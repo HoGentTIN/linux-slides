@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Andy Van Maele, Bert Van Vreckem">
+  <title>9. SSH-tuning, BIND</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">9. SSH-tuning, BIND</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2021-2022</p>
+</section>
+
+<section>
+<section id="ssh-tuning" class="title-slide slide level1">
+<h1>SSH Tuning</h1>
+
+</section>
+<section id="todo" class="slide level2">
+<h2>TODO</h2>
+</section></section>
+<section>
+<section id="dns-server-met-bind" class="title-slide slide level1">
+<h1>DNS-server met BIND</h1>
+
+</section>
+<section id="before-we-begin" class="slide level2">
+<h2>Before we begin</h2>
+<p>Set up the test environment</p>
+<pre class="console"><code>$ cd elnx-syllabus/demo
+$ vagrant up ns1 ns2
+[...]</code></pre>
+</section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<ul>
+<li>DNS</li>
+<li>BIND on Enterprise Linux</li>
+<li>Main configuration</li>
+<li>Zone files</li>
+<li>Secondary servers</li>
+<li>Troubleshooting</li>
+</ul>
+<p><a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+</section></section>
+<section>
+<section id="dns" class="title-slide slide level1">
+<h1>DNS</h1>
+
+</section>
+<section id="actually-dns-is-simple" class="slide level2">
+<h2>Actually, DNS is simple!</h2>
+<ul>
+<li>name to IP mappings in text file</li>
+<li>DNS query = lookup mapping in text file</li>
+<li>Send queries over the network</li>
+</ul>
+</section>
+<section id="poor-mans-dns" class="slide level2">
+<h2>Poor man’s DNS</h2>
+<p>Hosts file: <code>/etc/hosts</code></p>
+<pre class="text"><code># IP-address   hostname    aliases
+127.0.0.1      localhost   localhost.localdomain
+::1            localhost6  localhost6.localdomain6
+
+172.22.255.254 router4038  gw gw.netlab.hogent.be
+172.22.0.2     server4038  server4038.netlab.hogent.be
+172.22.0.3     printer4038 printer4038.netlab.hogent.be</code></pre>
+<ul>
+<li>On Windows: <code>c:\Windows\System32\Drivers\etc\hosts</code></li>
+<li>Ad blocker: <a href="https://someonewhocares.org/hosts/" class="uri">https://someonewhocares.org/hosts/</a></li>
+</ul>
+</section>
+<section id="however" class="slide level2">
+<h2>However…</h2>
+<figure>
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Domain_name_space.svg" alt="" /><figcaption>Hierarchical domains</figcaption>
+</figure>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png" alt="" /><figcaption>Iterative resolver</figcaption>
+</figure>
+</section>
+<section id="root-dns-servers" class="slide level2">
+<h2>Root DNS servers</h2>
+<p><a href="http://www.root-servers.org/" class="uri">http://www.root-servers.org/</a></p>
+<ul>
+<li>12 root servers: [a-m].root-servers.net</li>
+<li>Multiple instances per root server!
+<ul>
+<li>total: 1000+</li>
+<li>e.g. Brussels: e, f, i, l</li>
+</ul></li>
+<li>Each root server has one IP address!
+<ul>
+<li>routers will guide traffic to nearby instance</li>
+</ul></li>
+</ul>
+</section>
+<section id="types-of-dns-servers" class="slide level2">
+<h2>Types of DNS servers</h2>
+<ul>
+<li>Authoritative: “source of truth” for a <em>zone</em></li>
+<li>Forwarding/caching: sends requests to other servers</li>
+<li>Primary/Secondary (master/slave)</li>
+</ul>
+</section>
+<section id="best-practices-in-production" class="slide level2">
+<h2>Best practices in production</h2>
+<ul>
+<li>Authoritative-only
+<ul>
+<li><strong>Do not</strong> mix caching &amp; authoritative</li>
+</ul></li>
+<li>DNS only
+<ul>
+<li><strong>Do not</strong> run other services on that machine</li>
+</ul></li>
+</ul>
+<p>Typical Active Directory Domain Controller violates both!</p>
+</section></section>
+<section>
+<section id="interacting-with-dns" class="title-slide slide level1">
+<h1>Interacting with DNS</h1>
+
+</section>
+<section id="nslookup" class="slide level2">
+<h2>nslookup</h2>
+<p>query the DNS server in <code>/etc/resolv.conf</code></p>
+<pre class="console"><code>nslookup www.hogent.be</code></pre>
+<p>query the specified DNS server</p>
+<pre class="console"><code>nslookup www.hogent.be 193.190.172.1</code></pre>
+</section>
+<section id="dig-forward-lookups" class="slide level2">
+<h2>dig: forward lookups</h2>
+<pre class="console"><code>$ dig www.hogent.be
+[...]
+$ dig www.hogent.be @ens1.hogent.be +short
+hogent.be.
+193.190.173.132</code></pre>
+</section>
+<section id="dig-reverse-lookup" class="slide level2">
+<h2>dig: reverse lookup</h2>
+<pre class="console"><code>$ dig -x 193.190.173.132 @ens1.hogent.be +short
+net-173-node-133.hogent.be.</code></pre>
+</section>
+<section id="dig-ipv6" class="slide level2">
+<h2>dig: IPv6</h2>
+<pre class="console"><code>$ dig AAAA www.google.com +short
+2a00:1450:400e:806::2004</code></pre>
+</section>
+<section id="dig-domain-info" class="slide level2">
+<h2>dig: domain info</h2>
+<pre class="console"><code>$ dig NS hogent.be
+$ dig MX hogent.be
+$ dig SOA hogent.be
+$ dig ANY hogent.be @ens1.hogent.be
+$ dig AXFR zonetransfer.me @nsztm1.digi.ninja</code></pre>
+<ol type="1">
+<li>Who is the authoritative name server for hogent.be?</li>
+<li>Who is the mail server for hogent.be?</li>
+<li>Start-of-Authority section for hogent.be</li>
+<li>Get any RR that contains the given name</li>
+<li>Request domain transfer</li>
+</ol>
+</section></section>
+<section>
+<section id="bind" class="title-slide slide level1">
+<h1>BIND</h1>
+
+</section>
+<section id="berkeley-internet-name-domain" class="slide level2">
+<h2>Berkeley Internet Name Domain</h2>
+<ul>
+<li>Implementation of DNS protocol</li>
+<li>Most widely used</li>
+<li>De facto standard on Unix-like systems</li>
+</ul>
+<p>Read <em>DNS for rocket scientists</em>: <a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+</section>
+<section id="installation-on-enterprise-linux" class="slide level2">
+<h2>Installation on Enterprise Linux</h2>
+<ul>
+<li>Package: <code>named</code></li>
+<li>Service configuration: <code>/etc/named*</code></li>
+<li>Zone files, etc.: <code>/var/named/</code></li>
+</ul>
+</section>
+<section id="main-config-file" class="slide level2">
+<h2>Main config file</h2>
+<pre class="text"><code>options {
+  listen-on port 53 { any; };
+  listen-on-v6 port 53 { any; };
+  directory   &quot;/var/named&quot;;
+
+  // ...
+
+  allow-query     { any; };
+  allow-transfer  { any; };
+
+  recursion no;
+
+  rrset-order { order random; };
+
+  // ...
+};</code></pre>
+</section>
+<section id="important-options" class="slide level2">
+<h2>Important options</h2>
+<ul>
+<li><code>listen-on</code>: port number + network interfaces
+<ul>
+<li><code>any;</code></li>
+<li><code>127.0.0.0/8; 192.168.56.0/24</code></li>
+</ul></li>
+<li><code>allow-query</code>: which hosts may send queries?</li>
+<li><code>allow-transfer</code>: which secondary name servers may receive zone transfers?</li>
+<li><code>recursion</code>: allow recursive queries
+<ul>
+<li>should be <code>no</code> on authoritative name server</li>
+</ul></li>
+</ul>
+</section>
+<section id="primary-server-forward-zone-definition" class="slide level2">
+<h2>Primary server forward zone definition</h2>
+<p>Forward lookup zone for <em>example.com</em></p>
+<pre class="text"><code>zone &quot;example.com&quot; IN {
+  type master;
+  file &quot;example.com&quot;;
+  notify yes;
+  allow-update { none; };
+};</code></pre>
+</section>
+<section id="secondary-server-zone-definition" class="slide level2">
+<h2>Secondary server zone definition</h2>
+<p>On a secondary name server:</p>
+<pre class="text"><code>zone &quot;example.com&quot; IN {
+  type slave;
+  masters { 192.168.56.10; };
+  file &quot;slaves/example.com&quot;;
+};</code></pre>
+</section>
+<section id="primary-server-reverse-lookup-zone" class="slide level2">
+<h2>Primary server reverse lookup zone</h2>
+<pre class="text"><code>zone &quot;56.168.192.in-addr.arpa&quot; IN {
+  type master;
+  file &quot;56.168.192.in-addr.arpa&quot;;
+  notify yes;
+  allow-update { none; };
+};</code></pre>
+</section>
+<section id="ip-to-reverse-lookup-zone" class="slide level2">
+<h2>IP to reverse lookup zone</h2>
+<ol type="1">
+<li>Take the “dotted quad”, e.g. <code>192.168.56.0/24</code></li>
+<li>Drop the host part: <code>192.168.56</code></li>
+<li>Reverse the quads: <code>56.168.192</code></li>
+<li>Add <code>in-addr.arpa.</code>:
+<ul>
+<li><code>56.168.192.in-addr.arpa.</code></li>
+</ul></li>
+</ol>
+</section>
+<section id="example-zone-file" class="slide level2">
+<h2>Example zone file</h2>
+<pre class="text"><code>$ORIGIN example.com.
+$TTL 1W
+
+@ IN SOA ns1.example.com. hostmaster.example.com. (
+  18042020 1D 1H 1W 1D )
+
+                     IN  NS     ns1
+                     IN  NS     ns2
+
+ns1                  IN  A      192.168.56.10
+ns2                  IN  A      192.168.56.11
+dc                   IN  A      192.168.56.40
+web                  IN  A      192.168.56.172
+www                  IN  CNAME  web
+db                   IN  A      192.168.56.173
+
+priv0001             IN  A      172.16.0.10
+priv0002             IN  A      172.16.0.11</code></pre>
+</section>
+<section id="resource-records-rrs" class="slide level2">
+<h2>Resource records (RRs)</h2>
+<pre class="text"><code>web  IN  A      192.168.56.172
+www  IN  CNAME  web</code></pre>
+</section>
+<section id="types-of-resource-records" class="slide level2">
+<h2>Types of Resource Records</h2>
+<ul>
+<li><code>A</code>: name → IP</li>
+<li><code>AAAA</code>: name → IPv6</li>
+<li><code>PTR</code>: IP → name</li>
+<li><code>CNAME</code>: alias</li>
+<li><code>SOA</code>: start of authority, info about the domain</li>
+<li><code>NS</code>: authoritative name server(s)</li>
+<li><code>MX</code>: mail server</li>
+<li><code>SRV</code>: service</li>
+<li><code>TXT</code>: text record</li>
+<li>…</li>
+</ul>
+</section>
+<section id="start-of-authority" class="slide level2">
+<h2>Start of Authority</h2>
+<pre class="text"><code>@ IN SOA ns1.example.com. hostmaster.example.com. (
+  18042020 1D 1H 1W 1D )</code></pre>
+<ul>
+<li><code>ns1.example.com.</code>: primary name server</li>
+<li><code>hostmaster.example.com.</code>: email address of sysadmin
+<ul>
+<li><code>hostmaster@example.com</code></li>
+</ul></li>
+<li><code>18042020</code>: serial
+<ul>
+<li><strong>REMARK</strong> Secondary name servers will <strong>only</strong> update if serial increments</li>
+</ul></li>
+</ul>
+</section>
+<section id="start-of-authority-timeouts" class="slide level2">
+<h2>Start of Authority timeouts</h2>
+<pre class="text"><code>@ IN SOA ns1.example.com hostmaster.example.com (
+  18042020 1D 1H 1W 1D )</code></pre>
+<ul>
+<li><code>1D</code>: when will secondary ns try to refresh the zone</li>
+<li><code>1H</code>: time between update retries</li>
+<li><code>1W</code>: when is zone data no longer authoritative (only secondary)</li>
+<li><code>1D</code>: how long can NAME ERROR result be cached</li>
+</ul>
+</section>
+<section id="shortcuts" class="slide level2">
+<h2>“Shortcuts”</h2>
+<ul>
+<li><code>$ORIGIN</code>: domain name
+<ul>
+<li>added to all names not ending with <code>.</code></li>
+<li><code>@</code>: replaced with value of <code>$ORIGIN</code></li>
+</ul></li>
+<li><code>$TTL</code>: time to live (in seconds)
+<ul>
+<li>how long may record be cached</li>
+</ul></li>
+</ul>
+</section>
+<section id="unqualified-names" class="slide level2">
+<h2>(Un)qualified names</h2>
+<ul>
+<li>Qualified name (FQDN): end with dot</li>
+<li>Unqualified: without dot
+<ul>
+<li><code>$ORIGIN</code> added to the end</li>
+</ul></li>
+</ul>
+</section>
+<section id="specifying-time" class="slide level2">
+<h2>Specifying time</h2>
+<ul>
+<li>default = seconds</li>
+<li>M = minutes</li>
+<li>H = hours</li>
+<li>D = days</li>
+<li>W = weeks</li>
+</ul>
+<p>Combinations are allowed, e.g. <code>2H30M</code></p>
+</section>
+<section id="reverse-zone-file" class="slide level2">
+<h2>Reverse zone file</h2>
+<pre class="text"><code>$TTL 1W
+$ORIGIN 16.172.in-addr.arpa.
+
+@ IN SOA ns1.example.com. hostmaster.example.com. (
+  18042020
+  1D 1H 1W 1D )
+
+                 IN  NS   ns1.example.com.
+                 IN  NS   ns2.example.com.
+
+10.0             IN  PTR  priv0001.example.com.
+11.0             IN  PTR  priv0002.example.com.</code></pre>
+</section>
+<section id="root-hint" class="slide level2">
+<h2>Root hint</h2>
+<p>Every (forwarding) name server should have list of root name servers</p>
+<pre class="console"><code>dig @a.root-servers.net</code></pre>
+</section>
+<section class="slide level2">
+
+<pre class="text"><code>.   518400 IN NS a.root-servers.net.
+.   518400 IN NS b.root-servers.net.
+
+[...]
+
+a.root-servers.net. 518400 IN A 198.41.0.4
+b.root-servers.net. 518400 IN A 199.9.14.201
+
+[...]
+
+a.root-servers.net. 518400 IN AAAA 2001:503:ba3e::2:30
+b.root-servers.net. 518400 IN AAAA 2001:500:200::b
+
+[...]</code></pre>
+</section></section>
+<section>
+<section id="troubleshooting" class="title-slide slide level1">
+<h1>Troubleshooting</h1>
+
+</section>
+<section id="assignment" class="slide level2">
+<h2>Assignment</h2>
+<p>Authoritative name server for domain <em>example.com</em></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Host</th>
+<th style="text-align: left;">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ns1</td>
+<td style="text-align: left;">192.168.56.10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ns2</td>
+<td style="text-align: left;">192.168.56.11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">dc</td>
+<td style="text-align: left;">192.168.56.40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">web</td>
+<td style="text-align: left;">192.168.56.72</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">db</td>
+<td style="text-align: left;">192.168.56.73</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">priv0001</td>
+<td style="text-align: left;">172.16.0.10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">priv0002</td>
+<td style="text-align: left;">172.16.0.11</td>
+</tr>
+</tbody>
+</table>
+<p>The host <code>web</code> has an alias, <code>www</code>.</p>
+</section>
+<section id="goal-make-the-tests-succeed" class="slide level2">
+<h2>Goal: make the tests succeed!</h2>
+<pre class="console"><code>[vagrant@ns1]$ /vagrant/tests/runtests.sh
+Testing 192.168.56.10
+ ✓ The dig command should be installed
+ ✓ It should return the NS record(s)
+ ✓ It should be able to resolve host names
+ ✓ It should be able to do reverse lookups
+ ✓ It should be able to resolve aliases
+ ✓ It should return the SRV record(s)
+
+6 tests, 0 failures
+Testing 192.168.56.11
+ ✓ The dig command should be installed
+ ✓ It should return the NS record(s)
+ ✓ It should be able to resolve host names
+ ✓ It should be able to do reverse lookups
+ ✓ It should be able to resolve aliases
+ ✓ It should return the SRV record(s)
+
+6 tests, 0 failures</code></pre>
+</section>
+<section id="useful-commands" class="slide level2">
+<h2>Useful commands</h2>
+<ul>
+<li>Check the logs: <code>journalctl -f -l -u named</code></li>
+<li>Validate config files:
+<ul>
+<li>main: <code>named-checkconf /etc/named.conf</code></li>
+<li>zone files: <code>named-checkzone ZONE FILE</code></li>
+</ul></li>
+</ul>
+<pre class="console"><code>$ named-checkconf
+$ named-checkzone example.com /var/named/example.com
+$ named-checkzone 16.172.in-addr.arpa /var/named/16.172.in-addr.arpa</code></pre>
+</section>
+<section id="tips" class="slide level2">
+<h2>Tips</h2>
+<p>Enable Query log:</p>
+<pre class="console"><code>[root@ns1 ~]# rndc querylog</code></pre>
+<p>Force zone update:</p>
+<pre class="console"><code>[root@ns2 ~]# rndc refresh example.com</code></pre>
+</section>
+<section id="tips-vervolg" class="slide level2">
+<h2>Tips (vervolg)</h2>
+<p>Follow BIND logs:</p>
+<pre class="console"><code>[root@ns1 ~]# journalctl -f -u named.service</code></pre>
+<p>Capture network traffic:</p>
+<pre class="console"><code>[root@ns2 ~]# tcpdump -i eth1 -vvnnttt
+[root@ns2 ~]# tcpdump -i eth1 -U -w - | tee dns.pcap | tcpdump -vv -nn -ttttt -r -</code></pre>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

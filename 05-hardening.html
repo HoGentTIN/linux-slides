@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Andy Van Maele, Bert Van Vreckem">
+  <title>5. Hardening van een webserver</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="reveal.js/css/reset.css">
+  <link rel="stylesheet" href="reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? 'reveal.js/css/print/pdf.css' : 'reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">5. Hardening van een webserver</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2021-2022</p>
+</section>
+
+<section>
+<section id="firewall-configuratie" class="title-slide slide level1">
+<h1>Firewall-configuratie</h1>
+
+</section>
+<section id="firewall-instellingen-aanpassen" class="slide level2">
+<h2>Firewall-instellingen aanpassen</h2>
+<pre class="console"><code>$ sudo firewall-cmd --list-all  # = toon firewall-regels
+$ sudo firewall-cmd --add-service http --permanent
+$ sudo firewall-cmd --add-service https --permanent
+$ sudo firewall-cmd --reload</code></pre>
+<p>Probeer opnieuw de website te bekijken vanaf het fysieke systeem</p>
+</section>
+<section id="zones" class="slide level2">
+<h2>Zones</h2>
+<ul>
+<li>Zone = list of rules to be applied in a specific situation
+<ul>
+<li>e.g. public (default), home, work, …</li>
+</ul></li>
+<li>NICs are assigned to zones</li>
+<li>For a server, <code>public</code> zone is probably sufficient</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Task</th>
+<th style="text-align: left;">Command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">List all zones</td>
+<td style="text-align: left;"><code>firewall-cmd --get-zones</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Current active zone</td>
+<td style="text-align: left;"><code>firewall-cmd --get-active-zones</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Add interface to active zone</td>
+<td style="text-align: left;"><code>firewall-cmd --add-interface=IFACE</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Show current rules</td>
+<td style="text-align: left;"><code>firewall-cmd --list-all</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>firewall-cmd</code> requires <em>root permissions</em></p>
+</section>
+<section id="configuring-firewall-rules" class="slide level2">
+<h2>Configuring firewall rules</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Task</th>
+<th style="text-align: left;">Command</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Allow predefined service</td>
+<td style="text-align: left;"><code>firewall-cmd --add-service=http</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">List predefined services</td>
+<td style="text-align: left;"><code>firewall-cmd --get-services</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Allow specific port</td>
+<td style="text-align: left;"><code>firewall-cmd --add-port=8080/tcp</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reload rules</td>
+<td style="text-align: left;"><code>firewall-cmd --reload</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Block all traffic</td>
+<td style="text-align: left;"><code>firewall-cmd --panic-on</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Turn panic mode off</td>
+<td style="text-align: left;"><code>firewall-cmd --panic-off</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="persistent-changes" class="slide level2">
+<h2>Persistent changes</h2>
+<ul>
+<li><code>--permanent</code> option is not applied immediately!</li>
+<li>Two methods:
+<ol type="1">
+<li>Execute command once without, once with <code>--permanent</code></li>
+<li>Execute command with <code>--permanent</code>, reload rules</li>
+</ol></li>
+</ul>
+<pre class="console"><code>sudo firewall-cmd --add-service=http --permanent
+sudo firewall-cmd --add-service=https --permanent
+sudo firewall-cmd --reload</code></pre>
+</section></section>
+<section>
+<section id="selinux-troubleshooting" class="title-slide slide level1">
+<h1>SELinux troubleshooting</h1>
+
+</section>
+<section id="selinux" class="slide level2">
+<h2>SELinux</h2>
+<ul>
+<li>SELinux is Mandatory Access Control in the Linux kernel</li>
+<li>Settings:
+<ul>
+<li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
+<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>, <code>restorecon</code></li>
+<li>Policy modules: <code>sepolicy</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="do-not-disable-selinux" class="slide level2">
+<h2>Do not disable SELinux</h2>
+<p><a href="https://stopdisablingselinux.com/" class="uri">https://stopdisablingselinux.com/</a></p>
+</section>
+<section id="check-file-context" class="slide level2">
+<h2>Check file context</h2>
+<ul>
+<li>Is the file context as expected?
+<ul>
+<li><code>ls -Z /var/www/html</code></li>
+</ul></li>
+<li>Set file context to default value
+<ul>
+<li><code>sudo restorecon -R /var/www/</code></li>
+</ul></li>
+<li>Set file context to specified value
+<ul>
+<li><code>sudo chcon -t httpd_sys_content_t test.php</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="check-booleans" class="slide level2">
+<h2>Check booleans</h2>
+<p><code>getsebool -a | grep http</code></p>
+<ul>
+<li>Know the relevant booleans! (RedHat manuals)</li>
+<li>Enable boolean:
+<ul>
+<li><code>sudo setsebool -P httpd_can_network_connect_db on</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="creating-a-policy" class="slide level2">
+<h2>Creating a policy</h2>
+<p>Let’s try to set <code>DocumentRoot "/vagrant/www"</code></p>
+<pre><code>$ sudo vi /etc/httpd/conf/httpd.conf
+$ ls -Z /vagrant/www/
+-rw-rw-r--. vagrant vagrant system_u:object_r:vmblock_t:s0   test.php
+$ sudo chcon -R -t httpd_sys_content_t /vagrant/www/
+chcon: failed to change context of ‘test.php’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported
+chcon: failed to change context of ‘/vagrant/www/’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported</code></pre>
+</section>
+<section id="creating-a-policy-1" class="slide level2">
+<h2>Creating a policy</h2>
+<p>Instead of setting the files to the expected context, allow httpd to access files with <code>vmblock_t</code> context</p>
+<ol type="1">
+<li><p>Allow Apache to run in “permissive” mode:</p>
+<pre><code>$ sudo semanage permissive -a httpd_t</code></pre></li>
+<li><p>Generate “Type Enforcement” file (.te)</p>
+<pre><code>$ sudo audit2allow -a -m httpd-vboxsf &gt; httpd-vboxsf.te</code></pre></li>
+<li><p>If necessary, edit the policy</p>
+<pre><code>$ sudo vi httpd-vboxsf.te</code></pre></li>
+</ol>
+</section>
+<section class="slide level2">
+
+<ol type="1">
+<li><p>Convert to policy module (.pp)</p>
+<pre><code>$ checkmodule -M -m -o httpd-vboxsf.mod httpd-vboxsf.te
+$ semodule_package -o httpd-vboxsf.pp -m httpd-vboxsf.mod</code></pre></li>
+<li><p>Install module</p>
+<pre><code>$ sudo semodule -i httpd-vboxsf.pp</code></pre></li>
+<li><p>Remove permissive domain exception</p>
+<pre><code>$ sudo semanage permissive -d httpd_t</code></pre></li>
+</ol>
+<p>Tip: automate this!</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: 'reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: 'reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: 'reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

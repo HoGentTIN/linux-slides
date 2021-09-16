@@ -1,5 +1,5 @@
 ---
-title: "4. Complexe scripts, cronjobs"
+title: "7. Complexe scripts, cronjobs"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Andy Van Maele, Bert Van Vreckem
 date: 2021-2022

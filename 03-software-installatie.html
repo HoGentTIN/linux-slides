@@ -104,19 +104,11 @@
   <p class="date">2021-2022</p>
 </section>
 
-<section>
-<section id="software-installatie" class="title-slide slide level1">
-<h1>Software-installatie</h1>
-
-</section>
+<section><section id="software-installatie" class="title-slide slide level1"><h1>Software-installatie</h1></section>
 <section id="todo" class="slide level2">
 <h2>TODO</h2>
 </section></section>
-<section>
-<section id="netwerkconfiguratie" class="title-slide slide level1">
-<h1>Netwerkconfiguratie</h1>
-
-</section>
+<section><section id="netwerkconfiguratie" class="title-slide slide level1"><h1>Netwerkconfiguratie</h1></section>
 <section id="netwerkinstellingen-controleren" class="slide level2">
 <h2>Netwerkinstellingen controleren</h2>
 <p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
@@ -136,24 +128,24 @@
 </section>
 <section id="wat-is-het-ip-adres-van" class="slide level2">
 <h2>Wat is het IP-adres van…?</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
+<span id="cb1-2"><a href="#cb1-2"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
 <p>Wat is <em>mijn publiek</em> IP-adres?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>$ <span class="ex">curl</span> icanhazip.com</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">curl</span> icanhazip.com</span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
 </section>
 <section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>$ <span class="ex">ip</span> -4 a</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ <span class="ex">ip</span> -4 a</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
+<span id="cb3-4"><a href="#cb3-4"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb3-6"><a href="#cb3-6"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
+<span id="cb3-7"><a href="#cb3-7"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
+<span id="cb3-8"><a href="#cb3-8"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb3-9"><a href="#cb3-9"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
+<span id="cb3-10"><a href="#cb3-10"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>

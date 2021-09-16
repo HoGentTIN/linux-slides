@@ -104,11 +104,7 @@
   <p class="date">2021-2022</p>
 </section>
 
-<section>
-<section id="praktische-afspraken" class="title-slide slide level1">
-<h1>Praktische afspraken</h1>
-
-</section>
+<section><section id="praktische-afspraken" class="title-slide slide level1"><h1>Praktische afspraken</h1></section>
 <section id="lectoren" class="slide level2">
 <h2>Lectoren</h2>
 <ul>
@@ -116,11 +112,7 @@
 <li>Bert Van Vreckem</li>
 </ul>
 </section></section>
-<section>
-<section id="intro" class="title-slide slide level1">
-<h1>Intro</h1>
-
-</section>
+<section><section id="intro" class="title-slide slide level1"><h1>Intro</h1></section>
 <section id="waarom-linux" class="slide level2">
 <h2>Waarom Linux?</h2>
 </section>
@@ -212,11 +204,7 @@
 <p>Van een sysadmin wordt <strong>zelfstandigheid</strong> verwacht</p>
 <p>De werkwijze in deze cursus is een eerste stap in die richting!</p>
 </section></section>
-<section>
-<section id="beheer-van-gebruikers" class="title-slide slide level1">
-<h1>Beheer van gebruikers</h1>
-
-</section>
+<section><section id="beheer-van-gebruikers" class="title-slide slide level1"><h1>Beheer van gebruikers</h1></section>
 <section id="commandos-voor-gebruikers-en-groepen" class="slide level2">
 <h2>Commando’s voor gebruikers en groepen</h2>
 <ul>
@@ -242,11 +230,11 @@
 <section class="slide level2">
 
 <p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
 </section>
 <section id="bestandspermissies-1" class="slide level2">
 <h2>Bestandspermissies (1)</h2>
@@ -353,8 +341,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>u+s</code></li>
 <li>octaal: 4</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
 </section>
 <section id="speciale-permissies-sgid" class="slide level2">
 <h2>Speciale permissies: <em>SGID</em></h2>
@@ -365,8 +353,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>g+s</code></li>
 <li>octaal: 2</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
 </section>
 <section id="speciale-permissies-restricted-deletion" class="slide level2">
 <h2>Speciale permissies: <em>restricted deletion</em></h2>
@@ -377,8 +365,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>+t</code></li>
 <li>octaal: 1</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="fu">ls</span> -ld /tmp</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ls</span> -ld /tmp</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
 </section>
 <section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>

@@ -104,17 +104,13 @@
   <p class="date">2021-2022</p>
 </section>
 
-<section>
-<section id="intro-bash-scripts" class="title-slide slide level1">
-<h1>Intro Bash scripts</h1>
-
-</section>
+<section><section id="intro-bash-scripts" class="title-slide slide level1"><h1>Intro Bash scripts</h1></section>
 <section id="een-script-schrijven" class="slide level2">
 <h2>Een script schrijven</h2>
 <ol type="1">
 <li><p>Maak bestand aan (bv. <code>script.sh</code>) met een teksteditor, bv.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="co">#! /bin/bash</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
 <li><p>Maak bestand uitvoerbaar: <code>chmod +x script.sh</code></p></li>
 <li><p>Voer uit: <code>./script.sh</code></p></li>
 </ol>
@@ -138,24 +134,24 @@
 <section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a></span>
+<span id="cb2-3"><a href="#cb2-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    # Binnen <span class="st">&quot; &quot;</span> wordt substitutie toegepast</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    # Binnen <span class="st">&#39; &#39;</span> NIET!</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
 </section>
 <section id="gebruik-printf" class="slide level2">
 <h2>Gebruik <code>printf</code></h2>
 <p><code>printf</code> is beter dan <code>echo</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
 <ul>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
@@ -192,9 +188,9 @@
 <section id="fouten-voorkomen" class="slide level2">
 <h2>Fouten voorkomen</h2>
 <p>Begin elk script met:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   # abort on nonzero exitstatus</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   # abort on unbound variable</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  # don<span class="st">&#39;t hide errors within pipes</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
 </section>
 <section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
@@ -207,7 +203,7 @@
 <li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
 <li>Gebruik in strings (met dubbele aanhalingstekens):</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
 <section id="variabelen-codestijl" class="slide level2">
 <h2>Variabelen: codestijl</h2>
@@ -221,9 +217,9 @@
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        # Fout</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      # Juist</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
 </section>
 <section id="onbestaande-variabelen-opvragen" class="slide level2">
 <h2>Onbestaande variabelen opvragen</h2>
@@ -242,10 +238,10 @@
 <li>Een script oproepen creëert een subshell</li>
 <li>Maak “globale”, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="va">VARIABLE2=</span>value</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
+<span id="cb8-2"><a href="#cb8-2"></a></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="va">VARIABLE2=</span>value</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
 </section>
 <section id="variabelen-naamgeving" class="slide level2">
 <h2>Variabelen: naamgeving</h2>
@@ -255,11 +251,7 @@
 <li>Omgevingsvariabelen: hoofdletters, bv. <code>FOO_BAR</code></li>
 </ul>
 </section></section>
-<section>
-<section id="opzetten-werkomgeving" class="title-slide slide level1">
-<h1>Opzetten werkomgeving</h1>
-
-</section>
+<section><section id="opzetten-werkomgeving" class="title-slide slide level1"><h1>Opzetten werkomgeving</h1></section>
 <section id="github-repo-voor-labo-taken-aanmaken" class="slide level2">
 <h2>Github-repo voor labo-taken aanmaken</h2>
 <p>TODO</p>

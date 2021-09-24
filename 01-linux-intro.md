@@ -12,6 +12,19 @@ date: 2021-2022
 - Andy Van Maele
 - Bert Van Vreckem
 
+## Studiemethode
+
+- 3 lesuur / week ; 4 studiepunten
+- equivalente hoeveelheid voor- en nawerk thuis
+
+## Linux flavour
+
+- Debian or Red Hat?
+- Linux Mint als GUI-Linux VM
+    - Download ova file
+    - import & get started
+
+
 # Intro
 
 ## Waarom Linux?
@@ -76,43 +89,7 @@ Van een sysadmin wordt **zelfstandigheid** verwacht
 
 De werkwijze in deze cursus is een eerste stap in die richting!
 
-# Beheer van gebruikers
-
-## Commando's voor gebruikers en groepen
-
-- Gebruikers: `useradd`, `usermod`, `userdel`
-- Groepen: `groupadd`, `groupmod`, `groupdel`
-- Info opvragen: `who`, `groups`, `id`
-
-## Configuratiebestanden
-
-- Gebruikers: `/etc/passwd`, `/etc/shadow`
-- Groepen: `/etc/group`, (`/etc/gshadow`, van weinig belang)
-
-## Primaire vs aanvullende groepen
-
-- Primaire groep: 4e veld van `/etc/passwd` (group ID)
-- Aanvullende groepen: in `/etc/group`. Gebruiker staat niet vermeld in de primaire groep!
-
----
-
-*primaire* groep aanpassen
-
-```bash
-sudo usermod -g groep gebruiker
-```
-
-gebruiker toevoegen aan opgegeven groepen *en verwijderen uit alle andere groepen*
-
-```bash
-sudo usermod -G groep1,groep2 gebruiker
-```
-
-gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen
-
-```bash
-sudo usermod -aG groep gebruiker
-```
+# Permissies (herhaling)
 
 ## Bestandspermissies (1)
 
@@ -182,6 +159,8 @@ Voorbeelden:
 - `root` negeert bestandspermissies (mag alles), vb. `/etc/shadow`
 - tip: octale permissies opvragen: `stat -c %a BESTAND`
 
+# More Permissies
+
 ## Permissies van nieuwe bestanden: `umask`
 
 - `umask` bepaalt permissies van bestand/directory bij aanmaken
@@ -242,6 +221,48 @@ $ ls -l /usr/bin/write
 ls -ld /tmp
 drwxrwxrwt. 16 root root 360 2017-12-04 13:05 /tmp/
 ```
+# Beheer van gebruikers
+
+## Commando's voor gebruikers en groepen
+
+- Gebruikers: `useradd`, `usermod`, `userdel`
+- Groepen: `groupadd`, `groupmod`, `groupdel`
+- Info opvragen: `who`, `groups`, `id`
+
+## Configuratiebestanden
+
+- Gebruikers: `/etc/passwd`, `/etc/shadow`
+- Groepen: `/etc/group`, (`/etc/gshadow`, van weinig belang)
+
+---
+
+- bekijk het verschil in permissies tussen deze drie bestanden
+- het wachtwoord van een gebruiker komt **niet** voor in `/etc/passwd`
+
+## Primaire vs aanvullende groepen
+
+- Primaire groep: 4e veld van `/etc/passwd` (group ID)
+- Aanvullende groepen: in `/etc/group`. Gebruiker staat niet vermeld in de primaire groep!
+
+---
+
+*primaire* groep aanpassen
+
+```bash
+sudo usermod -g groep gebruiker
+```
+
+gebruiker toevoegen aan opgegeven groepen *en verwijderen uit alle andere groepen*
+
+```bash
+sudo usermod -G groep1,groep2 gebruiker
+```
+
+gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen
+
+```bash
+sudo usermod -aG groep gebruiker
+```
 
 ## Eigenaar/groep veranderen:
 
@@ -251,4 +272,36 @@ Merk op: root-rechten nodig
 chown user file
 chown user:group file
 chgrp group file
+```
+
+## root of administrator
+
+- `root` oorspronkelijk de enige administrator van het systeem
+- `sudo` kan root rechten verlenen aan een gebruiker
+    - voor een bepaald commando
+    - voor alle commando's 
+- `/etc/sudoers` tells you who can be admin
+    - group `sudo` in Ubuntu/Debian distro
+    - group `wheel` in Fedora/RedHat distro
+
+## wachtwoord
+
+eigen wachtwoord aanpassen
+
+```bash
+passwd
+```
+
+wachtwoord aanpassen van een gebruiker als administrator
+
+```bash
+sudo passwd <username>
+```
+
+wachtwoord genereren in hash vorm (zoals in `/etc/shadow`)
+
+```bash
+openssl passwd -6 -salt <salt-string> <desired passwd>
+e.g.
+openssl passwd -6 -salt hogent nieuwWachtWoord
 ```

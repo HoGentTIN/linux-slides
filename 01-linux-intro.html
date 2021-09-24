@@ -111,6 +111,24 @@
 <li>Andy Van Maele</li>
 <li>Bert Van Vreckem</li>
 </ul>
+</section>
+<section id="studiemethode" class="slide level2">
+<h2>Studiemethode</h2>
+<ul>
+<li>3 lesuur / week ; 4 studiepunten</li>
+<li>equivalente hoeveelheid voor- en nawerk thuis</li>
+</ul>
+</section>
+<section id="linux-flavour" class="slide level2">
+<h2>Linux flavour</h2>
+<ul>
+<li>Debian or Red Hat?</li>
+<li>Linux Mint als GUI-Linux VM
+<ul>
+<li>Download ova file</li>
+<li>import &amp; get started</li>
+</ul></li>
+</ul>
 </section></section>
 <section><section id="intro" class="title-slide slide level1"><h1>Intro</h1></section>
 <section id="waarom-linux" class="slide level2">
@@ -204,38 +222,7 @@
 <p>Van een sysadmin wordt <strong>zelfstandigheid</strong> verwacht</p>
 <p>De werkwijze in deze cursus is een eerste stap in die richting!</p>
 </section></section>
-<section><section id="beheer-van-gebruikers" class="title-slide slide level1"><h1>Beheer van gebruikers</h1></section>
-<section id="commandos-voor-gebruikers-en-groepen" class="slide level2">
-<h2>Commando’s voor gebruikers en groepen</h2>
-<ul>
-<li>Gebruikers: <code>useradd</code>, <code>usermod</code>, <code>userdel</code></li>
-<li>Groepen: <code>groupadd</code>, <code>groupmod</code>, <code>groupdel</code></li>
-<li>Info opvragen: <code>who</code>, <code>groups</code>, <code>id</code></li>
-</ul>
-</section>
-<section id="configuratiebestanden" class="slide level2">
-<h2>Configuratiebestanden</h2>
-<ul>
-<li>Gebruikers: <code>/etc/passwd</code>, <code>/etc/shadow</code></li>
-<li>Groepen: <code>/etc/group</code>, (<code>/etc/gshadow</code>, van weinig belang)</li>
-</ul>
-</section>
-<section id="primaire-vs-aanvullende-groepen" class="slide level2">
-<h2>Primaire vs aanvullende groepen</h2>
-<ul>
-<li>Primaire groep: 4e veld van <code>/etc/passwd</code> (group ID)</li>
-<li>Aanvullende groepen: in <code>/etc/group</code>. Gebruiker staat niet vermeld in de primaire groep!</li>
-</ul>
-</section>
-<section class="slide level2">
-
-<p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
-<p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
-<p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
-</section>
+<section><section id="permissies-herhaling" class="title-slide slide level1"><h1>Permissies (herhaling)</h1></section>
 <section id="bestandspermissies-1" class="slide level2">
 <h2>Bestandspermissies (1)</h2>
 <p>= toegangsrechten voor bestanden en directories</p>
@@ -306,7 +293,8 @@ r w x  r - x  - - -
 <li><code>root</code> negeert bestandspermissies (mag alles), vb. <code>/etc/shadow</code></li>
 <li>tip: octale permissies opvragen: <code>stat -c %a BESTAND</code></li>
 </ul>
-</section>
+</section></section>
+<section><section id="more-permissies" class="title-slide slide level1"><h1>More Permissies</h1></section>
 <section id="permissies-van-nieuwe-bestanden-umask" class="slide level2">
 <h2>Permissies van nieuwe bestanden: <code>umask</code></h2>
 <ul>
@@ -341,8 +329,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>u+s</code></li>
 <li>octaal: 4</li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>$ <span class="fu">ls</span> -l /bin/passwd</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
 </section>
 <section id="speciale-permissies-sgid" class="slide level2">
 <h2>Speciale permissies: <em>SGID</em></h2>
@@ -353,8 +341,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>g+s</code></li>
 <li>octaal: 2</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
-<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ <span class="fu">ls</span> -l /usr/bin/write </span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
 </section>
 <section id="speciale-permissies-restricted-deletion" class="slide level2">
 <h2>Speciale permissies: <em>restricted deletion</em></h2>
@@ -365,8 +353,47 @@ r w x  r - x  - - -
 <li>symbolisch: <code>+t</code></li>
 <li>octaal: 1</li>
 </ul>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">ls</span> -ld /tmp</span>
-<span id="cb9-2"><a href="#cb9-2"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="fu">ls</span> -ld /tmp</span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
+</section></section>
+<section><section id="beheer-van-gebruikers" class="title-slide slide level1"><h1>Beheer van gebruikers</h1></section>
+<section id="commandos-voor-gebruikers-en-groepen" class="slide level2">
+<h2>Commando’s voor gebruikers en groepen</h2>
+<ul>
+<li>Gebruikers: <code>useradd</code>, <code>usermod</code>, <code>userdel</code></li>
+<li>Groepen: <code>groupadd</code>, <code>groupmod</code>, <code>groupdel</code></li>
+<li>Info opvragen: <code>who</code>, <code>groups</code>, <code>id</code></li>
+</ul>
+</section>
+<section id="configuratiebestanden" class="slide level2">
+<h2>Configuratiebestanden</h2>
+<ul>
+<li>Gebruikers: <code>/etc/passwd</code>, <code>/etc/shadow</code></li>
+<li>Groepen: <code>/etc/group</code>, (<code>/etc/gshadow</code>, van weinig belang)</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>bekijk het verschil in permissies tussen deze drie bestanden</li>
+<li>het wachtwoord van een gebruiker komt <strong>niet</strong> voor in <code>/etc/passwd</code></li>
+</ul>
+</section>
+<section id="primaire-vs-aanvullende-groepen" class="slide level2">
+<h2>Primaire vs aanvullende groepen</h2>
+<ul>
+<li>Primaire groep: 4e veld van <code>/etc/passwd</code> (group ID)</li>
+<li>Aanvullende groepen: in <code>/etc/group</code>. Gebruiker staat niet vermeld in de primaire groep!</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><em>primaire</em> groep aanpassen</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">sudo</span> usermod -g groep gebruiker</span></code></pre></div>
+<p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="fu">sudo</span> usermod -G groep1,groep2 gebruiker</span></code></pre></div>
+<p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="fu">sudo</span> usermod -aG groep gebruiker</span></code></pre></div>
 </section>
 <section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>
@@ -374,6 +401,33 @@ r w x  r - x  - - -
 <pre class="console"><code>chown user file
 chown user:group file
 chgrp group file</code></pre>
+</section>
+<section id="root-of-administrator" class="slide level2">
+<h2>root of administrator</h2>
+<ul>
+<li><code>root</code> oorspronkelijk de enige administrator van het systeem</li>
+<li><code>sudo</code> kan root rechten verlenen aan een gebruiker
+<ul>
+<li>voor een bepaald commando</li>
+<li>voor alle commando’s</li>
+</ul></li>
+<li><code>/etc/sudoers</code> tells you who can be admin
+<ul>
+<li>group <code>sudo</code> in Ubuntu/Debian distro</li>
+<li>group <code>wheel</code> in Fedora/RedHat distro</li>
+</ul></li>
+</ul>
+</section>
+<section id="wachtwoord" class="slide level2">
+<h2>wachtwoord</h2>
+<p>eigen wachtwoord aanpassen</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="fu">passwd</span></span></code></pre></div>
+<p>wachtwoord aanpassen van een gebruiker als administrator</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="fu">sudo</span> passwd <span class="op">&lt;</span>username<span class="op">&gt;</span></span></code></pre></div>
+<p>wachtwoord genereren in hash vorm (zoals in <code>/etc/shadow</code>)</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="ex">openssl</span> passwd -6 -salt <span class="op">&lt;</span>salt-string<span class="op">&gt;</span> <span class="op">&lt;</span>desired passwd<span class="op">&gt;</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="ex">e.g.</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="ex">openssl</span> passwd -6 -salt hogent nieuwWachtWoord</span></code></pre></div>
 </section></section>
     </div>
   </div>

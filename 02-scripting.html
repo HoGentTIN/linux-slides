@@ -104,13 +104,274 @@
   <p class="date">2021-2022</p>
 </section>
 
+<section><section id="streams-pipes-redirects" class="title-slide slide level1"><h1>Streams, pipes, redirects</h1></section>
+<section id="input-en-output" class="slide level2">
+<h2>Input en output</h2>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg" /></p>
+<ul>
+<li><em>stdin</em>, standard input
+<ul>
+<li>vgl. Java <code>System.in</code></li>
+</ul></li>
+<li><em>stdout</em>, standard output
+<ul>
+<li>vgl. <code>System.out</code></li>
+</ul></li>
+<li><em>stderr</em>, standard error
+<ul>
+<li>vgl. <code>System.err</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="normaal-gedrag" class="slide level2">
+<h2>Normaal gedrag</h2>
+<ul>
+<li><em>standard input</em>: invoer toetsenbord</li>
+<li><em>standard output/error</em>: afdrukken op scherm (console)</li>
+</ul>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png" /></p>
+</section>
+<section id="io-redirection-1" class="slide level2">
+<h2>I/O Redirection (1)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd &gt; file</code></td>
+<td style="text-align: left;">schrijf uitvoer van <code>cmd</code> weg naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &gt;&gt; file</code></td>
+<td style="text-align: left;">voeg toe aan einde van <code>file</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd 2&gt; file</code></td>
+<td style="text-align: left;">schrijf foutboodschappen van <code>cmd</code> weg naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &lt; file</code></td>
+<td style="text-align: left;">gebruik inhoud van <code>file</code> als invoer voor <code>cmd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd1 | cmd2</code></td>
+<td style="text-align: left;">gebruik uitvoer van <code>cmd1</code> als invoer voor <code>cmd2</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="io-redirection-2" class="slide level2">
+<h2>I/O Redirection (2)</h2>
+<p><code>cmd &gt; file</code></p>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_output_redirection.png" /></p>
+</section>
+<section id="io-redirection-3" class="slide level2">
+<h2>I/O Redirection (3)</h2>
+<p><code>cmd 2&gt; file</code></p>
+<p><img data-src="http://linux-training.be/funhtml/images/bash_error_redirection.png" /></p>
+</section>
+<section id="pipes" class="slide level2">
+<h2>Pipes</h2>
+<p>Probeer het volgende eens!</p>
+<pre class="console"><code>$ sudo dnf install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat</code></pre>
+</section>
+<section id="combineren" class="slide level2">
+<h2>Combineren</h2>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt</span>
+<span id="cb2-3"><a href="#cb2-3"></a></span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
+<span id="cb2-5"><a href="#cb2-5"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null</span>
+<span id="cb2-6"><a href="#cb2-6"></a></span>
+<span id="cb2-7"><a href="#cb2-7"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
+<span id="cb2-8"><a href="#cb2-8"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span></span>
+<span id="cb2-9"><a href="#cb2-9"></a></span>
+<span id="cb2-10"><a href="#cb2-10"></a><span class="co"># invoer én uitvoer omleiden</span></span>
+<span id="cb2-11"><a href="#cb2-11"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</span></code></pre></div>
+</section>
+<section id="foutboodschappen-afdrukken" class="slide level2">
+<h2>Foutboodschappen afdrukken</h2>
+<p>(Equivalent van <a href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">System.err.printf()</a>)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span></code></pre></div>
+</section>
+<section id="here-documents-1" class="slide level2">
+<h2>Here documents (1)</h2>
+<p>Als je meer dan één lijn wil afdrukken:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>Usage: <span class="va">${0}</span> [OPT]... [ARG]..</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>OPTIONS:</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  -h, --help  Print this help message</span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="op">_EOF_</span></span></code></pre></div>
+<p><em>Let op:</em> geen spaties toegelaten vóór de eindemarkering</p>
+</section>
+<section id="here-documents-2" class="slide level2">
+<h2>Here documents (2)</h2>
+<p>Dit kan bv. ook:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>DROP DATABASE IF EXISTS drupal;</span>
+<span id="cb5-3"><a href="#cb5-3"></a>CREATE DATABASE drupal;</span>
+<span id="cb5-4"><a href="#cb5-4"></a>GRANT ALL PRIVILEGES ON drupal TO <span class="va">${drupal_usr}</span>@localhost</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  IDENTIFIED BY <span class="va">${drupal_password}</span>;</span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="op">_EOF_</span></span></code></pre></div>
+</section></section>
+<section><section id="filters" class="title-slide slide level1"><h1>Filters</h1></section>
+<section id="filters-1" class="slide level2">
+<h2>Filters</h2>
+<ul>
+<li>Filter = commando dat:
+<ol type="1">
+<li>leest van <code>stdin</code> of bestand,</li>
+<li>tekst transformeert, en</li>
+<li>wegschrijft naar <code>stdout</code></li>
+</ol></li>
+<li>Combineer filters via <code>|</code> (pipe) om complexe bewerkingen op tekst toe te passen
+<ul>
+<li>De <em>UNIX-filosofie</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="filters-overzicht-1" class="slide level2">
+<h2>Filters: overzicht (1)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Doel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>awk</code></td>
+<td style="text-align: left;">Veelzijdige tool voor bewerken van tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cat</code></td>
+<td style="text-align: left;">Druk inhoud bestand(en) af op stdout</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cut</code></td>
+<td style="text-align: left;">Selecteer “kolommen” uit tekstbestanden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>fmt</code></td>
+<td style="text-align: left;">Herformatteer tekst (bv. bepaald aantal kolommen)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>grep</code></td>
+<td style="text-align: left;">Zoek ahv reguliere expressies naar tekstpatronen in bestanden</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>head</code></td>
+<td style="text-align: left;">Toon de eerste regels van een tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>join</code></td>
+<td style="text-align: left;">Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>nl</code></td>
+<td style="text-align: left;">Voeg regelnummers toe aan een bestand</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filters-overzicht-2" class="slide level2">
+<h2>Filters: overzicht (2)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Doel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>paste</code></td>
+<td style="text-align: left;">Voeg twee tekstbestanden regel per regel samen</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>sed</code></td>
+<td style="text-align: left;">Veelzijdige tool voor bewerken van tekst (Stream EDitor)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>sort</code></td>
+<td style="text-align: left;">Sorteer tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>tail</code></td>
+<td style="text-align: left;">Toon de laatste regels van een tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>tr</code></td>
+<td style="text-align: left;">Zoek en vervang lettertekens in tekst</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>uniq</code></td>
+<td style="text-align: left;">Verwijder dubbele rijen uit een gesorteerd tekstbestand</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>wc</code></td>
+<td style="text-align: left;">Tel karakters, woorden of lijnen in een tekstbestand</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="filters-voorbeelden" class="slide level2">
+<h2>Filters: voorbeelden</h2>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Invoer uit bestand</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span> tennis.txt</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="fu">sort</span> -k2 tennis.txt</span>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="co"># Invoer via stdin</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;Williams&#39;</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="fu">cat</span> tennis.txt <span class="kw">|</span> <span class="fu">tr</span> <span class="st">&#39;a-z&#39;</span> <span class="st">&#39;A-Z&#39;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="co"># Combinatie</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="fu">sort</span> music.txt <span class="kw">|</span> <span class="fu">uniq</span></span></code></pre></div>
+</section>
+<section id="sed-voorbeelden" class="slide level2">
+<h2>Sed: voorbeelden</h2>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a></span>
+<span id="cb7-10"><a href="#cb7-10"></a><span class="co"># Lege regels verwijderen</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
+</section>
+<section id="awk-voorbeelden" class="slide level2">
+<h2>Awk: voorbeelden</h2>
+<p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
+<span id="cb8-6"><a href="#cb8-6"></a></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span></code></pre></div>
+</section></section>
 <section><section id="intro-bash-scripts" class="title-slide slide level1"><h1>Intro Bash scripts</h1></section>
 <section id="een-script-schrijven" class="slide level2">
 <h2>Een script schrijven</h2>
 <ol type="1">
 <li><p>Maak bestand aan (bv. <code>script.sh</code>) met een teksteditor, bv.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co">#! /bin/bash</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
 <li><p>Maak bestand uitvoerbaar: <code>chmod +x script.sh</code></p></li>
 <li><p>Voer uit: <code>./script.sh</code></p></li>
 </ol>
@@ -134,24 +395,24 @@
 <section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb2-2"><a href="#cb2-2"></a></span>
-<span id="cb2-3"><a href="#cb2-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
-<span id="cb2-4"><a href="#cb2-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
 </section>
 <section id="gebruik-printf" class="slide level2">
 <h2>Gebruik <code>printf</code></h2>
 <p><code>printf</code> is beter dan <code>echo</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a></span>
+<span id="cb12-3"><a href="#cb12-3"></a><span class="bu">printf</span> <span class="st">&#39;Hello %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${var}</span><span class="st">&quot;</span></span></code></pre></div>
 <ul>
 <li>Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.</li>
 <li>Vgl. <code>printf()</code> method in Java!</li>
@@ -188,9 +449,9 @@
 <section id="fouten-voorkomen" class="slide level2">
 <h2>Fouten voorkomen</h2>
 <p>Begin elk script met:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
 </section>
 <section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
@@ -203,7 +464,7 @@
 <li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
 <li>Gebruik in strings (met dubbele aanhalingstekens):</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
 <section id="variabelen-codestijl" class="slide level2">
 <h2>Variabelen: codestijl</h2>
@@ -217,9 +478,9 @@
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
 </section>
 <section id="onbestaande-variabelen-opvragen" class="slide level2">
 <h2>Onbestaande variabelen opvragen</h2>
@@ -238,10 +499,10 @@
 <li>Een script oproepen creëert een subshell</li>
 <li>Maak “globale”, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
-<span id="cb8-2"><a href="#cb8-2"></a></span>
-<span id="cb8-3"><a href="#cb8-3"></a><span class="va">VARIABLE2=</span>value</span>
-<span id="cb8-4"><a href="#cb8-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="va">VARIABLE2=</span>value</span>
+<span id="cb16-4"><a href="#cb16-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
 </section>
 <section id="variabelen-naamgeving" class="slide level2">
 <h2>Variabelen: naamgeving</h2>
@@ -250,19 +511,6 @@
 <li>Lokale variabelen: kleine letters, bv: <code>foo_bar</code></li>
 <li>Omgevingsvariabelen: hoofdletters, bv. <code>FOO_BAR</code></li>
 </ul>
-</section></section>
-<section><section id="opzetten-werkomgeving" class="title-slide slide level1"><h1>Opzetten werkomgeving</h1></section>
-<section id="github-repo-voor-labo-taken-aanmaken" class="slide level2">
-<h2>Github-repo voor labo-taken aanmaken</h2>
-<p>TODO</p>
-</section>
-<section id="configuratie-git" class="slide level2">
-<h2>Configuratie Git</h2>
-<p>TODO</p>
-</section>
-<section id="oplossingen-testen" class="slide level2">
-<h2>Oplossingen testen</h2>
-<p>TODO</p>
 </section></section>
     </div>
   </div>

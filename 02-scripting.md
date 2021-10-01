@@ -5,6 +5,197 @@ author: Andy Van Maele, Bert Van Vreckem
 date: 2021-2022
 ---
 
+# Streams, pipes, redirects
+
+## Input en output
+
+![ ](http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg)
+
+- *stdin*, standard input
+    - vgl. Java `System.in`
+- *stdout*, standard output
+    - vgl. `System.out`
+- *stderr*, standard error
+    - vgl. `System.err`
+
+## Normaal gedrag
+
+- *standard input*: invoer toetsenbord
+- *standard output/error*: afdrukken op scherm (console)
+
+![ ](http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png)
+
+## I/O Redirection (1)
+
+| Syntax        | Betekenis                                          |
+|:--------------|:---------------------------------------------------|
+| `cmd > file`  | schrijf uitvoer van `cmd` weg naar `file`          |
+| `cmd >> file` | voeg toe aan einde van `file`                      |
+| `cmd 2> file` | schrijf foutboodschappen van `cmd` weg naar `file` |
+| `cmd < file`  | gebruik inhoud van `file` als invoer voor `cmd`    |
+| `cmd1 | cmd2` | gebruik uitvoer van `cmd1` als invoer voor `cmd2`  |
+
+## I/O Redirection (2)
+
+`cmd > file`
+
+![ ](http://linux-training.be/funhtml/images/bash_output_redirection.png)
+
+## I/O Redirection (3)
+
+`cmd 2> file`
+
+![ ](http://linux-training.be/funhtml/images/bash_error_redirection.png)
+
+## Pipes
+
+Probeer het volgende eens!
+
+```console
+$ sudo dnf install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat
+```
+
+## Combineren
+
+```bash
+# stdout en stderr apart wegschrijven
+find / -type d > directories.txt 2> errors.txt
+
+# stderr "negeren"
+find / -type d > directories.txt 2> /dev/null
+
+# stdout en stderr samen wegschrijven
+find / -type d > all.txt 2>&1
+
+# invoer én uitvoer omleiden
+sort < unsorted.txt > sorted.txt 2> errors.txt
+```
+
+## Foutboodschappen afdrukken
+
+(Equivalent van [System.err.printf()](https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)))
+
+```bash
+printf 'Error: %s is not a directory\n' "${dir}" >&2
+```
+
+## Here documents (1)
+
+Als je meer dan één lijn wil afdrukken:
+
+```bash
+cat << _EOF_
+Usage: ${0} [OPT]... [ARG]..
+
+OPTIONS:
+  -h, --help  Print this help message
+
+_EOF_
+```
+
+*Let op:* geen spaties toegelaten vóór de eindemarkering
+
+## Here documents (2)
+
+Dit kan bv. ook:
+
+```bash
+mysql -uroot -p"${db_password}" mysql << _EOF_
+DROP DATABASE IF EXISTS drupal;
+CREATE DATABASE drupal;
+GRANT ALL PRIVILEGES ON drupal TO ${drupal_usr}@localhost
+  IDENTIFIED BY ${drupal_password};
+_EOF_
+```
+
+
+# Filters
+
+## Filters
+
+- Filter = commando dat:
+    1. leest van `stdin` of bestand,
+    2. tekst transformeert, en
+    3. wegschrijft naar `stdout`
+- Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
+    - De *UNIX-filosofie*
+
+## Filters: overzicht (1)
+
+| Commando | Doel                                                            |
+|:---------|:----------------------------------------------------------------|
+| `awk`    | Veelzijdige tool voor bewerken van tekst                        |
+| `cat`    | Druk inhoud bestand(en) af op stdout                            |
+| `cut`    | Selecteer "kolommen" uit tekstbestanden                         |
+| `fmt`    | Herformatteer tekst (bv. bepaald aantal kolommen)               |
+| `grep`   | Zoek ahv reguliere expressies naar tekstpatronen in bestanden   |
+| `head`   | Toon de eerste regels van een tekstbestand                      |
+| `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
+| `nl`     | Voeg regelnummers toe aan een bestand                           |
+
+## Filters: overzicht (2)
+
+| Commando | Doel                                                     |
+|:---------|:---------------------------------------------------------|
+| `paste`  | Voeg twee tekstbestanden regel per regel samen           |
+| `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor) |
+| `sort`   | Sorteer tekst                                            |
+| `tail`   | Toon de laatste regels van een tekstbestand              |
+| `tr`     | Zoek en vervang lettertekens in tekst                    |
+| `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand  |
+| `wc`     | Tel karakters, woorden of lijnen in een tekstbestand     |
+
+## Filters: voorbeelden
+
+```bash
+# Invoer uit bestand
+grep 'Williams' tennis.txt
+sort -k2 tennis.txt
+
+# Invoer via stdin
+cat tennis.txt | grep 'Williams'
+cat tennis.txt | tr 'a-z' 'A-Z'
+
+# Combinatie
+sort music.txt | uniq
+```
+
+## Sed: voorbeelden
+
+```bash
+# Zoeken en vervangen (1x per regel)
+sed 's/foo/bar/'
+
+# "Globaal", meerdere keren per regel
+sed 's/foo/bar/g'
+
+# Regels die beginnen met '#' verwijderen
+sed '/^#/d'
+
+# Lege regels verwijderen
+sed '/^$/d'
+```
+
+## Awk: voorbeelden
+
+Wat tussen accolades staat wordt uitgevoerd op elke regel
+
+```bash
+# Druk 4e kolom af (afgebakend door "whitespace")
+awk '{ print $4 }'
+
+# Enkel regels afdrukken die beginnen met #
+awk '/^#/ { print $0 }'
+
+# Druk kolom 2 en 4 af, gescheiden door ;
+awk '{ printf "%s;%s", $2, $4 }'
+```
+
+
 # Intro Bash scripts
 
 ## Een script schrijven
@@ -142,17 +333,3 @@ Conventie naamgeving:
 
 - Lokale variabelen: kleine letters, bv: `foo_bar`
 - Omgevingsvariabelen: hoofdletters, bv. `FOO_BAR`
-
-# Opzetten werkomgeving
-
-## Github-repo voor labo-taken aanmaken
-
-TODO
-
-## Configuratie Git
-
-TODO
-
-## Oplossingen testen
-
-TODO

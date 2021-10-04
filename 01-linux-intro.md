@@ -1,5 +1,5 @@
 ---
-title: "Linux"
+title: "Linux intro & user management"
 subtitle: "HOGENT toegepaste informatica"
 author: Andy Van Maele, Bert Van Vreckem
 date: 2021-2022

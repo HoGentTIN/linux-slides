@@ -1,5 +1,5 @@
 ---
-title: "Combining commands towards scripting"
+title: "2. Combining commands towards scripting"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Andy Van Maele, Bert Van Vreckem
 date: 2021-2022
@@ -28,7 +28,7 @@ date: 2021-2022
 ## I/O Redirection (1)
 
 | Syntax        | Betekenis                                          |
-|:--------------|:---------------------------------------------------|
+| :------------ | :------------------------------------------------- |
 | `cmd > file`  | schrijf uitvoer van `cmd` weg naar `file`          |
 | `cmd >> file` | voeg toe aan einde van `file`                      |
 | `cmd 2> file` | schrijf foutboodschappen van `cmd` weg naar `file` |
@@ -52,7 +52,7 @@ date: 2021-2022
 Probeer het volgende eens!
 
 ```console
-$ sudo dnf install fortune cowsay lolcat figlet
+$ sudo apt install fortune cowsay lolcat figlet
 $ echo ${USER} | figlet
 $ fortune
 $ fortune | cowsay
@@ -126,28 +126,33 @@ _EOF_
 
 ## Filters: overzicht (1)
 
-| Commando | Doel                                                            |
-|:---------|:----------------------------------------------------------------|
-| `awk`    | Veelzijdige tool voor bewerken van tekst                        |
-| `cat`    | Druk inhoud bestand(en) af op stdout                            |
-| `cut`    | Selecteer "kolommen" uit tekstbestanden                         |
-| `fmt`    | Herformatteer tekst (bv. bepaald aantal kolommen)               |
-| `grep`   | Zoek ahv reguliere expressies naar tekstpatronen in bestanden   |
-| `head`   | Toon de eerste regels van een tekstbestand                      |
-| `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
-| `nl`     | Voeg regelnummers toe aan een bestand                           |
+| Commando | Doel                                                          |
+| :------- | :------------------------------------------------------------ |
+| `awk`    | Veelzijdige tool voor bewerken van tekst                      |
+| `cat`    | Druk inhoud bestand(en) af op stdout                          |
+| `cut`    | Selecteer "kolommen" uit tekstbestanden                       |
+| `fmt`    | Herformatteer tekst (bv. bepaald aantal kolommen)             |
+| `grep`   | Zoek ahv reguliere expressies naar tekstpatronen in bestanden |
+| `head`   | Toon de eerste regels van een tekstbestand                    |
 
 ## Filters: overzicht (2)
 
-| Commando | Doel                                                     |
-|:---------|:---------------------------------------------------------|
-| `paste`  | Voeg twee tekstbestanden regel per regel samen           |
-| `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor) |
-| `sort`   | Sorteer tekst                                            |
-| `tail`   | Toon de laatste regels van een tekstbestand              |
-| `tr`     | Zoek en vervang lettertekens in tekst                    |
-| `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand  |
-| `wc`     | Tel karakters, woorden of lijnen in een tekstbestand     |
+| Commando | Doel                                                            |
+| :------- | :-------------------------------------------------------------- |
+| `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
+| `nl`     | Voeg regelnummers toe aan een bestand                           |
+| `paste`  | Voeg twee tekstbestanden regel per regel samen                  |
+| `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor)        |
+
+## Filters: overzicht (3)
+
+| Commando | Doel                                                    |
+| :------- | :------------------------------------------------------ |
+| `sort`   | Sorteer tekst                                           |
+| `tail`   | Toon de laatste regels van een tekstbestand             |
+| `tr`     | Zoek en vervang lettertekens in tekst                   |
+| `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand |
+| `wc`     | Tel karakters, woorden of lijnen in een tekstbestand    |
 
 ## Filters: voorbeelden
 
@@ -194,7 +199,6 @@ awk '/^#/ { print $0 }'
 # Druk kolom 2 en 4 af, gescheiden door ;
 awk '{ printf "%s;%s", $2, $4 }'
 ```
-
 
 # Intro Bash scripts
 
@@ -348,7 +352,7 @@ Conventie naamgeving:
 - Als je tekst wil invoeren moet je naar *insert mode*.
 
 | Taak                       | Commando |
-|:---------------------------|:---------|
+| :------------------------- | :------- |
 | Normal mode -> insert mode | `i`      |
 | Insert mode -> normal mode | `<Esc>`  |
 | Opslaan                    | `:w`     |

@@ -47,18 +47,6 @@ date: 2021-2022
 
 ![ ](http://linux-training.be/funhtml/images/bash_error_redirection.png)
 
-## Pipes
-
-Probeer het volgende eens!
-
-```console
-$ sudo apt install fortune cowsay lolcat figlet
-$ echo ${USER} | figlet
-$ fortune
-$ fortune | cowsay
-$ fortune | cowsay | lolcat
-```
-
 ## Combineren
 
 ```bash
@@ -112,6 +100,17 @@ GRANT ALL PRIVILEGES ON drupal TO ${drupal_usr}@localhost
 _EOF_
 ```
 
+## Pipes
+
+Probeer het volgende eens!
+
+```console
+$ sudo apt install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat
+```
 
 # Filters
 
@@ -124,52 +123,118 @@ _EOF_
 - Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
     - De *UNIX-filosofie*
 
-## Filters: overzicht (1)
+## Filters (2)
 
-| Commando | Doel                                                          |
-| :------- | :------------------------------------------------------------ |
-| `awk`    | Veelzijdige tool voor bewerken van tekst                      |
-| `cat`    | Druk inhoud bestand(en) af op stdout                          |
-| `cut`    | Selecteer "kolommen" uit tekstbestanden                       |
-| `fmt`    | Herformatteer tekst (bv. bepaald aantal kolommen)             |
-| `grep`   | Zoek ahv reguliere expressies naar tekstpatronen in bestanden |
-| `head`   | Toon de eerste regels van een tekstbestand                    |
+Ofwel bestand meegeven, ofwel stdin
 
-## Filters: overzicht (2)
+```console
+filter file1 file2...
 
-| Commando | Doel                                                            |
-| :------- | :-------------------------------------------------------------- |
-| `join`   | Voeg twee tekstbestanden samen ahv een gemeenschappelijke kolom |
-| `nl`     | Voeg regelnummers toe aan een bestand                           |
-| `paste`  | Voeg twee tekstbestanden regel per regel samen                  |
-| `sed`    | Veelzijdige tool voor bewerken van tekst (Stream EDitor)        |
+filter < file
 
-## Filters: overzicht (3)
-
-| Commando | Doel                                                    |
-| :------- | :------------------------------------------------------ |
-| `sort`   | Sorteer tekst                                           |
-| `tail`   | Toon de laatste regels van een tekstbestand             |
-| `tr`     | Zoek en vervang lettertekens in tekst                   |
-| `uniq`   | Verwijder dubbele rijen uit een gesorteerd tekstbestand |
-| `wc`     | Tel karakters, woorden of lijnen in een tekstbestand    |
-
-## Filters: voorbeelden
-
-```bash
-# Invoer uit bestand
-grep 'Williams' tennis.txt
-sort -k2 tennis.txt
-
-# Invoer via stdin
-cat tennis.txt | grep 'Williams'
-cat tennis.txt | tr 'a-z' 'A-Z'
-
-# Combinatie
-sort music.txt | uniq
+cmd | filter
 ```
 
-## Sed: voorbeelden
+Merk op: `cat file | filter` kan je beter anders schrijven!
+
+## `cat`, `tac` en `shuf`
+
+- `cat`: wat binnenkomt op stdin afdrukken op stdout
+- `tac`: idem, maar in omgekeerde volgorde
+- `shuf`: in willekeurige volgorde
+
+```console
+$ cat file1 file2 > file3
+$ tac file1
+$ shuf cards.txt
+```
+
+## `head` en `tail`
+
+- Toon (10) eerste/laatste regels
+
+```console
+$ head /etc/passwd
+$ tail -5 /etc/passwd
+$ tail -f /var/log/syslog
+```
+
+## `cut`, `paste` en `join`
+
+- `cut`: selecteer kolommen uit gestructureerde tekst (bv. CSV)
+- `paste`: voeg bestanden regel per regel samen
+- `join`: voeg bestanden samen ahv gemeenschappelijke kolom
+
+```console
+cut -d: -f1,3-4 /etc/passwd
+paste -d';' users.txt passwords.txt
+```
+
+---
+
+```console
+$ cat foodtypes.txt
+1 Protein
+2 Carbohydrate
+
+$ cat foods.txt
+1 Cheese 
+2 Potato
+
+$ join foodtypes.txt foods.txt
+1 Protein Cheese
+2 Carbohydrate Potato
+```
+
+## `sort` en `uniq`
+
+```console
+$ sort unsorted.txt
+$ uniq -c sorted.txt
+```
+
+Welke commando's gebruik ik het vaakst?
+
+```console
+$ history | awk '{ print $2 }' | sort | uniq -c | sort -nr | head
+```
+
+## `fmt`, `nl` en `wc`
+
+```console
+$ fmt -w40 some-file.txt
+$ nl script.sh
+$ wc thesis.md
+$ wc --words thesis.md
+$ ls /usr/bin | wc -l
+```
+
+## `grep`
+
+```console
+$ grep root /etc/passwd
+$ grep '^#' script.sh
+$ sudo grep -i dhcp /var/log/syslog
+```
+
+Moet je zoeken in een reeks directories? Gebruik `silversearcher-ag`
+
+```console
+$ ag TODO *.java
+```
+
+## Buitenbeentje: `tr`
+
+- TRanslate
+- Teken per teken ipv lijn per lijn
+- Enkel stdin, geen files
+
+```console
+$ tr 'A-Z' 'a-z' < UPPERCASE.txt > lowercase.txt
+$ tr -d '[:punct:]' < file.txt
+```
+
+## De Stream EDitor, `sed`
 
 ```bash
 # Zoeken en vervangen (1x per regel)
@@ -185,7 +250,7 @@ sed '/^#/d'
 sed '/^$/d'
 ```
 
-## Awk: voorbeelden
+## De AWK-taal
 
 Wat tussen accolades staat wordt uitgevoerd op elke regel
 
@@ -198,6 +263,9 @@ awk '/^#/ { print $0 }'
 
 # Druk kolom 2 en 4 af, gescheiden door ;
 awk '{ printf "%s;%s", $2, $4 }'
+
+# Druk de namen van de "gewone" gebruikers af
+awk -F: '{ if($3 > 1000) print $1 }' /etc/passwd
 ```
 
 # Intro Bash scripts
@@ -242,47 +310,6 @@ var="world"
 
 echo "Hello ${var}"    # Binnen " " wordt substitutie toegepast
 echo 'Hello ${var}'    # Binnen ' ' NIET!
-```
-
-## Gebruik `printf`
-
-`printf` is beter dan `echo`
-
-```bash
-var="world"
-
-printf 'Hello %s\n' "${var}"
-```
-
-- Het gedrag is beter gedefinieerd over verschillende UNIX-varianten.
-- Vgl. `printf()` method in Java!
-
-## Fouten opsporen (1)
-
-- Werk altijd **stap voor stap**
-- **Test** voortdurend het resultaat van elke wijziging
-- Hou minstens **2 vensters** open naast elkaar:
-    - Editor
-    - Terminal voor testen
-
-## Fouten opsporen (2)
-
-- Syntax check: `bash -n script.sh`
-- ShellCheck: `shellcheck script.sh`
-    - Gebruik editor-plugin waar mogelijk
-- Druk veel info af (`printf`)
-- Debug-mode:
-    - `bash -x script.sh`
-    - In het script: `set -x` en `set +x`
-
-## Fouten voorkomen
-
-Begin elk script met:
-
-```bash
-set -o errexit   # abort on nonzero exitstatus
-set -o nounset   # abort on unbound variable
-set -o pipefail  # don't hide errors within pipes
 ```
 
 ## Variabelen

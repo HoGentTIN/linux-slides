@@ -466,3 +466,17 @@ for arg in "${@}"; do
   # ...
 done
 ```
+
+# Opzetten werkomgeving
+
+## Github-repo voor labo-taken aanmaken
+
+TODO
+
+## Configuratie Git
+
+TODO
+
+## Oplossingen testen
+
+TODO

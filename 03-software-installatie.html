@@ -105,8 +105,92 @@
 </section>
 
 <section><section id="software-installatie" class="title-slide slide level1"><h1>Software-installatie</h1></section>
-<section id="todo" class="slide level2">
-<h2>TODO</h2>
+<section id="where-does-it-come-from" class="slide level2">
+<h2>Where does it come from?</h2>
+<p>Wat is een distributie? - Linux is een operating system (OS). - Applicaties worden ontwikkeld, al of niet met libraries - Applicatiesoftware wordt gecompileerd voor het OS</p>
+<p>Waar komt software vandaan? - package = verzameling van … - gecompileerde software voor een versie van Linux - bijhorende bestanden (configuratie, man, …) - informatie over waar deze bestanden terecht horen - eventuele afhankelijkheden van libraries of andere software = dependency (zie verder) - packages worden aangeboden op specifieke servers - repository servers - werken zoals ‘Play Store’ (of liever: omgekeerd)</p>
+</section>
+<section id="debian-vs-red-hat" class="slide level2">
+<h2>Debian vs Red Hat</h2>
+<p>Klassiek zijn er twee grote Linux distributies (zie https://nl.wikipedia.org/wiki/Linuxdistributie)</p>
+<ol type="1">
+<li>Debian</li>
+<li>Red Hat</li>
+</ol>
+<p>De verschillen zijn o.a. in de manier waarop software wordt beheerd:</p>
+<ol type="1">
+<li>Debian: .deb packages</li>
+<li>Red Hat: .rpm packages</li>
+</ol>
+</section>
+<section id="debian-dpkg" class="slide level2">
+<h2>Debian dpkg</h2>
+<p>Tool die een .deb package installeert op een systeem.</p>
+<ol type="1">
+<li>download een .deb package (manueel)</li>
+<li>installeer met dpkg</li>
+</ol>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">dpkg</span> -i <span class="op">&lt;</span>package_name<span class="op">&gt;</span>.deb</span></code></pre></div>
+<ol start="3" type="1">
+<li>Los eventuele depencencies manueel op (zie later)</li>
+</ol>
+</section>
+<section class="slide level2">
+
+<p>Overzicht van geïnstalleerde packages op Debian:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">dpkg</span> -l</span></code></pre></div>
+</section>
+<section id="dependency" class="slide level2">
+<h2>Dependency</h2>
+<p>Software wordt gebouwd boven op andere software. Zonder de onderliggende bouwstenen kan dit niet werken.</p>
+<p>Linux name = dependency</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="ex">dpkg</span> -I vim_2%3a8.1.2269-1ubuntu5.3_amd64.deb </span>
+<span id="cb3-2"><a href="#cb3-2"></a> <span class="ex">new</span> Debian package, version 2.0.</span>
+<span id="cb3-3"><a href="#cb3-3"></a> <span class="ex">Package</span>: vim</span>
+<span id="cb3-4"><a href="#cb3-4"></a> <span class="ex">Version</span>: 2:8.1.2269-1ubuntu5.3</span>
+<span id="cb3-5"><a href="#cb3-5"></a> <span class="ex">Architecture</span>: amd64</span>
+<span id="cb3-6"><a href="#cb3-6"></a> <span class="ex">Depends</span>: vim-common (= 2:8.1.2269-1ubuntu5.3), <span class="ex">vim-runtime</span> (= 2:8.1.2269-1ubuntu5.3), <span class="ex">libacl1</span> (<span class="op">&gt;</span>= 2.2.23), <span class="ex">libc6</span> (<span class="op">&gt;</span>= 2.29), <span class="ex">libcanberra0</span> (<span class="op">&gt;</span>= 0.2), <span class="ex">libgpm2</span> (<span class="op">&gt;</span>= 1.20.7), <span class="ex">libpython3.8</span> (<span class="op">&gt;</span>= 3.8.2), <span class="ex">libselinux1</span> (<span class="op">&gt;</span>= 1.32), <span class="ex">libtinfo6</span> (<span class="op">&gt;</span>= 6)</span></code></pre></div>
+</section>
+<section id="debian-apt" class="slide level2">
+<h2>Debian apt</h2>
+<p>APT = Advanced Package Tool</p>
+<ol type="1">
+<li>Zoek een package op de (aanvaarde) repository servers</li>
+<li>download de .deb package (automatisch)</li>
+<li>controlleer depencencies, download eventuele extra packages</li>
+<li>installeert (achterliggend) met dpkg</li>
+</ol>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a>$ <span class="ex">apt</span> install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div>
+</section>
+<section id="debian-apt-2" class="slide level2">
+<h2>Debian apt (2)</h2>
+<p>Automatisering:</p>
+<p>Bijwerken van info op de repo servers</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a>$ <span class="ex">apt</span> update</span></code></pre></div>
+<p>Bijwerken van alle packages op jouw systeem</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a>$ <span class="ex">apt</span> upgrade</span></code></pre></div>
+<p>Bijwerken van een enkele package op jouw systeem</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a>$ <span class="ex">apt</span> install <span class="op">&lt;</span>package_name<span class="op">&gt;</span> <span class="co"># nieuwe versie wordt geïnstalleerd</span></span></code></pre></div>
+</section>
+<section id="debian-repository-servers" class="slide level2">
+<h2>Debian repository servers</h2>
+<p>List of repository servers you use:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="ex">osboxes@osboxes</span>:~$ ls /etc/apt/sources.list*</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">/etc/apt/sources.list</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="ex">/etc/apt</span>/sources.list.d:</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="ex">official-package-repositories.list</span></span></code></pre></div>
+</section>
+<section id="red-hat-yum-dnf" class="slide level2">
+<h2>Red Hat yum / dnf</h2>
+<p>Identical system, but different command set. In brief…</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>$ <span class="ex">dnf</span> install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div>
+<p>Bijwerken van info op de repo servers; aftoetsen van wat kan bijgewerkt worden:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>$ <span class="ex">dnf</span> check-update</span></code></pre></div>
+<p>Bijwerken van alle packages op jouw systeem</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a>$ <span class="ex">dnf</span> upgrade</span></code></pre></div>
+<p>Bijwerken van een enkele package op jouw systeem</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a>$ <span class="ex">dnf</span> upgrade <span class="op">&lt;</span>package_name<span class="op">&gt;</span> <span class="co"># nieuwe versie wordt geïnstalleerd</span></span></code></pre></div>
 </section></section>
 <section><section id="netwerkconfiguratie" class="title-slide slide level1"><h1>Netwerkconfiguratie</h1></section>
 <section id="netwerkinstellingen-controleren" class="slide level2">
@@ -128,24 +212,24 @@
 </section>
 <section id="wat-is-het-ip-adres-van" class="slide level2">
 <h2>Wat is het IP-adres van…?</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
-<span id="cb1-2"><a href="#cb1-2"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
+<span id="cb13-2"><a href="#cb13-2"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
 <p>Wat is <em>mijn publiek</em> IP-adres?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="ex">curl</span> icanhazip.com</span>
-<span id="cb2-2"><a href="#cb2-2"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a>$ <span class="ex">curl</span> icanhazip.com</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
 </section>
 <section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ <span class="ex">ip</span> -4 a</span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
-<span id="cb3-3"><a href="#cb3-3"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
-<span id="cb3-4"><a href="#cb3-4"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-6"><a href="#cb3-6"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
-<span id="cb3-7"><a href="#cb3-7"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-9"><a href="#cb3-9"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
-<span id="cb3-10"><a href="#cb3-10"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a>$ <span class="ex">ip</span> -4 a</span>
+<span id="cb15-2"><a href="#cb15-2"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
+<span id="cb15-3"><a href="#cb15-3"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
+<span id="cb15-4"><a href="#cb15-4"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
+<span id="cb15-5"><a href="#cb15-5"></a><span class="ex">2</span>: enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb15-6"><a href="#cb15-6"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
+<span id="cb15-7"><a href="#cb15-7"></a>       <span class="ex">valid_lft</span> 74751sec preferred_lft 74751sec</span>
+<span id="cb15-8"><a href="#cb15-8"></a><span class="ex">3</span>: enp0s8: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb15-9"><a href="#cb15-9"></a>    <span class="ex">inet</span> 192.168.56.101/24 brd 192.168.56.255 scope global dynamic noprefixroute enp0s8</span>
+<span id="cb15-10"><a href="#cb15-10"></a>       <span class="ex">valid_lft</span> 1049sec preferred_lft 1049sec</span></code></pre></div>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>

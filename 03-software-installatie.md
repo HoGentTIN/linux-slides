@@ -313,23 +313,13 @@ Zoek de naam van de package om ISC DHCP te installeren!
 - `sudo systemctl enable dhcpd`
     - Start altijd bij booten
 
-## Logbestanden lezen: `journalctl`
-
-- `sudo journalctl`
-    - Alle logs sinds boot
-- `sudo journalctl -u dhcpd.service`
-    - Enkel voor DHCP-server
-- `sudo journalctl -f`
-    - Laat laatste lijnen zien en toon live toevoegingen
-
-<div style="color:#ff0000">**Logbestanden kunnen doorzoeken en foutboodschappen interpreteren zijn essentiële troubleshooting-skills!**</div>
-
 ## Sluit de Linux-Mint VM aan op intnet
 
 - Krijgt je VM een IP-adres? welk?
 - Zie je iets in de DHCP logs?
 - Kan je pingen tussen de VMs?
 - Heb je Internet-toegang? Waarom (niet)?
+- Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden
 
 # Vim survival guide
 

@@ -379,26 +379,6 @@
 </ul></li>
 </ul>
 </section>
-<section id="logbestanden-lezen-journalctl" class="slide level2">
-<h2>Logbestanden lezen: <code>journalctl</code></h2>
-<ul>
-<li><code>sudo journalctl</code>
-<ul>
-<li>Alle logs sinds boot</li>
-</ul></li>
-<li><code>sudo journalctl -u dhcpd.service</code>
-<ul>
-<li>Enkel voor DHCP-server</li>
-</ul></li>
-<li><code>sudo journalctl -f</code>
-<ul>
-<li>Laat laatste lijnen zien en toon live toevoegingen</li>
-</ul></li>
-</ul>
-<div style="color:#ff0000">
-<strong>Logbestanden kunnen doorzoeken en foutboodschappen interpreteren zijn essentiële troubleshooting-skills!</strong>
-</div>
-</section>
 <section id="sluit-de-linux-mint-vm-aan-op-intnet" class="slide level2">
 <h2>Sluit de Linux-Mint VM aan op intnet</h2>
 <ul>
@@ -406,6 +386,7 @@
 <li>Zie je iets in de DHCP logs?</li>
 <li>Kan je pingen tussen de VMs?</li>
 <li>Heb je Internet-toegang? Waarom (niet)?</li>
+<li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden</li>
 </ul>
 </section></section>
 <section><section id="vim-survival-guide" class="title-slide slide level1"><h1>Vim survival guide</h1></section>

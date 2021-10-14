@@ -300,7 +300,7 @@ Zoek de naam van de package om ISC DHCP te installeren!
 
 ## Configuratie
 
-- Configbestand: `/etc/dhcp/dhcp.conf`
+- Configbestand: `/etc/dhcp/dhcpd.conf`
 - Zie voorbeeld: `/usr/share/doc/dhcp-server/dhcpd.conf.example`
 - Wat hebben we nodig voor onze opstelling?
 

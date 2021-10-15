@@ -10,13 +10,12 @@ date: 2021-2022
 ## Doelstelling
 
 - LAMP-stack: **L**inux + **A**pache + **M**ariaDB + **P**HP
-- Installeren Wordpress
 - Website bekijken vanop het fysieke systeem
 
 ## Installatie software
 
 ```bash
-$ sudo dnf install mariadb-server wordpress phpMyAdmin
+$ sudo dnf install httpd mariadb-server php
 ```
 
 ## Belangrijke directories
@@ -48,8 +47,13 @@ $ systemctl status httpd
 $ systemctl status mariadb
 ```
 
-- Open webbrowser *op de VM*
+- CLI webbrowser *op de VM*
     - surf naar <http://localhost/>
+```bash
+curl localhost
+curl 127.0.0.1
+```
+
 - PHP testen: maak bestand
   `/var/www/html/info.php`
 - Surf naar: <http://localhost/info.php>
@@ -146,19 +150,14 @@ journalctl --since=2018-06-00 \
 
 Much more options in the man-page!
 
-## Website vanaf fysiek systeem bekijken
+## Website vanaf GUI Linux VM bekijken
 
 - Controleer IP-adres VM: `ip a`
-    - waarschijnlijk 192.168.56.101
+    - waarschijnlijk 192.168.76.2
+		- verifieer dat je GUI Linux VM een IP-adres in dit netwerk heeft
+		- ping ?!
 - Open webbrowser *op fysiek systeem*
-    - surf naar <http://192.168.56.101/>
-
-## Routering VM ⟷  fysiek systeem
-
-- Fysiek systeem → VM: `ping 192.168.56.101`
-- VM → fysiek systeem: `ping 192.168.56.1`
-
-Controleer instellingen Host-Only Netwerkinterface VirtualBox.
+    - surf naar <http://192.168.76.2/>
 
 ## Database beveiligen
 
@@ -172,16 +171,6 @@ $ sudo mysql_secure_installation
 - bevestig andere vragen (ENTER)
 
 **Hou je wachtwoorden goed bij!**
-
-## Database voor Wordpress aanmaken
-
-- Surf naar <http://localhost/phpmyadmin/>, log in
-- Klik op "User accounts" → "Add user account"
-    - User name: `wordpress`
-    - Host name: Local / `localhost`
-    - Password: kies er een of "Generate"
-- Create database with same name and grant all privileges: *aanvinken*
-- Ga naar onderaan de pagina, klik rechtsonder op "Go"
 
 ## Database testen: root
 
@@ -198,69 +187,6 @@ MariaDB [mysql]> quit
     - (GEEN spatie na `-p`)
 - `mysql`: inloggen op database `mysql`
 
-## Database testen: wordpress
-
-```bash
-$ mysql -uwordpress -pPu7QxGKPlvEdw6Gr wordpress
-...
-MariaDB [wordpress]> SHOW TABLES;
-MariaDB [wordpress]> quit
-```
-
-## Wordpress: Belangrijke bestanden
-
-- `/usr/share/wordpress/`: installatie Wordpress
-- `/etc/wordpress/wp-config.php`: configuratie
-- `/etc/httpd/conf.d/wordpress.conf`: Apache-configuratie
-
-## Wordpress: Apache-configuratie
-
-In `/etc/httpd/conf.d/wordpress.conf`:
-
-```apache
-# Zoek naar
-Require local
-# Vervang door
-Require all granted
-```
-
-Daarna: `sudo sytemctl restart httpd`
-
-## Wordpress: database-instellingen
-
-In `/etc/wordpress/wp-config.php`:
-
-```php
-/** The name of the database for WordPress */
-define('DB_NAME', 'wordpress');
-
-/** MySQL database username */
-define('DB_USER', 'wordpress');
-
-/** MySQL database password */
-define('DB_PASSWORD', 'Pu7QxGKPlvEdw6Gr');
-```
-
-## Wordpress: Keys en Salts
-
-- Ga naar <https://api.wordpress.org/secret-key/1.1/salt/>
-- Copy-paste naar `wp-config.php`
-
-## Wordpress: installatie plugins en updates
-
-In `/etc/wordpress/wp-config.php`:
-
-```php
-/* ENABLE file changes */
-define('DISALLOW_FILE_MODS', false);
-```
-
-## Installatie Wordpress
-
-- Surf naar <http://192.168.56.101/wordpress/>
-- Kies titel, gebruikersnaam, wachtwoord, enz.
-- Log in
-- Klaar!
 
 # Scripting (vervolg)
 

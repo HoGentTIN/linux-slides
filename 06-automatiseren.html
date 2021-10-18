@@ -105,6 +105,69 @@
 </section>
 
 <section><section id="scripting-vervolg" class="title-slide slide level1"><h1>Scripting (vervolg)</h1></section>
+<section id="de-commandos-true-en-false" class="slide level2">
+<h2>De commando’s <code>true</code> en <code>false</code></h2>
+<p>Er bestaan wel gelijknamige commando’s.</p>
+<p>In Java zou je <code>true</code> als volgt implementeren</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">public</span> <span class="kw">class</span> True {</span>
+<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
+<span id="cb1-3"><a href="#cb1-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">0</span>);</span>
+<span id="cb1-4"><a href="#cb1-4"></a>  }</span>
+<span id="cb1-5"><a href="#cb1-5"></a>}</span></code></pre></div>
+<p>en <code>false</code>:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">public</span> <span class="kw">class</span> False {</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">1</span>);</span>
+<span id="cb2-4"><a href="#cb2-4"></a>  }</span>
+<span id="cb2-5"><a href="#cb2-5"></a>}</span></code></pre></div>
+</section>
+<section id="logische-operatoren" class="slide level2">
+<h2>Logische operatoren</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="co"># A</span></span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">else</span></span>
+<span id="cb3-4"><a href="#cb3-4"></a>  <span class="co"># B</span></span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">fi</span></span></code></pre></div>
+<ul>
+<li><code>A</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
+<li><code>B</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
+</ul>
+</section>
+<section id="operatoren-en" class="slide level2">
+<h2>Operatoren <code>&amp;&amp;</code> en <code>||</code></h2>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">command1</span> <span class="kw">&amp;&amp;</span> <span class="ex">command2</span></span></code></pre></div>
+<p><code>command2</code> wordt enkel uitgevoerd als <code>command1</code> succesvol was (exit 0)</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">command1</span> <span class="kw">||</span> <span class="ex">command2</span></span></code></pre></div>
+<p><code>command2</code> wordt enkel uitgevoerd als <code>command1</code> <strong>niet</strong> succesvol was (exit ≠ 0)</p>
+</section>
+<section id="het-commando-test" class="slide level2">
+<h2>Het commando <code>test</code></h2>
+<ul>
+<li>Evalueren van logische expressies</li>
+<li>Geeft geschikte exit-status
+<ul>
+<li>0 = TRUE</li>
+<li>1 = FALSE</li>
+</ul></li>
+<li>Alias voor <code>test</code> is <code>[</code>
+<ul>
+<li><code>[</code> is een <em>commando</em>, geen “haakje” in de traditionele betekenis</li>
+<li>spaties vóór en na!</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Fout:</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">fi</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a></span>
+<span id="cb6-6"><a href="#cb6-6"></a><span class="co"># Juist:</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a><span class="kw">fi</span></span></code></pre></div>
+</section>
 <section id="fouten-opsporen-1" class="slide level2">
 <h2>Fouten opsporen (1)</h2>
 <ul>
@@ -136,9 +199,9 @@
 <section id="fouten-voorkomen" class="slide level2">
 <h2>Fouten voorkomen</h2>
 <p>Begin elk script met:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
 </section>
 <section id="todo" class="slide level2">
 <h2>TODO</h2>

@@ -462,6 +462,7 @@ Ga naar Chamilo, volg de link om een Github-repo aan te maken.
 <div style="color: red;">**Volgende stappen voer je uit op de GUI VM (Linux Mint)**</div>
 
 Git moet al geïnstalleerd zijn!
+
 ## Sleutelpaar genereren
 
 ```console

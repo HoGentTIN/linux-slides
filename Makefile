@@ -46,7 +46,10 @@ help: ## Show this help message (default)
 	@printf "\033[34mIndividual presentations:\033[0m\n"
 	@printf "\033[36m%-20s\033[0m\n" $(PRESENTATION_FILES)
 
-all: $(STYLE_FILE) $(PRESENTATION_FILES) ## Build the presentation (but not the handouts)
+all: $(STYLE_FILE) $(PRESENTATION_FILES) assets ## Build the presentation (but not the handouts)
+
+assets: ## Copy asset files (images, etc.) to the appropriate directory
+	rsync -avu $(ASSETS_DIR)/ $(OUTPUT)/$(ASSETS_DIR)/
 
 clean: ## Deletes the presentation and handouts (not reveal.js)
 	rm -f $(OUTPUT)/*.html
@@ -55,7 +58,7 @@ clean: ## Deletes the presentation and handouts (not reveal.js)
 mrproper: clean ## Thorough cleanup (also removes reveal.js)
 	rm -rf $(REVEAL_JS_DIR)
 
-.PHONY: clean mrproper help
+.PHONY: clean mrproper help assets
 
 ##---------- Actual build targets ---------------------------------------------
 

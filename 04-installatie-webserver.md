@@ -10,7 +10,7 @@ date: 2021-2022
 ## Doelstelling
 
 - LAMP-stack: **L**inux + **A**pache + **M**ariaDB + **P**HP
-- Website bekijken vanop het fysieke systeem
+- Website bekijken vanop de andere VM (Linux Mint)
 
 ## Installatie software
 
@@ -231,6 +231,30 @@ echo "${4}"  #  =>       (lege string)
 - Logische operatoren in Bash zijn gebaseerd op exit-status
 - Booleaanse variabelen *bestaan niet*
 
+## De commando's `true` en `false`
+
+Er bestaan wel gelijknamige commando's.
+
+In Java zou je `true` als volgt implementeren
+
+```java
+public class True {
+  public static void main(String[] args) {
+    System.exit(0);
+  }
+}
+```
+
+en `false`:
+
+```java
+public class False {
+  public static void main(String[] args) {
+    System.exit(1);
+  }
+}
+```
+
 ## Logische operatoren
 
 ```bash
@@ -243,6 +267,20 @@ fi
 
 - `A`-blok wordt uitgevoerd als exit-status van `COMMANDO` 0 is (geslaagd, TRUE)
 - `B`-blok wordt uitgevoerd als exit-status van `COMMANDO` verschillend is van 0 (gefaald, FALSE)
+
+## Operatoren `&&` en `||`
+
+```bash
+command1 && command2
+```
+
+`command2` wordt enkel uitgevoerd als `command1` succesvol was (exit 0)
+
+```bash
+command1 || command2
+```
+
+`command2` wordt enkel uitgevoerd als `command1` **niet** succesvol was (exit ≠ 0)
 
 ## Het commando `test`
 
@@ -397,12 +435,143 @@ done
 
 ## Github-repo voor labo-taken aanmaken
 
-TODO
+Ga naar Chamilo, volg de link om een Github-repo aan te maken.
+
+---
+
+![](assets/create-repo-github-classroom.png)
+
+---
+
+![](assets/create-repo-accepted.png)
+
+---
+
+- Persoonlijke private Github-repository
+- Uitnodiging voor Github-organisatie "HogentTIN"
+    - <https://github.com/HoGentTIN>
+
+---
+
+<https://github.com/HoGentTIN/linux-2122-scripts-USERNAME>
+
+![](assets/create-repo-done.png)
 
 ## Configuratie Git
 
-TODO
+<div style="color: red;">**Volgende stappen voer je uit op de GUI VM (Linux Mint)**</div>
 
-## Oplossingen testen
+Git moet al geïnstalleerd zijn!
+## Sleutelpaar genereren
 
-TODO
+```console
+osboxes@osboxes:~$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/bert/.ssh/id_rsa): 
+Created directory '/home/bert/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/bert/.ssh/id_rsa
+Your public key has been saved in /home/bert/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:S/WtkPaCSXWK/oqs9lywV6XnMf8nYmYMZ4Io1lx8fS4 bert@osboxes
+The key's randomart image is:
++---[RSA 3072]----+
+|                 |
+|                 |
+|       .  o.o    |
+|        o+.B...  |
+|     o.oSoB =o.  |
+|    o +*.*o=E=.  |
+|   . .. B .*+..  |
+|    .o + . .* ...|
+|   ..o= ...+ . .o|
++----[SHA256]-----+
+```
+
+## Publieke sleutel kopiëren
+
+- Open `~/.ssh/id_rsa.pub` en kopieer de **volledige** inhoud
+- Ga in een browser naar <https://github.com/> en meld aan
+- Klik rechtsboven op je avatar, kies "Settings"
+- Klik door op "SSH and GPG keys"
+- Klik "New SSH key"
+
+---
+
+![](assets/github-settings.png)
+
+## Publieke sleutel registreren
+
+Plak in het "Key" veld:
+
+![](assets/github-public-key.png)
+
+## Github repo klonen
+
+Klik "Code", SSH, Kopieer de URL:
+
+![](assets/github-clone-url.png)
+
+---
+
+```console
+osboxes@osboxes:~$ git clone git@github.com:HoGentTIN/linux-2122-scripts-bertvv.git
+Cloning into 'linux-2122-scripts-bertvv'...
+The authenticity of host 'github.com (140.82.121.4)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,140.82.121.4' (RSA) to the list of known hosts.
+remote: Enumerating objects: 28, done.
+remote: Counting objects: 100% (28/28), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 28 (delta 1), reused 27 (delta 1), pack-reused 0
+Receiving objects: 100% (28/28), 17.54 KiB | 8.77 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+```
+
+## Basisconfiguratie Git
+
+```console
+osboxes@osboxes:~$ git config --global user.name "VOORNAAM NAAM"
+osboxes@osboxes:~$ git config --global user.email "VOORNAAM.NAAM@student.hogent.be"
+osboxes@osboxes:~$ git config --global push.default simple
+```
+
+## Werken met Git
+
+- Je hebt nu een lokale kopie van de Github-repo:
+    - `~/linux-2122-scripts-USERNAME`
+- Maak wijzigingen (teksteditor)
+- `git status`
+- `git add .`
+- `git commit -m "Beschrijving wijzigingen`
+- `git push` 
+
+## Oefening
+
+Maak een bestand `README.md` met deze inhoud:
+
+```markdown
+# Linux scripting labo's
+
+- Student: STUDENTNAAM
+- Klasgroep: GROEPNAAM
+```
+
+Commit, push naar Github, bekijk het resultaat op github.com!
+
+## Labo-oefeningen
+
+- Start met oefeningenreeks `script102`
+
+    ```console
+    cd ~/linux-2122-scripts-USERNAME/script102
+    ```
+
+- Opgave: `script102-rapport.md` of Chamilo-leerpad
+- Controleer je oplossingen met:
+
+    ```console
+    ./test/runtests.sh
+    ```

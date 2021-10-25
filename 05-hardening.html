@@ -45,21 +45,26 @@
 <section><section id="firewall-configuratie" class="title-slide slide level1"><h1>Firewall-configuratie</h1></section>
 <section id="firewall-instellingen-aanpassen" class="slide level2">
 <h2>Firewall-instellingen aanpassen</h2>
-<pre class="console"><code>$ sudo firewall-cmd --list-all  # = toon firewall-regels
+<pre class="console"><code>$ sudo systemctl status firewalld  # is de firewall actief?
+$ sudo firewall-cmd --list-all     # = toon firewall-regels
 $ sudo firewall-cmd --add-service http --permanent
 $ sudo firewall-cmd --add-service https --permanent
 $ sudo firewall-cmd --reload</code></pre>
-<p>Probeer opnieuw de website te bekijken vanaf het fysieke systeem</p>
+<p>Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.</p>
+<p><a href="https://192.168.76.2/" class="uri">https://192.168.76.2/</a></p>
 </section>
 <section id="zones" class="slide level2">
 <h2>Zones</h2>
 <ul>
-<li>Zone = list of rules to be applied in a specific situation
+<li>Zone = lijst van regels voor een specifieke situatie
 <ul>
-<li>e.g. public (default), home, work, …</li>
+<li>bv. in een publieke ruimte (standaard), thuisnetwerk, werk, …</li>
 </ul></li>
-<li>NICs are assigned to zones</li>
-<li>For a server, <code>public</code> zone is probably sufficient</li>
+<li>Netwerkkaarten worden toegekend aan een zone</li>
+<li>Vooral nuttig voor laptop
+<ul>
+<li>Server: <code>public</code> zone is meestal voldoende</li>
+</ul></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -73,27 +78,27 @@ $ sudo firewall-cmd --reload</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">List all zones</td>
+<td style="text-align: left;">Toon alle zones</td>
 <td style="text-align: left;"><code>firewall-cmd --get-zones</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Current active zone</td>
+<td style="text-align: left;">Actieve zones</td>
 <td style="text-align: left;"><code>firewall-cmd --get-active-zones</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Add interface to active zone</td>
+<td style="text-align: left;">Voeg IFACE toe aan actieve zone</td>
 <td style="text-align: left;"><code>firewall-cmd --add-interface=IFACE</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Show current rules</td>
+<td style="text-align: left;">Toon huidige regels</td>
 <td style="text-align: left;"><code>firewall-cmd --list-all</code></td>
 </tr>
 </tbody>
 </table>
-<p><code>firewall-cmd</code> requires <em>root permissions</em></p>
+<p>Voor <code>firewall-cmd</code> moet je <em>root-rechten</em> hebben!</p>
 </section>
-<section id="configuring-firewall-rules" class="slide level2">
-<h2>Configuring firewall rules</h2>
+<section id="firewall-regels-instellen" class="slide level2">
+<h2>Firewall-regels instellen</h2>
 <table>
 <thead>
 <tr class="header">
@@ -103,75 +108,128 @@ $ sudo firewall-cmd --reload</code></pre>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Allow predefined service</td>
+<td style="text-align: left;">Laat service toe</td>
 <td style="text-align: left;"><code>firewall-cmd --add-service=http</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">List predefined services</td>
+<td style="text-align: left;">Toon beschikbare services</td>
 <td style="text-align: left;"><code>firewall-cmd --get-services</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Allow specific port</td>
+<td style="text-align: left;">Laat poort toe</td>
 <td style="text-align: left;"><code>firewall-cmd --add-port=8080/tcp</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Reload rules</td>
+<td style="text-align: left;">Firewall-regels herladen</td>
 <td style="text-align: left;"><code>firewall-cmd --reload</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Block all traffic</td>
+<td style="text-align: left;">Alle netwerkverkeer blokkeren</td>
 <td style="text-align: left;"><code>firewall-cmd --panic-on</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Turn panic mode off</td>
+<td style="text-align: left;">Paniekmodus uitschakelen</td>
 <td style="text-align: left;"><code>firewall-cmd --panic-off</code></td>
 </tr>
 </tbody>
 </table>
 </section>
-<section id="persistent-changes" class="slide level2">
-<h2>Persistent changes</h2>
+<section id="persistente-wijzigingen" class="slide level2">
+<h2>Persistente wijzigingen</h2>
 <ul>
-<li><code>--permanent</code> option is not applied immediately!</li>
-<li>Two methods:
+<li><code>--permanent</code> optie wordt niet onmiddellijk toegepast!</li>
+<li>Twee werkwijzen:
 <ol type="1">
-<li>Execute command once without, once with <code>--permanent</code></li>
-<li>Execute command with <code>--permanent</code>, reload rules</li>
+<li>Commando 2x uitvoeren, 1x zonder, 1x mét <code>--permanent</code></li>
+<li>Commando enkel met <code>--permanent</code> uitvoeren, firewall herladen</li>
 </ol></li>
 </ul>
 <pre class="console"><code>sudo firewall-cmd --add-service=http --permanent
 sudo firewall-cmd --add-service=https --permanent
 sudo firewall-cmd --reload</code></pre>
 </section></section>
-<section><section id="selinux-troubleshooting" class="title-slide slide level1"><h1>SELinux troubleshooting</h1></section>
+<section><section id="security-enhanced-linux" class="title-slide slide level1"><h1>Security Enhanced Linux</h1></section>
 <section id="selinux" class="slide level2">
 <h2>SELinux</h2>
 <ul>
-<li>SELinux is Mandatory Access Control in the Linux kernel</li>
-<li>Settings:
+<li>SELinux: Security Enhanced Linux
+<ul>
+<li>“Mandatory Access Control”</li>
+<li>Ingebouwd in de Linux kernel</li>
+<li>Vooral op RedHat!</li>
+</ul></li>
+<li>AppArmor:
+<ul>
+<li>equivalent op Debian/Ubuntu</li>
+<li>niet behandeld in deze cursus</li>
+</ul></li>
+</ul>
+</section>
+<section id="staat-selinux-aan" class="slide level2">
+<h2>Staat SELinux aan?</h2>
+<pre class="console"><code>[admin@server ~]$ getenforce 
+Enforcing</code></pre>
+</section>
+<section class="slide level2">
+
+<p>Let op! Dit werkt niet op de Linux Mint-VM!</p>
+<pre class="console"><code>osboxes@osboxes:~$ getenforce
+
+Command &#39;getenforce&#39; not found, but can be installed with:
+
+sudo apt install selinux-utils
+
+osboxes@osboxes:~$ sudo aa-status
+[sudo] password for osboxes:
+apparmor module is loaded.
+22 profiles are loaded.
+[...]</code></pre>
+</section>
+<section id="hoofdconfiguratiebestand" class="slide level2">
+<h2>Hoofdconfiguratiebestand</h2>
+<pre class="console"><code>[admin@server ~]$ cat /etc/selinux/config
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of these three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted</code></pre>
+</section>
+<section id="zet-selinux-niet-uit" class="slide level2">
+<h2>Zet SELinux niet uit!</h2>
+<p>Op productie-systemen zou SELinux altijd aan moeten staan!</p>
+<p><a href="https://stopdisablingselinux.com/" class="uri">https://stopdisablingselinux.com/</a></p>
+</section>
+<section id="soorten-selinux-instellingen" class="slide level2">
+<h2>3 soorten SELinux-instellingen</h2>
 <ul>
 <li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
 <li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>, <code>restorecon</code></li>
 <li>Policy modules: <code>sepolicy</code></li>
-</ul></li>
 </ul>
+<p>In de meeste gevallen is configuratie van booleans/context voldoende!</p>
 </section>
-<section id="do-not-disable-selinux" class="slide level2">
-<h2>Do not disable SELinux</h2>
-<p><a href="https://stopdisablingselinux.com/" class="uri">https://stopdisablingselinux.com/</a></p>
-</section>
-<section id="check-file-context" class="slide level2">
-<h2>Check file context</h2>
+<section id="controleer-de-context-van-een-bestand" class="slide level2">
+<h2>Controleer de context van een bestand</h2>
 <ul>
-<li>Is the file context as expected?
+<li>Wat is de SELinux-context van een bestand?
 <ul>
-<li><code>ls -Z /var/www/html</code></li>
+<li><code>ls -lZ</code></li>
 </ul></li>
-<li>Set file context to default value
+<li>Wat wordt de SELinux-context bij aanmaken van een nieuw bestand?
+<ul>
+<li><code>/etc/selinux/targeted/contexts/files/files_contexts</code></li>
+</ul></li>
+<li>Standaard-context herstellen:
 <ul>
 <li><code>sudo restorecon -R /var/www/</code></li>
 </ul></li>
-<li>Set file context to specified value
+<li>Context instellen naar een bepaalde waarde:
 <ul>
 <li><code>sudo chcon -t httpd_sys_content_t test.php</code></li>
 </ul></li>
@@ -188,40 +246,10 @@ sudo firewall-cmd --reload</code></pre>
 </ul></li>
 </ul>
 </section>
-<section id="creating-a-policy" class="slide level2">
-<h2>Creating a policy</h2>
-<p>Let’s try to set <code>DocumentRoot "/vagrant/www"</code></p>
-<pre><code>$ sudo vi /etc/httpd/conf/httpd.conf
-$ ls -Z /vagrant/www/
--rw-rw-r--. vagrant vagrant system_u:object_r:vmblock_t:s0   test.php
-$ sudo chcon -R -t httpd_sys_content_t /vagrant/www/
-chcon: failed to change context of ‘test.php’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported
-chcon: failed to change context of ‘/vagrant/www/’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported</code></pre>
-</section>
-<section id="creating-a-policy-1" class="slide level2">
-<h2>Creating a policy</h2>
-<p>Instead of setting the files to the expected context, allow httpd to access files with <code>vmblock_t</code> context</p>
-<ol type="1">
-<li><p>Allow Apache to run in “permissive” mode:</p>
-<pre><code>$ sudo semanage permissive -a httpd_t</code></pre></li>
-<li><p>Generate “Type Enforcement” file (.te)</p>
-<pre><code>$ sudo audit2allow -a -m httpd-vboxsf &gt; httpd-vboxsf.te</code></pre></li>
-<li><p>If necessary, edit the policy</p>
-<pre><code>$ sudo vi httpd-vboxsf.te</code></pre></li>
-</ol>
-</section>
-<section class="slide level2">
-
-<ol type="1">
-<li><p>Convert to policy module (.pp)</p>
-<pre><code>$ checkmodule -M -m -o httpd-vboxsf.mod httpd-vboxsf.te
-$ semodule_package -o httpd-vboxsf.pp -m httpd-vboxsf.mod</code></pre></li>
-<li><p>Install module</p>
-<pre><code>$ sudo semodule -i httpd-vboxsf.pp</code></pre></li>
-<li><p>Remove permissive domain exception</p>
-<pre><code>$ sudo semanage permissive -d httpd_t</code></pre></li>
-</ol>
-<p>Tip: automate this!</p>
+<section id="hoe-weet-ik-wat-selinux-tegenhoudt" class="slide level2">
+<h2>Hoe weet ik wat SELinux tegenhoudt?</h2>
+<pre class="console"><code>$ sudo tail -f /var/log/audit/audit.log
+$ sudo grep denied /var/log/audit/audit.log</code></pre>
 </section></section>
     </div>
   </div>

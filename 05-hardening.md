@@ -10,50 +10,53 @@ date: 2021-2022
 ## Firewall-instellingen aanpassen
 
 ```console
-$ sudo firewall-cmd --list-all  # = toon firewall-regels
+$ sudo systemctl status firewalld  # is de firewall actief?
+$ sudo firewall-cmd --list-all     # = toon firewall-regels
 $ sudo firewall-cmd --add-service http --permanent
 $ sudo firewall-cmd --add-service https --permanent
 $ sudo firewall-cmd --reload
 ```
 
-Probeer opnieuw de website te bekijken vanaf het fysieke systeem
+Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.
+
+<https://192.168.76.2/>
 
 ## Zones
 
-- Zone = list of rules to be applied in a specific situation
-    - e.g. public (default), home, work, ...
-- NICs are assigned to zones
-- For a server, `public` zone is probably sufficient
+- Zone = lijst van regels voor een specifieke situatie
+    - bv. in een publieke ruimte (standaard), thuisnetwerk, werk, ...
+- Netwerkkaarten worden toegekend aan een zone
+- Vooral nuttig voor laptop
+    - Server: `public` zone is meestal voldoende
 
 ---
 
-| Task                         | Command                              |
-| :---                         | :---                                 |
-| List all zones               | `firewall-cmd --get-zones`           |
-| Current active zone          | `firewall-cmd --get-active-zones`    |
-| Add interface to active zone | `firewall-cmd --add-interface=IFACE` |
-| Show current rules           | `firewall-cmd --list-all`            |
+| Task                            | Command                              |
+| :------------------------------ | :----------------------------------- |
+| Toon alle zones                 | `firewall-cmd --get-zones`           |
+| Actieve zones                   | `firewall-cmd --get-active-zones`    |
+| Voeg IFACE toe aan actieve zone | `firewall-cmd --add-interface=IFACE` |
+| Toon huidige regels             | `firewall-cmd --list-all`            |
 
-`firewall-cmd` requires *root permissions*
+Voor `firewall-cmd` moet je *root-rechten* hebben!
 
-## Configuring firewall rules
+## Firewall-regels instellen
 
-| Task                     | Command                            |
-| :---                     | :---                               |
-| Allow predefined service | `firewall-cmd --add-service=http`  |
-| List predefined services | `firewall-cmd --get-services`      |
-| Allow specific port      | `firewall-cmd --add-port=8080/tcp` |
-| Reload rules             | `firewall-cmd --reload`            |
-| Block all traffic        | `firewall-cmd --panic-on`          |
-| Turn panic mode off      | `firewall-cmd --panic-off`         |
+| Task                          | Command                            |
+| :---------------------------- | :--------------------------------- |
+| Laat service toe              | `firewall-cmd --add-service=http`  |
+| Toon beschikbare services     | `firewall-cmd --get-services`      |
+| Laat poort toe                | `firewall-cmd --add-port=8080/tcp` |
+| Firewall-regels herladen      | `firewall-cmd --reload`            |
+| Alle netwerkverkeer blokkeren | `firewall-cmd --panic-on`          |
+| Paniekmodus uitschakelen      | `firewall-cmd --panic-off`         |
 
-## Persistent changes
+## Persistente wijzigingen
 
-- `--permanent` option is not applied immediately!
-- Two methods:
-    1. Execute command once without, once with `--permanent`
-    2. Execute command with `--permanent`, reload rules
-
+- `--permanent` optie wordt niet onmiddellijk toegepast!
+- Twee werkwijzen:
+    1. Commando 2x uitvoeren, 1x zonder, 1x mét `--permanent`
+    2. Commando enkel met `--permanent` uitvoeren, firewall herladen
 
 ```console
 sudo firewall-cmd --add-service=http --permanent
@@ -61,27 +64,83 @@ sudo firewall-cmd --add-service=https --permanent
 sudo firewall-cmd --reload
 ```
 
-# SELinux troubleshooting
+# Security Enhanced Linux
 
 ## SELinux
 
-- SELinux is Mandatory Access Control in the Linux kernel
-- Settings:
-    - Booleans: `getsebool`, `setsebool`
-    - Contexts, labels: `ls -Z`, `chcon`, `restorecon`
-    - Policy modules: `sepolicy`
+- SELinux: Security Enhanced Linux
+    - "Mandatory Access Control"
+    - Ingebouwd in de Linux kernel
+    - Vooral op RedHat!
+- AppArmor:
+    - equivalent op Debian/Ubuntu
+    - niet behandeld in deze cursus
 
-## Do not disable SELinux
+## Staat SELinux aan?
+
+```console
+[admin@server ~]$ getenforce 
+Enforcing
+```
+
+---
+
+Let op! Dit werkt niet op de Linux Mint-VM!
+
+```console
+osboxes@osboxes:~$ getenforce
+
+Command 'getenforce' not found, but can be installed with:
+
+sudo apt install selinux-utils
+
+osboxes@osboxes:~$ sudo aa-status
+[sudo] password for osboxes:
+apparmor module is loaded.
+22 profiles are loaded.
+[...]
+```
+
+## Hoofdconfiguratiebestand
+
+```console
+[admin@server ~]$ cat /etc/selinux/config
+# This file controls the state of SELinux on the system.
+# SELINUX= can take one of these three values:
+#     enforcing - SELinux security policy is enforced.
+#     permissive - SELinux prints warnings instead of enforcing.
+#     disabled - No SELinux policy is loaded.
+SELINUX=enforcing
+# SELINUXTYPE= can take one of these three values:
+#     targeted - Targeted processes are protected,
+#     minimum - Modification of targeted policy. Only selected processes are protected. 
+#     mls - Multi Level Security protection.
+SELINUXTYPE=targeted
+```
+
+## Zet SELinux niet uit!
+
+Op productie-systemen zou SELinux altijd aan moeten staan!
 
 <https://stopdisablingselinux.com/>
 
-## Check file context
+## 3 soorten SELinux-instellingen
 
-- Is the file context as expected?
-    - `ls -Z /var/www/html`
-- Set file context to default value
+- Booleans: `getsebool`, `setsebool`
+- Contexts, labels: `ls -Z`, `chcon`, `restorecon`
+- Policy modules: `sepolicy`
+
+In de meeste gevallen is configuratie van booleans/context voldoende!
+
+## Controleer de context van een bestand
+
+- Wat is de SELinux-context van een bestand?
+    - `ls -lZ`
+- Wat wordt de SELinux-context bij aanmaken van een nieuw bestand?
+    - `/etc/selinux/targeted/contexts/files/files_contexts`
+- Standaard-context herstellen:
     - `sudo restorecon -R /var/www/`
-- Set file context to specified value
+- Context instellen naar een bepaalde waarde:
     - `sudo chcon -t httpd_sys_content_t test.php`
 
 ## Check booleans
@@ -92,60 +151,9 @@ sudo firewall-cmd --reload
 - Enable boolean:
     - `sudo setsebool -P httpd_can_network_connect_db on`
 
-## Creating a policy
+## Hoe weet ik wat SELinux tegenhoudt?
 
-Let's try to set `DocumentRoot "/vagrant/www"`
-
+```console
+$ sudo tail -f /var/log/audit/audit.log
+$ sudo grep denied /var/log/audit/audit.log
 ```
-$ sudo vi /etc/httpd/conf/httpd.conf
-$ ls -Z /vagrant/www/
--rw-rw-r--. vagrant vagrant system_u:object_r:vmblock_t:s0   test.php
-$ sudo chcon -R -t httpd_sys_content_t /vagrant/www/
-chcon: failed to change context of ‘test.php’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported
-chcon: failed to change context of ‘/vagrant/www/’ to ‘system_u:object_r:httpd_sys_content_t:s0’: Operation not supported
-```
-
-## Creating a policy
-
-Instead of setting the files to the expected context, allow httpd to access files with `vmblock_t` context
-
-1. Allow Apache to run in "permissive" mode:
-
-    ```
-    $ sudo semanage permissive -a httpd_t
-    ```
-
-2. Generate "Type Enforcement" file (.te)
-
-    ```
-    $ sudo audit2allow -a -m httpd-vboxsf > httpd-vboxsf.te
-    ```
-
-3. If necessary, edit the policy
-
-    ```
-    $ sudo vi httpd-vboxsf.te
-    ```
-
----
-
-1. Convert to policy module (.pp)
-
-    ```
-    $ checkmodule -M -m -o httpd-vboxsf.mod httpd-vboxsf.te
-    $ semodule_package -o httpd-vboxsf.pp -m httpd-vboxsf.mod
-    ```
-
-5. Install module
-
-    ```
-    $ sudo semodule -i httpd-vboxsf.pp
-    ```
-
-6. Remove permissive domain exception
-
-    ```
-    $ sudo semanage permissive -d httpd_t
-    ```
-
-Tip: automate this!

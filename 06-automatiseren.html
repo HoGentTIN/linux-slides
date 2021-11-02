@@ -105,39 +105,96 @@
 </section>
 
 <section><section id="scripting-vervolg" class="title-slide slide level1"><h1>Scripting (vervolg)</h1></section>
+<section id="fouten-opsporen-1" class="slide level2">
+<h2>Fouten opsporen (1)</h2>
+<ul>
+<li>Begin met minimaal script, voer het zo snel mogelijk uit!</li>
+<li>Werk altijd <strong>stap voor stap</strong>
+<ul>
+<li>iteratieve toevoegingen</li>
+</ul></li>
+<li><strong>Test</strong> voortdurend het resultaat van elke wijziging</li>
+<li>Hou minstens <strong>2 vensters</strong> open naast elkaar:
+<ul>
+<li>Editor</li>
+<li>Terminal voor testen</li>
+</ul></li>
+</ul>
+</section>
+<section id="fouten-opsporen-2" class="slide level2">
+<h2>Fouten opsporen (2)</h2>
+<ul>
+<li>Syntax check: <code>bash -n script.sh</code></li>
+<li>ShellCheck: <code>shellcheck script.sh</code>
+<ul>
+<li>Gebruik editor-plugin waar mogelijk</li>
+</ul></li>
+<li>Druk veel info af (<code>printf</code> of <code>echo</code>)</li>
+<li>Debug-mode:
+<ul>
+<li><code>bash -x script.sh</code></li>
+<li>In het script: <code>set -x</code> en <code>set +x</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="fouten-voorkomen" class="slide level2">
+<h2>Fouten voorkomen</h2>
+<p>Begin elk script met:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
+</section>
+<section id="booleans-in-bash" class="slide level2">
+<h2>Booleans in Bash</h2>
+<ul>
+<li>In Bash bestaan <strong>geen</strong> booleaanse variabelen!</li>
+<li>Er bestaan wel gelijknamige commando’s <code>true</code> en <code>false</code></li>
+<li>Booleaanse waarden zijn gebaseerd op exit-status v/e proces</li>
+</ul>
+</section>
 <section id="de-commandos-true-en-false" class="slide level2">
 <h2>De commando’s <code>true</code> en <code>false</code></h2>
-<p>Er bestaan wel gelijknamige commando’s.</p>
 <p>In Java zou je <code>true</code> als volgt implementeren</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">public</span> <span class="kw">class</span> True {</span>
-<span id="cb1-2"><a href="#cb1-2"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
-<span id="cb1-3"><a href="#cb1-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">0</span>);</span>
-<span id="cb1-4"><a href="#cb1-4"></a>  }</span>
-<span id="cb1-5"><a href="#cb1-5"></a>}</span></code></pre></div>
-<p>en <code>false</code>:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">public</span> <span class="kw">class</span> False {</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1"></a><span class="kw">public</span> <span class="kw">class</span> True {</span>
 <span id="cb2-2"><a href="#cb2-2"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
-<span id="cb2-3"><a href="#cb2-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">1</span>);</span>
+<span id="cb2-3"><a href="#cb2-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">0</span>);</span>
 <span id="cb2-4"><a href="#cb2-4"></a>  }</span>
 <span id="cb2-5"><a href="#cb2-5"></a>}</span></code></pre></div>
+<p>en <code>false</code>:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">public</span> <span class="kw">class</span> False {</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span>(<span class="bu">String</span>[] args) {</span>
+<span id="cb3-3"><a href="#cb3-3"></a>    <span class="bu">System</span>.<span class="fu">exit</span>(<span class="dv">1</span>);</span>
+<span id="cb3-4"><a href="#cb3-4"></a>  }</span>
+<span id="cb3-5"><a href="#cb3-5"></a>}</span></code></pre></div>
+<p>De echte implementatie <a href="https://github.com/coreutils/coreutils/blob/master/src/true.c">vind je hier</a></p>
 </section>
 <section id="logische-operatoren" class="slide level2">
 <h2>Logische operatoren</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>  <span class="co"># A</span></span>
-<span id="cb3-3"><a href="#cb3-3"></a><span class="kw">else</span></span>
-<span id="cb3-4"><a href="#cb3-4"></a>  <span class="co"># B</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="kw">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a>  <span class="co"># A</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="kw">else</span></span>
+<span id="cb4-4"><a href="#cb4-4"></a>  <span class="co"># B</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a><span class="kw">fi</span></span></code></pre></div>
 <ul>
 <li><code>A</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
 <li><code>B</code>-blok wordt uitgevoerd als exit-status van <code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
 </ul>
 </section>
+<section id="toepassing" class="slide level2">
+<h2>Toepassing</h2>
+<p>Maak gebruiker <code>${user}</code> aan als die nog niet bestaat</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">if</span> ! <span class="fu">getent</span> passwd <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span> <span class="op">&gt;</span> /dev/null <span class="op">2&gt;&amp;1</span><span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="bu">echo</span> <span class="st">&quot;Adding user </span><span class="va">${user}</span><span class="st">&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a>  <span class="ex">adduser</span> <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="kw">else</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="bu">echo</span> <span class="st">&quot;User </span><span class="va">${user}</span><span class="st"> already exists&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a><span class="kw">fi</span></span></code></pre></div>
+</section>
 <section id="operatoren-en" class="slide level2">
 <h2>Operatoren <code>&amp;&amp;</code> en <code>||</code></h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">command1</span> <span class="kw">&amp;&amp;</span> <span class="ex">command2</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="ex">command1</span> <span class="kw">&amp;&amp;</span> <span class="ex">command2</span></span></code></pre></div>
 <p><code>command2</code> wordt enkel uitgevoerd als <code>command1</code> succesvol was (exit 0)</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="ex">command1</span> <span class="kw">||</span> <span class="ex">command2</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="ex">command1</span> <span class="kw">||</span> <span class="ex">command2</span></span></code></pre></div>
 <p><code>command2</code> wordt enkel uitgevoerd als <code>command1</code> <strong>niet</strong> succesvol was (exit ≠ 0)</p>
 </section>
 <section id="het-commando-test" class="slide level2">
@@ -158,57 +215,313 @@
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># Fout:</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a><span class="kw">fi</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a></span>
-<span id="cb6-6"><a href="#cb6-6"></a><span class="co"># Juist:</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a><span class="kw">fi</span></span></code></pre></div>
-</section>
-<section id="fouten-opsporen-1" class="slide level2">
-<h2>Fouten opsporen (1)</h2>
-<ul>
-<li>Werk altijd <strong>stap voor stap</strong></li>
-<li><strong>Test</strong> voortdurend het resultaat van elke wijziging</li>
-<li>Hou minstens <strong>2 vensters</strong> open naast elkaar:
-<ul>
-<li>Editor</li>
-<li>Terminal voor testen</li>
-</ul></li>
-</ul>
-</section>
-<section id="fouten-opsporen-2" class="slide level2">
-<h2>Fouten opsporen (2)</h2>
-<ul>
-<li>Syntax check: <code>bash -n script.sh</code></li>
-<li>ShellCheck: <code>shellcheck script.sh</code>
-<ul>
-<li>Gebruik editor-plugin waar mogelijk</li>
-</ul></li>
-<li>Druk veel info af (<code>printf</code>)</li>
-<li>Debug-mode:
-<ul>
-<li><code>bash -x script.sh</code></li>
-<li>In het script: <code>set -x</code> en <code>set +x</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="fouten-voorkomen" class="slide level2">
-<h2>Fouten voorkomen</h2>
-<p>Begin elk script met:</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">set</span> <span class="ex">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a><span class="kw">set</span> <span class="ex">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">set</span> <span class="ex">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
-</section>
-<section id="todo" class="slide level2">
-<h2>TODO</h2>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1"></a><span class="co"># Fout:</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="ex">if</span>[<span class="va">$#</span>-eq 0]<span class="kw">;</span> <span class="kw">then</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw">fi</span></span>
+<span id="cb8-5"><a href="#cb8-5"></a></span>
+<span id="cb8-6"><a href="#cb8-6"></a><span class="co"># Juist:</span></span>
+<span id="cb8-7"><a href="#cb8-7"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="kw">fi</span></span></code></pre></div>
 </section></section>
 <section><section id="automatiseren-webserverinstallatie" class="title-slide slide level1"><h1>Automatiseren webserverinstallatie</h1></section>
-<section id="todo-1" class="slide level2">
-<h2>TODO</h2>
+<section id="de-kracht-van-automatisering" class="slide level2">
+<h2>De kracht van automatisering</h2>
+<ul>
+<li>Installeren van een server is terugkerende taak</li>
+<li>Moet snel én foutloos kunnen gebeuren!
+<ul>
+<li>1x, 10x, 100x, …</li>
+</ul></li>
+<li>⇒ Automatiseren is een noodzaak!</li>
+</ul>
+</section>
+<section id="kwaliteitsbewaking-bij-server-installatie" class="slide level2">
+<h2>Kwaliteitsbewaking bij server-installatie</h2>
+<p>Opbouw in de opleiding:</p>
+<ol type="1">
+<li>Gedetailleerde procedurehandleiding
+<ul>
+<li>SELab, Linux, System Engineering Project</li>
+</ul></li>
+<li>Script voor automatisering
+<ul>
+<li>Linux, System Engineering Project</li>
+</ul></li>
+<li>Configuration Management
+<ul>
+<li>Infrastructure Automation</li>
+</ul></li>
+</ol>
+</section>
+<section id="tool-vagrant" class="slide level2">
+<h2>Tool: Vagrant</h2>
+<p><a href="https://www.vagrantup.com/" class="uri">https://www.vagrantup.com/</a></p>
+<ul>
+<li>Command-line applicatie</li>
+<li>Automatiseert aanmaken en configureren van (VirtualBox) VMs</li>
+<li>Draait op Linux, Windows, MacOS</li>
+</ul>
+</section>
+<section id="waarom-vagrant-gebruiken" class="slide level2">
+<h2>Waarom Vagrant gebruiken?</h2>
+<ul>
+<li>Snel nieuwe VMs aanmaken</li>
+<li>Reproduceerbaar!
+<ul>
+<li>Enkel code, geen .ova van +4GB</li>
+<li>Overdraagbaar naar ander platform</li>
+</ul></li>
+<li>Aantal VMs onder controle houden</li>
+</ul>
+</section>
+<section id="installeer-vagrant" class="slide level2">
+<h2>Installeer Vagrant</h2>
+<p>Op je fysieke systeem!</p>
+<ul>
+<li>Windows: <code>choco install vagrant</code></li>
+<li>MacOS: <code>brew install vagrant</code></li>
+<li>Linux: <code>apt install vagrant</code> (of <code>dnf</code>)</li>
+</ul>
+<p>Of ga naar <a href="https://www.vagrantup.com/downloads" class="uri">https://www.vagrantup.com/downloads</a></p>
+</section>
+<section id="werkomgeving-opzetten" class="slide level2">
+<h2>Werkomgeving opzetten</h2>
+<ul>
+<li>Ga naar Chamilo</li>
+<li>Volg link voor aanmaken Github repo labo automatisering</li>
+<li>Kloon deze Github repo lokaal (op je fysieke systeem!)</li>
+<li>Open terminal (Git Bash of PowerShell)</li>
+<li>Ga in de directory (<code>linux-2122-automation-USER</code>)</li>
+</ul>
+</section>
+<section id="overzicht-repo" class="slide level2">
+<h2>Overzicht repo</h2>
+<pre class="console"><code>$ tree
+.
+├── LICENSE.md
+├── provisioning
+│   ├── common.sh
+│   ├── db.sh
+│   └── web.sh
+├── README.md
+├── Vagrantfile
+└── vagrant-hosts.yml
+
+1 directory, 7 files</code></pre>
+</section>
+<section id="overzicht-repo-2" class="slide level2">
+<h2>Overzicht repo (2)</h2>
+<ul>
+<li><code>Vagrantfile</code>: configuratiebestand van Vagrant
+<ul>
+<li>hoef je niet aan te komen</li>
+</ul></li>
+<li><code>vagrant-hosts.yml</code>: overzicht VMs in de opstelling
+<ul>
+<li>incl. eigenschappen zoals IP-adres</li>
+</ul></li>
+<li><code>provisioning/</code>: installatiescripts voor VMs</li>
+</ul>
+</section>
+<section id="werken-met-vagrant" class="slide level2">
+<h2>Werken met Vagrant</h2>
+<pre class="console"><code>$ vagrant status
+Current machine states:
+
+db                        not created (virtualbox)
+web                       not created (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.</code></pre>
+</section>
+<section id="start-de-db-vm-op" class="slide level2">
+<h2>Start de <code>db</code> VM op</h2>
+<pre class="console"><code>$ vagrant up db
+Bringing machine &#39;db&#39; up with &#39;virtualbox&#39; provider...
+==&gt; db: Importing base box &#39;bento/almalinux-8&#39;...
+==&gt; db: Matching MAC address for NAT networking...
+==&gt; db: Checking if box &#39;bento/almalinux-8&#39; version &#39;202109.10.0&#39; is up to date...
+==&gt; db: Setting the name of the VM: linux-2122-automation-bertvv_db_1635848839364_33506
+==&gt; db: Clearing any previously set network interfaces...
+==&gt; db: Preparing network interfaces based on configuration...
+    db: Adapter 1: nat
+    db: Adapter 2: intnet
+==&gt; db: Forwarding ports...
+    db: 22 (guest) =&gt; 2222 (host) (adapter 1)
+==&gt; db: Running &#39;pre-boot&#39; VM customizations...
+==&gt; db: Booting VM...
+==&gt; db: Waiting for machine to boot. This may take a few minutes...
+    db: SSH address: 127.0.0.1:2222
+    db: SSH username: vagrant
+    db: SSH auth method: private key
+    db: 
+    db: Vagrant insecure key detected. Vagrant will automatically replace
+    db: this with a newly generated keypair for better security.
+    db: 
+    db: Inserting generated public key within guest...
+    db: Removing insecure key from the guest if it&#39;s present...
+    db: Key inserted! Disconnecting and reconnecting using new SSH key...
+==&gt; db: Machine booted and ready!
+==&gt; db: Checking for guest additions in VM...
+==&gt; db: Setting hostname...
+==&gt; db: Configuring and enabling network interfaces...
+==&gt; db: Mounting shared folders...
+    db: /vagrant =&gt; /home/bert/Documents/Vakken/Linux/21-22/linux-2122-automation-bertvv
+==&gt; db: Running provisioner: shell...
+    db: Running: /tmp/vagrant-shell20211102-9694-yq9qn5.sh
+    db: [LOG]  === Starting common provisioning tasks ===
+    db: [LOG]  Ensuring SELinux is activePermissivePermissivePermissive
+    db: [LOG]  Installing useful packages
+    [...]
+    db: [LOG]  Securing the database
+    db: [LOG]  Creating database and user
+    db: [LOG]  Creating database table and add some data</code></pre>
+</section>
+<section id="wat-gebeurt-er" class="slide level2">
+<h2>Wat gebeurt er?</h2>
+<ol type="1">
+<li>Een nieuwe VirtualBox-VM wordt aangemaakt
+<ul>
+<li>Check in de GUI!</li>
+</ul></li>
+<li>Een zgn. “base box” wordt zo nodig gedownload
+<ul>
+<li>= VM image met minimale installatie</li>
+<li>hier: <a href="https://app.vagrantup.com/bento/boxes/almalinux-8">bento/almalinux-8</a></li>
+<li>wordt later hergebruikt</li>
+</ul></li>
+</ol>
+</section>
+<section class="slide level2">
+
+<ol start="3" type="1">
+<li>De VM wordt geconfigureerd:
+<ul>
+<li>Naam, CPU, RAM, netwerkkaarten, …</li>
+<li>IP-adres</li>
+<li>Gedeelde map <code>/vagrant</code></li>
+</ul></li>
+<li>Het installatie-script wordt uitgevoerd</li>
+</ol>
+</section>
+<section id="inloggen" class="slide level2">
+<h2>Inloggen</h2>
+<pre class="console"><code>$ vagrant ssh db
+
+This system is built by the Bento project by Chef Software
+More information can be found at https://github.com/chef/bento
+[vagrant@db ~]$ ip a show dev eth1
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:1f:c4:a7 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.76.3/24 brd 192.168.76.255 scope global noprefixroute eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe1f:c4a7/64 scope link 
+       valid_lft forever preferred_lft forever
+[vagrant@db ~]$ </code></pre>
+</section>
+<section id="probeer-het-volgende" class="slide level2">
+<h2>Probeer het volgende!</h2>
+<ul>
+<li>Kan je pingen vanuit Linux Mint naar deze VM?</li>
+<li>Draait MariaDB?</li>
+<li>Kan je inloggen in de database?</li>
+<li>Welke data zit in de database?</li>
+</ul>
+<p>Tip: bekijk het installatiescript <code>provisioning/db.sh</code></p>
+</section>
+<section id="belangrijkste-commandos" class="slide level2">
+<h2>Belangrijkste commando’s</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Taak</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant status</code></td>
+<td style="text-align: left;">Overzicht omgeving</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant up VM</code></td>
+<td style="text-align: left;">start VM op</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant ssh VM</code></td>
+<td style="text-align: left;">inloggen op VM</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant halt VM</code></td>
+<td style="text-align: left;">VM uitschakelen</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant reload VM</code></td>
+<td style="text-align: left;">VM rebooten</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant provision VM</code></td>
+<td style="text-align: left;">Installatie-script uitvoeren</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant destroy VM</code></td>
+<td style="text-align: left;">VM vernietigen</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="opdracht" class="slide level2">
+<h2>Opdracht</h2>
+<ul>
+<li>Maak van <code>web</code> een webserver</li>
+<li>Poort 80, 443 (firewall!)</li>
+<li>Test-php script dat resultaat query naar <code>db</code> toont</li>
+<li>Eindresultaat: <code>vagrant up web</code> ⇒ werkende webserver!</li>
+</ul>
+</section>
+<section id="werkwijze" class="slide level2">
+<h2>Werkwijze</h2>
+<ol type="1">
+<li>Begin met <code>vagrant up web</code> en log in</li>
+<li>Open installatiescript <code>provisioning/web.sh</code> in een editor</li>
+<li>Zoek de juiste commando’s voor de webserverinstallatie (labo-verslagen!)</li>
+<li>Voeg toe aan installatiescript</li>
+<li><code>vagrant provision web</code></li>
+</ol>
+<p>Herhaal 3-5 <strong>in kleine iteraties!</strong></p>
+</section>
+<section id="richtlijnen" class="slide level2">
+<h2>Richtlijnen</h2>
+<ul>
+<li>Rebooten/herbeginnen niet nodig! <code>provision</code> is voldoende</li>
+<li>Controleer telkens het effect van wijzigingen</li>
+<li>Onherstelbaar beschadigd? <code>vagrant destroy</code></li>
+<li>Script mag <strong>geen input</strong> van gebruiker vragen</li>
+<li>Script moet meermaals na elkaar uitgevoerd kunnen worden
+<ul>
+<li><strong>idempotentie</strong></li>
+</ul></li>
+<li>Script klaar?
+<ul>
+<li>Test met <code>vagrant destroy web; vagrant up web</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="idempotentie" class="slide level2">
+<h2>Idempotentie</h2>
+<ul>
+<li>Wiskundige eigenschap v/e operatie</li>
+<li>Een operatie herhaald uitvoeren verandert het resultaat niet meer na de 1e keer</li>
+<li>Server installatie: handeling wordt enkel uitgevoerd indien nodig
+<ul>
+<li>Sommige Linux commando’s zijn al idempotent (bv. <code>dnf install</code>)</li>
+<li>Sommige commando’s zijn dat niet (bv. <code>useradd</code>)</li>
+<li>⇒ test of het nodig is bepaalde taak uit te voeren!</li>
+</ul></li>
+</ul>
 </section></section>
     </div>
   </div>

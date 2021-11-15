@@ -7,44 +7,6 @@ date: 2021-2022
 
 # Complexere scripts
 
-## Case (1)
-
-```bash
-case EXPR in
-  PATROON1)
-    # ...
-    ;;
-  PATROON2)
-    # ...
-    ;;
-  *)
-    # ...
-    ;;
-esac
-```
-
-## Case (2)
-
-```bash
-option="${1}"
-
-case "${option}" in
-  -h|--help|-?)
-    usage
-    exit 0
-    ;;
-  -v|--verbose)
-    verbose=y
-    shift
-    ;;
-  *)
-    printf 'Unrecognized option: %s\n' "${option}"
-    usage
-    exit 1
-    ;;
-esac
-```
-
 ## Communicatie script/omgeving
 
 Informatie uitwisselen tussen script en omgeving:
@@ -112,21 +74,49 @@ copy_iso_to_usb() {
 }
 ```
 
-## Tips (1)
+## Case (1)
 
-- Begin elk script met `set -o ...`
+```bash
+case EXPR in
+  PATROON1)
+    # ...
+    ;;
+  PATROON2)
+    # ...
+    ;;
+  *)
+    # ...
+    ;;
+esac
+```
+
+## Case (2)
+
+```bash
+option="${1}"
+
+case "${option}" in
+  -h|--help|-?)
+    usage
+    exit 0
+    ;;
+  -v|--verbose)
+    verbose=y
+    shift
+    ;;
+  *)
+    printf 'Unrecognized option: %s\n' "${option}"
+    usage
+    exit 1
+    ;;
+esac
+```
+
+## Tips
+
 - Zet positionele parameters om in beschrijvende namen
 - Maak lijnen niet te lang (gebruik `\` op het einde van een regel)
 - Gebruik "lange" opties: maakt script leesbaarder
-
-```bash
-set -o nounset  # stop bij onbestaande variabele
-set -o errexit  # stop bij fout (exitstatus ≠ 0) in commando
-set -o pipefail # stop bij fout in pipeline
-```
-
-## Tips (2)
-
 - Gebruik lokale variabelen in functies
 - Deel script op in (herbruikbare) functies
 

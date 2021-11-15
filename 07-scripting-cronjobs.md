@@ -124,4 +124,105 @@ Meer tips op: <https://gitpitch.com/bertvv/presentation-clean-bash>
 
 # Plannen van systeembeheertaken: cronjobs
 
-## TODO
+## Processen op de achtergrond
+
+Probeer dit:
+
+```console
+$ vi test.txt
+Ctrl+Z
+
+[1]+  Stopped                 gvim -v test.txt
+$ find / -type f > all-files.txt 2>&1 &
+[2] 4321
+```
+
+- `Ctrl+Z` zet de uitvoer van een proces stil (nog niet afgesloten!)
+- `&` op het einde van een regel start proces op de achtergrond
+
+## Achtergrondprocessen beheren
+
+| Commando  | Betekenis                                 |
+| :-------- | :---------------------------------------- |
+| `jobs`    | Lijst van achtergrondprocessen            |
+| `jobs -l` | Idem, toon ook Process ID (PID)           |
+| `fg NUM`  | Breng proces op voorgrond                 |
+| `bg NUM`  | Herstart stilgelegd proces op achtergrond |
+
+## Processen eenmalig plannen
+
+Probeer dit:
+
+```console
+$ at now + 2 minutes
+warning: commands will be executed using /bin/sh
+at Mon Nov 15 15:47:00 2021
+at> date > /tmp/date.txt     
+at> <Ctrl+D>
+job 9 at Mon Nov 15 15:47:00 2021
+$ watch cat /tmp/date.txt
+```
+
+- `at` zal binnen 2 minuten het opgegeven commando uitvoeren
+- Met `watch` herbekijken we elke 2s de inhoud van het doelbestand
+
+## Processen eenmalig plannen (2)
+
+Nog `at` voorbeelden:
+
+- `at 3:03 AM`
+- `at midnight`
+- `at 1am tomorrow`
+- `at now + 3 weeks`
+-...
+
+## Overzicht
+
+| Commando   | Betekenis                                      |
+| :--------- | :--------------------------------------------- |
+| `at`       | Voer commando's uit op specifiek tijdstip      |
+| `atq`      | Geeft lijst van geplande taken                 |
+| `atrm NUM` | Verwijder taak met id NUM                      |
+| `batch`    | Voer taak uit wanneer systeem minder belast is |
+
+## Processen herhaald plannen: cron
+
+- Bekijk `/etc/crontab`
+- Bevat taken die regelmatig gepland worden:
+    - tijdsaanduiding
+    - commando
+- Crontab per gebruiker:
+    - tonen: `crontab -l`
+    - bewerken: `crontab -e`
+
+## Tijdsaanduiding
+
+| Veld | Beschrijving     | Waarden |
+| :--- | :--------------- | :------ |
+| MIN  | Minuten          | 0-59    |
+| HOUR | Uren             | 0-23    |
+| DOM  | Dag van de maand | 1-31    |
+| MON  | Maand            | 1-12    |
+| DOW  | Dag van de week  | 0-7     |
+| CMD  | Commando         |         |
+
+Dag van de week: zo = 0/7, ma = 1, di = 2, ...
+
+## Voorbeelden
+
+```text
+# use /bin/sh to run commands, no matter what /etc/passwd says
+SHELL=/bin/sh
+# mail any output to `paul', no matter whose crontab this is
+MAILTO=paul
+# Set time zone
+CRON_TZ=Japan
+# run five minutes after midnight, every day
+5 0 * * *       $HOME/bin/daily.job >> $HOME/tmp/out 2>&1
+# run at 2:15pm on the first of every month -- output mailed to paul
+15 14 1 * *     $HOME/bin/monthly
+# run at 10 pm on weekdays, annoy Joe
+0 22 * * 1-5    mail -s "It's 10pm" joe%Joe,%%Where are your kids?%
+23 0-23/2 * * * echo "run 23 minutes after midn, 2am, 4am ..., everyday"
+5 4 * * sun     echo "run at 5 after 4 every sunday"
+```

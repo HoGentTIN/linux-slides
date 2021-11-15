@@ -34,7 +34,7 @@ Een functie gedraagt zich als een script!
 - positionele parameters: `${1}`, `${2}`, enz.
 - `return STATUS` ipv `exit`
 
-## Scope variabelen bij functies
+## Scope variabelen bij functies - global
 
 Wat is de uitvoer van dit script?
 
@@ -44,6 +44,24 @@ var_a=a
 
 foo() {
   var_b=b
+  echo "${var_a} ${var_b}"
+}
+
+foo
+
+echo "${var_a} ${var_b}"
+```
+
+## Scope variabelen bij functies - local
+
+Wat is de uitvoer van dit script?
+
+```bash
+#! /usr/bin/env bash
+var_a=a
+
+foo() {
+  local var_b=b
   echo "${var_a} ${var_b}"
 }
 
@@ -120,7 +138,6 @@ esac
 - Gebruik lokale variabelen in functies
 - Deel script op in (herbruikbare) functies
 
-Meer tips op: <https://gitpitch.com/bertvv/presentation-clean-bash>
 
 # Plannen van systeembeheertaken: cronjobs
 
@@ -133,12 +150,17 @@ $ vi test.txt
 Ctrl+Z
 
 [1]+  Stopped                 gvim -v test.txt
+$ bg
+[1]+ sleep 30 &
+
 $ find / -type f > all-files.txt 2>&1 &
 [2] 4321
 ```
 
 - `Ctrl+Z` zet de uitvoer van een proces stil (nog niet afgesloten!)
+- `bg` start het proces terug op, maar in de achtergrond
 - `&` op het einde van een regel start proces op de achtergrond
+   = combinatie van `Ctrl+Z` en `bg`
 
 ## Achtergrondprocessen beheren
 

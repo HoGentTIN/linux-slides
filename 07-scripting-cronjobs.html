@@ -128,8 +128,8 @@
 <li><code>return STATUS</code> ipv <code>exit</code></li>
 </ul>
 </section>
-<section id="scope-variabelen-bij-functies" class="slide level2">
-<h2>Scope variabelen bij functies</h2>
+<section id="scope-variabelen-bij-functies---global" class="slide level2">
+<h2>Scope variabelen bij functies - global</h2>
 <p>Wat is de uitvoer van dit script?</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#! /usr/bin/env bash</span></span>
 <span id="cb3-2"><a href="#cb3-2"></a><span class="va">var_a=</span>a</span>
@@ -143,59 +143,74 @@
 <span id="cb3-10"><a href="#cb3-10"></a></span>
 <span id="cb3-11"><a href="#cb3-11"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
+<section id="scope-variabelen-bij-functies---local" class="slide level2">
+<h2>Scope variabelen bij functies - local</h2>
+<p>Wat is de uitvoer van dit script?</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co">#! /usr/bin/env bash</span></span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="va">var_a=</span>a</span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">foo()</span> <span class="kw">{</span></span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="bu">local</span> <span class="va">var_b=</span>b</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span>
+<span id="cb4-7"><a href="#cb4-7"></a><span class="kw">}</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a></span>
+<span id="cb4-9"><a href="#cb4-9"></a><span class="ex">foo</span></span>
+<span id="cb4-10"><a href="#cb4-10"></a></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span></code></pre></div>
+</section>
 <section id="functies-in-bash-voorbeeld" class="slide level2">
 <h2>Functies in Bash: voorbeeld</h2>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></span>
-<span id="cb4-4"><a href="#cb4-4"></a><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></span>
-<span id="cb4-5"><a href="#cb4-5"></a>  <span class="bu">local</span> <span class="va">iso=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb4-6"><a href="#cb4-6"></a>  <span class="bu">local</span> <span class="va">destination=</span><span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span></span>
-<span id="cb4-7"><a href="#cb4-7"></a>  <span class="bu">local</span> <span class="va">iso_size</span></span>
-<span id="cb4-8"><a href="#cb4-8"></a></span>
-<span id="cb4-9"><a href="#cb4-9"></a>  <span class="va">iso_size=$(</span><span class="fu">stat</span> -c <span class="st">&#39;%s&#39;</span> <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span><span class="va">)</span></span>
-<span id="cb4-10"><a href="#cb4-10"></a></span>
-<span id="cb4-11"><a href="#cb4-11"></a>  <span class="bu">printf</span> <span class="st">&quot;Copying %s (%&#39;dB) to %s\n&quot;</span> \</span>
-<span id="cb4-12"><a href="#cb4-12"></a>    <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
-<span id="cb4-13"><a href="#cb4-13"></a></span>
-<span id="cb4-14"><a href="#cb4-14"></a>  <span class="fu">dd</span> if=<span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> \</span>
-<span id="cb4-15"><a href="#cb4-15"></a>    <span class="kw">|</span> <span class="ex">pv</span> --size <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> \</span>
-<span id="cb4-16"><a href="#cb4-16"></a>    <span class="kw">|</span> <span class="fu">sudo</span> dd of=<span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
-<span id="cb4-17"><a href="#cb4-17"></a><span class="kw">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
+<span id="cb5-2"><a href="#cb5-2"></a><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></span>
+<span id="cb5-3"><a href="#cb5-3"></a><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="bu">local</span> <span class="va">iso=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb5-6"><a href="#cb5-6"></a>  <span class="bu">local</span> <span class="va">destination=</span><span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span></span>
+<span id="cb5-7"><a href="#cb5-7"></a>  <span class="bu">local</span> <span class="va">iso_size</span></span>
+<span id="cb5-8"><a href="#cb5-8"></a></span>
+<span id="cb5-9"><a href="#cb5-9"></a>  <span class="va">iso_size=$(</span><span class="fu">stat</span> -c <span class="st">&#39;%s&#39;</span> <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span><span class="va">)</span></span>
+<span id="cb5-10"><a href="#cb5-10"></a></span>
+<span id="cb5-11"><a href="#cb5-11"></a>  <span class="bu">printf</span> <span class="st">&quot;Copying %s (%&#39;dB) to %s\n&quot;</span> \</span>
+<span id="cb5-12"><a href="#cb5-12"></a>    <span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> <span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
+<span id="cb5-13"><a href="#cb5-13"></a></span>
+<span id="cb5-14"><a href="#cb5-14"></a>  <span class="fu">dd</span> if=<span class="st">&quot;</span><span class="va">${iso}</span><span class="st">&quot;</span> \</span>
+<span id="cb5-15"><a href="#cb5-15"></a>    <span class="kw">|</span> <span class="ex">pv</span> --size <span class="st">&quot;</span><span class="va">${iso_size}</span><span class="st">&quot;</span> \</span>
+<span id="cb5-16"><a href="#cb5-16"></a>    <span class="kw">|</span> <span class="fu">sudo</span> dd of=<span class="st">&quot;</span><span class="va">${destination}</span><span class="st">&quot;</span></span>
+<span id="cb5-17"><a href="#cb5-17"></a><span class="kw">}</span></span></code></pre></div>
 </section>
 <section id="case-1" class="slide level2">
 <h2>Case (1)</h2>
-<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">case</span> EXPR<span class="kw"> in</span></span>
-<span id="cb5-2"><a href="#cb5-2"></a>  PATROON1<span class="kw">)</span></span>
-<span id="cb5-3"><a href="#cb5-3"></a>    <span class="co"># ...</span></span>
-<span id="cb5-4"><a href="#cb5-4"></a>    <span class="kw">;;</span></span>
-<span id="cb5-5"><a href="#cb5-5"></a>  PATROON2<span class="kw">)</span></span>
-<span id="cb5-6"><a href="#cb5-6"></a>    <span class="co"># ...</span></span>
-<span id="cb5-7"><a href="#cb5-7"></a>    <span class="kw">;;</span></span>
-<span id="cb5-8"><a href="#cb5-8"></a>  *<span class="kw">)</span></span>
-<span id="cb5-9"><a href="#cb5-9"></a>    <span class="co"># ...</span></span>
-<span id="cb5-10"><a href="#cb5-10"></a>    <span class="kw">;;</span></span>
-<span id="cb5-11"><a href="#cb5-11"></a><span class="kw">esac</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">case</span> EXPR<span class="kw"> in</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>  PATROON1<span class="kw">)</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a>    <span class="co"># ...</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>    <span class="kw">;;</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>  PATROON2<span class="kw">)</span></span>
+<span id="cb6-6"><a href="#cb6-6"></a>    <span class="co"># ...</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>    <span class="kw">;;</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>  *<span class="kw">)</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a>    <span class="co"># ...</span></span>
+<span id="cb6-10"><a href="#cb6-10"></a>    <span class="kw">;;</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="kw">esac</span></span></code></pre></div>
 </section>
 <section id="case-2" class="slide level2">
 <h2>Case (2)</h2>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1"></a><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></span>
-<span id="cb6-4"><a href="#cb6-4"></a>  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></span>
-<span id="cb6-5"><a href="#cb6-5"></a>    <span class="ex">usage</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>    <span class="bu">exit</span> 0</span>
-<span id="cb6-7"><a href="#cb6-7"></a>    <span class="kw">;;</span></span>
-<span id="cb6-8"><a href="#cb6-8"></a>  -v<span class="kw">|</span>--verbose<span class="kw">)</span></span>
-<span id="cb6-9"><a href="#cb6-9"></a>    <span class="va">verbose=</span>y</span>
-<span id="cb6-10"><a href="#cb6-10"></a>    <span class="bu">shift</span></span>
-<span id="cb6-11"><a href="#cb6-11"></a>    <span class="kw">;;</span></span>
-<span id="cb6-12"><a href="#cb6-12"></a>  *<span class="kw">)</span></span>
-<span id="cb6-13"><a href="#cb6-13"></a>    <span class="bu">printf</span> <span class="st">&#39;Unrecognized option: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></span>
-<span id="cb6-14"><a href="#cb6-14"></a>    <span class="ex">usage</span></span>
-<span id="cb6-15"><a href="#cb6-15"></a>    <span class="bu">exit</span> 1</span>
-<span id="cb6-16"><a href="#cb6-16"></a>    <span class="kw">;;</span></span>
-<span id="cb6-17"><a href="#cb6-17"></a><span class="kw">esac</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1"></a><span class="va">option=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a></span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span><span class="kw"> in</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  -h<span class="kw">|</span>--help<span class="kw">|</span>-?<span class="kw">)</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>    <span class="ex">usage</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a>    <span class="bu">exit</span> 0</span>
+<span id="cb7-7"><a href="#cb7-7"></a>    <span class="kw">;;</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  -v<span class="kw">|</span>--verbose<span class="kw">)</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>    <span class="va">verbose=</span>y</span>
+<span id="cb7-10"><a href="#cb7-10"></a>    <span class="bu">shift</span></span>
+<span id="cb7-11"><a href="#cb7-11"></a>    <span class="kw">;;</span></span>
+<span id="cb7-12"><a href="#cb7-12"></a>  *<span class="kw">)</span></span>
+<span id="cb7-13"><a href="#cb7-13"></a>    <span class="bu">printf</span> <span class="st">&#39;Unrecognized option: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></span>
+<span id="cb7-14"><a href="#cb7-14"></a>    <span class="ex">usage</span></span>
+<span id="cb7-15"><a href="#cb7-15"></a>    <span class="bu">exit</span> 1</span>
+<span id="cb7-16"><a href="#cb7-16"></a>    <span class="kw">;;</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a><span class="kw">esac</span></span></code></pre></div>
 </section>
 <section id="tips" class="slide level2">
 <h2>Tips</h2>
@@ -206,7 +221,6 @@
 <li>Gebruik lokale variabelen in functies</li>
 <li>Deel script op in (herbruikbare) functies</li>
 </ul>
-<p>Meer tips op: <a href="https://gitpitch.com/bertvv/presentation-clean-bash" class="uri">https://gitpitch.com/bertvv/presentation-clean-bash</a></p>
 </section></section>
 <section><section id="plannen-van-systeembeheertaken-cronjobs" class="title-slide slide level1"><h1>Plannen van systeembeheertaken: cronjobs</h1></section>
 <section id="processen-op-de-achtergrond" class="slide level2">
@@ -216,11 +230,15 @@
 Ctrl+Z
 
 [1]+  Stopped                 gvim -v test.txt
+$ bg
+[1]+ sleep 30 &amp;
+
 $ find / -type f &gt; all-files.txt 2&gt;&amp;1 &amp;
 [2] 4321</code></pre>
 <ul>
 <li><code>Ctrl+Z</code> zet de uitvoer van een proces stil (nog niet afgesloten!)</li>
-<li><code>&amp;</code> op het einde van een regel start proces op de achtergrond</li>
+<li><code>bg</code> start het proces terug op, maar in de achtergrond</li>
+<li><code>&amp;</code> op het einde van een regel start proces op de achtergrond = combinatie van <code>Ctrl+Z</code> en <code>bg</code></li>
 </ul>
 </section>
 <section id="achtergrondprocessen-beheren" class="slide level2">

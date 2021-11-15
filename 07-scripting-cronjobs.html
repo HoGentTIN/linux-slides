@@ -209,8 +209,180 @@
 <p>Meer tips op: <a href="https://gitpitch.com/bertvv/presentation-clean-bash" class="uri">https://gitpitch.com/bertvv/presentation-clean-bash</a></p>
 </section></section>
 <section><section id="plannen-van-systeembeheertaken-cronjobs" class="title-slide slide level1"><h1>Plannen van systeembeheertaken: cronjobs</h1></section>
-<section id="todo" class="slide level2">
-<h2>TODO</h2>
+<section id="processen-op-de-achtergrond" class="slide level2">
+<h2>Processen op de achtergrond</h2>
+<p>Probeer dit:</p>
+<pre class="console"><code>$ vi test.txt
+Ctrl+Z
+
+[1]+  Stopped                 gvim -v test.txt
+$ find / -type f &gt; all-files.txt 2&gt;&amp;1 &amp;
+[2] 4321</code></pre>
+<ul>
+<li><code>Ctrl+Z</code> zet de uitvoer van een proces stil (nog niet afgesloten!)</li>
+<li><code>&amp;</code> op het einde van een regel start proces op de achtergrond</li>
+</ul>
+</section>
+<section id="achtergrondprocessen-beheren" class="slide level2">
+<h2>Achtergrondprocessen beheren</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>jobs</code></td>
+<td style="text-align: left;">Lijst van achtergrondprocessen</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>jobs -l</code></td>
+<td style="text-align: left;">Idem, toon ook Process ID (PID)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>fg NUM</code></td>
+<td style="text-align: left;">Breng proces op voorgrond</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>bg NUM</code></td>
+<td style="text-align: left;">Herstart stilgelegd proces op achtergrond</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="processen-eenmalig-plannen" class="slide level2">
+<h2>Processen eenmalig plannen</h2>
+<p>Probeer dit:</p>
+<pre class="console"><code>$ at now + 2 minutes
+warning: commands will be executed using /bin/sh
+at Mon Nov 15 15:47:00 2021
+at&gt; date &gt; /tmp/date.txt     
+at&gt; &lt;Ctrl+D&gt;
+job 9 at Mon Nov 15 15:47:00 2021
+$ watch cat /tmp/date.txt</code></pre>
+<ul>
+<li><code>at</code> zal binnen 2 minuten het opgegeven commando uitvoeren</li>
+<li>Met <code>watch</code> herbekijken we elke 2s de inhoud van het doelbestand</li>
+</ul>
+</section>
+<section id="processen-eenmalig-plannen-2" class="slide level2">
+<h2>Processen eenmalig plannen (2)</h2>
+<p>Nog <code>at</code> voorbeelden:</p>
+<ul>
+<li><code>at 3:03 AM</code></li>
+<li><code>at midnight</code></li>
+<li><code>at 1am tomorrow</code></li>
+<li><code>at now + 3 weeks</code> -…</li>
+</ul>
+</section>
+<section id="overzicht" class="slide level2">
+<h2>Overzicht</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>at</code></td>
+<td style="text-align: left;">Voer commando’s uit op specifiek tijdstip</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>atq</code></td>
+<td style="text-align: left;">Geeft lijst van geplande taken</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>atrm NUM</code></td>
+<td style="text-align: left;">Verwijder taak met id NUM</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>batch</code></td>
+<td style="text-align: left;">Voer taak uit wanneer systeem minder belast is</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="processen-herhaald-plannen-cron" class="slide level2">
+<h2>Processen herhaald plannen: cron</h2>
+<ul>
+<li>Bekijk <code>/etc/crontab</code></li>
+<li>Bevat taken die regelmatig gepland worden:
+<ul>
+<li>tijdsaanduiding</li>
+<li>commando</li>
+</ul></li>
+<li>Crontab per gebruiker:
+<ul>
+<li>tonen: <code>crontab -l</code></li>
+<li>bewerken: <code>crontab -e</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="tijdsaanduiding" class="slide level2">
+<h2>Tijdsaanduiding</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Veld</th>
+<th style="text-align: left;">Beschrijving</th>
+<th style="text-align: left;">Waarden</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">MIN</td>
+<td style="text-align: left;">Minuten</td>
+<td style="text-align: left;">0-59</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">HOUR</td>
+<td style="text-align: left;">Uren</td>
+<td style="text-align: left;">0-23</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DOM</td>
+<td style="text-align: left;">Dag van de maand</td>
+<td style="text-align: left;">1-31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">MON</td>
+<td style="text-align: left;">Maand</td>
+<td style="text-align: left;">1-12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">DOW</td>
+<td style="text-align: left;">Dag van de week</td>
+<td style="text-align: left;">0-7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">CMD</td>
+<td style="text-align: left;">Commando</td>
+<td style="text-align: left;"></td>
+</tr>
+</tbody>
+</table>
+<p>Dag van de week: zo = 0/7, ma = 1, di = 2, …</p>
+</section>
+<section id="voorbeelden" class="slide level2">
+<h2>Voorbeelden</h2>
+<pre class="text"><code># use /bin/sh to run commands, no matter what /etc/passwd says
+SHELL=/bin/sh
+# mail any output to `paul&#39;, no matter whose crontab this is
+MAILTO=paul
+# Set time zone
+CRON_TZ=Japan
+# run five minutes after midnight, every day
+5 0 * * *       $HOME/bin/daily.job &gt;&gt; $HOME/tmp/out 2&gt;&amp;1
+# run at 2:15pm on the first of every month -- output mailed to paul
+15 14 1 * *     $HOME/bin/monthly
+# run at 10 pm on weekdays, annoy Joe
+0 22 * * 1-5    mail -s &quot;It&#39;s 10pm&quot; joe%Joe,%%Where are your kids?%
+23 0-23/2 * * * echo &quot;run 23 minutes after midn, 2am, 4am ..., everyday&quot;
+5 4 * * sun     echo &quot;run at 5 after 4 every sunday&quot;</code></pre>
 </section></section>
     </div>
   </div>

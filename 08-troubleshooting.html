@@ -45,9 +45,9 @@
 <section><section id="preparation" class="title-slide slide level1"><h1>Preparation</h1></section>
 <section id="before-we-begin" class="slide level2">
 <h2>Before we begin</h2>
-<p>Set up the test environment</p>
-<pre class="console"><code>$ cd elnx-syllabus/demo
-$ vagrant up web db
+<p>Set up the test environment: - download the zipfile <code>trouble-demo.zip</code> - unzip - go to folder, and prep VMs:</p>
+<pre class="console"><code>$ cd trouble-demo
+$ vagrant up 
 [...]</code></pre>
 </section></section>
 <section><section id="introduction" class="title-slide slide level1"><h1>Introduction</h1></section>
@@ -76,20 +76,20 @@ $ vagrant up web db
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;"><code>web</code></td>
-<td style="text-align: left;">192.168.56.72</td>
+<td style="text-align: left;"><code>webt</code></td>
+<td style="text-align: left;">192.168.76.72</td>
 <td style="text-align: left;">http, https (Apache)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;"><code>db</code></td>
-<td style="text-align: left;">192.168.56.73</td>
+<td style="text-align: left;"><code>dbt</code></td>
+<td style="text-align: left;">192.168.76.73</td>
 <td style="text-align: left;">mysql (MariaDB)</td>
 </tr>
 </tbody>
 </table>
 <ul>
-<li>On <code>web</code>, a PHP app runs a query on the <code>db</code></li>
-<li><code>db</code> is set up correctly, <code>web</code> is not</li>
+<li>On <code>webt</code>, a PHP app runs a query on the <code>dbt</code></li>
+<li><code>dbt</code> is set up correctly, <code>webt</code> is not</li>
 </ul>
 </section>
 <section id="objective" class="slide level2">
@@ -101,8 +101,8 @@ $ vagrant up web db
 <section id="test-the-database-server" class="slide level2">
 <h2>Test the database server</h2>
 <pre class="shell"><code>$ ./query_db.sh 
-+ mysql --host=192.168.56.73 --user=demo_user \
-+   --password=ArfovWap_OwkUfeaf4 demo \
++ mysql --host=192.168.76.73 --user=demo_user \
++:   --password=ArfovWap_OwkUfeaf4 demo \
 +   &#39;--execute=SELECT * FROM demo_tbl;&#39;
 +----+-------------------+
 | id | name              |
@@ -113,8 +113,8 @@ $ vagrant up web db
 + set +x</code></pre>
 <p>Should work from</p>
 <ul>
-<li>physical system (MacOS/Linux and if MySQL/MariaDB client is installed)</li>
-<li>from VMs (<code>/vagrant/query_db.sh</code>)</li>
+<li>your Linux Mint GUI VM (if it is connected to <code>intnet</code> <code>sudo apt install mysql-client</code></li>
+<li>from demo VMs (<code>/vagrant/query_db.sh</code>)</li>
 </ul>
 </section>
 <section id="use-a-bottom-up-approach" class="slide level2">
@@ -217,7 +217,7 @@ ONBOOT=yes
 <pre class="console"><code>$ cat /etc/sysconfig/network-scripts/ifcfg-enp0s8
 BOOTPROTO=none
 ONBOOT=yes
-IPADDR=192.168.56.73
+IPADDR=192.168.76.73
 NETMASK=255.255.255.0
 DEVICE=enp0s8
 [...]</code></pre>
@@ -281,10 +281,10 @@ DEVICE=enp0s8
 <section id="lan-connectivity-ping" class="slide level2">
 <h2>LAN connectivity: <code>ping</code></h2>
 <ul>
-<li>physical -&gt; VM: <code>ping 192.168.56.72</code></li>
-<li>VM -&gt; physical: <code>ping 192.168.56.1</code></li>
-<li>VM -&gt; GW: <code>ping 10.0.2.2</code></li>
-<li>VM -&gt; DNS: <code>ping 10.0.2.3</code></li>
+<li>GUI-VM-&gt; VM: <code>ping 192.168.76.72</code></li>
+<li>VM -&gt; GUI-VM: <code>ping 192.168.76.101</code></li>
+<li>VM -&gt; NAT-GW: <code>ping 10.0.2.2</code></li>
+<li>VM -&gt; NAT-DNS: <code>ping 10.0.2.3</code></li>
 </ul>
 <p>Remark: some routers <strong>block</strong> ICMP!</p>
 </section>
@@ -324,24 +324,6 @@ DEVICE=enp0s8
 </ul></li>
 </ul>
 </section>
-<section id="correct-portsinterfaces" class="slide level2">
-<h2>Correct ports/interfaces?</h2>
-<ul>
-<li>Use <code>ss</code> (not <code>netstat</code>)
-<ul>
-<li>TCP service: <code>sudo ss -tlnp</code></li>
-<li>UDP service: <code>sudo ss -ulnp</code></li>
-</ul></li>
-<li>Correct port number?
-<ul>
-<li>See <code>/etc/services</code></li>
-</ul></li>
-<li>Correct interface?
-<ul>
-<li>Only loopback?</li>
-</ul></li>
-</ul>
-</section>
 <section id="firewall-settings" class="slide level2">
 <h2>Firewall settings</h2>
 <p><code>sudo firewall-cmd --list-all</code></p>
@@ -361,6 +343,24 @@ DEVICE=enp0s8
 <pre class="console"><code>$ sudo firewall-cmd --add-service=http --permanent
 $ sudo firewall-cmd --add-service=https --permanent
 $ sudo firewall-cmd --reload</code></pre>
+</section>
+<section id="correct-portsinterfaces" class="slide level2">
+<h2>Correct ports/interfaces?</h2>
+<ul>
+<li>Use <code>ss</code> (not <code>netstat</code>)
+<ul>
+<li>TCP service: <code>sudo ss -tlnp</code></li>
+<li>UDP service: <code>sudo ss -ulnp</code></li>
+</ul></li>
+<li>Correct port number?
+<ul>
+<li>See <code>/etc/services</code></li>
+</ul></li>
+<li>Correct interface?
+<ul>
+<li>Only loopback?</li>
+</ul></li>
+</ul>
 </section></section>
 <section><section id="application-layer" class="title-slide slide level1"><h1>Application Layer</h1></section>
 <section id="checklist-application-layer" class="slide level2">
@@ -411,6 +411,47 @@ $ sudo firewall-cmd --reload</code></pre>
 <li>Man pages
 <ul>
 <li>smb.conf(5), dhcpd.conf(5), named.conf(5), …</li>
+</ul></li>
+</ul>
+</section></section>
+<section><section id="selinux-troubleshooting" class="title-slide slide level1"><h1>SELinux troubleshooting</h1></section>
+<section id="selinux" class="slide level2">
+<h2>SELinux</h2>
+<ul>
+<li>SELinux is Mandatory Access Control in the Linux kernel</li>
+<li>Settings:
+<ul>
+<li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
+<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>, <code>restorecon</code></li>
+<li>Policy modules: <code>sepolicy</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="check-file-context" class="slide level2">
+<h2>Check file context</h2>
+<ul>
+<li>Is the file context as expected?
+<ul>
+<li><code>ls -Z /var/www/html</code></li>
+</ul></li>
+<li>Set file context to default value
+<ul>
+<li><code>sudo restorecon -R /var/www/</code></li>
+</ul></li>
+<li>Set file context to specified value
+<ul>
+<li><code>sudo chcon -t httpd_sys_content_t test.php</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="check-booleans" class="slide level2">
+<h2>Check booleans</h2>
+<p><code>getsebool -a | grep http</code></p>
+<ul>
+<li>Know the relevant booleans! (RedHat manuals)</li>
+<li>Enable boolean:
+<ul>
+<li><code>sudo setsebool -P httpd_can_network_connect_db on</code></li>
 </ul></li>
 </ul>
 </section></section>

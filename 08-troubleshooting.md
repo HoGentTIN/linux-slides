@@ -9,11 +9,14 @@ date: 2021-2022
 
 ## Before we begin
 
-Set up the test environment
+Set up the test environment:
+- download the zipfile `trouble-demo.zip`
+- unzip
+- go to folder, and prep VMs:
 
 ```console
-$ cd elnx-syllabus/demo
-$ vagrant up web db
+$ cd trouble-demo
+$ vagrant up 
 [...]
 ```
 
@@ -34,13 +37,13 @@ $ vagrant up web db
 
 Two VirtualBox VMs, set up with Vagrant
 
-| Host  | IP            | Service              |
-| :---  | :---          | :---                 |
-| `web` | 192.168.56.72 | http, https (Apache) |
-| `db`  | 192.168.56.73 | mysql (MariaDB)      |
+| Host   | IP            | Service              |
+| :---   | :---          | :---                 |
+| `webt` | 192.168.76.72 | http, https (Apache) |
+| `dbt`  | 192.168.76.73 | mysql (MariaDB)      |
 
-- On `web`, a PHP app runs a query on the `db`
-- `db` is set up correctly, `web` is not
+- On `webt`, a PHP app runs a query on the `dbt`
+- `dbt` is set up correctly, `webt` is not
 
 ## Objective
 
@@ -50,8 +53,8 @@ Two VirtualBox VMs, set up with Vagrant
 
 ```shell
 $ ./query_db.sh 
-+ mysql --host=192.168.56.73 --user=demo_user \
-+   --password=ArfovWap_OwkUfeaf4 demo \
++ mysql --host=192.168.76.73 --user=demo_user \
++:   --password=ArfovWap_OwkUfeaf4 demo \
 +   '--execute=SELECT * FROM demo_tbl;'
 +----+-------------------+
 | id | name              |
@@ -64,8 +67,9 @@ $ ./query_db.sh
 
 Should work from
 
-- physical system (MacOS/Linux and if MySQL/MariaDB client is installed)
-- from VMs (`/vagrant/query_db.sh`)
+- your Linux Mint GUI VM (if it is connected to `intnet`
+  `sudo apt install mysql-client`
+- from demo VMs (`/vagrant/query_db.sh`)
 
 ## Use a bottom-up approach
 
@@ -136,7 +140,7 @@ Example: Static IP
 $ cat /etc/sysconfig/network-scripts/ifcfg-enp0s8
 BOOTPROTO=none
 ONBOOT=yes
-IPADDR=192.168.56.73
+IPADDR=192.168.76.73
 NETMASK=255.255.255.0
 DEVICE=enp0s8
 [...]
@@ -182,10 +186,10 @@ Checking routing within the *LAN*:
 
 ## LAN connectivity: `ping`
 
-- physical -> VM: `ping 192.168.56.72`
-- VM -> physical: `ping 192.168.56.1`
-- VM -> GW: `ping 10.0.2.2`
-- VM -> DNS: `ping 10.0.2.3`
+- GUI-VM-> VM: `ping 192.168.76.72`
+- VM -> GUI-VM: `ping 192.168.76.101`
+- VM -> NAT-GW:  `ping 10.0.2.2`
+- VM -> NAT-DNS: `ping 10.0.2.3`
 
 Remark: some routers **block** ICMP!
 
@@ -217,16 +221,6 @@ Next step: routing beyond GW
 - Start at boot: `enabled` vs. `disabled`
     - `systemctl enable httpd`
 
-## Correct ports/interfaces?
-
-- Use `ss` (not `netstat`)
-    - TCP service: `sudo ss -tlnp`
-    - UDP service: `sudo ss -ulnp`
-- Correct port number?
-    - See `/etc/services`
-- Correct interface?
-    - Only loopback?
-
 ## Firewall settings
 
 `sudo firewall-cmd --list-all`
@@ -245,6 +239,16 @@ $ sudo firewall-cmd --add-service=http --permanent
 $ sudo firewall-cmd --add-service=https --permanent
 $ sudo firewall-cmd --reload
 ```
+## Correct ports/interfaces?
+
+- Use `ss` (not `netstat`)
+    - TCP service: `sudo ss -tlnp`
+    - UDP service: `sudo ss -ulnp`
+- Correct port number?
+    - See `/etc/services`
+- Correct interface?
+    - Only loopback?
+
 
 # Application Layer
 
@@ -278,6 +282,35 @@ $ sudo firewall-cmd --reload
     - <https://httpd.apache.org/docs/2.4/configuring.html>
 - Man pages
     - smb.conf(5), dhcpd.conf(5), named.conf(5), ...
+
+
+# SELinux troubleshooting
+
+## SELinux
+
+- SELinux is Mandatory Access Control in the Linux kernel
+- Settings:
+    - Booleans: `getsebool`, `setsebool`
+    - Contexts, labels: `ls -Z`, `chcon`, `restorecon`
+    - Policy modules: `sepolicy`
+
+## Check file context
+
+- Is the file context as expected?
+    - `ls -Z /var/www/html`
+- Set file context to default value
+    - `sudo restorecon -R /var/www/`
+- Set file context to specified value
+    - `sudo chcon -t httpd_sys_content_t test.php`
+
+## Check booleans
+
+`getsebool -a | grep http`
+
+- Know the relevant booleans! (RedHat manuals)
+- Enable boolean:
+    - `sudo setsebool -P httpd_can_network_connect_db on`
+
 
 # General guidelines
 

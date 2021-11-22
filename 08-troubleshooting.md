@@ -10,7 +10,8 @@ date: 2021-2022
 ## Before we begin
 
 Set up the test environment:
-- download the zipfile `trouble-demo.zip`
+
+- download the zipfile `trouble-demo.zip` (learning path)
 - unzip
 - go to folder, and prep VMs:
 

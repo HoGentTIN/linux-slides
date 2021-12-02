@@ -11,8 +11,8 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - [7. Complexe scripts, cronjobs](07-scripting-cronjobs.html)
 - [8. Troubleshooting, SSH-configuratie](08-troubleshooting.html)
 - [9. SSH-tuning, BIND](09-ssh-bind.html)
-- [10. Filesystems](10-filesystems.html)
+- [10. DNS met BIND](10-bind.html)
 - [11. Linux installatie: expert-modus](11-expert-installatie.html)
 - [12. LVM, RAID](12-LVM-RAID.html)
 
-Laatste wijziging: 2021-11-22T23:27:53+00:00
+Laatste wijziging: 2021-12-02T15:56:12+00:00

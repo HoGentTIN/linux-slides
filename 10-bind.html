@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Andy Van Maele, Bert Van Vreckem">
+  <title>10. DNS met BIND</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">10. DNS met BIND</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2021-2022</p>
+</section>
+
+<section>
+<section id="dns-server-met-bind" class="title-slide slide level1">
+<h1>DNS-server met BIND</h1>
+
+</section>
+<section id="agenda" class="slide level2">
+<h2>Agenda</h2>
+<ul>
+<li>DNS</li>
+<li>BIND op Enterprise Linux</li>
+<li>Configuratie</li>
+<li>Zonebestanden</li>
+</ul>
+<p><a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+</section>
+<section id="opstelling" class="slide level2">
+<h2>Opstelling</h2>
+<ul>
+<li>We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
+<ul>
+<li>Github repo: “linux-2122-automation-USERNAME”</li>
+</ul></li>
+<li>In de les: stap voor stap, manueel</li>
+<li>Labo-taak: automatiseren!</li>
+</ul>
+</section>
+<section id="nieuwe-vm" class="slide level2">
+<h2>Nieuwe VM</h2>
+<ul>
+<li><p>In <code>vagrant-hosts.yml</code>:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> srv</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-8</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ip</span><span class="kw">:</span><span class="at"> </span><span class="fl">192.168.76.254</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">intnet</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div></li>
+<li><p>In <code>provisioning/</code> script <code>srv.sh</code> toevoegen</p>
+<ul>
+<li>bv. kopie van <code>web.sh</code>, toegevoegde code voor installatie LAMP verwijderen</li>
+</ul></li>
+<li><p><code>vagrant up srv</code></p></li>
+</ul>
+</section></section>
+<section>
+<section id="dns" class="title-slide slide level1">
+<h1>DNS</h1>
+
+</section>
+<section id="in-wezen-is-dns-eenvoudig" class="slide level2">
+<h2>In wezen is DNS eenvoudig!</h2>
+<ul>
+<li>Vertaling van hostnaam naar IP in een tekstbestand</li>
+<li>DNS query = opzoeking in dat tekstbestand</li>
+<li>Queries kunnen over het netwerk gestuurd worden</li>
+</ul>
+<p>en toch blijkt…</p>
+<p><a href="https://krisbuytaert.be/blog/linux-troubleshooting-101-2016-edition/index.html">Everything is a freaking DNS problem</a></p>
+</section>
+<section id="poor-mans-dns" class="slide level2">
+<h2>Poor man’s DNS</h2>
+<p>Hosts-bestand: <code>/etc/hosts</code></p>
+<pre class="text"><code># IP-address   hostname    aliases
+127.0.0.1      localhost   localhost.localdomain
+::1            localhost6  localhost6.localdomain6
+
+172.22.255.254 router4038  gw gw.netlab.hogent.be
+172.22.0.2     server4038  server4038.netlab.hogent.be
+172.22.0.3     printer4038 printer4038.netlab.hogent.be</code></pre>
+<ul>
+<li>On Windows: <code>c:\Windows\System32\Drivers\etc\hosts</code></li>
+<li>Ad blocker: <a href="https://someonewhocares.org/hosts/" class="uri">https://someonewhocares.org/hosts/</a></li>
+</ul>
+</section>
+<section id="maar" class="slide level2">
+<h2>Maar…</h2>
+<figure>
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Domain_name_space.svg" alt="Hierarchical domains" /><figcaption aria-hidden="true">Hierarchical domains</figcaption>
+</figure>
+</section>
+<section class="slide level2">
+
+<figure>
+<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png" alt="Iterative resolver" /><figcaption aria-hidden="true">Iterative resolver</figcaption>
+</figure>
+</section>
+<section id="root-dns-servers" class="slide level2">
+<h2>Root DNS servers</h2>
+<p><a href="http://www.root-servers.org/" class="uri">http://www.root-servers.org/</a></p>
+<ul>
+<li>12 root servers: [a-m].root-servers.net</li>
+<li>Verschillende instanties per root server!
+<ul>
+<li>totaal: 1000+</li>
+<li>vb. Brussels: e, f, i, l</li>
+</ul></li>
+<li>Instanties v/e root server delen hun IP address!
+<ul>
+<li>routers sturen trafiek naar dichtstbijzijnde instantie</li>
+</ul></li>
+</ul>
+</section>
+<section id="types-van-dns-servers" class="slide level2">
+<h2>Types van DNS servers</h2>
+<ul>
+<li><strong>Authoritative</strong>: “bron van waarheid” voor een <em>zone</em>
+<ul>
+<li>zonebestand</li>
+</ul></li>
+<li><strong>Forwarding</strong>/<strong>caching</strong>: stuurt requests door naar andere servers</li>
+<li><strong>Primary</strong>/<strong>Secondary</strong> (master/slave): voor “high availability”
+<ul>
+<li>enkel primaire heeft zonebestand</li>
+<li>secundaire vraagt regelmatig “zone transfer”</li>
+</ul></li>
+</ul>
+</section>
+<section id="best-practices-in-productie" class="slide level2">
+<h2>Best practices in productie</h2>
+<ul>
+<li>Authoritative-only
+<ul>
+<li>Caching &amp; authoritative <strong>niet</strong> mengen</li>
+</ul></li>
+<li>DNS only
+<ul>
+<li><strong>Geen</strong> andere services op die machine</li>
+</ul></li>
+</ul>
+<p>Een typische AD DC overtreedt beide regels!</p>
+</section></section>
+<section>
+<section id="interactie-met-dns" class="title-slide slide level1">
+<h1>Interactie met DNS</h1>
+
+</section>
+<section id="nslookup" class="slide level2">
+<h2>nslookup</h2>
+<p>Stuur vraag naar de DNS-server in <code>/etc/resolv.conf</code></p>
+<pre class="console"><code>nslookup www.hogent.be</code></pre>
+<p>Stuur vraag naar specifieke DNS-server</p>
+<pre class="console"><code>nslookup www.hogent.be 193.190.172.1</code></pre>
+</section>
+<section id="dig-forward-lookups" class="slide level2">
+<h2>dig: forward lookups</h2>
+<pre class="console"><code>$ dig www.hogent.be
+[...]
+$ dig www.hogent.be @ens1.hogent.be +short
+hogent.be.
+193.190.173.132</code></pre>
+</section>
+<section id="dig-reverse-lookup" class="slide level2">
+<h2>dig: reverse lookup</h2>
+<pre class="console"><code>$ dig -x 193.190.173.132 @ens1.hogent.be +short
+net-173-node-133.hogent.be.</code></pre>
+</section>
+<section id="dig-ipv6" class="slide level2">
+<h2>dig: IPv6</h2>
+<pre class="console"><code>$ dig AAAA www.google.com +short
+2a00:1450:400e:806::2004</code></pre>
+</section>
+<section id="dig-domain-info" class="slide level2">
+<h2>dig: domain info</h2>
+<pre class="console"><code>$ dig NS hogent.be
+$ dig MX hogent.be
+$ dig SOA hogent.be
+$ dig ANY hogent.be @ens1.hogent.be
+$ dig AXFR zonetransfer.me @nsztm1.digi.ninja</code></pre>
+<ol type="1">
+<li>Wie is de <em>authoritative name server</em> voor hogent.be?</li>
+<li>Wie is de mail server voor hogent.be?</li>
+<li>Vraag de Start-of-Authority section voor hogent.be op</li>
+<li>Geef gelijk welk record met de opgegeven naam</li>
+<li>Vraag een domain transfer aan</li>
+</ol>
+</section></section>
+<section>
+<section id="bind" class="title-slide slide level1">
+<h1>BIND</h1>
+
+</section>
+<section id="berkeley-internet-name-domain" class="slide level2">
+<h2>Berkeley Internet Name Domain</h2>
+<ul>
+<li>Implementatie van het DNS protocol</li>
+<li>Meest gebruikte</li>
+<li>De facto standaard op Unix-achtige systemen</li>
+</ul>
+<p>Lees <em>DNS for rocket scientists</em>!</p>
+<p><a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+</section>
+<section id="installatie-op-enterprise-linux" class="slide level2">
+<h2>Installatie op Enterprise Linux</h2>
+<ul>
+<li>Package: <code>bind</code></li>
+<li>Configuratie: <code>/etc/named*</code></li>
+<li>Zonebestanden, enz: <code>/var/named/</code></li>
+</ul>
+</section>
+<section id="hoofdconfiguratiebestand" class="slide level2">
+<h2>Hoofdconfiguratiebestand</h2>
+<p><code>/etc/named.conf</code></p>
+<pre class="text"><code>options {
+  listen-on port 53 { any; };     //aanpassen!
+  listen-on-v6 port 53 { any; };  //aanpassen!
+  directory   &quot;/var/named&quot;;
+
+  // ...
+
+  allow-query     { any; };       //aanpassen!
+
+  recursion yes;
+
+  // ...
+};</code></pre>
+</section>
+<section id="belangrijkste-opties" class="slide level2">
+<h2>Belangrijkste opties:</h2>
+<ul>
+<li><code>listen-on</code>: port number + network interfaces
+<ul>
+<li><code>any;</code></li>
+<li><code>127.0.0.0/8; 192.168.76.0/24</code></li>
+</ul></li>
+<li><code>allow-query</code>: welke hosts mogen queries sturen?</li>
+<li><code>recursion</code>: recursieve queries toelaten
+<ul>
+<li>zou <code>no</code> moeten zijn op een authoritative name server!</li>
+</ul></li>
+</ul>
+</section>
+<section id="forwarding-name-server" class="slide level2">
+<h2>Forwarding name server</h2>
+<p>Als je de service nu opstart, heb je een forwarding name server</p>
+<p>Controleer dit!</p>
+<ul>
+<li>Draait de service?</li>
+<li>Op welke poort(en)?</li>
+<li>Firewall?</li>
+<li>Reageert de service op requests?
+<ul>
+<li>localhost?</li>
+<li>vanaf de Linux Mint?</li>
+</ul></li>
+</ul>
+</section>
+<section id="voorbeeld-domein-example.com" class="slide level2">
+<h2>Voorbeeld: domein example.com</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Host</th>
+<th style="text-align: left;">Alias</th>
+<th style="text-align: left;">IP</th>
+<th style="text-align: left;">Functie</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">ns1</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">192.0.2.1</td>
+<td style="text-align: left;">Primaire DNS-server</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">ns2</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">192.0.2.2</td>
+<td style="text-align: left;">Secundaire DNS-server</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">web</td>
+<td style="text-align: left;">www</td>
+<td style="text-align: left;">192.0.2.10</td>
+<td style="text-align: left;">Webserver</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">mail</td>
+<td style="text-align: left;">smtp, imap</td>
+<td style="text-align: left;">192.0.2.20</td>
+<td style="text-align: left;">Mailserver</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="configuratie-zone" class="slide level2">
+<h2>Configuratie zone:</h2>
+<p>Forward lookup zone voor <em>example.com</em></p>
+<pre class="text"><code>zone &quot;example.com&quot; IN {
+  type master;
+  file &quot;example.com&quot;;
+  notify yes;
+  allow-update { none; };
+};</code></pre>
+</section>
+<section id="zonebestand-voor-example.com" class="slide level2">
+<h2>Zonebestand voor example.com</h2>
+<p><code>/var/named/example.com</code></p>
+<pre class="text"><code>$ORIGIN example.com.
+$TTL 1W
+
+@ IN SOA ns.example.com. hostmaster.example.com. (
+  21120117 1D 1H 1W 1D )
+
+       IN  NS     ns1
+       IN  NS     ns2
+
+       IN  MX     10 mail
+
+ns1    IN  A      192.0.2.1
+ns2    IN  A      192.0.2.2
+
+web    IN  A      192.0.2.10
+www    IN  CNAME  web
+
+mail   IN  A      192.0.2.20
+smtp   IN  CNAME  mail
+imap   IN  CNAME  smtp</code></pre>
+</section>
+<section id="resource-records-rrs" class="slide level2">
+<h2>Resource records (RRs)</h2>
+<pre class="text"><code>web    IN  A      192.0.2.10
+www    IN  CNAME  web</code></pre>
+</section>
+<section id="types-van-resource-records" class="slide level2">
+<h2>Types van Resource Records</h2>
+<ul>
+<li><code>A</code>: hostnaam → IP</li>
+<li><code>AAAA</code>: hostnaam → IPv6</li>
+<li><code>PTR</code>: IP → hostnaam</li>
+<li><code>CNAME</code>: alias</li>
+<li><code>SOA</code>: start of authority</li>
+<li><code>NS</code>: authoritative name server(s)</li>
+<li><code>MX</code>: mail server</li>
+<li><code>SRV</code>: service</li>
+<li><code>TXT</code>: text record</li>
+<li>…</li>
+</ul>
+</section>
+<section id="start-of-authority" class="slide level2">
+<h2>Start of Authority</h2>
+<pre class="text"><code>@ IN SOA ns.example.com. hostmaster.example.com. (
+  21120117 1D 1H 1W 1D )</code></pre>
+<ul>
+<li><code>srv.example.com.</code>: primaire DNS-server</li>
+<li><code>hostmaster.example.com.</code>: email adres v/d sysadmin
+<ul>
+<li><code>hostmaster@example.com</code></li>
+</ul></li>
+<li><code>21120120</code>: serial
+<ul>
+<li><strong>LET OP</strong> secundaire servers zullen <strong>alleen</strong> update uitvoeren als serial verhoogd is</li>
+</ul></li>
+</ul>
+</section>
+<section id="start-of-authority-timeouts" class="slide level2">
+<h2>Start of Authority: timeouts</h2>
+<pre class="text"><code>@ IN SOA ns.example.com. hostmaster.example.com. (
+  21120117 1D 1H 1W 1D )</code></pre>
+<ul>
+<li><code>1D</code>: waneer zal secundaire ns proberen de zone te synchroniseren</li>
+<li><code>1H</code>: tijd tussen update-pogingen</li>
+<li><code>1W</code>: wanneer zijn zonegegevens niet langer “authoritative” (enkel op secondaire)</li>
+<li><code>1D</code>: hoe lang kan een NAME ERROR resultaat gecached worden</li>
+</ul>
+<p>Zie <a href="http://www.zytrax.com/books/dns/ch8/soa.html" class="uri">http://www.zytrax.com/books/dns/ch8/soa.html</a></p>
+</section>
+<section id="shortcuts" class="slide level2">
+<h2>“Shortcuts”</h2>
+<ul>
+<li><code>$ORIGIN</code>: domeinnaam
+<ul>
+<li>wordt toegevoegd aan alle namen die niet eindigen op <code>.</code></li>
+<li><code>@</code>: wordt vervangen door waarde van <code>$ORIGIN</code></li>
+</ul></li>
+<li><code>$TTL</code>: time to live (in seconden)
+<ul>
+<li>hoe lang mag een record gecached worden</li>
+</ul></li>
+</ul>
+</section>
+<section id="unqualified-domain-names" class="slide level2">
+<h2>(Un)qualified domain names</h2>
+<ul>
+<li>Fully Qualified Domain Name (FQDN): eindigt met een punt</li>
+<li>Unqualified: zonder punt
+<ul>
+<li><code>$ORIGIN</code> toegevoegd aan het einde</li>
+</ul></li>
+</ul>
+</section>
+<section id="tijdsaanduidingen" class="slide level2">
+<h2>Tijdsaanduidingen</h2>
+<ul>
+<li>default = seconden</li>
+<li>M = minuten</li>
+<li>H = uren</li>
+<li>D = dagen</li>
+<li>W = weken</li>
+</ul>
+<p>Ook combinaties, bv. <code>2H30M</code></p>
+</section>
+<section id="reverse-lookup-zone" class="slide level2">
+<h2>Reverse lookup zone</h2>
+<pre class="text"><code>zone &quot;2.0.192.in-addr.arpa&quot; IN {
+  type master;
+  file &quot;2.0.192.in-addr.arpa&quot;;
+  notify yes;
+  allow-update { none; };
+};</code></pre>
+</section>
+<section id="naam-van-een-reverse-lookup-zone" class="slide level2">
+<h2>Naam van een “reverse lookup zone”</h2>
+<ol type="1">
+<li>Neem het IP-adres: <code>192.0.2.0/24</code></li>
+<li>Laat het host-deel vallen: <code>192.0.2</code></li>
+<li>Keer volgorde om: <code>2.0.192</code></li>
+<li>Voeg <code>in-addr.arpa.</code> toe</li>
+</ol>
+<p>Resutaat: <code>2.0.192.in-addr.arpa.</code></p>
+</section>
+<section id="zonebestand" class="slide level2">
+<h2>Zonebestand</h2>
+<p><code>/var/named/2.0.192.in-addr.arpa</code></p>
+<pre class="text"><code>$TTL 1W
+$ORIGIN 2.0.192.in-addr.arpa.
+
+@ IN SOA ns.example.com. hostmaster.example.com. (
+  21120117 1D 1H 1W 1D )
+
+       IN  NS     ns1.example.com.
+       IN  NS     ns2.example.com.
+
+1      IN  PTR    ns1.example.com.
+2      IN  PTR    ns2.example.com.
+10     IN  PTR    web.example.com.
+20     IN  PTR    mail.example.com.</code></pre>
+</section>
+<section id="root-hint" class="slide level2">
+<h2>Root hint</h2>
+<p>Elke (forwarding) name server moet een lijst bijhouden van de root name servers</p>
+<pre class="console"><code>dig @a.root-servers.net</code></pre>
+</section>
+<section class="slide level2">
+
+<pre class="text"><code>.   518400 IN NS a.root-servers.net.
+.   518400 IN NS b.root-servers.net.
+
+[...]
+
+a.root-servers.net. 518400 IN A 198.41.0.4
+b.root-servers.net. 518400 IN A 199.9.14.201
+
+[...]
+
+a.root-servers.net. 518400 IN AAAA 2001:503:ba3e::2:30
+b.root-servers.net. 518400 IN AAAA 2001:500:200::b
+
+[...]</code></pre>
+</section></section>
+<section>
+<section id="labo-opdracht" class="title-slide slide level1">
+<h1>Labo-opdracht</h1>
+
+</section>
+<section id="doelstelling" class="slide level2">
+<h2>Doelstelling</h2>
+<p>Authoritative name server voor het domein <em>linux.lan</em></p>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Host</th>
+<th style="text-align: left;">Alias</th>
+<th style="text-align: left;">IP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">web</td>
+<td style="text-align: left;">www</td>
+<td style="text-align: left;">192.168.76.4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">db</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">192.168.76.3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">srv</td>
+<td style="text-align: left;"></td>
+<td style="text-align: left;">192.168.76.254</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li>Zoek zelf op: hoe kan je “http://linux.lan” laten werken?</li>
+<li>Begin met forward zone, pas als die werkt de reverse</li>
+<li>Kan je DNS ondervragen vanaf Linux Mint?</li>
+</ul>
+</section>
+<section id="nuttige-commandos" class="slide level2">
+<h2>Nuttige commando’s</h2>
+<ul>
+<li>Controleer de logs: <code>journalctl -f -l -u named</code></li>
+<li>Valideer configbestanden:
+<ul>
+<li>hoofdbestand: <code>named-checkconf</code></li>
+<li>zonebestanden: <code>named-checkzone ZONE FILE</code></li>
+</ul></li>
+</ul>
+<pre class="console"><code>$ sudo named-checkconf
+$ sudo named-checkzone linux.lan /var/named/linux.lan
+$ sudo named-checkzone 76.168.192.in-addr.arpa \
+        /var/named/76.168.192.in-addr.arpa</code></pre>
+</section>
+<section id="tips" class="slide level2">
+<h2>Tips</h2>
+<p>Query log aanzetten:</p>
+<pre class="console"><code>[vagrant@srv ~]$ sudo rndc querylog</code></pre>
+<p>BIND logs tonen:</p>
+<pre class="console"><code>[vagrant@srv ~]$ journalctl -f -u named.service</code></pre>
+</section>
+<section id="netwerkverkeer-opvangen" class="slide level2">
+<h2>Netwerkverkeer opvangen:</h2>
+<pre class="console"><code>[vagrant@srv ~]$ sudo tcpdump -i eth1 -vvnnttt
+[vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -</code></pre>
+<ol type="1">
+<li>Interactie met de Linux Mint VM</li>
+<li>Alle verkeer op poort 53, opslaan in dns.pcap</li>
+</ol>
+<p>Bestand <code>dns.pcap</code> kan je openen met Wireshark!</p>
+</section>
+<section id="lan-afwerken" class="slide level2">
+<h2>LAN “afwerken”</h2>
+<p>Werk de huidige opstelling af tot een volledig werkend LAN</p>
+<ul>
+<li>Automatiseer de installatie en configuratie van BIND</li>
+<li>Zorg dat ook DHCP-server geïnstalleerd en geconfigureerd wordt</li>
+<li>Zorg dat Linux Mint correcte IP-instellingen krijgt op intnet</li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: false,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

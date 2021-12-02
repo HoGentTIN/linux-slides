@@ -14,13 +14,13 @@ date: 2021-2022
 - BIND op Enterprise Linux
 - Configuratie
 - Zonebestanden
-- Troubleshooting
 
 <http://www.zytrax.com/books/dns/>
 
 ## Opstelling
 
 - We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
+    - Github repo: "linux-2122-automation-USERNAME"
 - In de les: stap voor stap, manueel
 - Labo-taak: automatiseren!
 
@@ -37,6 +37,7 @@ date: 2021-2022
 
 - In `provisioning/` script `srv.sh` toevoegen
     - bv. kopie van `web.sh`, toegevoegde code voor installatie LAMP verwijderen
+- `vagrant up srv`
 
 # DNS
 
@@ -83,14 +84,15 @@ Hosts-bestand: `/etc/hosts`
 - Verschillende instanties per root server!
     - totaal: 1000+
     - vb. Brussels: e, f, i, l
-- Elke root server heeft 1 IP address!
+- Instanties v/e root server delen hun IP address!
     - routers sturen trafiek naar dichtstbijzijnde instantie
 
 ## Types van DNS servers
 
-- Authoritative: "bron van waarheid" voor een *zone*
-- Forwarding/caching: stuurt requests door naar andere servers
-- Primary/Secondary (master/slave): voor "high availability"
+- **Authoritative**: "bron van waarheid" voor een *zone*
+    - zonebestand
+- **Forwarding**/**caching**: stuurt requests door naar andere servers
+- **Primary**/**Secondary** (master/slave): voor "high availability"
     - enkel primaire heeft zonebestand
     - secundaire vraagt regelmatig "zone transfer"
 
@@ -179,19 +181,19 @@ Lees *DNS for rocket scientists*!
 
 ## Hoofdconfiguratiebestand
 
+`/etc/named.conf`
+
 ```text
 options {
-  listen-on port 53 { any; };
-  listen-on-v6 port 53 { any; };
+  listen-on port 53 { any; };     //aanpassen!
+  listen-on-v6 port 53 { any; };  //aanpassen!
   directory   "/var/named";
 
   // ...
 
-  allow-query     { any; };
+  allow-query     { any; };       //aanpassen!
 
-  recursion no;
-
-  rrset-order { order random; };
+  recursion yes;
 
   // ...
 };
@@ -202,9 +204,22 @@ options {
 - `listen-on`: port number + network interfaces
     - `any;`
     - `127.0.0.0/8; 192.168.76.0/24`
-- `allow-query`: which hosts may send queries?
-- `recursion`: allow recursive queries
-    - should be `no` on authoritative name server
+- `allow-query`: welke hosts mogen queries sturen?
+- `recursion`: recursieve queries toelaten
+    - zou `no` moeten zijn op een authoritative name server!
+
+## Forwarding name server
+
+Als je de service nu opstart, heb je een forwarding name server
+
+Controleer dit!
+
+- Draait de service?
+- Op welke poort(en)?
+- Firewall?
+- Reageert de service op requests?
+    - localhost?
+    - vanaf de Linux Mint?
 
 ## Voorbeeld: domein example.com
 
@@ -228,10 +243,12 @@ zone "example.com" IN {
 };
 ```
 
-## Zonebestand voor linux.lan
+## Zonebestand voor example.com
+
+`/var/named/example.com`
 
 ```text
-$ORIGIN linux.lan.
+$ORIGIN example.com.
 $TTL 1W
 
 @ IN SOA ns.example.com. hostmaster.example.com. (
@@ -346,6 +363,8 @@ Resutaat: `2.0.192.in-addr.arpa.`
 
 ## Zonebestand
 
+`/var/named/2.0.192.in-addr.arpa`
+
 ```text
 $TTL 1W
 $ORIGIN 2.0.192.in-addr.arpa.
@@ -353,13 +372,13 @@ $ORIGIN 2.0.192.in-addr.arpa.
 @ IN SOA ns.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 
-       IN  NS     ns1
-       IN  NS     ns2
+       IN  NS     ns1.example.com.
+       IN  NS     ns2.example.com.
 
-1      IN  PTR    ns1.linux.lan.
-2      IN  PTR    ns2.linux.lan.
-10     IN  PTR    web.linux.lan.
-20     IN  PTR    mail.linux.lan.
+1      IN  PTR    ns1.example.com.
+2      IN  PTR    ns2.example.com.
+10     IN  PTR    web.example.com.
+20     IN  PTR    mail.example.com.
 ```
 
 ## Root hint
@@ -424,23 +443,26 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 Query log aanzetten:
 
 ```console
-[root@srv ~]# rndc querylog
+[vagrant@srv ~]$ sudo rndc querylog
 ```
 
 BIND logs tonen:
 
 ```console
-[root@ns1 ~]# journalctl -f -u named.service
+[vagrant@srv ~]$ journalctl -f -u named.service
 ```
 
----
-
-Netwerkverkeer opvangen:
+## Netwerkverkeer opvangen:
 
 ```console
-[root@ns2 ~]# tcpdump -i eth1 -vvnnttt
-[root@ns2 ~]# tcpdump -i eth1 -U -w - | tee dns.pcap | tcpdump -vv -nn -ttttt -r -
+[vagrant@srv ~]$ sudo tcpdump -i eth1 -vvnnttt
+[vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -
 ```
+
+1. Interactie met de Linux Mint VM
+2. Alle verkeer op poort 53, opslaan in dns.pcap
+
+Bestand `dns.pcap` kan je openen met Wireshark!
 
 ## LAN "afwerken"
 

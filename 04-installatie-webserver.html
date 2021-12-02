@@ -8,8 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
-  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,6 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -80,9 +79,19 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
+  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
 </head>
 <body>
   <div class="reveal">
@@ -95,11 +104,7 @@
   <p class="date">2021-2022</p>
 </section>
 
-<section>
-<section id="webserver-installatie" class="title-slide slide level1">
-<h1>Webserver installatie</h1>
-
-</section>
+<section><section id="webserver-installatie" class="title-slide slide level1"><h1>Webserver installatie</h1></section>
 <section id="doelstelling" class="slide level2">
 <h2>Doelstelling</h2>
 <ul>
@@ -109,7 +114,7 @@
 </section>
 <section id="installatie-software" class="slide level2">
 <h2>Installatie software</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf install httpd mariadb-server php</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a>$ <span class="fu">sudo</span> dnf install httpd mariadb-server php</span></code></pre></div>
 </section>
 <section id="belangrijke-directories" class="slide level2">
 <h2>Belangrijke directories</h2>
@@ -129,10 +134,10 @@
 </section>
 <section id="services-opstarten" class="slide level2">
 <h2>Services opstarten</h2>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl start mariadb</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl enable mariadb</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl start httpd</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl enable httpd</span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a>$ <span class="fu">sudo</span> systemctl start mariadb</span>
+<span id="cb2-2"><a href="#cb2-2"></a>$ <span class="fu">sudo</span> systemctl enable mariadb</span>
+<span id="cb2-3"><a href="#cb2-3"></a>$ <span class="fu">sudo</span> systemctl start httpd</span>
+<span id="cb2-4"><a href="#cb2-4"></a>$ <span class="fu">sudo</span> systemctl enable httpd</span></code></pre></div>
 <ul>
 <li><code>start</code>: <em>nu</em> opstarten</li>
 <li><code>enable</code>: automatisch opstarten bij <em>booten</em></li>
@@ -140,19 +145,19 @@
 </section>
 <section id="test-de-services" class="slide level2">
 <h2>Test de services</h2>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> systemctl status httpd</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> systemctl status mariadb</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a>$ <span class="ex">systemctl</span> status httpd</span>
+<span id="cb3-2"><a href="#cb3-2"></a>$ <span class="ex">systemctl</span> status mariadb</span></code></pre></div>
 <ul>
 <li>CLI webbrowser <em>op de VM</em>
 <ul>
 <li>surf naar <a href="http://localhost/" class="uri">http://localhost/</a></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> localhost</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> 127.0.0.1</span></code></pre></div></li>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">curl</span> localhost</span>
+<span id="cb4-2"><a href="#cb4-2"></a><span class="ex">curl</span> 127.0.0.1</span></code></pre></div></li>
 <li>PHP testen: maak bestand <code>/var/www/html/info.php</code></li>
 <li>Surf naar: <a href="http://localhost/info.php" class="uri">http://localhost/info.php</a></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span><span class="ot">();</span> <span class="kw">?&gt;</span></span></code></pre></div>
 </section>
 <section id="toon-socketspoorten-in-gebruik" class="slide level2">
 <h2>Toon sockets/poorten in gebruik</h2>
@@ -328,7 +333,7 @@ $ sudo tail -f /var/log/httpd/error_log</code></pre>
 </section>
 <section id="database-beveiligen" class="slide level2">
 <h2>Database beveiligen</h2>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo mysql_secure_installation</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1"></a>$ <span class="fu">sudo</span> mysql_secure_installation</span></code></pre></div>
 <ul>
 <li>Volg de instructies!</li>
 <li>kies MariaDB root-wachtwoord
@@ -341,11 +346,11 @@ $ sudo tail -f /var/log/httpd/error_log</code></pre>
 </section>
 <section id="database-testen-root" class="slide level2">
 <h2>Database testen: root</h2>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mysql <span class="at">-uroot</span> <span class="at">-pR2rrbLV02TA1hAjN</span> mysql</span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1"></a>$ <span class="ex">mysql</span> -uroot -pR2rrbLV02TA1hAjN mysql</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="ex">...</span></span>
+<span id="cb10-3"><a href="#cb10-3"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
+<span id="cb10-5"><a href="#cb10-5"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
 <ul>
 <li><code>-uroot</code>: inloggen als MariaDB-root</li>
 <li><code>-pR2rrbLV02TA1hAjN</code>: gekozen wachtwoord
@@ -355,11 +360,7 @@ $ sudo tail -f /var/log/httpd/error_log</code></pre>
 <li><code>mysql</code>: inloggen op database <code>mysql</code></li>
 </ul>
 </section></section>
-<section>
-<section id="scripting-vervolg" class="title-slide slide level1">
-<h1>Scripting (vervolg)</h1>
-
-</section>
+<section><section id="scripting-vervolg" class="title-slide slide level1"><h1>Scripting (vervolg)</h1></section>
 <section id="positionele-parameters" class="slide level2">
 <h2>Positionele parameters</h2>
 <p>Bij uitvoeren van script zijn opties en argumenten beschikbaar via variabelen, <em>positionele parameters</em></p>
@@ -410,11 +411,11 @@ $ sudo tail -f /var/log/httpd/error_log</code></pre>
 </section>
 <section id="positionele-parameters-instellen" class="slide level2">
 <h2>Positionele parameters instellen</h2>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> par1 par2 par3</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw">set</span> <span class="ex">par1</span> par2 par3</span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par1</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${2}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par2</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${3}</span><span class="st">&quot;</span>  <span class="co">#  =&gt; par3</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${4}</span><span class="st">&quot;</span>  <span class="co">#  =&gt;       (lege string)</span></span></code></pre></div>
 </section>
 <section id="exit-status" class="slide level2">
 <h2>Exit-status</h2>
@@ -431,100 +432,96 @@ $ sudo tail -f /var/log/httpd/error_log</code></pre>
 </section>
 <section id="if-1" class="slide level2">
 <h2>If (1)</h2>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ex">EXPR</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="cf">then</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="cf">elif</span> <span class="ex">EXPR</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw">if</span> <span class="ex">EXPR</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="kw">then</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a>  <span class="co"># ...</span></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="kw">elif</span> <span class="ex">EXPR</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a>  <span class="co"># ...</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="kw">else</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a>  <span class="co"># ...</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="kw">fi</span></span></code></pre></div>
 </section>
 <section id="if-2" class="slide level2">
 <h2>If (2)</h2>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">${</span><span class="op">#</span><span class="va">}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">printf</span> <span class="st">&#39;Expected at most 2 arguments, got %d\n&#39;</span> <span class="st">&quot;</span><span class="va">${</span><span class="op">#</span><span class="va">}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">exit</span> 1</span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1"></a><span class="kw">if</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="ot">-gt</span> <span class="st">&#39;2&#39;</span><span class="bu"> ]</span>; <span class="kw">then</span></span>
+<span id="cb13-2"><a href="#cb13-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Expected at most 2 arguments, got %d\n&#39;</span> <span class="st">&quot;</span><span class="va">${#}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span>
+<span id="cb13-3"><a href="#cb13-3"></a>  <span class="bu">exit</span> 1</span>
+<span id="cb13-4"><a href="#cb13-4"></a><span class="kw">fi</span></span></code></pre></div>
 </section>
 <section id="while-lus" class="slide level2">
 <h2>While-lus</h2>
-<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw">while</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb14-2"><a href="#cb14-2"></a>  <span class="co"># ...</span></span>
+<span id="cb14-3"><a href="#cb14-3"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="until-lus" class="slide level2">
 <h2>Until-lus</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="cf">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw">until</span> <span class="ex">EXPR</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb15-2"><a href="#cb15-2"></a>  <span class="co"># ...</span></span>
+<span id="cb15-3"><a href="#cb15-3"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="while-lus-met-teller" class="slide level2">
 <h2>While lus met teller</h2>
-<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="va">counter</span><span class="op">=</span>0</span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span> <span class="ot">-le</span> <span class="st">&#39;10&#39;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="va">counter</span><span class="op">=</span><span class="va">$((counter</span> <span class="op">+</span> <span class="dv">1</span><span class="va">))</span></span>
-<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1"></a><span class="va">counter=</span>0</span>
+<span id="cb16-2"><a href="#cb16-2"></a></span>
+<span id="cb16-3"><a href="#cb16-3"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span> <span class="ot">-le</span> <span class="st">&#39;10&#39;</span><span class="bu"> ]</span>; <span class="kw">do</span></span>
+<span id="cb16-4"><a href="#cb16-4"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${counter}</span><span class="st">&quot;</span></span>
+<span id="cb16-5"><a href="#cb16-5"></a>  <span class="va">counter=$((</span>counter + 1<span class="va">))</span></span>
+<span id="cb16-6"><a href="#cb16-6"></a><span class="kw">done</span></span></code></pre></div>
 <p><code>$(( ... ))</code> is <em>arithmetic expansion</em></p>
 </section>
 <section id="for-lus" class="slide level2">
 <h2>For-lus</h2>
 <p>Itereren over een lijst</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> ITEM <span class="kw">in</span> LIST<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="pp">*</span>.md<span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">printf</span> <span class="st">&#39;Processing file %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw">for</span> <span class="ex">ITEM</span> in LIST<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb17-2"><a href="#cb17-2"></a>  <span class="co"># ...</span></span>
+<span id="cb17-3"><a href="#cb17-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="kw">for</span> <span class="fu">file</span> in *.md<span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb18-2"><a href="#cb18-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Processing file %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${file}</span><span class="st">&quot;</span></span>
+<span id="cb18-3"><a href="#cb18-3"></a>  <span class="co"># ...</span></span>
+<span id="cb18-4"><a href="#cb18-4"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="for-lus-met-teller-13" class="slide level2">
 <h2>For-lus met teller (1/3)</h2>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">1</span><span class="dt">..</span><span class="dv">10</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="dt">{</span><span class="dv">2</span><span class="dt">..</span><span class="dv">20</span><span class="dt">..</span><span class="dv">2</span><span class="dt">}</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{1..10}</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb19-2"><a href="#cb19-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb19-3"><a href="#cb19-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="dt">{2..20..2}</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb20-2"><a href="#cb20-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb20-3"><a href="#cb20-3"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="for-lus-met-teller-23" class="slide level2">
 <h2>For-lus met teller (2/3)</h2>
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">$(</span><span class="fu">seq</span> 1 10<span class="va">)</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="va">$(</span><span class="fu">seq</span> 2 2 20<span class="va">)</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 1 10<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb21-2"><a href="#cb21-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb21-3"><a href="#cb21-3"></a><span class="kw">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="kw">for</span> <span class="ex">i</span> in <span class="va">$(</span><span class="fu">seq</span> 2 2 20<span class="va">)</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb22-2"><a href="#cb22-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb22-3"><a href="#cb22-3"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="for-lus-met-teller-33" class="slide level2">
 <h2>For-lus met teller (3/3)</h2>
 <p>“Klassieke” for-lus, komt slechts uitzonderlijk voor</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="kw">((</span><span class="va">i</span><span class="op">=</span><span class="dv">0</span><span class="kw">;</span> <span class="va">i</span><span class="op">&lt;=</span><span class="dv">10</span><span class="kw">;</span> <span class="va">i</span><span class="op">++</span><span class="kw">));</span> <span class="cf">do</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="kw">for</span> <span class="kw">((</span>i=0; i&lt;=10; i++<span class="kw">))</span>; <span class="kw">do</span></span>
+<span id="cb23-2"><a href="#cb23-2"></a>  <span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${i}</span><span class="st">&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="itereren-over-positionele-parameters-while" class="slide level2">
 <h2>Itereren over positionele parameters (<code>while</code>)</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="cf">while</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0 <span class="bu">]</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="bu">shift</span></span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="kw">while</span><span class="bu"> [</span> <span class="st">&quot;</span><span class="va">$#</span><span class="st">&quot;</span> <span class="ot">-gt</span> 0<span class="bu"> ]</span>; <span class="kw">do</span></span>
+<span id="cb24-2"><a href="#cb24-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<span id="cb24-3"><a href="#cb24-3"></a>  <span class="co"># ...</span></span>
+<span id="cb24-4"><a href="#cb24-4"></a>  <span class="bu">shift</span></span>
+<span id="cb24-5"><a href="#cb24-5"></a><span class="kw">done</span></span></code></pre></div>
 </section>
 <section id="itereren-over-positionele-parameters-for" class="slide level2">
 <h2>Itereren over positionele parameters (<code>for</code>)</h2>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> arg <span class="kw">in</span> <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="cf">do</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># ...</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="cf">done</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="kw">for</span> <span class="ex">arg</span> in <span class="st">&quot;</span><span class="va">${@}</span><span class="st">&quot;</span><span class="kw">;</span> <span class="kw">do</span></span>
+<span id="cb25-2"><a href="#cb25-2"></a>  <span class="bu">printf</span> <span class="st">&#39;Arg: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${arg}</span><span class="st">&quot;</span></span>
+<span id="cb25-3"><a href="#cb25-3"></a>  <span class="co"># ...</span></span>
+<span id="cb25-4"><a href="#cb25-4"></a><span class="kw">done</span></span></code></pre></div>
 </section></section>
-<section>
-<section id="opzetten-werkomgeving" class="title-slide slide level1">
-<h1>Opzetten werkomgeving</h1>
-
-</section>
+<section><section id="opzetten-werkomgeving" class="title-slide slide level1"><h1>Opzetten werkomgeving</h1></section>
 <section id="github-repo-voor-labo-taken-aanmaken" class="slide level2">
 <h2>Github-repo voor labo-taken aanmaken</h2>
 <p>Ga naar Chamilo, volg de link om een Github-repo aan te maken.</p>
@@ -646,10 +643,10 @@ osboxes@osboxes:~$ git config --global push.default simple</code></pre>
 <section id="oefening" class="slide level2">
 <h2>Oefening</h2>
 <p>Maak een bestand <code>README.md</code> met deze inhoud:</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linux scripting labo&#39;s</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Student: STUDENTNAAM</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Klasgroep: GROEPNAAM</span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb29-1"><a href="#cb29-1"></a><span class="fu"># Linux scripting labo&#39;s</span></span>
+<span id="cb29-2"><a href="#cb29-2"></a></span>
+<span id="cb29-3"><a href="#cb29-3"></a><span class="st">- Student: STUDENTNAAM</span></span>
+<span id="cb29-4"><a href="#cb29-4"></a><span class="st">- Klasgroep: GROEPNAAM</span></span></code></pre></div>
 <p>Commit, push naar Github, bekijk het resultaat op github.com!</p>
 </section>
 <section id="labo-oefeningen" class="slide level2">
@@ -665,163 +662,21 @@ osboxes@osboxes:~$ git config --global push.default simple</code></pre>
     </div>
   </div>
 
-  <script src="./reveal.js/dist/reveal.js"></script>
-
-  <!-- reveal.js plugins -->
-  <script src="./reveal.js/plugin/notes/notes.js"></script>
-  <script src="./reveal.js/plugin/search/search.js"></script>
-  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="./reveal.js/js/reveal.js"></script>
 
   <script>
 
       // Full list of configuration options available at:
-      // https://revealjs.com/config/
+      // https://github.com/hakimel/reveal.js#configuration
       Reveal.initialize({
-        // Display controls in the bottom right corner
-        controls: true,
-
-        // Help the user learn the controls by providing hints, for example by
-        // bouncing the down arrow when they first encounter a vertical slide
-        controlsTutorial: true,
-
-        // Determines where controls appear, "edges" or "bottom-right"
-        controlsLayout: 'bottom-right',
-
-        // Visibility rule for backwards navigation arrows; "faded", "hidden"
-        // or "visible"
-        controlsBackArrows: 'faded',
-
-        // Display a presentation progress bar
-        progress: true,
-
-        // Display the page number of the current slide
-        slideNumber: false,
-
-        // 'all', 'print', or 'speaker'
-        showSlideNumber: 'all',
-
-        // Add the current slide number to the URL hash so that reloading the
-        // page/copying the URL will return you to the same slide
-        hash: false,
-
-        // Start with 1 for the hash rather than 0
-        hashOneBasedIndex: false,
-
-        // Flags if we should monitor the hash and change slides accordingly
-        respondToHashChanges: true,
-
         // Push each slide change to the browser history
-        history: false,
+        history: true,
 
-        // Enable keyboard shortcuts for navigation
-        keyboard: true,
-
-        // Enable the slide overview mode
-        overview: true,
-
-        // Disables the default reveal.js slide layout (scaling and centering)
-        // so that you can use custom CSS layout
-        disableLayout: false,
-
-        // Vertical centering of slides
-        center: true,
-
-        // Enables touch navigation on devices with touch input
-        touch: true,
-
-        // Loop the presentation
-        loop: false,
-
-        // Change the presentation direction to be RTL
-        rtl: false,
-
-        // see https://revealjs.com/vertical-slides/#navigation-mode
-        navigationMode: 'default',
-
-        // Randomizes the order of slides each time the presentation loads
-        shuffle: false,
-
-        // Turns fragments on and off globally
-        fragments: true,
-
-        // Flags whether to include the current fragment in the URL,
-        // so that reloading brings you to the same fragment position
-        fragmentInURL: true,
-
-        // Flags if the presentation is running in an embedded mode,
-        // i.e. contained within a limited portion of the screen
-        embedded: false,
-
-        // Flags if we should show a help overlay when the questionmark
-        // key is pressed
-        help: true,
-
-        // Flags if it should be possible to pause the presentation (blackout)
-        pause: true,
-
-        // Flags if speaker notes should be visible to all viewers
-        showNotes: false,
-
-        // Global override for autoplaying embedded media (null/true/false)
-        autoPlayMedia: null,
-
-        // Global override for preloading lazy-loaded iframes (null/true/false)
-        preloadIframes: null,
-
-        // Number of milliseconds between automatically proceeding to the
-        // next slide, disabled when set to 0, this value can be overwritten
-        // by using a data-autoslide attribute on your slides
-        autoSlide: 0,
-
-        // Stop auto-sliding after user input
-        autoSlideStoppable: true,
-
-        // Use this method for navigation when auto-sliding
-        autoSlideMethod: null,
-
-        // Specify the average time in seconds that you think you will spend
-        // presenting each slide. This is used to show a pacing timer in the
-        // speaker view
-        defaultTiming: null,
-
-        // Enable slide navigation via mouse wheel
-        mouseWheel: false,
-
-        // The display mode that will be used to show slides
-        display: 'block',
-
-        // Hide cursor if inactive
-        hideInactiveCursor: true,
-
-        // Time before the cursor is hidden (in ms)
-        hideCursorTime: 5000,
-
-        // Opens links in an iframe preview overlay
-        previewLinks: false,
-
-        // Transition style (none/fade/slide/convex/concave/zoom)
-        transition: 'slide',
-
-        // Transition speed (default/fast/slow)
-        transitionSpeed: 'default',
-
-        // Transition style for full page slide backgrounds
-        // (none/fade/slide/convex/concave/zoom)
-        backgroundTransition: 'fade',
-
-        // Number of slides away from the current that are visible
-        viewDistance: 3,
-
-        // Number of slides away from the current that are visible on mobile
-        // devices. It is advisable to set this to a lower number than
-        // viewDistance in order to save resources.
-        mobileViewDistance: 2,
-
-        // reveal.js plugins
-        plugins: [
-          RevealNotes,
-          RevealSearch,
-          RevealZoom
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
         ]
       });
     </script>

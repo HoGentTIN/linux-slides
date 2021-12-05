@@ -114,7 +114,7 @@ esac
 option="${1}"
 
 case "${option}" in
-  -h|--help|-?)
+  -h|--help|'-?')
     usage
     exit 0
     ;;

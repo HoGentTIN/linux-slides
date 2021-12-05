@@ -1,5 +1,5 @@
 ---
-title: "8. Troubleshooting, SSH-configuratie"
+title: "8. Troubleshooting, SSH"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Andy Van Maele, Bert Van Vreckem
 date: 2021-2022
@@ -353,6 +353,6 @@ E.g. <https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats>
 
 ## Don't ping Google!
 
-# SSH-configuratie
+# SSH 
 
-## TODO
+## SSH keys

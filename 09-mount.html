@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Andy Van Maele, Bert Van Vreckem">
+  <title>9. Mount</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">9. Mount</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2021-2022</p>
+</section>
+
+<section id="pre-knowledge" class="slide level1">
+<h1>Pre knowledge</h1>
+<p>Disk devices and partitions have already surfaced in other courses. We briefly depict how you can explore these devices on Linux</p>
+<h2 id="disk-devices">Disk devices</h2>
+<p>Sata disks devices:</p>
+<pre class="console"><code>$ ls /dev/sd*
+/dev/sda    /dev/sdb
+</code></pre>
+<h2 id="disk-partitions">Disk partitions</h2>
+<p>Every disk: * maximum 4 primary/extended partitions * one extended partition can host further logical (sub)partitions</p>
+<table>
+<thead>
+<tr class="header">
+<th>Partition Type</th>
+<th>naming</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Primary (max 4)</td>
+<td>1-4</td>
+</tr>
+<tr class="even">
+<td>Extended (max 1)</td>
+<td>1-4</td>
+</tr>
+<tr class="odd">
+<td>Logical</td>
+<td>5-</td>
+</tr>
+</tbody>
+</table>
+<h2 id="fdisk">fdisk</h2>
+<p>Display and modify partitions of a disk.</p>
+<pre class="console"><code>$ sudo fdisk -l 
+Disk /dev/sda: 64 GiB, 68719476736 bytes, 134217728 sectors
+[...]
+
+Device     Boot   Start       End   Sectors  Size Id Type
+/dev/sda1          2048   4501503   4499456  2.1G 82 Linux swap / Solaris
+/dev/sda2  *    4501504 134217727 129716224 61.9G 83 Linux</code></pre>
+<h2 id="file-systems">File systems</h2>
+<p>Linux file systems (common): * ext2 * ext3 - with journaling * ext4 - latest version, with journaling * xfs</p>
+<p>Other file systems: * vfat * ntfs * iso9660</p>
+<h2 id="formating-a-partition">Formating a partition</h2>
+<p>mkfs = MaKe FileSystem</p>
+<pre class="console"><code>$ sudo mkfs -t ext3 /dev/sdb3
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 244224 4k blocks and 61056 inodes
+Filesystem UUID: 396d698d-eac6-44f3-9b95-34db7d461664
+Superblock backups stored on blocks:
+    32768, 98304, 163840, 229376
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done</code></pre>
+<h2 id="changing-defaults-of-a-file-system">Changing defaults of a file system</h2>
+<p>Every partition has e.g. reserved blocks for root user only:</p>
+<pre class="console"><code>$ sudo tune2fs -l /dev/sdb3 | grep -i &quot;block count&quot;
+Block count:              104388
+Reserved block count:     5219</code></pre>
+</section>
+<section class="slide level1">
+
+<p>Update with <code>tune2fs</code> e.g. reduce to 3% reserved blocks</p>
+<pre class="console"><code>$ sudo tune2fs -m3 /dev/sdb3 &quot;
+tune2fs 1.45 (Jan-2020)
+Setting reserved blocks percentage to 3 (3131 blocks)</code></pre>
+</section>
+<section id="mount" class="slide level1">
+<h1>Mount</h1>
+<h2 id="manual-mount">Manual mount</h2>
+<p>mount = Making a partition available in the file tree</p>
+<ol type="1">
+<li>make a mount point ~ a mount directory, e.g.</li>
+</ol>
+<pre class="console"><code>$ sudo mkdir /mnt/newmountpoint</code></pre>
+<ol start="2" type="1">
+<li>bind the partition to the mount point</li>
+</ol>
+<pre class="console"><code>$ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint</code></pre>
+<h2 id="display-mount-points">Display mount points</h2>
+<pre class="console"><code>$ mount | grep sd
+/dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)
+/dev/sda4 on /home type ext4 (rw,relatime)
+</code></pre>
+<h2 id="permanent-mounts">Permanent mounts</h2>
+<p>Partitions which will be mounted at boot: <code>/etc/fstab</code></p>
+<pre class="console"><code>$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+/dev/sda1           /               ext4    errors=remount-ro 0       1
+/dev/sda2           /boot           ext4    defaults        0       2
+/dev/sda4           /home           ext4    defaults        0       2
+/dev/sda3           none            swap    sw              0       0</code></pre>
+<h2 id="mount-options">Mount options</h2>
+<p>Mount has some useful options: * ro - read-only * rw - read-write * remount - mount an already mounted device with new options</p>
+<pre class="console"><code>$ mount | grep boot 
+/dev/sda2 on /boot type ext4 (rw,relatime)
+$ sudo mount -o remount,ro /boot/
+$ mount | grep boot 
+/dev/sda2 on /boot type ext4 (ro,relatime)</code></pre>
+</section>
+<section id="uuid" class="slide level1">
+<h1>UUID</h1>
+<h2 id="uuid-def">UUID def</h2>
+<p>UUID = universally unique identifier * 128 bits * generated while formating</p>
+<h2 id="lookup-uuid">lookup UUID</h2>
+<pre class="console"><code>$ sudo tune2fs -l /dev/sda2 | grep UUID
+Filesystem UUID:          fd5db924-4be6-4fee-9a92-ca9db8fe2b9c
+$ blkid /dev/sda2
+/dev/sda2: UUID=&quot;fd5db924-4be6-4fee-9a92-ca9db8fe2b9c&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;97584a69-02&quot;</code></pre>
+<h2 id="fstab-with-uuid">fstab with UUID</h2>
+<p>unique indication of partition in case e.g. sda and sdb get switched when booting</p>
+<pre class="console"><code>$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+# / was on /dev/sda1 during installation
+UUID=757350f2-9cb2-4ce5-86bc-4528dfe9d9ac /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/sda2 during installation
+UUID=fd5db924-4be6-4fee-9a92-ca9db8fe2b9c /boot           ext4    defaults        0       2
+# /home was on /dev/sda4 during installation
+UUID=502c37ca-255c-4a38-9294-9802a5fb5941 /home           ext4    defaults        0       2
+# swap was on /dev/sda3 during installation
+UUID=b559d746-ef9d-45bc-acfb-faa036b3418f none            swap    sw              0       0</code></pre>
+</section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

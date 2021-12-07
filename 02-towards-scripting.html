@@ -8,8 +8,8 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="./reveal.js/css/reset.css">
-  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -20,6 +20,7 @@
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -79,19 +80,9 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
-  <!-- Printing and PDF exports -->
-  <script>
-    var link = document.createElement( 'link' );
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
-    document.getElementsByTagName( 'head' )[0].appendChild( link );
-  </script>
-  <!--[if lt IE 9]>
-  <script src="./reveal.js/lib/js/html5shiv.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
 </head>
 <body>
   <div class="reveal">
@@ -104,7 +95,11 @@
   <p class="date">2021-2022</p>
 </section>
 
-<section><section id="streams-pipes-redirects" class="title-slide slide level1"><h1>Streams, pipes, redirects</h1></section>
+<section>
+<section id="streams-pipes-redirects" class="title-slide slide level1">
+<h1>Streams, pipes, redirects</h1>
+
+</section>
 <section id="input-en-output" class="slide level2">
 <h2>Input en output</h2>
 <p><img data-src="http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg" /></p>
@@ -176,44 +171,44 @@
 </section>
 <section id="combineren" class="slide level2">
 <h2>Combineren</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> errors.txt</span>
-<span id="cb1-3"><a href="#cb1-3"></a></span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> directories.txt <span class="op">2&gt;</span> /dev/null</span>
-<span id="cb1-6"><a href="#cb1-6"></a></span>
-<span id="cb1-7"><a href="#cb1-7"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="fu">find</span> / -type d <span class="op">&gt;</span> all.txt <span class="op">2&gt;&amp;1</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a></span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="co"># invoer én uitvoer omleiden</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="op">2&gt;</span> errors.txt</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> directories.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> directories.txt <span class="dv">2</span><span class="op">&gt;</span> /dev/null</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> all.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># invoer én uitvoer omleiden</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span></code></pre></div>
 </section>
 <section id="foutboodschappen-afdrukken" class="slide level2">
 <h2>Foutboodschappen afdrukken</h2>
 <p>(Equivalent van <a href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">System.err.printf()</a>)</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;2</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span></code></pre></div>
 </section>
 <section id="here-documents-1" class="slide level2">
 <h2>Here documents (1)</h2>
 <p>Als je meer dan één lijn wil afdrukken:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a>Usage: <span class="va">${0}</span> [OPT]... [ARG]..</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a>OPTIONS:</span>
-<span id="cb3-5"><a href="#cb3-5"></a>  -h, --help  Print this help message</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="op">_EOF_</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">Usage: </span><span class="va">${0}</span><span class="st"> [OPT]... [ARG]..</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">OPTIONS:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">  -h, --help  Print this help message</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">_EOF_</span></span></code></pre></div>
 <p><em>Let op:</em> geen spaties toegelaten vóór de eindemarkering</p>
 </section>
 <section id="here-documents-2" class="slide level2">
 <h2>Here documents (2)</h2>
 <p>Dit kan bv. ook:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1"></a><span class="ex">mysql</span> -uroot -p<span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
-<span id="cb4-2"><a href="#cb4-2"></a>DROP DATABASE IF EXISTS drupal;</span>
-<span id="cb4-3"><a href="#cb4-3"></a>CREATE DATABASE drupal;</span>
-<span id="cb4-4"><a href="#cb4-4"></a>GRANT ALL PRIVILEGES ON drupal TO <span class="va">${drupal_usr}</span>@localhost</span>
-<span id="cb4-5"><a href="#cb4-5"></a>  IDENTIFIED BY <span class="va">${drupal_password}</span>;</span>
-<span id="cb4-6"><a href="#cb4-6"></a><span class="op">_EOF_</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-uroot</span> <span class="at">-p</span><span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">DROP DATABASE IF EXISTS drupal;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE DATABASE drupal;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">GRANT ALL PRIVILEGES ON drupal TO </span><span class="va">${drupal_usr}</span><span class="st">@localhost</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">  IDENTIFIED BY </span><span class="va">${drupal_password}</span><span class="st">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">_EOF_</span></span></code></pre></div>
 </section>
 <section id="pipes" class="slide level2">
 <h2>Pipes</h2>
@@ -224,7 +219,11 @@ $ fortune
 $ fortune | cowsay
 $ fortune | cowsay | lolcat</code></pre>
 </section></section>
-<section><section id="filters" class="title-slide slide level1"><h1>Filters</h1></section>
+<section>
+<section id="filters" class="title-slide slide level1">
+<h1>Filters</h1>
+
+</section>
 <section id="filters-1" class="slide level2">
 <h2>Filters</h2>
 <ul>
@@ -329,40 +328,44 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 </section>
 <section id="de-stream-editor-sed" class="slide level2">
 <h2>De Stream EDitor, <code>sed</code></h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
-<span id="cb17-2"><a href="#cb17-2"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
-<span id="cb17-3"><a href="#cb17-3"></a></span>
-<span id="cb17-4"><a href="#cb17-4"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
-<span id="cb17-5"><a href="#cb17-5"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
-<span id="cb17-6"><a href="#cb17-6"></a></span>
-<span id="cb17-7"><a href="#cb17-7"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
-<span id="cb17-8"><a href="#cb17-8"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
-<span id="cb17-9"><a href="#cb17-9"></a></span>
-<span id="cb17-10"><a href="#cb17-10"></a><span class="co"># Lege regels verwijderen</span></span>
-<span id="cb17-11"><a href="#cb17-11"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lege regels verwijderen</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
 </section>
 <section id="de-awk-taal" class="slide level2">
 <h2>De AWK-taal</h2>
 <p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
-<span id="cb18-2"><a href="#cb18-2"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
-<span id="cb18-3"><a href="#cb18-3"></a></span>
-<span id="cb18-4"><a href="#cb18-4"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
-<span id="cb18-5"><a href="#cb18-5"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
-<span id="cb18-6"><a href="#cb18-6"></a></span>
-<span id="cb18-7"><a href="#cb18-7"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
-<span id="cb18-8"><a href="#cb18-8"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span>
-<span id="cb18-9"><a href="#cb18-9"></a></span>
-<span id="cb18-10"><a href="#cb18-10"></a><span class="co"># Druk de namen van de &quot;gewone&quot; gebruikers af</span></span>
-<span id="cb18-11"><a href="#cb18-11"></a><span class="fu">awk</span> -F: <span class="st">&#39;{ if($3 &gt; 1000) print $1 }&#39;</span> /etc/passwd</span></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk de namen van de &quot;gewone&quot; gebruikers af</span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">&#39;{ if($3 &gt; 1000) print $1 }&#39;</span> /etc/passwd</span></code></pre></div>
 </section></section>
-<section><section id="intro-bash-scripts" class="title-slide slide level1"><h1>Intro Bash scripts</h1></section>
+<section>
+<section id="intro-bash-scripts" class="title-slide slide level1">
+<h1>Intro Bash scripts</h1>
+
+</section>
 <section id="een-script-schrijven" class="slide level2">
 <h2>Een script schrijven</h2>
 <ol type="1">
 <li><p>Maak bestand aan (bv. <code>script.sh</code>) met een teksteditor, bv.</p>
-<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1"></a><span class="co">#! /bin/bash</span></span>
-<span id="cb19-2"><a href="#cb19-2"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
 <li><p>Maak bestand uitvoerbaar: <code>chmod +x script.sh</code></p></li>
 <li><p>Voer uit: <code>./script.sh</code></p></li>
 </ol>
@@ -386,17 +389,17 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb20-2"><a href="#cb20-2"></a></span>
-<span id="cb20-3"><a href="#cb20-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
-<span id="cb20-4"><a href="#cb20-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1"></a><span class="va">var=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb21-2"><a href="#cb21-2"></a></span>
-<span id="cb21-3"><a href="#cb21-3"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
-<span id="cb21-4"><a href="#cb21-4"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
 </section>
 <section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
@@ -409,7 +412,7 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
 <li>Gebruik in strings (met dubbele aanhalingstekens):</li>
 </ul>
-<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
 <section id="variabelen-codestijl" class="slide level2">
 <h2>Variabelen: codestijl</h2>
@@ -423,9 +426,9 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1"></a><span class="va">bestand=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
-<span id="cb23-3"><a href="#cb23-3"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">bestand</span><span class="op">=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
 </section>
 <section id="onbestaande-variabelen-opvragen" class="slide level2">
 <h2>Onbestaande variabelen opvragen</h2>
@@ -444,10 +447,10 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <li>Een script oproepen creëert een subshell</li>
 <li>Maak “globale”, of <em>omgevingsvariabele</em> met <code>export</code>:</li>
 </ul>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1"></a><span class="bu">export</span> <span class="va">VARIABLE1=</span>value</span>
-<span id="cb24-2"><a href="#cb24-2"></a></span>
-<span id="cb24-3"><a href="#cb24-3"></a><span class="va">VARIABLE2=</span>value</span>
-<span id="cb24-4"><a href="#cb24-4"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE1</span><span class="op">=</span>value</span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="va">VARIABLE2</span><span class="op">=</span>value</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
 </section>
 <section id="variabelen-naamgeving" class="slide level2">
 <h2>Variabelen: naamgeving</h2>
@@ -457,7 +460,11 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <li>Omgevingsvariabelen: hoofdletters, bv. <code>FOO_BAR</code></li>
 </ul>
 </section></section>
-<section><section id="xtra-vim-vs-nano" class="title-slide slide level1"><h1>[Xtra]: vi(m) vs nano</h1></section>
+<section>
+<section id="xtra-vim-vs-nano" class="title-slide slide level1">
+<h1>[Xtra]: vi(m) vs nano</h1>
+
+</section>
 <section id="hoe-maak-je-een-bestand-aan" class="slide level2">
 <h2>Hoe maak je een bestand aan?</h2>
 <ol type="1">
@@ -506,8 +513,8 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 <section class="slide level2">
 
 <p>Steep learning curve, great tool!</p>
-<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1"></a><span class="fu">sudo</span> apt install vim-runtime</span>
-<span id="cb25-2"><a href="#cb25-2"></a><span class="ex">vimtutor</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install vim-runtime</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="ex">vimtutor</span></span></code></pre></div>
 </section>
 <section id="nano" class="slide level2">
 <h2>Nano</h2>
@@ -523,21 +530,163 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
     </div>
   </div>
 
-  <script src="./reveal.js/js/reveal.js"></script>
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
 
   <script>
 
       // Full list of configuration options available at:
-      // https://github.com/hakimel/reveal.js#configuration
+      // https://revealjs.com/config/
       Reveal.initialize({
-        // Push each slide change to the browser history
-        history: true,
+        // Display controls in the bottom right corner
+        controls: true,
 
-        // Optional reveal.js plugins
-        dependencies: [
-          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
-          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: false,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
         ]
       });
     </script>

@@ -7,6 +7,8 @@ date: 2021-2022
 
 # Pre knowledge
 
+## Pre knowledge
+
 Disk devices and partitions have already surfaced in other courses.
 We briefly depict how you can explore these devices on Linux
 
@@ -17,17 +19,17 @@ Sata disks devices:
 ```console
 $ ls /dev/sd*
 /dev/sda	/dev/sdb
-
 ```
 
 ## Disk partitions
 
 Every disk:
+
 * maximum 4 primary/extended partitions
 * one extended partition can host further logical (sub)partitions
 
 | Partition Type   | naming |
-|------------------|--------|
+| :--------------- | :----- |
 | Primary (max 4)  | 1-4    |
 | Extended (max 1) | 1-4    |
 | Logical          | 5-     |
@@ -49,12 +51,14 @@ Device     Boot   Start       End   Sectors  Size Id Type
 ## File systems
 
 Linux file systems (common):
+
 * ext2
 * ext3 - with journaling
 * ext4 - latest version, with journaling
 * xfs
 
 Other file systems:
+
 * vfat
 * ntfs
 * iso9660
@@ -86,7 +90,8 @@ $ sudo tune2fs -l /dev/sdb3 | grep -i "block count"
 Block count:              104388
 Reserved block count:     5219
 ```
---- 
+
+---
 
 Update with `tune2fs`
 e.g. reduce to 3% reserved blocks
@@ -101,18 +106,19 @@ Setting reserved blocks percentage to 3 (3131 blocks)
 
 ## Manual mount
 
-mount = 
-Making a partition available in the file tree
+mount = Making a partition available in the file tree
 
 1. make a mount point ~ a mount directory, e.g.
-```console
-$ sudo mkdir /mnt/newmountpoint
-```
+
+    ```console
+    $ sudo mkdir /mnt/newmountpoint
+    ```
 
 2. bind the partition to the mount point
-```console
-$ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint
-```
+
+    ```console
+    $ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint
+    ```
 
 ## Display mount points
 
@@ -120,12 +126,11 @@ $ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint
 $ mount | grep sd
 /dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)
 /dev/sda4 on /home type ext4 (rw,relatime)
-
 ```
+
 ## Permanent mounts
 
-Partitions which will be mounted at boot:
-`/etc/fstab`
+Partitions which will be mounted at boot: `/etc/fstab`
 
 ```console
 $ cat /etc/fstab
@@ -141,6 +146,7 @@ $ cat /etc/fstab
 ## Mount options
 
 Mount has some useful options:
+
 * ro - read-only
 * rw - read-write
 * remount - mount an already mounted device with new options
@@ -152,11 +158,13 @@ $ sudo mount -o remount,ro /boot/
 $ mount | grep boot 
 /dev/sda2 on /boot type ext4 (ro,relatime)
 ```
+
 # UUID
 
 ## UUID def
 
 UUID = universally unique identifier
+
 * 128 bits
 * generated while formating
 

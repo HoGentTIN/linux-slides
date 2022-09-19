@@ -386,7 +386,6 @@ Conventie naamgeving:
 | Opslaan en afsluiten       | `:wq`    |
 | Afsluiten zonder opslaan   | `:q!`    |
 
-
 ---
 
 Steep learning curve, great tool!
@@ -395,10 +394,10 @@ Steep learning curve, great tool!
 sudo apt install vim-runtime
 vimtutor
 ```
+
 ## Nano
 
 - Ook een command-line teksteditor
 - Iets toegankelijker dan Vim
 - Shortcuts staan onderaan het scherm
     - vb. Exit: `^X` -> Ctrl+X
-

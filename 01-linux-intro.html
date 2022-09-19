@@ -211,7 +211,7 @@
 <ul>
 <li>Bereid volgende sessie voor
 <ul>
-<li>Leerpad: voorbereiding, achtergrondinfo, toetsingsvragen</li>
+<li>Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen</li>
 </ul></li>
 <li>Werk verder aan labo’s</li>
 </ul>
@@ -298,8 +298,8 @@ r w x  r - x  - - -
 </ul>
 </section></section>
 <section>
-<section id="more-permissies" class="title-slide slide level1">
-<h1>More Permissies</h1>
+<section id="speciale-permissies" class="title-slide slide level1">
+<h1>Speciale Permissies</h1>
 
 </section>
 <section id="permissies-van-nieuwe-bestanden-umask" class="slide level2">
@@ -327,10 +327,10 @@ r w x  r - x  - - -
 ---------   ---------
   0 6 4 0     0 7 5 0      permissies</code></pre>
 </section>
-<section id="speciale-permissies-suid" class="slide level2">
-<h2>Speciale permissies: <em>SUID</em></h2>
+<section id="speciale-permissies-setuid" class="slide level2">
+<h2>Speciale permissies: <em>SETUID</em></h2>
 <ul>
-<li>set user ID (<em>SUID</em>)</li>
+<li>set user ID (<em>SETUID</em>)</li>
 <li>op bestanden met execute-permissies</li>
 <li>tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand</li>
 <li>symbolisch: <code>u+s</code></li>
@@ -339,10 +339,10 @@ r w x  r - x  - - -
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> /bin/passwd</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-rwsr-xr-x.</span> 1 root root 28k 2017-02-11 12:02 /bin/passwd</span></code></pre></div>
 </section>
-<section id="speciale-permissies-sgid" class="slide level2">
-<h2>Speciale permissies: <em>SGID</em></h2>
+<section id="speciale-permissies-setgid" class="slide level2">
+<h2>Speciale permissies: <em>SETGID</em></h2>
 <ul>
-<li>set group ID (<em>SGID</em>)</li>
+<li>set group ID (<em>SETGID</em>)</li>
 <li>op bestanden met execute-permissies</li>
 <li>tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand</li>
 <li>symbolisch: <code>g+s</code></li>
@@ -350,6 +350,22 @@ r w x  r - x  - - -
 </ul>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls <span class="at">-l</span> /usr/bin/write </span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">-rwxr-sr-x.</span> 1 root tty 20k 2017-09-22 10:55 /usr/bin/write</span></code></pre></div>
+</section>
+<section id="speciale-permissies-sgid" class="slide level2">
+<h2>Speciale permissies: <em>SGID</em></h2>
+<ul>
+<li>Set Group ID kan ook op directories</li>
+<li>Nieuwe bestanden binnen de directory worden toegekend aan de groep van die directory</li>
+</ul>
+<pre class="console"><code>$ mkdir /tmp/testdir
+$ sudo chgrp users /tmp/testdir
+$ touch /tmp/testdir/nosetguid
+$ sudo chmod g+s /tmp/testdir/
+$ touch /tmp/testdir/setguid
+$ ls -l /tmp/testdir/
+total 0
+-rw-r--r--. 1 osboxes osboxes  0 2022-09-19 23:39 nosetguid
+-rw-r--r--. 1 osboxes users    0 2022-09-19 23:39 setguid</code></pre>
 </section>
 <section id="speciale-permissies-restricted-deletion" class="slide level2">
 <h2>Speciale permissies: <em>restricted deletion</em></h2>
@@ -360,8 +376,8 @@ r w x  r - x  - - -
 <li>symbolisch: <code>+t</code></li>
 <li>octaal: 1</li>
 </ul>
-<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ld</span> /tmp</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> <span class="at">-ld</span> /tmp</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">drwxrwxrwt.</span> 16 root root 360 2017-12-04 13:05 /tmp/</span></code></pre></div>
 </section></section>
 <section>
 <section id="beheer-van-gebruikers" class="title-slide slide level1">
@@ -400,11 +416,11 @@ r w x  r - x  - - -
 <section class="slide level2">
 
 <p><em>primaire</em> groep aanpassen</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-g</span> groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-g</span> groep gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groepen <em>en verwijderen uit alle andere groepen</em></p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-G</span> groep1,groep2 gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-G</span> groep1,groep2 gebruiker</span></code></pre></div>
 <p>gebruiker toevoegen aan opgegeven groep, blijft lid van andere groepen</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> groep gebruiker</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> usermod <span class="at">-aG</span> groep gebruiker</span></code></pre></div>
 </section>
 <section id="eigenaargroep-veranderen" class="slide level2">
 <h2>Eigenaar/groep veranderen:</h2>
@@ -432,13 +448,13 @@ chgrp group file</code></pre>
 <section id="wachtwoord" class="slide level2">
 <h2>wachtwoord</h2>
 <p>eigen wachtwoord aanpassen</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span></code></pre></div>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">passwd</span></span></code></pre></div>
 <p>wachtwoord aanpassen van een gebruiker als administrator</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd <span class="op">&lt;</span>username<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> passwd <span class="op">&lt;</span>username<span class="op">&gt;</span></span></code></pre></div>
 <p>wachtwoord genereren in hash vorm (zoals in <code>/etc/shadow</code>)</p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> passwd <span class="at">-6</span> <span class="at">-salt</span> <span class="op">&lt;</span>salt-string<span class="op">&gt;</span> <span class="op">&lt;</span>desired passwd<span class="op">&gt;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">e.g.</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> passwd <span class="at">-6</span> <span class="at">-salt</span> hogent nieuwWachtWoord</span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> passwd <span class="at">-6</span> <span class="at">-salt</span> <span class="op">&lt;</span>salt-string<span class="op">&gt;</span> <span class="op">&lt;</span>desired passwd<span class="op">&gt;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">e.g.</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="ex">openssl</span> passwd <span class="at">-6</span> <span class="at">-salt</span> hogent nieuwWachtWoord</span></code></pre></div>
 </section></section>
     </div>
   </div>

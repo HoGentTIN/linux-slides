@@ -80,7 +80,7 @@ date: 2021-2022
 ## Buiten contactmomenten
 
 - Bereid volgende sessie voor
-    - Leerpad: voorbereiding, achtergrondinfo, toetsingsvragen
+    - Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen
 - Werk verder aan labo's
 
 ---
@@ -159,7 +159,7 @@ Voorbeelden:
 - `root` negeert bestandspermissies (mag alles), vb. `/etc/shadow`
 - tip: octale permissies opvragen: `stat -c %a BESTAND`
 
-# More Permissies
+# Speciale Permissies
 
 ## Permissies van nieuwe bestanden: `umask`
 
@@ -183,9 +183,9 @@ Voorbeelden:
   0 6 4 0     0 7 5 0      permissies
 ```
 
-## Speciale permissies: *SUID*
+## Speciale permissies: *SETUID*
 
-- set user ID (*SUID*)
+- set user ID (*SETUID*)
 - op bestanden met execute-permissies
 - tijdens uitvoeren krijgt de gebruiker de rechten van de eigenaar van het bestand
 - symbolisch: `u+s`
@@ -196,9 +196,9 @@ $ ls -l /bin/passwd
 -rwsr-xr-x. 1 root root 28k 2017-02-11 12:02 /bin/passwd
 ```
 
-## Speciale permissies: *SGID*
+## Speciale permissies: *SETGID*
 
-- set group ID (*SGID*)
+- set group ID (*SETGID*)
 - op bestanden met execute-permissies
 - tijdens uitvoeren krijgt de gebruiker de rechten van de groep van het bestand
 - symbolisch: `g+s`
@@ -207,6 +207,23 @@ $ ls -l /bin/passwd
 ```bash
 $ ls -l /usr/bin/write 
 -rwxr-sr-x. 1 root tty 20k 2017-09-22 10:55 /usr/bin/write
+```
+
+## Speciale permissies: *SGID*
+
+- Set Group ID kan ook op directories
+- Nieuwe bestanden binnen de directory worden toegekend aan de groep van die directory
+
+```console
+$ mkdir /tmp/testdir
+$ sudo chgrp users /tmp/testdir
+$ touch /tmp/testdir/nosetguid
+$ sudo chmod g+s /tmp/testdir/
+$ touch /tmp/testdir/setguid
+$ ls -l /tmp/testdir/
+total 0
+-rw-r--r--. 1 osboxes osboxes  0 2022-09-19 23:39 nosetguid
+-rw-r--r--. 1 osboxes users    0 2022-09-19 23:39 setguid
 ```
 
 ## Speciale permissies: *restricted deletion*
@@ -221,6 +238,7 @@ $ ls -l /usr/bin/write
 ls -ld /tmp
 drwxrwxrwt. 16 root root 360 2017-12-04 13:05 /tmp/
 ```
+
 # Beheer van gebruikers
 
 ## Commando's voor gebruikers en groepen

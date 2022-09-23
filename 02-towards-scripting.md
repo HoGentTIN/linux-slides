@@ -209,6 +209,20 @@ $ wc --words thesis.md
 $ ls /usr/bin | wc -l
 ```
 
+## `column`
+
+Invoer in kolommen afdrukken.
+
+```console
+$ column -t -s: < /etc/passwd
+$ column -J -N user,passwd,uid,gid,name,home,shell -s: < /etc/passwd
+```
+
+- `-t`, `--table`: Afdrukken in kolommen
+- `-J`, `--json`: Vertalen naar JSON
+- `-s`, `--separator`: Input separator
+- `-N`, `--table-columns`: namen velden
+
 ## `grep`
 
 ```console

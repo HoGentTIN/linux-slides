@@ -30,7 +30,10 @@ git worktree add -B gh-pages ${output_dir} origin/gh-pages
 
 printf 'Running make to generate new version\n'
 make all    # Generate slides
-./index.sh  # Create index page
+# Copy tables of content
+cp linux-ds.md "${output_dir}"
+cp linux-ops.md "${output_dir}"
+cp index.md  "${output_dir}"/README.md
 
 printf 'Updating gh-pages branch\n'
 cd "${output_dir}" \

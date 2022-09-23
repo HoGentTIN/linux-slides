@@ -112,6 +112,18 @@ $ fortune | cowsay
 $ fortune | cowsay | lolcat
 ```
 
+## Here strings
+
+```console
+echo "Hello world" | figlet
+```
+
+Zonder "overbodig" proces/pipe:
+
+```console
+figlet <<< "Hello world!"
+```
+
 # Filters
 
 ## Filters

@@ -2,17 +2,17 @@
 
 Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux for Data Scientists binnen het keuzepakket *Data Engineering* in het tweede modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
-- [1. Linux intro &amp; user management](01-linux-intro.html)
+- [0. Linux for Data Scientists: intro](00-linux-ds-intro.html)
+- [1. Linux intro &amp; user management](01-user-mgmt.html)
 - [2. Combining commands towards scripting](02-towards-scripting.html)
-- [3. Software-installatie, netwerkconfiguratie](03-software-installatie.html)
+- 3. Software-installatie, `curl` (TODO)
 - [4. Installatie van een webserver, scripting](04-installatie-webserver.html)
-- [5. Hardening van een webserver](05-hardening.html)
+- 5. Advanced data parsing (TODO)
 - [6. Automatiseren webserverinstallatie](06-automatiseren.html)
 - [7. Complexe scripts, cronjobs](07-scripting-cronjobs.html)
-- [8. Troubleshooting, SSH](08-troubleshooting.html)
-- [9. Mount](09-mount.html)
-- [10. DNS met BIND](10-bind.html)
-- [11. Linux installatie: expert-modus](11-expert-installatie.html)
-- [12. LVM, RAID](12-LVM-RAID.html)
+- 8. SSH, Docker (TODO)
+- 9. Docker (cont'd)
+- 10. Workflow automation
+- 11. Workflow automation (cont'd)
 
 Laatste wijziging: 

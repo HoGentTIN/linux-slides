@@ -1,8 +1,8 @@
 ---
 title: "4. Installatie van een webserver, scripting"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
-author: Andy Van Maele, Bert Van Vreckem
-date: 2021-2022
+author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
+date: 2022-2023
 ---
 
 # Webserver installatie

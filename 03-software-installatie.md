@@ -1,8 +1,8 @@
 ---
 title: "3. Software-installatie, netwerkconfiguratie"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
-author: Andy Van Maele, Bert Van Vreckem
-date: 2021-2022
+author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
+date: 2022-2023
 ---
 
 # Software-installatie

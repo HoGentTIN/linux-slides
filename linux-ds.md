@@ -1,6 +1,6 @@
 # Slides Linux for Data Scientists
 
-Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux for Data Scientists binnen het keuzepakket *Data Engineering* in het tweede modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
+Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux/Infrastructure Automation for Data Scientists binnen het keuzepakket *Data Engineering* in het tweede/derde modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
 - [0. Linux for Data Scientists: intro](00-linux-ds-intro.html)
 - [1. Linux intro &amp; user management](01-user-mgmt.html)

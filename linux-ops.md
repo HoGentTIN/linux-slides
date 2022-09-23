@@ -16,4 +16,4 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - [11. Linux installatie: expert-modus](11-expert-installatie.html)
 - [12. LVM, RAID](12-LVM-RAID.html)
 
-Laatste wijziging: Fri Sep 23 17:44:32 UTC 2022
+Laatste wijziging: Fri Sep 23 18:38:34 UTC 2022

@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +63,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
+    code span.bu { color: #008000; } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -68,7 +76,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -108,7 +116,8 @@
 <li>Configuratie</li>
 <li>Zonebestanden</li>
 </ul>
-<p><a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+<p><a href="http://www.zytrax.com/books/dns/"
+class="uri">http://www.zytrax.com/books/dns/</a></p>
 </section>
 <section id="opstelling" class="slide level2">
 <h2>Opstelling</h2>
@@ -125,13 +134,16 @@
 <h2>Nieuwe VM</h2>
 <ul>
 <li><p>In <code>vagrant-hosts.yml</code>:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> srv</span></span>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> srv</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-8</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ip</span><span class="kw">:</span><span class="at"> </span><span class="fl">192.168.76.254</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">intnet</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div></li>
-<li><p>In <code>provisioning/</code> script <code>srv.sh</code> toevoegen</p>
+<li><p>In <code>provisioning/</code> script <code>srv.sh</code>
+toevoegen</p>
 <ul>
-<li>bv. kopie van <code>web.sh</code>, toegevoegde code voor installatie LAMP verwijderen</li>
+<li>bv. kopie van <code>web.sh</code>, toegevoegde code voor installatie
+LAMP verwijderen</li>
 </ul></li>
 <li><p><code>vagrant up srv</code></p></li>
 </ul>
@@ -149,7 +161,9 @@
 <li>Queries kunnen over het netwerk gestuurd worden</li>
 </ul>
 <p>en toch blijkt…</p>
-<p><a href="https://krisbuytaert.be/blog/linux-troubleshooting-101-2016-edition/index.html">Everything is a freaking DNS problem</a></p>
+<p><a
+href="https://krisbuytaert.be/blog/linux-troubleshooting-101-2016-edition/index.html">Everything
+is a freaking DNS problem</a></p>
 </section>
 <section id="poor-mans-dns" class="slide level2">
 <h2>Poor man’s DNS</h2>
@@ -163,24 +177,32 @@
 172.22.0.3     printer4038 printer4038.netlab.hogent.be</code></pre>
 <ul>
 <li>On Windows: <code>c:\Windows\System32\Drivers\etc\hosts</code></li>
-<li>Ad blocker: <a href="https://someonewhocares.org/hosts/" class="uri">https://someonewhocares.org/hosts/</a></li>
+<li>Ad blocker: <a href="https://someonewhocares.org/hosts/"
+class="uri">https://someonewhocares.org/hosts/</a></li>
 </ul>
 </section>
 <section id="maar" class="slide level2">
 <h2>Maar…</h2>
 <figure>
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Domain_name_space.svg" alt="Hierarchical domains" /><figcaption aria-hidden="true">Hierarchical domains</figcaption>
+<img
+data-src="https://upload.wikimedia.org/wikipedia/commons/b/b1/Domain_name_space.svg"
+alt="Hierarchical domains" />
+<figcaption aria-hidden="true">Hierarchical domains</figcaption>
 </figure>
 </section>
 <section class="slide level2">
 
 <figure>
-<img data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png" alt="Iterative resolver" /><figcaption aria-hidden="true">Iterative resolver</figcaption>
+<img
+data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png"
+alt="Iterative resolver" />
+<figcaption aria-hidden="true">Iterative resolver</figcaption>
 </figure>
 </section>
 <section id="root-dns-servers" class="slide level2">
 <h2>Root DNS servers</h2>
-<p><a href="http://www.root-servers.org/" class="uri">http://www.root-servers.org/</a></p>
+<p><a href="http://www.root-servers.org/"
+class="uri">http://www.root-servers.org/</a></p>
 <ul>
 <li>12 root servers: [a-m].root-servers.net</li>
 <li>Verschillende instanties per root server!
@@ -197,12 +219,15 @@
 <section id="types-van-dns-servers" class="slide level2">
 <h2>Types van DNS servers</h2>
 <ul>
-<li><strong>Authoritative</strong>: “bron van waarheid” voor een <em>zone</em>
+<li><strong>Authoritative</strong>: “bron van waarheid” voor een
+<em>zone</em>
 <ul>
 <li>zonebestand</li>
 </ul></li>
-<li><strong>Forwarding</strong>/<strong>caching</strong>: stuurt requests door naar andere servers</li>
-<li><strong>Primary</strong>/<strong>Secondary</strong> (master/slave): voor “high availability”
+<li><strong>Forwarding</strong>/<strong>caching</strong>: stuurt
+requests door naar andere servers</li>
+<li><strong>Primary</strong>/<strong>Secondary</strong> (master/slave):
+voor “high availability”
 <ul>
 <li>enkel primaire heeft zonebestand</li>
 <li>secundaire vraagt regelmatig “zone transfer”</li>
@@ -281,7 +306,8 @@ $ dig AXFR zonetransfer.me @nsztm1.digi.ninja</code></pre>
 <li>De facto standaard op Unix-achtige systemen</li>
 </ul>
 <p>Lees <em>DNS for rocket scientists</em>!</p>
-<p><a href="http://www.zytrax.com/books/dns/" class="uri">http://www.zytrax.com/books/dns/</a></p>
+<p><a href="http://www.zytrax.com/books/dns/"
+class="uri">http://www.zytrax.com/books/dns/</a></p>
 </section>
 <section id="installatie-op-enterprise-linux" class="slide level2">
 <h2>Installatie op Enterprise Linux</h2>
@@ -319,7 +345,8 @@ $ dig AXFR zonetransfer.me @nsztm1.digi.ninja</code></pre>
 <li><code>allow-query</code>: welke hosts mogen queries sturen?</li>
 <li><code>recursion</code>: recursieve queries toelaten
 <ul>
-<li>zou <code>no</code> moeten zijn op een authoritative name server!</li>
+<li>zou <code>no</code> moeten zijn op een authoritative name
+server!</li>
 </ul></li>
 </ul>
 </section>
@@ -443,7 +470,8 @@ www    IN  CNAME  web</code></pre>
 </ul></li>
 <li><code>21120120</code>: serial
 <ul>
-<li><strong>LET OP</strong> secundaire servers zullen <strong>alleen</strong> update uitvoeren als serial verhoogd is</li>
+<li><strong>LET OP</strong> secundaire servers zullen
+<strong>alleen</strong> update uitvoeren als serial verhoogd is</li>
 </ul></li>
 </ul>
 </section>
@@ -452,20 +480,26 @@ www    IN  CNAME  web</code></pre>
 <pre class="text"><code>@ IN SOA ns.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )</code></pre>
 <ul>
-<li><code>1D</code>: waneer zal secundaire ns proberen de zone te synchroniseren</li>
+<li><code>1D</code>: waneer zal secundaire ns proberen de zone te
+synchroniseren</li>
 <li><code>1H</code>: tijd tussen update-pogingen</li>
-<li><code>1W</code>: wanneer zijn zonegegevens niet langer “authoritative” (enkel op secondaire)</li>
-<li><code>1D</code>: hoe lang kan een NAME ERROR resultaat gecached worden</li>
+<li><code>1W</code>: wanneer zijn zonegegevens niet langer
+“authoritative” (enkel op secondaire)</li>
+<li><code>1D</code>: hoe lang kan een NAME ERROR resultaat gecached
+worden</li>
 </ul>
-<p>Zie <a href="http://www.zytrax.com/books/dns/ch8/soa.html" class="uri">http://www.zytrax.com/books/dns/ch8/soa.html</a></p>
+<p>Zie <a href="http://www.zytrax.com/books/dns/ch8/soa.html"
+class="uri">http://www.zytrax.com/books/dns/ch8/soa.html</a></p>
 </section>
 <section id="shortcuts" class="slide level2">
 <h2>“Shortcuts”</h2>
 <ul>
 <li><code>$ORIGIN</code>: domeinnaam
 <ul>
-<li>wordt toegevoegd aan alle namen die niet eindigen op <code>.</code></li>
-<li><code>@</code>: wordt vervangen door waarde van <code>$ORIGIN</code></li>
+<li>wordt toegevoegd aan alle namen die niet eindigen op
+<code>.</code></li>
+<li><code>@</code>: wordt vervangen door waarde van
+<code>$ORIGIN</code></li>
 </ul></li>
 <li><code>$TTL</code>: time to live (in seconden)
 <ul>
@@ -532,7 +566,8 @@ $ORIGIN 2.0.192.in-addr.arpa.
 </section>
 <section id="root-hint" class="slide level2">
 <h2>Root hint</h2>
-<p>Elke (forwarding) name server moet een lijst bijhouden van de root name servers</p>
+<p>Elke (forwarding) name server moet een lijst bijhouden van de root
+name servers</p>
 <pre class="console"><code>dig @a.root-servers.net</code></pre>
 </section>
 <section class="slide level2">
@@ -673,7 +708,7 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

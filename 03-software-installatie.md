@@ -1,5 +1,5 @@
 ---
-title: "3. Software-installatie, netwerkconfiguratie"
+title: "3.1. Software-installatie, netwerkconfiguratie"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
 date: 2022-2023
@@ -45,14 +45,16 @@ Klassiek zijn er twee grote Linux distributies
     - AlmaLinux
     - ...
 
-Opm. "Enterprise Linux" (EL) = compatibel met RedHat Enterprise Linux (RHEL)
+**Opm.** "Enterprise Linux" (EL) = compatibel met RedHat Enterprise Linux (RHEL)
 
 ## Verschillen tussen Debian en RedHat
 
 De verschillen zijn o.a. in de manier waarop software wordt beheerd:
 
-1. Debian:  .deb packages
-2. Red Hat: .rpm packages
+- Debian:  .deb packages
+- Red Hat: .rpm packages
+
+**Opm.** Er zijn nog meer package managers voor Linux
 
 ## Debian `dpkg`
 
@@ -111,19 +113,19 @@ Automatisering:
 - Bijwerken van info op de repo servers
 
     ```bash
-    $ apt update
+    $ sudo apt update
     ```
 
 - Bijwerken van alle packages op jouw systeem
 
     ```bash
-    $ apt upgrade
+    $ sudo apt upgrade
     ```
 
 - Bijwerken van een enkele package op jouw systeem
 
     ```bash
-    $ apt install <package_name> # nieuwe versie wordt geïnstalleerd
+    $ sudo apt install <package_name> # nieuwe versie wordt geïnstalleerd
     ```
 
 ## Debian repository servers
@@ -155,7 +157,7 @@ official-package-repositories.list
 - Installatie package
 
     ```bash
-    $ dnf install <package_name>
+    $ sudo dnf install <package_name>
     ```
 
 - Bijwerken van info op de repo servers; aftoetsen van wat kan bijgewerkt worden:
@@ -169,13 +171,13 @@ official-package-repositories.list
 - Bijwerken van alle packages op jouw systeem
 
     ```bash
-    $ dnf upgrade
+    $ sudo dnf upgrade
     ```
 
 - Bijwerken van een enkele package op jouw systeem
 
     ```bash
-    $ dnf upgrade <package_name>
+    $ sudo dnf upgrade <package_name>
     ```
 
 ## Andere handige commando's
@@ -217,137 +219,26 @@ epel-playground.repo  epel-testing-modular.repo  epel-testing.repo  epel.repo
 [admin@server ~]$ cat /etc/yum.repos.d/almalinux.repo
 ```
 
-# Netwerkconfiguratie
+# Other package managers
 
-## Netwerkinstellingen controleren
+## Application-level package managers
 
-Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
+- **pip** - Python
+- **npm** - JavaScript
+- **CTAN** - (La)TeX
+- **Gem** - Ruby
+- ...
 
-1. IP-adres en subnetmasker
-2. Default gateway
-3. DNS-server
+## It's complicated
 
-## Netwerkinstellingen opvragen
-
-1. IP-adress/netmask: `ip address` (`ip a`)
-2. Default gateway: `ip route` (`ip r`)
-3. DNS-server:
-    - EL: `cat /etc/resolv.conf`
-    - Debian, Fedora: `resolvectl status <interface>`
-
-## Wat is het IP-adres van...?
-
-```bash
-$ nslookup www.hogent.be
-$ dig www.hogent.be
-```
-
-Wat is *mijn publiek* IP-adres?
-
-```bash
-$ curl icanhazip.com
-81.164.175.191
-```
-
-## Controleer eerst netwerkinstellingen
-
-```bash
-[admin@server] $ ip -4 a
-1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
-    inet 127.0.0.1/8 scope host lo
-       valid_lft forever preferred_lft forever
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
-       valid_lft 85546sec preferred_lft 85546sec
-3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    inet 192.168.76.2/24 brd 192.168.76.255 scope global noprefixroute eth1
-       valid_lft forever preferred_lft forever
-```
-
-Probeer dit ook op de Linux Mint VM. Overeenkomsten? Verschillen?
-
-## Netwerkinstellingen
-
-- `lo` (loopback): 127.0.0.1/8
-- `eth0`/`enp0s3` = 1e VirtualBox adapter (NAT): 10.0.2.15/24
-- `eth1`/`enp0s8` = 2e VirtualBox adapter (Host-only): 192.168.76.2/24
-
-## Netwerkinstellingen aanpassen (RedHat)
-
-`/etc/sysconfig/network-scripts/ifcfg-<interface_name>`
-
-```bash
-NM_CONTROLLED=yes
-BOOTPROTO=none
-ONBOOT=yes
-IPADDR=192.168.76.2
-NETMASK=255.255.255.0
-DEVICE=eth1
-PEERDNS=no
-```
-
-Na aanpassingen, netwerk herstarten:
-
-```console
-$ sudo systemctl restart network
-```
-
-# Let's install DHCP!
-
-## Installatie
-
-Zoek de naam van de package om ISC DHCP te installeren!
-
-## Configuratie
-
-- Configbestand: `/etc/dhcp/dhcpd.conf`
-- Zie voorbeeld: `/usr/share/doc/dhcp-server/dhcpd.conf.example`
-- Wat hebben we nodig voor onze opstelling?
-
-## Opstarten `systemctl`
-
-- `sudo systemctl start dhcpd`
-- `systemctl status dhcpd`
-- `sudo systemctl restart dhcpd`
-    - Na elke wijziging config!
-- `sudo systemctl enable dhcpd`
-    - Start altijd bij booten
-
-## Sluit de Linux-Mint VM aan op intnet
-
-- Krijgt je VM een IP-adres? welk?
-- Zie je iets in de DHCP logs?
-- Kan je pingen tussen de VMs?
-- Heb je Internet-toegang? Waarom (niet)?
-- Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden
-
-# Vim survival guide
-
-## Hoe maak je een bestand aan?
-
-1. Met teksteditor Vi/Vim: `vim bestand.txt`
-2. Met teksteditor Nano: `nano bestand.txt`
-3. Leeg bestand: `touch bestand.txt`
-
-## Essentiële Vim-commando's
-
-- Bij opstarten van Vim kom je terecht in *normal mode*.
-- Als je tekst wil invoeren moet je naar *insert mode*.
-
-| Taak                       | Commando |
-| :------------------------- | :------- |
-| Normal mode -> insert mode | `i`      |
-| Insert mode -> normal mode | `<Esc>`  |
-| Opslaan                    | `:w`     |
-| Opslaan en afsluiten       | `:wq`    |
-| Afsluiten zonder opslaan   | `:q!`    |
+- Sommige packages zijn beschikbaar via bv. apt én pip
+- Welke installeren? It depends...
 
 ---
 
-Steep learning curve, great tool!
+![<https://xkcd.com/1654/>](assets/xkcd-1654-install.png)
 
-```console
-$ sudo apt install vim-runtime     # Op Debian
-$ sudo dnf install vim-enhanced    # Op RedHat
-$ vimtutor
-```
+## On other OSs
+
+- MacOS: [Homebrew](https://brew.sh)
+- Windows: [Chocolatey](https://chocolatey.org)/NuGet

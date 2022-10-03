@@ -6,8 +6,8 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - [1 - User management](01-user-mgmt.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)
 - 3 - Software-installatie, netwerkconfiguratie
-    - [Software-installatie](03-software-installatie.md)
-    - [Curl](03-curl.md)
+    - [Software-installatie](03-software-installatie.html)
+    - [Curl](03-curl.html)
 - [4. Installatie van een webserver, scripting](04-installatie-webserver.html)
 - 5 - Advanced data parsing (TODO)
 - [6 - Automatiseren webserverinstallatie](06-automatiseren.html)

@@ -6,8 +6,8 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - [1 - User management](01-user-mgmt.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)
 - 3 - Software-installatie, netwerkconfiguratie
-    - [Software-installatie](03-software-installatie.md)
-    - [Netwerkconfig, DHCP](03-netwerkconfiguratie.md)
+    - [Software-installatie](03-software-installatie.html)
+    - [Netwerkconfig, DHCP](03-netwerkconfiguratie.html)
 - [4 - Installatie van een webserver, scripting](04-installatie-webserver.html)
 - [5 - Hardening van een webserver](05-hardening.html)
 - [6 - Automatiseren webserverinstallatie](06-automatiseren.html)
@@ -23,4 +23,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.md)
 - [Vim Survival Guide](99-vim-survival-guide.md)
 
-Laatste wijziging: Fri Sep 30 11:19:10 UTC 2022
+Laatste wijziging: Mon Oct  3 19:29:21 UTC 2022

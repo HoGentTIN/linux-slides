@@ -127,8 +127,7 @@ nodig:</p>
 <li>DNS-server:
 <ul>
 <li>EL: <code>cat /etc/resolv.conf</code></li>
-<li>Debian, Fedora:
-<code>resolvectl status &lt;interface&gt;</code></li>
+<li>Debian, Fedora: <code>resolvectl dns</code></li>
 </ul></li>
 </ol>
 </section>
@@ -144,17 +143,15 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 </section>
 <section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
+<p>(op de AlmaLinux VM, vóór uitvoeren van labo 3.4)</p>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[admin@server]</span> $ ip <span class="at">-4</span> a</span>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[osboxes@almaserver]</span> $ ip <span class="at">-4</span> a</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1:</span> lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2:</span> eth0: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="ex">3:</span> eth1: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 192.168.76.2/24 brd 192.168.76.255 scope global noprefixroute eth1</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span></code></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span></code></pre></div>
 <p>Probeer dit ook op de Linux Mint VM. Overeenkomsten? Verschillen?</p>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
@@ -164,7 +161,11 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT):
 10.0.2.15/24</li>
 <li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter
-(Host-only): 192.168.76.2/24</li>
+(intnet):
+<ul>
+<li>Linux Mint: 192.168.76.10/24</li>
+<li>AlmaLinux: 192.168.76.12/24</li>
+</ul></li>
 </ul>
 </section>
 <section id="netwerkinstellingen-aanpassen-redhat" class="slide level2">
@@ -174,12 +175,17 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NM_CONTROLLED</span><span class="op">=</span>yes</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span>none</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span>yes</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span>192.168.76.2</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span>192.168.76.12</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">NETMASK</span><span class="op">=</span>255.255.255.0</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">DEVICE</span><span class="op">=</span>eth1</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="va">PEERDNS</span><span class="op">=</span>no</span></code></pre></div>
-<p>Na aanpassingen, netwerk herstarten:</p>
+</section>
+<section class="slide level2">
+
+<p>Na aanpassingen, netwerk herstarten (RHEL &lt;=8):</p>
 <pre class="console"><code>$ sudo systemctl restart network</code></pre>
+<p>Vanaf RHEL 9:</p>
+<pre class="console"><code>$ sudo nmcli device reapply eth1</code></pre>
 </section></section>
 <section>
 <section id="lets-install-dhcp" class="title-slide slide level1">
@@ -192,6 +198,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 </section>
 <section id="configuratie" class="slide level2">
 <h2>Configuratie</h2>
+<p>Zie opgave labo 3.4</p>
 <ul>
 <li>Configbestand: <code>/etc/dhcp/dhcpd.conf</code></li>
 <li>Zie voorbeeld:
@@ -224,63 +231,6 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden
 worden</li>
 </ul>
-</section></section>
-<section>
-<section id="vim-survival-guide" class="title-slide slide level1">
-<h1>Vim survival guide</h1>
-
-</section>
-<section id="hoe-maak-je-een-bestand-aan" class="slide level2">
-<h2>Hoe maak je een bestand aan?</h2>
-<ol type="1">
-<li>Met teksteditor Vi/Vim: <code>vim bestand.txt</code></li>
-<li>Met teksteditor Nano: <code>nano bestand.txt</code></li>
-<li>Leeg bestand: <code>touch bestand.txt</code></li>
-</ol>
-</section>
-<section id="essentiële-vim-commandos" class="slide level2">
-<h2>Essentiële Vim-commando’s</h2>
-<ul>
-<li>Bij opstarten van Vim kom je terecht in <em>normal mode</em>.</li>
-<li>Als je tekst wil invoeren moet je naar <em>insert mode</em>.</li>
-</ul>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Taak</th>
-<th style="text-align: left;">Commando</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Normal mode -&gt; insert mode</td>
-<td style="text-align: left;"><code>i</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Insert mode -&gt; normal mode</td>
-<td style="text-align: left;"><code>&lt;Esc&gt;</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Opslaan</td>
-<td style="text-align: left;"><code>:w</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Opslaan en afsluiten</td>
-<td style="text-align: left;"><code>:wq</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Afsluiten zonder opslaan</td>
-<td style="text-align: left;"><code>:q!</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section class="slide level2">
-
-<p>Steep learning curve, great tool!</p>
-<pre class="console"><code>$ sudo apt install vim-runtime     # Op Debian
-$ sudo dnf install vim-enhanced    # Op RedHat
-$ vimtutor</code></pre>
 </section></section>
     </div>
   </div>

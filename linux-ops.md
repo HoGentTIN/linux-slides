@@ -20,7 +20,7 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 
 Extra:
 
-- [Git, Github, Markdown](99-git-survival-guide.md)
-- [Vim Survival Guide](99-vim-survival-guide.md)
+- [Git, Github, Markdown](99-git-survival-guide.html)
+- [Vim Survival Guide](99-vim-survival-guide.html)
 
 Laatste wijziging: 

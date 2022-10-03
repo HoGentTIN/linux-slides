@@ -17,4 +17,9 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - 10 - Workflow automation (TODO)
 - 11 - Workflow automation (cont'd)
 
-Laatste wijziging: Mon Oct  3 21:24:40 UTC 2022
+Extra:
+
+- [Git, Github, Markdown](99-git-survival-guide.html)
+- [Vim Survival Guide](99-vim-survival-guide.html)
+
+Laatste wijziging: Mon Oct  3 21:25:13 UTC 2022

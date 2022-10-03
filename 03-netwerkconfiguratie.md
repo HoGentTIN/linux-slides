@@ -116,6 +116,7 @@ Zie opgave labo 3.4
 
 - Krijgt je VM een IP-adres? welk?
 - Zie je iets in de DHCP logs?
+    - Doe: `sudo journalctl -f -u dhcpd.service`
 - Kan je pingen tussen de VMs?
 - Heb je Internet-toegang? Waarom (niet)?
 - Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden

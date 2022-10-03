@@ -17,4 +17,4 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - 10 - Workflow automation (TODO)
 - 11 - Workflow automation (cont'd)
 
-Laatste wijziging: Mon Oct  3 19:29:21 UTC 2022
+Laatste wijziging: Mon Oct  3 21:24:40 UTC 2022

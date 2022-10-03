@@ -225,7 +225,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <h2>Sluit de Linux-Mint VM aan op intnet</h2>
 <ul>
 <li>Krijgt je VM een IP-adres? welk?</li>
-<li>Zie je iets in de DHCP logs?</li>
+<li>Zie je iets in de DHCP logs?
+<ul>
+<li>Doe: <code>sudo journalctl -f -u dhcpd.service</code></li>
+</ul></li>
 <li>Kan je pingen tussen de VMs?</li>
 <li>Heb je Internet-toegang? Waarom (niet)?</li>
 <li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden

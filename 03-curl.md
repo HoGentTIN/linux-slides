@@ -107,10 +107,6 @@ curl -L https://www.twitter.com   # volg de redirect
 curl -X POST -d 'penguin=tux&color=blue' https://httpbin.org/anything
 ```
 
-## TODO:
-
-- data meesturen met POST
-
 ## Opdracht Automatiseren data-workflow
 
 1. Verzamel data over een bepaalde periode (bv. curl)

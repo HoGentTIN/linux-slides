@@ -25,6 +25,69 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -66,29 +129,128 @@ class="title-slide slide level1">
 <section id="curl" class="slide level2">
 <h2>cURL</h2>
 <pre class="console"><code>$ curl icanhazip.com
-7370:b673:ac23:a771:1a0a:ea7a:5094:03d7</code></pre>
+193.190.172.117</code></pre>
 <p>Try this:</p>
 <ul>
 <li><code>curl 'https://icanhazdadjoke.com/'</code></li>
 <li><code>curl 'https://covid19.mathdro.id/api/countries/BE'</code></li>
 <li><code>curl 'https://api.coinlore.net/api/ticker/?id=90'</code></li>
-<li><code>curl 'https://data.stad.gent/api/records/1.0/search/?dataset=real-time-bezettingen-fietsenstallingen-gent&amp;q=&amp;facet=facilityname'</code></li>
+<li><code>curl 'https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d'</code></li>
 </ul>
 </section>
-<section id="tip-publieke-apis" class="slide level2">
-<h2>Tip: publieke API’s</h2>
+<section id="output-redirection" class="slide level2">
+<h2>Output, redirection</h2>
 <ul>
-<li>Gent Open Data portaal: <a href="https://data.stad.gent/"
-class="uri">https://data.stad.gent/</a></li>
-<li><a href="https://documenter.getpostman.com/view/8854915/Szf7znEe"
-class="uri">https://documenter.getpostman.com/view/8854915/Szf7znEe</a></li>
-<li><a href="https://rapidapi.com/collection/list-of-free-apis"
-class="uri">https://rapidapi.com/collection/list-of-free-apis</a></li>
-<li><a href="https://github.com/public-apis/public-apis"
-class="uri">https://github.com/public-apis/public-apis</a></li>
+<li><p>Normally, <code>curl</code> prints to
+<code>stdout</code></p></li>
+<li><p>When redirected, progress information is printed:</p>
+<pre class="console"><code>$ curl &#39;https://icanhazdadjoke.com/&#39; &gt; joke.txt
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+100    95  100    95    0     0    320      0 --:--:-- --:--:-- --:--:--   319</code></pre></li>
+<li><p>Turn off with <code>-s</code> / <code>--silent</code></p></li>
+</ul>
+</section>
+<section id="http-request-methods" class="slide level2">
+<h2>HTTP Request methods</h2>
+<p>E.g.</p>
+<pre class="console"><code>curl -X GET https://httpbin.org/anything
+curl -X POST https://httpbin.org/anything
+curl -X PUT https://httpbin.org/anything
+curl -X DELETE https://httpbin.org/anything
+...</code></pre>
+<p>Which request is default?</p>
+</section>
+<section id="saving-the-result" class="slide level2">
+<h2>Saving the result</h2>
+<ul>
+<li><code>-o</code>, <code>--output</code>
+<code>&lt;file&gt;</code></li>
+<li><code>-O</code>, <code>--remote-name</code></li>
+</ul>
+<pre class="console"><code>curl -s -o anything.json https://httpbin.org/anything
+curl -s -O https://www.google.com/robots.txt</code></pre>
+</section>
+<section id="show-headers" class="slide level2">
+<h2>Show headers</h2>
+<ul>
+<li><code>-i</code>, <code>--include</code>: toon ook de HTTP response
+headers</li>
+<li><code>-I</code>, <code>--head</code>: toon <strong>enkel</strong> de
+headers</li>
+</ul>
+<pre class="console"><code>curl -i http://google.com</code></pre>
+</section>
+<section id="set-request-headers" class="slide level2">
+<h2>Set request headers</h2>
+<pre class="console"><code>curl -H &#39;User-Agent: Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)&#39; \
+    https://httpbin.org/anything</code></pre>
+</section>
+<section id="follow-redirects" class="slide level2">
+<h2>Follow redirects</h2>
+<ul>
+<li><code>-L</code>, <code>--location</code></li>
+</ul>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.twitter.com      <span class="co"># Leeg resultaat!</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-i</span> https://www.twitter.com   <span class="co"># zie location: veld in de response header</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://www.twitter.com   <span class="co"># volg de redirect</span></span></code></pre></div>
+</section>
+<section id="post-data" class="slide level2">
+<h2>POST data</h2>
+<ul>
+<li><code>-d</code>, <code>--data</code>
+<code>var=val&amp;var=val</code></li>
+</ul>
+<pre class="console"><code>curl -X POST -d &#39;penguin=tux&amp;color=blue&#39; https://httpbin.org/anything</code></pre>
+</section>
+<section id="todo" class="slide level2">
+<h2>TODO:</h2>
+<ul>
+<li>data meesturen met POST</li>
+</ul>
+</section>
+<section id="opdracht-automatiseren-data-workflow" class="slide level2">
+<h2>Opdracht Automatiseren data-workflow</h2>
+<ol type="1">
+<li>Verzamel data over een bepaalde periode (bv. curl)</li>
+<li>Zet ruwe data om in geschikte vorm (bv. JSON/HTML -&gt; CSV)</li>
+<li>Simuleer analyse van de data (bv. grafiekje,
+basis-statistieken)</li>
+<li>Genereer rapport (webpagina, PDF)</li>
+</ol>
+<p>Resultaat in te dienen/demonstreren (= 50% examencijfer)</p>
+</section>
+<section id="stap-1.-verzamel-data" class="slide level2">
+<h2>Stap 1. Verzamel data</h2>
+<ul>
+<li>Kies een dataset</li>
+<li>Schrijf een script dat de gewenste data downloadt
+<ul>
+<li>Slaat op in bepaalde directory (instellen met variabele)</li>
+<li>Bestand met timestamp in de naam</li>
+</ul></li>
+</ul>
+</section>
+<section id="voorbeelden-open-datasets" class="slide level2">
+<h2>Voorbeelden open datasets</h2>
+<ul>
+<li><a href="https://data.stad.gent/">Open Dataportaal stad
+Gent</a></li>
 <li><a
-href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/"
-class="uri">https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/</a></li>
+href="https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d">CO2-meter
+in lokaal B.4.037</a></li>
+<li><a
+href="https://documenter.getpostman.com/view/8854915/Szf7znEe">Lijst van
+publieke REST APIs</a> (Postman)</li>
+<li><a href="https://github.com/public-apis/public-apis">Public
+API’s</a> (Github-repo)</li>
+<li><a href="https://rapidapi.com/collection/list-of-free-apis">Free
+APIs for developers</a> (Rapid API)</li>
+<li><a
+href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">Big
+list of free and open APIs</a> (Ana Kravitz)</li>
+<li>…</li>
 </ul>
 </section></section>
     </div>

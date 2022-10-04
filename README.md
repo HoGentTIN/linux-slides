@@ -5,4 +5,4 @@
 
 De slides zijn opgemaakt in [Markdown](https://guides.github.com/features/mastering-markdown/) en worden met [Pandoc](https://pandoc.org/) omgezet naar een [reveal.js](https://revealjs.com/) presentatie. De broncode is gepubliceerd op: <https://github.com/hogenttin/linux-slides/>
 
-Laatste wijziging: Mon Oct  3 21:25:13 UTC 2022
+Laatste wijziging: Tue Oct  4 14:18:22 UTC 2022

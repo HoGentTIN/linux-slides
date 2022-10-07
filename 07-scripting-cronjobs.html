@@ -11,20 +11,12 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
-    .reveal .sourceCode {  /* see #7635 */
-      overflow: visible;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: 1;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -63,7 +55,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { color: #008000; } /* BuiltIn */
+    code span.bu { } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -76,7 +68,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.im { } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -99,8 +91,7 @@
 <section id="title-slide">
   <h1 class="title">7. Complexe scripts, cronjobs</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
-Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -113,35 +104,29 @@ Vreckem</p>
 <h2>Communicatie script/omgeving</h2>
 <p>Informatie uitwisselen tussen script en omgeving:</p>
 <ul>
-<li>I/O: <code>stdin</code>, <code>stdout</code>,
-<code>stderr</code></li>
+<li>I/O: <code>stdin</code>, <code>stdout</code>, <code>stderr</code></li>
 <li>Positionele parameters: <code>$1</code>, <code>$2</code>, enz.</li>
 <li>Exit-status (0-255)</li>
 <li>Omgevingsvariabelen, vb:</li>
 </ul>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">VAGRANT_LOG</span><span class="op">=</span>debug <span class="ex">vagrant</span> up</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="va">VAGRANT_LOG</span><span class="op">=</span>debug <span class="ex">vagrant</span> up</span></code></pre></div>
 </section>
 <section id="functies-in-bash" class="slide level2">
 <h2>Functies in Bash</h2>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functie_naam()</span> <span class="kw">{</span></span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functie_naam()</span> <span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
 <p>Een functie gedraagt zich als een script!</p>
 <ul>
 <li>oproepen: <code>functie_naam arg1 arg2 arg3</code></li>
-<li>positionele parameters: <code>${1}</code>, <code>${2}</code>,
-enz.</li>
+<li>positionele parameters: <code>${1}</code>, <code>${2}</code>, enz.</li>
 <li><code>return STATUS</code> ipv <code>exit</code></li>
 </ul>
 </section>
-<section id="scope-variabelen-bij-functies---global"
-class="slide level2">
+<section id="scope-variabelen-bij-functies---global" class="slide level2">
 <h2>Scope variabelen bij functies - global</h2>
 <p>Wat is de uitvoer van dit script?</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/env bash</span></span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/env bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="va">var_a</span><span class="op">=</span>a</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">foo()</span> <span class="kw">{</span></span>
@@ -153,12 +138,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;</span><span class="va">${var_a}</span><span class="st"> </span><span class="va">${var_b}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
-<section id="scope-variabelen-bij-functies---local"
-class="slide level2">
+<section id="scope-variabelen-bij-functies---local" class="slide level2">
 <h2>Scope variabelen bij functies - local</h2>
 <p>Wat is de uitvoer van dit script?</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/env bash</span></span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/env bash</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">var_a</span><span class="op">=</span>a</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">foo()</span> <span class="kw">{</span></span>
@@ -172,8 +155,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 </section>
 <section id="functies-in-bash-voorbeeld" class="slide level2">
 <h2>Functies in Bash: voorbeeld</h2>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Usage: copy_iso_to_usb ISO_FILE DEVICE</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Copy an ISO file to a USB device, showing progress with pv (pipe viewer)</span></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># e.g. copy_iso_to_usb FedoraWorkstation.iso /dev/sdc</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="fu">copy_iso_to_usb()</span> <span class="kw">{</span></span>
@@ -193,8 +175,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="
 </section>
 <section id="case-1" class="slide level2">
 <h2>Case (1)</h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> EXPR <span class="kw">in</span></span>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> EXPR <span class="kw">in</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="ss">PATROON1</span><span class="kw">)</span></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">;;</span></span>
@@ -208,8 +189,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="
 </section>
 <section id="case-2" class="slide level2">
 <h2>Case (2)</h2>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">option</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">option</span><span class="op">=</span><span class="st">&quot;</span><span class="va">${1}</span><span class="st">&quot;</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">case</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span> <span class="kw">in</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="ss">-h</span><span class="kw">|</span><span class="ss">--help</span><span class="kw">|</span><span class="st">&#39;-?&#39;</span><span class="kw">)</span></span>
@@ -231,16 +211,14 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 <h2>Tips</h2>
 <ul>
 <li>Zet positionele parameters om in beschrijvende namen</li>
-<li>Maak lijnen niet te lang (gebruik <code>\</code> op het einde van
-een regel)</li>
+<li>Maak lijnen niet te lang (gebruik <code>\</code> op het einde van een regel)</li>
 <li>Gebruik “lange” opties: maakt script leesbaarder</li>
 <li>Gebruik lokale variabelen in functies</li>
 <li>Deel script op in (herbruikbare) functies</li>
 </ul>
 </section></section>
 <section>
-<section id="plannen-van-systeembeheertaken-cronjobs"
-class="title-slide slide level1">
+<section id="plannen-van-systeembeheertaken-cronjobs" class="title-slide slide level1">
 <h1>Plannen van systeembeheertaken: cronjobs</h1>
 
 </section>
@@ -257,12 +235,9 @@ $ bg
 $ find / -type f &gt; all-files.txt 2&gt;&amp;1 &amp;
 [2] 4321</code></pre>
 <ul>
-<li><code>Ctrl+Z</code> zet de uitvoer van een proces stil (nog niet
-afgesloten!)</li>
-<li><code>bg</code> start het proces terug op, maar in de
-achtergrond</li>
-<li><code>&amp;</code> op het einde van een regel start proces op de
-achtergrond = combinatie van <code>Ctrl+Z</code> en <code>bg</code></li>
+<li><code>Ctrl+Z</code> zet de uitvoer van een proces stil (nog niet afgesloten!)</li>
+<li><code>bg</code> start het proces terug op, maar in de achtergrond</li>
+<li><code>&amp;</code> op het einde van een regel start proces op de achtergrond = combinatie van <code>Ctrl+Z</code> en <code>bg</code></li>
 </ul>
 </section>
 <section id="achtergrondprocessen-beheren" class="slide level2">
@@ -289,8 +264,7 @@ achtergrond = combinatie van <code>Ctrl+Z</code> en <code>bg</code></li>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>bg NUM</code></td>
-<td style="text-align: left;">Herstart stilgelegd proces op
-achtergrond</td>
+<td style="text-align: left;">Herstart stilgelegd proces op achtergrond</td>
 </tr>
 </tbody>
 </table>
@@ -306,10 +280,8 @@ at&gt; &lt;Ctrl+D&gt;
 job 9 at Mon Nov 15 15:47:00 2021
 $ watch cat /tmp/date.txt</code></pre>
 <ul>
-<li><code>at</code> zal binnen 2 minuten het opgegeven commando
-uitvoeren</li>
-<li>Met <code>watch</code> herbekijken we elke 2s de inhoud van het
-doelbestand</li>
+<li><code>at</code> zal binnen 2 minuten het opgegeven commando uitvoeren</li>
+<li>Met <code>watch</code> herbekijken we elke 2s de inhoud van het doelbestand</li>
 </ul>
 </section>
 <section id="processen-eenmalig-plannen-2" class="slide level2">
@@ -334,8 +306,7 @@ doelbestand</li>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;"><code>at</code></td>
-<td style="text-align: left;">Voer commando’s uit op specifiek
-tijdstip</td>
+<td style="text-align: left;">Voer commando’s uit op specifiek tijdstip</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>atq</code></td>
@@ -347,8 +318,7 @@ tijdstip</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>batch</code></td>
-<td style="text-align: left;">Voer taak uit wanneer systeem minder
-belast is</td>
+<td style="text-align: left;">Voer taak uit wanneer systeem minder belast is</td>
 </tr>
 </tbody>
 </table>
@@ -471,7 +441,7 @@ CRON_TZ=Japan
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: true,
+        hash: false,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

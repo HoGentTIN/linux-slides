@@ -11,20 +11,12 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
-    .reveal .sourceCode {  /* see #7635 */
-      overflow: visible;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: 1;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -63,7 +55,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { color: #008000; } /* BuiltIn */
+    code span.bu { } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -76,7 +68,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.im { } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -99,8 +91,7 @@
 <section id="title-slide">
   <h1 class="title">3.2. Netwerkconfiguratie</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
-Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -111,8 +102,7 @@ Vreckem</p>
 </section>
 <section id="netwerkinstellingen-controleren" class="slide level2">
 <h2>Netwerkinstellingen controleren</h2>
-<p>Om Internettoegang mogelijk te maken zijn er 3 instellingen
-nodig:</p>
+<p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
 <ol type="1">
 <li>IP-adres en subnetmasker</li>
 <li>Default gateway</li>
@@ -133,19 +123,16 @@ nodig:</p>
 </section>
 <section id="wat-is-het-ip-adres-van" class="slide level2">
 <h2>Wat is het IP-adres van…?</h2>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nslookup www.hogent.be</span>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nslookup www.hogent.be</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dig www.hogent.be</span></code></pre></div>
 <p>Wat is <em>mijn publiek</em> IP-adres?</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl icanhazip.com</span>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl icanhazip.com</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
 </section>
 <section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
 <p>(op de AlmaLinux VM, vóór uitvoeren van labo 3.4)</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[osboxes@almaserver]</span> $ ip <span class="at">-4</span> a</span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[osboxes@almaserver]</span> $ ip <span class="at">-4</span> a</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1:</span> lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
@@ -158,10 +145,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <h2>Netwerkinstellingen</h2>
 <ul>
 <li><code>lo</code> (loopback): 127.0.0.1/8</li>
-<li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT):
-10.0.2.15/24</li>
-<li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter
-(intnet):
+<li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT): 10.0.2.15/24</li>
+<li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter (intnet):
 <ul>
 <li>Linux Mint: 192.168.76.10/24</li>
 <li>AlmaLinux: 192.168.76.12/24</li>
@@ -171,8 +156,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <section id="netwerkinstellingen-aanpassen-redhat" class="slide level2">
 <h2>Netwerkinstellingen aanpassen (RedHat)</h2>
 <p><code>/etc/sysconfig/network-scripts/ifcfg-&lt;interface_name&gt;</code></p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NM_CONTROLLED</span><span class="op">=</span>yes</span>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NM_CONTROLLED</span><span class="op">=</span>yes</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span>none</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span>yes</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span>192.168.76.12</span>
@@ -201,8 +185,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <p>Zie opgave labo 3.4</p>
 <ul>
 <li>Configbestand: <code>/etc/dhcp/dhcpd.conf</code></li>
-<li>Zie voorbeeld:
-<code>/usr/share/doc/dhcp-server/dhcpd.conf.example</code></li>
+<li>Zie voorbeeld: <code>/usr/share/doc/dhcp-server/dhcpd.conf.example</code></li>
 <li>Wat hebben we nodig voor onze opstelling?</li>
 </ul>
 </section>
@@ -231,8 +214,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 </ul></li>
 <li>Kan je pingen tussen de VMs?</li>
 <li>Heb je Internet-toegang? Waarom (niet)?</li>
-<li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden
-worden</li>
+<li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden</li>
 </ul>
 </section></section>
     </div>
@@ -275,7 +257,7 @@ worden</li>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: true,
+        hash: false,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

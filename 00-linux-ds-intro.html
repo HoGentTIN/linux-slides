@@ -11,20 +11,12 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
-    .reveal .sourceCode {  /* see #7635 */
-      overflow: visible;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: 1;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -36,8 +28,7 @@
 <section id="title-slide">
   <h1 class="title">0. Linux for Data Scientists: intro</h1>
   <p class="subtitle">HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
-Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -123,8 +114,7 @@ Vreckem</p>
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/automate.jpg" alt="Automate all the things!" />
-<figcaption aria-hidden="true">Automate all the things!</figcaption>
+<img data-src="assets/automate.jpg" alt="Automate all the things!" /><figcaption aria-hidden="true">Automate all the things!</figcaption>
 </figure>
 </section>
 <section class="slide level2">
@@ -133,8 +123,7 @@ Vreckem</p>
 <li>Toolbox voor automatisering
 <ul>
 <li>Filtercommando’s</li>
-<li><code>grep</code>/<code>ag</code>, <code>sed</code>,
-<code>awk</code></li>
+<li><code>grep</code>/<code>ag</code>, <code>sed</code>, <code>awk</code></li>
 <li><code>curl</code>, <code>jq</code>, <code>pandoc</code>, …</li>
 <li>Shell scripts</li>
 <li>Configuration Management Systems (Ansible, …)</li>
@@ -157,14 +146,12 @@ Vreckem</p>
 <section id="de-kracht-van-de-cli" class="slide level2">
 <h2>De kracht van de CLI</h2>
 <ul>
-<li>Command line interface (CLI) is de sleutel tot
-<strong>automatisering</strong>
+<li>Command line interface (CLI) is de sleutel tot <strong>automatisering</strong>
 <ul>
 <li>Miljoenen servers beheren gaat niet via GUI</li>
 <li>Ook in Windows ziet men dit nu in (PowerShell)</li>
 </ul></li>
-<li>CLI Instructies zijn <strong>bondiger</strong> en makkelijker
-reproduceerbaar dan GUI instructies</li>
+<li>CLI Instructies zijn <strong>bondiger</strong> en makkelijker reproduceerbaar dan GUI instructies</li>
 </ul>
 </section>
 <section id="verloop-contactmoment" class="slide level2">
@@ -184,8 +171,7 @@ reproduceerbaar dan GUI instructies</li>
 <ul>
 <li>Bereid volgende sessie voor
 <ul>
-<li>Leerpad: voorbereiding, achtergrondinfo, oefeningen met
-oplossingen</li>
+<li>Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen</li>
 </ul></li>
 <li>Werk verder aan labo’s</li>
 </ul>
@@ -238,7 +224,7 @@ oplossingen</li>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: true,
+        hash: false,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

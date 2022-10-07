@@ -11,20 +11,12 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
-    .reveal .sourceCode {  /* see #7635 */
-      overflow: visible;
-    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: 1;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
-    ul.task-list li input[type="checkbox"] {
-      width: 0.8em;
-      margin: 0 0.8em 0.2em -1.6em;
-      vertical-align: middle;
-    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -63,7 +55,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { color: #008000; } /* BuiltIn */
+    code span.bu { } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -76,7 +68,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.im { } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -99,8 +91,7 @@
 <section id="title-slide">
   <h1 class="title">3.1. Software-installatie, netwerkconfiguratie</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
-Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -140,8 +131,7 @@ Vreckem</p>
 <section id="debian-vs-red-hat" class="slide level2">
 <h2>Debian vs Red Hat</h2>
 <p>Klassiek zijn er twee grote Linux distributies</p>
-<p>(zie <a href="https://nl.wikipedia.org/wiki/Linuxdistributie"
-class="uri">https://nl.wikipedia.org/wiki/Linuxdistributie</a>)</p>
+<p>(zie <a href="https://nl.wikipedia.org/wiki/Linuxdistributie" class="uri">https://nl.wikipedia.org/wiki/Linuxdistributie</a>)</p>
 <ol type="1">
 <li>Debian
 <ul>
@@ -158,19 +148,16 @@ class="uri">https://nl.wikipedia.org/wiki/Linuxdistributie</a>)</p>
 <li>…</li>
 </ul></li>
 </ol>
-<p><strong>Opm.</strong> “Enterprise Linux” (EL) = compatibel met RedHat
-Enterprise Linux (RHEL)</p>
+<p><strong>Opm.</strong> “Enterprise Linux” (EL) = compatibel met RedHat Enterprise Linux (RHEL)</p>
 </section>
 <section id="verschillen-tussen-debian-en-redhat" class="slide level2">
 <h2>Verschillen tussen Debian en RedHat</h2>
-<p>De verschillen zijn o.a. in de manier waarop software wordt
-beheerd:</p>
+<p>De verschillen zijn o.a. in de manier waarop software wordt beheerd:</p>
 <ul>
 <li>Debian: .deb packages</li>
 <li>Red Hat: .rpm packages</li>
 </ul>
-<p><strong>Opm.</strong> Er zijn nog meer package managers voor
-Linux</p>
+<p><strong>Opm.</strong> Er zijn nog meer package managers voor Linux</p>
 </section>
 <section id="debian-dpkg" class="slide level2">
 <h2>Debian <code>dpkg</code></h2>
@@ -178,16 +165,14 @@ Linux</p>
 <ol type="1">
 <li><p>download een .deb package (manueel)</p></li>
 <li><p>installeer met dpkg</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dpkg <span class="at">-i</span> <span class="op">&lt;</span>package_name<span class="op">&gt;</span>.deb</span></code></pre></div></li>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dpkg <span class="at">-i</span> <span class="op">&lt;</span>package_name<span class="op">&gt;</span>.deb</span></code></pre></div></li>
 <li><p>Los eventuele depencencies manueel op (zie later)</p></li>
 </ol>
 </section>
 <section class="slide level2">
 
 <p>Overzicht van geïnstalleerde packages op Debian:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dpkg <span class="at">-l</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dpkg <span class="at">-l</span></span></code></pre></div>
 </section>
 <section id="dependency" class="slide level2">
 <h2>Dependency</h2>
@@ -196,8 +181,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <li>Zonder de onderliggende bouwstenen kan dit niet werken.</li>
 </ul>
 <p>Linux name = dependency</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dpkg</span> <span class="at">-I</span> vim_2%3a8.1.2269-1ubuntu5.3_amd64.deb </span>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">dpkg</span> <span class="at">-I</span> vim_2%3a8.1.2269-1ubuntu5.3_amd64.deb </span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a> <span class="ex">new</span> Debian package, version 2.0.</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">Package:</span> vim</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">Version:</span> 2:8.1.2269-1ubuntu5.3</span>
@@ -213,29 +197,24 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <li>controlleer depencencies, download eventuele extra packages</li>
 <li>installeert (achterliggend) met dpkg</li>
 </ol>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> apt install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> apt install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div>
 </section>
 <section id="debian-apt-2" class="slide level2">
 <h2>Debian apt (2)</h2>
 <p>Automatisering:</p>
 <ul>
 <li><p>Bijwerken van info op de repo servers</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt update</span></code></pre></div></li>
+<div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt update</span></code></pre></div></li>
 <li><p>Bijwerken van alle packages op jouw systeem</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt upgrade</span></code></pre></div></li>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt upgrade</span></code></pre></div></li>
 <li><p>Bijwerken van een enkele package op jouw systeem</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt install <span class="op">&lt;</span>package_name<span class="op">&gt;</span> # nieuwe versie wordt geïnstalleerd</span></code></pre></div></li>
+<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo apt install <span class="op">&lt;</span>package_name<span class="op">&gt;</span> # nieuwe versie wordt geïnstalleerd</span></code></pre></div></li>
 </ul>
 </section>
 <section id="debian-repository-servers" class="slide level2">
 <h2>Debian repository servers</h2>
 <p>List of repository servers you use:</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">osboxes@osboxes:~$</span> ls /etc/apt/sources.list<span class="pp">*</span></span>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">osboxes@osboxes:~$</span> ls /etc/apt/sources.list<span class="pp">*</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/etc/apt/sources.list</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/etc/apt/sources.list.d:</span></span>
@@ -245,8 +224,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="
 <h2>Red Hat yum / dnf</h2>
 <ul>
 <li>Identical system, but different command set.</li>
-<li><code>rpm</code> = RedHat Package Manager (equivalent van
-<code>dpkg</code>)</li>
+<li><code>rpm</code> = RedHat Package Manager (equivalent van <code>dpkg</code>)</li>
 <li><code>yum</code> = Yellowdog Update Manager
 <ul>
 <li>equivalent van <code>apt</code></li>
@@ -264,53 +242,42 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="
 <h2>Red Hat yum / dnf (2)</h2>
 <ul>
 <li><p>Installatie package</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div></li>
-<li><p>Bijwerken van info op de repo servers; aftoetsen van wat kan
-bijgewerkt worden:</p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf check-update</span></code></pre></div></li>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf install <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div></li>
+<li><p>Bijwerken van info op de repo servers; aftoetsen van wat kan bijgewerkt worden:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf check-update</span></code></pre></div></li>
 </ul>
 </section>
 <section class="slide level2">
 
 <ul>
 <li><p>Bijwerken van alle packages op jouw systeem</p>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf upgrade</span></code></pre></div></li>
+<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf upgrade</span></code></pre></div></li>
 <li><p>Bijwerken van een enkele package op jouw systeem</p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf upgrade <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo dnf upgrade <span class="op">&lt;</span>package_name<span class="op">&gt;</span></span></code></pre></div></li>
 </ul>
 </section>
 <section id="andere-handige-commandos" class="slide level2">
 <h2>Andere handige commando’s</h2>
 <ul>
 <li><p>Lijst geïnstalleerde packages</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf list installed</span></code></pre></div></li>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf list installed</span></code></pre></div></li>
 <li><p>Lijst beschikbare packages</p>
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf list available</span></code></pre></div></li>
+<div class="sourceCode" id="cb14"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf list available</span></code></pre></div></li>
 </ul>
 <p>Hoeveel packages zijn geïnstalleerd/beschikbaar op jouw VM?</p>
 </section>
 <section class="slide level2">
 
 <ul>
-<li><p>Met welke package kan ik het commando <code>fortune</code>
-installeren?</p>
-<div class="sourceCode" id="cb15"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf provides <span class="pp">*</span>bin/fortune</span></code></pre></div></li>
+<li><p>Met welke package kan ik het commando <code>fortune</code> installeren?</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf provides <span class="pp">*</span>bin/fortune</span></code></pre></div></li>
 <li><p>Wat zijn de dependencies van <code>curl</code>?</p>
-<div class="sourceCode" id="cb16"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf deplist curl</span></code></pre></div></li>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dnf deplist curl</span></code></pre></div></li>
 </ul>
 </section>
 <section id="redhat-repository-servers" class="slide level2">
 <h2>RedHat repository servers</h2>
-<div class="sourceCode" id="cb17"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[admin@server</span> ~]$ ls /etc/yum.repos.d/</span>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[admin@server</span> ~]$ ls /etc/yum.repos.d/</span>
 <span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="ex">almalinux-ha.repo</span>  almalinux-powertools.repo  almalinux.repo  epel-modular.repo</span>
 <span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="ex">epel-playground.repo</span>  epel-testing-modular.repo  epel-testing.repo  epel.repo</span>
 <span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="ex">[admin@server</span> ~]$ cat /etc/yum.repos.d/almalinux.repo</span></code></pre></div>
@@ -340,10 +307,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href=
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/xkcd-1654-install.png"
-alt="https://xkcd.com/1654/" />
-<figcaption aria-hidden="true"><a href="https://xkcd.com/1654/"
-class="uri">https://xkcd.com/1654/</a></figcaption>
+<img data-src="assets/xkcd-1654-install.png" alt="https://xkcd.com/1654/" /><figcaption aria-hidden="true"><a href="https://xkcd.com/1654/" class="uri">https://xkcd.com/1654/</a></figcaption>
 </figure>
 </section>
 <section id="on-other-oss" class="slide level2">
@@ -393,7 +357,7 @@ class="uri">https://xkcd.com/1654/</a></figcaption>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: true,
+        hash: false,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

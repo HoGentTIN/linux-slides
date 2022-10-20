@@ -1,5 +1,5 @@
 ---
-title: "5. Advanced Data Parsing"
+title: "5. Advanced Text Processing"
 subtitle: "Linux (for data Scientists)<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
 date: 2022-2023
@@ -16,8 +16,9 @@ date: 2022-2023
 
 ## Globbing
 
-- Meestal om meerdere bestanden aan te duiden
+- Meestal om meerdere bestanden op te geven
 - Soms ook op andere plaatsen!
+    - vb. Bash `case`-statement
 - Eenvoudiger/minder mogelijkheden dan regex!
 
 ~~`ls | grep 'txt$'`~~ → `ls *.txt`
@@ -107,7 +108,7 @@ END { print s }
 
 Print de laatste kolom:
 
-```awk -F: '{print $NF}' /etc/passwd
+`awk -F: '{print $NF}' /etc/passwd`
 
 Bereken het gemiddelde van kolom 3 in een CSV-bestand:
 
@@ -176,3 +177,61 @@ END {
 - Herbst, M. (2016) *[Introduction to AWK programming](https://michael-herbst.com/teaching/introduction-to-awk-programming-2016/)*
 
 # JSON parsing: jq
+
+## jq
+
+> jq is a lightweight and flexible command-line JSON processor.
+
+- filter-commando: input > verwerking > output
+- zoals awk/sed, maar dan voor JSON
+- niet altijd even makkelijk in gebruik...
+- RTFM: <https://stedolan.github.io/jq/manual/>
+
+## jq als "pretty printer"
+
+```console
+curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq
+```
+
+of: `jq '.'` (met `.` de *identity operator*)
+
+## Toon enkel eerste element
+
+```console
+curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0]'
+```
+
+(in de volgende voorbeelden: enkel het `jq`-commando)
+
+## Toon enkel specifieke velden
+
+```console
+jq '.[0] | {message: .commit.message, name: .commit.committer.name}'
+```
+
+- Let op! `|` *binnen* de `jq`-expressie!
+- `.key` haalt het `key`-veld op
+    - kan ook genest, bv. `.commit.message`
+
+---
+
+```console
+jq '.[] | {message: .commit.message, name: .commit.committer.name}'
+```
+
+- `.[]` geeft elk element van de array terug
+    - Resultaat is geen JSON!
+- Als JSON-array: `[]` er rond:
+
+```console
+jq '[.[] | {message: .commit.message, name: .commit.committer.name}]'
+```
+
+## Array als waarde ophalen
+
+- Veld "parents" (parent commits) kan een array met 1 of meerdere waarden zijn
+    - (bv. merge commit heeft 2 parents)
+
+```console
+jq '[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]'
+```

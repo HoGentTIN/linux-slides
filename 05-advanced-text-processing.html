@@ -118,27 +118,60 @@ Vreckem</p>
 <li>Reguliere expressies (regex): <code>man 7 regex</code></li>
 </ul>
 </section>
-<section id="globbing" class="slide level2">
-<h2>Globbing</h2>
+<section id="meerdere-bestanden-opgeven-globbing" class="slide level2">
+<h2>Meerdere bestanden opgeven: globbing</h2>
+<p>Commando uitvoeren op meer dan 1 bestand?</p>
 <ul>
-<li>Meestal om meerdere bestanden op te geven</li>
-<li>Soms ook op andere plaatsen!
+<li>Geef elk bestand apart op (spatie ertussen)
 <ul>
-<li>vb. Bash <code>case</code>-statement</li>
+<li><code>cp a.txt b.doc c.jpg /tmp</code></li>
 </ul></li>
-<li>Eenvoudiger/minder mogelijkheden dan regex!</li>
-</ul>
-<p><del><code>ls | grep 'txt$'</code></del> → <code>ls *.txt</code></p>
-</section>
-<section id="globbing-syntax" class="slide level2">
-<h2>Globbing syntax</h2>
+<li>Gebruik <em>globbing</em>-patronen
 <ul>
-<li><code>?</code> Eén willekeurig karakter</li>
-<li><code>*</code> Een willekeurige string (incl. lege string)</li>
-<li><code>[...]</code> Een reeks karakters (bv. <code>[abc]</code> of
-<code>[a-c]</code>)</li>
-<li><code>[!...]</code> Een reeks niet toegelaten karakters</li>
+<li><code>cp /media/usbstick/*.jpg ~/Pictures/</code></li>
+</ul></li>
 </ul>
+</section>
+<section id="globbing-patronen" class="slide level2">
+<h2>Globbing-patronen</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Patroon</th>
+<th style="text-align: left;">Betekenis</th>
+<th style="text-align: left;">Voorbeeld</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>?</code></td>
+<td style="text-align: left;">Eén willekeurig teken</td>
+<td style="text-align: left;"><code>ls /bin/??</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>*</code></td>
+<td style="text-align: left;">Willekeurige string (ook leeg)</td>
+<td style="text-align: left;"><code>ls *.txt</code>,
+<code>ls a*</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>[...]</code></td>
+<td style="text-align: left;">Elk teken opgesomd tussen
+<code>[]</code></td>
+<td style="text-align: left;"><code>ls /bin/[A+_]*</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>[A-Z]</code></td>
+<td style="text-align: left;">Van A t/m Z</td>
+<td style="text-align: left;"><code>ls /bin/*[A-D1-3]</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>[!...]</code></td>
+<td style="text-align: left;"><em>Niet</em> 1 v/d opgesomde tekens</td>
+<td style="text-align: left;"><code>ls /bin/[!a-z]*</code></td>
+</tr>
+</tbody>
+</table>
 </section>
 <section id="voorbeelden" class="slide level2">
 <h2>Voorbeelden</h2>
@@ -169,6 +202,20 @@ waarvan de naam begint met twee cijfers gevolgd door een streepje
 <li><code>apt list --installed 'lib*'</code>: toon alle geïnstalleerde
 packages met programmabibliotheken</li>
 </ul>
+</section>
+<section id="enkele-anti-patterns" class="slide level2">
+<h2>Enkele “Anti-patterns”</h2>
+<p>Gebruik nooit regex om bestanden te selecteren!</p>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fout:</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /bin <span class="kw">|</span> <span class="fu">grep</span> <span class="st">&#39;a.*&#39;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> /bin/a<span class="pp">*</span></span></code></pre></div>
+<p>In dit soort gevallen is <code>find</code> overbodig:</p>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> . <span class="at">-maxdepth</span> 1 <span class="at">-type</span> f <span class="at">-name</span> <span class="st">&#39;a*&#39;</span> <span class="at">-exec</span> cp {} /tmp <span class="dt">\;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter:</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">cp</span> a<span class="pp">*</span> /tmp</span></code></pre></div>
 </section></section>
 <section>
 <section id="advanced-awk" class="title-slide slide level1">
@@ -222,9 +269,9 @@ voldaan is</li>
 <section id="voorbeeld" class="slide level2">
 <h2>Voorbeeld</h2>
 <p>Bereken de som van (alle getallen in) kolom 3</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>s <span class="op">+=</span> <span class="dt">$3</span><span class="op">}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span> <span class="kw">print</span> s <span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode awk"><code class="sourceCode awk"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>s <span class="op">+=</span> <span class="dt">$3</span><span class="op">}</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span> <span class="kw">print</span> s <span class="op">}</span></span></code></pre></div>
 <ul>
 <li>Initialisatie variabele <code>s=0</code> geïmpliceerd!</li>
 <li><code>$3</code> wordt automatisch geïnterpreteerd als getal!</li>
@@ -246,18 +293,18 @@ class="sourceCode awk"><code class="sourceCode awk"><span id="cb3-1"><a href="#c
 <p>Print de laatste kolom:</p>
 <p><code>awk -F: '{print $NF}' /etc/passwd</code></p>
 <p>Bereken het gemiddelde van kolom 3 in een CSV-bestand:</p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span> <span class="bu">FS</span><span class="op">=</span><span class="st">&quot;,&quot;</span> <span class="op">}</span>    <span class="co"># This is a CSV file</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>s <span class="op">+=</span> <span class="dt">$3</span><span class="op">}</span>           <span class="co"># Calculate sum of column 3</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span> <span class="kw">print</span> s<span class="op">/</span><span class="bu">NR</span> <span class="op">}</span>  <span class="co"># Print mean</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode awk"><code class="sourceCode awk"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span> <span class="bu">FS</span><span class="op">=</span><span class="st">&quot;,&quot;</span> <span class="op">}</span>    <span class="co"># This is a CSV file</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span>s <span class="op">+=</span> <span class="dt">$3</span><span class="op">}</span>           <span class="co"># Calculate sum of column 3</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span> <span class="kw">print</span> s<span class="op">/</span><span class="bu">NR</span> <span class="op">}</span>  <span class="co"># Print mean</span></span></code></pre></div>
 </section>
 <section id="awk-scripts" class="slide level2">
 <h2>Awk scripts</h2>
 <p>Voorbeeld: <code>users.awk</code></p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span><span class="bu">FS</span><span class="op">=</span><span class="st">&quot;:&quot;</span><span class="op">}</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="kw">print</span> <span class="dt">$1</span><span class="op">,</span> <span class="dt">$3</span><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode awk"><code class="sourceCode awk"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span><span class="bu">FS</span><span class="op">=</span><span class="st">&quot;:&quot;</span><span class="op">}</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> <span class="kw">print</span> <span class="dt">$1</span><span class="op">,</span> <span class="dt">$3</span><span class="op">}</span></span></code></pre></div>
 <p>Uitvoeren met:</p>
 <pre class="console"><code>$ chmod +x users.awk
 $ ./users.awk &lt; /etc/passwd
@@ -269,31 +316,31 @@ osboxes 1000</code></pre>
 <section id="arrays-en-dictionaries" class="slide level2">
 <h2>Arrays en dictionaries</h2>
 <p>Bereken de som van kolommen 2, 3 en 4:</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$2</span>] <span class="op">+=</span> <span class="dt">$2</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$3</span>] <span class="op">+=</span> <span class="dt">$3</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$4</span>] <span class="op">+=</span> <span class="dt">$4</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>s <span class="kw">in</span> sums<span class="op">)</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">print</span> s<span class="op">,</span> sums[s]</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode awk"><code class="sourceCode awk"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$2</span>] <span class="op">+=</span> <span class="dt">$2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$3</span>] <span class="op">+=</span> <span class="dt">$3</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$4</span>] <span class="op">+=</span> <span class="dt">$4</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>s <span class="kw">in</span> sums<span class="op">)</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="kw">print</span> s<span class="op">,</span> sums[s]</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <p>Print de <em>user shells</em> in <code>/etc/passwsd</code> en tel
 hoeveel elk voorkomt</p>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode awk"><code class="sourceCode awk"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="co"># countshells.awk</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span> <span class="bu">FS</span><span class="op">=</span><span class="st">&quot;:&quot;</span> <span class="op">}</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> shells[<span class="dt">$NF</span>]<span class="op">++</span> <span class="op">}</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>s <span class="kw">in</span> shells<span class="op">)</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">printf</span> <span class="st">&quot;%4s</span><span class="sc">\t</span><span class="st">%s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> shells[s]<span class="op">,</span> s</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode awk"><code class="sourceCode awk"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># countshells.awk</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span> <span class="bu">FS</span><span class="op">=</span><span class="st">&quot;:&quot;</span> <span class="op">}</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="op">{</span> shells[<span class="dt">$NF</span>]<span class="op">++</span> <span class="op">}</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> <span class="op">(</span>s <span class="kw">in</span> shells<span class="op">)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>        <span class="kw">printf</span> <span class="st">&quot;%4s</span><span class="sc">\t</span><span class="st">%s</span><span class="sc">\n</span><span class="st">&quot;</span><span class="op">,</span> shells[s]<span class="op">,</span> s</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
 </section>
 <section id="meer-weten" class="slide level2">
 <h2>Meer weten?</h2>

@@ -14,21 +14,24 @@ date: 2022-2023
 - Globbing (wildcards): `man 7 glob`
 - Reguliere expressies (regex): `man 7 regex`
 
-## Globbing
+## Meerdere bestanden opgeven: globbing
 
-- Meestal om meerdere bestanden op te geven
-- Soms ook op andere plaatsen!
-    - vb. Bash `case`-statement
-- Eenvoudiger/minder mogelijkheden dan regex!
+Commando uitvoeren op meer dan 1 bestand?
 
-~~`ls | grep 'txt$'`~~ → `ls *.txt`
+- Geef elk bestand apart op (spatie ertussen)
+    - `cp a.txt b.doc c.jpg /tmp`
+- Gebruik *globbing*-patronen
+    - `cp /media/usbstick/*.jpg ~/Pictures/`
 
-## Globbing syntax
+## Globbing-patronen
 
-- `?` Eén willekeurig karakter
-- `*` Een willekeurige string (incl. lege string)
-- `[...]` Een reeks karakters (bv. `[abc]` of `[a-c]`)
-- `[!...]` Een reeks niet toegelaten karakters
+| Patroon  | Betekenis                      | Voorbeeld           |
+|:---------|:-------------------------------|:--------------------|
+| `?`      | Eén willekeurig teken          | `ls /bin/??`        |
+| `*`      | Willekeurige string (ook leeg) | `ls *.txt`, `ls a*` |
+| `[...]`  | Elk teken opgesomd tussen `[]` | `ls /bin/[A+_]*`    |
+| `[A-Z]`  | Van A t/m Z                    | `ls /bin/*[A-D1-3]` |
+| `[!...]` | *Niet* 1 v/d opgesomde tekens  | `ls /bin/[!a-z]*`   |
 
 ## Voorbeelden
 
@@ -44,6 +47,25 @@ date: 2022-2023
 - `ls -d /usr/share/man/man?`: toon alle directories onder `/usr/share/man`, gevolgd door nog een enkel karakter
     - bv. `man1`, `man7`, `mann`
 - `apt list --installed 'lib*'`: toon alle geïnstalleerde packages met programmabibliotheken
+
+## Enkele "Anti-patterns"
+
+Gebruik nooit regex om bestanden te selecteren!
+
+```bash
+# Fout:
+ls /bin | grep 'a.*'
+# Beter:
+ls /bin/a*
+```
+
+In dit soort gevallen is `find` overbodig:
+
+```bash
+find . -maxdepth 1 -type f -name 'a*' -exec cp {} /tmp \;
+# Beter:
+cp a* /tmp
+```
 
 # Advanced AWK
 

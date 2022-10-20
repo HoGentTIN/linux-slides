@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
-  <title>5. Advanced Data Parsing</title>
+  <title>5. Advanced Text Processing</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +97,7 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">5. Advanced Data Parsing</h1>
+  <h1 class="title">5. Advanced Text Processing</h1>
   <p class="subtitle">Linux (for data Scientists)<br/>HOGENT toegepaste
 informatica</p>
   <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
@@ -121,8 +121,11 @@ Vreckem</p>
 <section id="globbing" class="slide level2">
 <h2>Globbing</h2>
 <ul>
-<li>Meestal om meerdere bestanden aan te duiden</li>
-<li>Soms ook op andere plaatsen!</li>
+<li>Meestal om meerdere bestanden op te geven</li>
+<li>Soms ook op andere plaatsen!
+<ul>
+<li>vb. Bash <code>case</code>-statement</li>
+</ul></li>
 <li>Eenvoudiger/minder mogelijkheden dan regex!</li>
 </ul>
 <p><del><code>ls | grep 'txt$'</code></del> → <code>ls *.txt</code></p>
@@ -241,7 +244,7 @@ class="sourceCode awk"><code class="sourceCode awk"><span id="cb3-1"><a href="#c
 <section class="slide level2">
 
 <p>Print de laatste kolom:</p>
-<p>```awk -F: ‘{print $NF}’ /etc/passwd</p>
+<p><code>awk -F: '{print $NF}' /etc/passwd</code></p>
 <p>Bereken het gemiddelde van kolom 3 in een CSV-bestand:</p>
 <div class="sourceCode" id="cb4"><pre
 class="sourceCode awk"><code class="sourceCode awk"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">BEGIN</span> <span class="op">{</span> <span class="bu">FS</span><span class="op">=</span><span class="st">&quot;,&quot;</span> <span class="op">}</span>    <span class="co"># This is a CSV file</span></span>
@@ -303,10 +306,70 @@ href="https://michael-herbst.com/teaching/introduction-to-awk-programming-2016/"
 to AWK programming</a></em></li>
 </ul>
 </section></section>
+<section>
 <section id="json-parsing-jq" class="title-slide slide level1">
 <h1>JSON parsing: jq</h1>
 
 </section>
+<section id="jq" class="slide level2">
+<h2>jq</h2>
+<blockquote>
+<p>jq is a lightweight and flexible command-line JSON processor.</p>
+</blockquote>
+<ul>
+<li>filter-commando: input &gt; verwerking &gt; output</li>
+<li>zoals awk/sed, maar dan voor JSON</li>
+<li>niet altijd even makkelijk in gebruik…</li>
+<li>RTFM: <a href="https://stedolan.github.io/jq/manual/"
+class="uri">https://stedolan.github.io/jq/manual/</a></li>
+</ul>
+</section>
+<section id="jq-als-pretty-printer" class="slide level2">
+<h2>jq als “pretty printer”</h2>
+<pre class="console"><code>curl -s &#39;https://api.github.com/repos/stedolan/jq/commits?per_page=5&#39; | jq</code></pre>
+<p>of: <code>jq '.'</code> (met <code>.</code> de <em>identity
+operator</em>)</p>
+</section>
+<section id="toon-enkel-eerste-element" class="slide level2">
+<h2>Toon enkel eerste element</h2>
+<pre class="console"><code>curl -s &#39;https://api.github.com/repos/stedolan/jq/commits?per_page=5&#39; | jq &#39;.[0]&#39;</code></pre>
+<p>(in de volgende voorbeelden: enkel het <code>jq</code>-commando)</p>
+</section>
+<section id="toon-enkel-specifieke-velden" class="slide level2">
+<h2>Toon enkel specifieke velden</h2>
+<pre class="console"><code>jq &#39;.[0] | {message: .commit.message, name: .commit.committer.name}&#39;</code></pre>
+<ul>
+<li>Let op! <code>|</code> <em>binnen</em> de
+<code>jq</code>-expressie!</li>
+<li><code>.key</code> haalt het <code>key</code>-veld op
+<ul>
+<li>kan ook genest, bv. <code>.commit.message</code></li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<pre class="console"><code>jq &#39;.[] | {message: .commit.message, name: .commit.committer.name}&#39;</code></pre>
+<ul>
+<li><code>.[]</code> geeft elk element van de array terug
+<ul>
+<li>Resultaat is geen JSON!</li>
+</ul></li>
+<li>Als JSON-array: <code>[]</code> er rond:</li>
+</ul>
+<pre class="console"><code>jq &#39;[.[] | {message: .commit.message, name: .commit.committer.name}]&#39;</code></pre>
+</section>
+<section id="array-als-waarde-ophalen" class="slide level2">
+<h2>Array als waarde ophalen</h2>
+<ul>
+<li>Veld “parents” (parent commits) kan een array met 1 of meerdere
+waarden zijn
+<ul>
+<li>(bv. merge commit heeft 2 parents)</li>
+</ul></li>
+</ul>
+<pre class="console"><code>jq &#39;[.[] | {message: .commit.message, name: .commit.committer.name, parents: [.parents[].html_url]}]&#39;</code></pre>
+</section></section>
     </div>
   </div>
 

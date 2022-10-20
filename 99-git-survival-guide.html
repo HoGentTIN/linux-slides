@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +63,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
+    code span.bu { color: #008000; } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -68,7 +76,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -91,7 +99,8 @@
 <section id="title-slide">
   <h1 class="title">Git &amp; Github Survival Guide</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -136,7 +145,8 @@
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/xkcd-1597-git.png" alt="https://xkcd.com/1597/" /><figcaption aria-hidden="true">https://xkcd.com/1597/</figcaption>
+<img data-src="assets/xkcd-1597-git.png" alt="https://xkcd.com/1597/" />
+<figcaption aria-hidden="true">https://xkcd.com/1597/</figcaption>
 </figure>
 </section>
 <section id="cli-vs-gui" class="slide level2">
@@ -192,7 +202,9 @@ $ git config --global core.autocrlf input</code></pre>
 
 <p>of</p>
 <pre class="console"><code>$ git config --global --edit</code></pre>
-<p>Voorbeeld: <a href="https://github.com/bertvv/dotfiles/blob/main/.gitconfig" class="uri">https://github.com/bertvv/dotfiles/blob/main/.gitconfig</a></p>
+<p>Voorbeeld: <a
+href="https://github.com/bertvv/dotfiles/blob/main/.gitconfig"
+class="uri">https://github.com/bertvv/dotfiles/blob/main/.gitconfig</a></p>
 </section>
 <section id="github" class="slide level2">
 <h2>Github</h2>
@@ -246,7 +258,8 @@ $ git commit -m &quot;Beschrijving aanpassingen&quot;</code></pre>
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/workflow-solo.png" alt="Eenvoudige workflow" /><figcaption aria-hidden="true">Eenvoudige workflow</figcaption>
+<img data-src="assets/workflow-solo.png" alt="Eenvoudige workflow" />
+<figcaption aria-hidden="true">Eenvoudige workflow</figcaption>
 </figure>
 </section>
 <section id="gebruik-git-status" class="slide level2">
@@ -359,13 +372,15 @@ $ git status</code></pre>
 <li>Beschrijvende commit-boodschappen!</li>
 <li>Atomaire commits</li>
 <li><code>git status</code>!</li>
-<li><code>.gitignore</code> - bepaalde bestanden nooit in versiebeheer opnemen</li>
+<li><code>.gitignore</code> - bepaalde bestanden nooit in versiebeheer
+opnemen</li>
 </ul>
 </section>
 <section id="aliases" class="slide level2">
 <h2>Aliases</h2>
 <p>Voeg toe aan <code>~/.bashrc</code></p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a=<span class="st">&#39;git add&#39;</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> c=<span class="st">&#39;git commit -m&#39;</span></span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> d=<span class="st">&#39;git diff&#39;</span></span>
@@ -375,23 +390,32 @@ $ git status</code></pre>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
+<div class="sourceCode" id="cb11"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pr=<span class="st">&#39;git pull --rebase&#39;</span></span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pt=<span class="st">&#39;git push -u origin --tags&#39;</span></span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Git author stats</span></span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gs=<span class="st">&#39;git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  &quot;^author &quot;|sort|uniq -c|sort -nr&#39;</span></span></code></pre></div>
-<p>Zie: <a href="https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh" class="uri">https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh</a></p>
+<p>Zie: <a
+href="https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh"
+class="uri">https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh</a></p>
 </section>
 <section id="meer-info-over-git" class="slide level2">
 <h2>Meer info over Git</h2>
 <ul>
-<li>Visual Git cheat sheet: <a href="http://ndpsoftware.com/git-cheatsheet.html#loc=stash;" class="uri">http://ndpsoftware.com/git-cheatsheet.html#loc=stash;</a></li>
-<li>Visualizing Git Concepts with D3: <a href="https://onlywei.github.io/explain-git-with-d3/" class="uri">https://onlywei.github.io/explain-git-with-d3/</a>
+<li>Visual Git cheat sheet: <a
+href="http://ndpsoftware.com/git-cheatsheet.html#loc=stash;"
+class="uri">http://ndpsoftware.com/git-cheatsheet.html#loc=stash;</a></li>
+<li>Visualizing Git Concepts with D3: <a
+href="https://onlywei.github.io/explain-git-with-d3/"
+class="uri">https://onlywei.github.io/explain-git-with-d3/</a>
 <ul>
 <li>Let op: verouderde commando’s</li>
 </ul></li>
-<li>Typische fouten rechtzetten: <a href="https://ohshitgit.com/" class="uri">https://ohshitgit.com/</a></li>
-<li>Oefenen: <a href="https://gitexercises.fracz.com" class="uri">https://gitexercises.fracz.com</a></li>
+<li>Typische fouten rechtzetten: <a href="https://ohshitgit.com/"
+class="uri">https://ohshitgit.com/</a></li>
+<li>Oefenen: <a href="https://gitexercises.fracz.com"
+class="uri">https://gitexercises.fracz.com</a></li>
 </ul>
 </section></section>
 <section>
@@ -405,8 +429,11 @@ $ git status</code></pre>
 <li>Git(hub) = tekstgebaseerd =&gt; niet geschikt voor Word, enz</li>
 <li>Alternatief = Markdown
 <ul>
-<li><a href="http://daringfireball.net/projects/markdown/" class="uri">http://daringfireball.net/projects/markdown/</a></li>
-<li><a href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Github Markdown manual</a></li>
+<li><a href="http://daringfireball.net/projects/markdown/"
+class="uri">http://daringfireball.net/projects/markdown/</a></li>
+<li><a
+href="https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax">Github
+Markdown manual</a></li>
 </ul></li>
 </ul>
 </section>
@@ -454,7 +481,12 @@ $ git status</code></pre>
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/in-case-of-fire-1-git-commit-2-git-push-3-leave-building2.webp" alt="https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/" /><figcaption aria-hidden="true"><a href="https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/" class="uri">https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/</a></figcaption>
+<img
+data-src="assets/in-case-of-fire-1-git-commit-2-git-push-3-leave-building2.webp"
+alt="https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/" />
+<figcaption aria-hidden="true"><a
+href="https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/"
+class="uri">https://hikaruzone.wordpress.com/2015/10/06/in-case-of-fire-1-git-commit-2-git-push-3-leave-building/</a></figcaption>
 </figure>
 </section></section>
     </div>
@@ -497,7 +529,7 @@ $ git status</code></pre>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

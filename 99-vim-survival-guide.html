@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -28,7 +36,8 @@
 <section id="title-slide">
   <h1 class="title">Vim Survival Guide</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -40,7 +49,8 @@
 <section id="the-editor-wars" class="slide level2">
 <h2>The editor wars</h2>
 <figure>
-<img data-src="assets/xkcd-378.png" alt="https://xkcd.com/378/" /><figcaption aria-hidden="true">https://xkcd.com/378/</figcaption>
+<img data-src="assets/xkcd-378.png" alt="https://xkcd.com/378/" />
+<figcaption aria-hidden="true">https://xkcd.com/378/</figcaption>
 </figure>
 </section>
 <section id="vim-vs-nano" class="slide level2">
@@ -61,7 +71,11 @@
 <section class="slide level2">
 
 <figure>
-<img data-src="assets/pdp7.jpg" alt="Source: https://www.soemtron.org/pdp7.html" /><figcaption aria-hidden="true">Source: <a href="https://www.soemtron.org/pdp7.html" class="uri">https://www.soemtron.org/pdp7.html</a></figcaption>
+<img data-src="assets/pdp7.jpg"
+alt="Source: https://www.soemtron.org/pdp7.html" />
+<figcaption aria-hidden="true">Source: <a
+href="https://www.soemtron.org/pdp7.html"
+class="uri">https://www.soemtron.org/pdp7.html</a></figcaption>
 </figure>
 </section>
 <section id="vim" class="slide level2">
@@ -166,7 +180,7 @@ $ vimtutor</code></pre>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

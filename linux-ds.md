@@ -9,7 +9,7 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
     - [Software-installatie](03-software-installatie.html)
     - [Curl](03-curl.html)
 - [4. Installatie van een webserver, scripting](04-installatie-webserver.html)
-- 5 - Advanced data parsing (TODO)
+- [5 - Advanced text processing](05-advanced-text-processing.html)
 - [6 - Automatiseren webserverinstallatie](06-automatiseren.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
 - 8 - SSH, Docker (TODO)
@@ -22,4 +22,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: vr 07 okt 2022 13:45:56 CEST
+Laatste wijziging: Thu Oct 20 12:36:02 UTC 2022

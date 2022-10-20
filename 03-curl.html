@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     pre > code.sourceCode { white-space: pre; position: relative; }
     pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
@@ -55,7 +63,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
+    code span.bu { color: #008000; } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -68,7 +76,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -90,13 +98,16 @@
 
 <section id="title-slide">
   <h1 class="title">3.2. Collecting data, web scraping with curl</h1>
-  <p class="subtitle">Linux for Data Scientists<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="subtitle">Linux for Data Scientists<br/>HOGENT toegepaste
+informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
 <section>
-<section id="interacting-with-web-servers-from-the-terminal" class="title-slide slide level1">
+<section id="interacting-with-web-servers-from-the-terminal"
+class="title-slide slide level1">
 <h1>Interacting with web servers from the terminal</h1>
 
 </section>
@@ -130,7 +141,8 @@
 <section id="output-redirection" class="slide level2">
 <h2>Output, redirection</h2>
 <ul>
-<li><p>Normally, <code>curl</code> prints to <code>stdout</code></p></li>
+<li><p>Normally, <code>curl</code> prints to
+<code>stdout</code></p></li>
 <li><p>When redirected, progress information is printed:</p>
 <pre class="console"><code>$ curl &#39;https://icanhazdadjoke.com/&#39; &gt; joke.txt
   % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
@@ -152,7 +164,8 @@ curl -X DELETE https://httpbin.org/anything
 <section id="saving-the-result" class="slide level2">
 <h2>Saving the result</h2>
 <ul>
-<li><code>-o</code>, <code>--output</code> <code>&lt;file&gt;</code></li>
+<li><code>-o</code>, <code>--output</code>
+<code>&lt;file&gt;</code></li>
 <li><code>-O</code>, <code>--remote-name</code></li>
 </ul>
 <pre class="console"><code>curl -s -o anything.json https://httpbin.org/anything
@@ -161,8 +174,10 @@ curl -s -O https://www.google.com/robots.txt</code></pre>
 <section id="show-headers" class="slide level2">
 <h2>Show headers</h2>
 <ul>
-<li><code>-i</code>, <code>--include</code>: toon ook de HTTP response headers</li>
-<li><code>-I</code>, <code>--head</code>: toon <strong>enkel</strong> de headers</li>
+<li><code>-i</code>, <code>--include</code>: toon ook de HTTP response
+headers</li>
+<li><code>-I</code>, <code>--head</code>: toon <strong>enkel</strong> de
+headers</li>
 </ul>
 <pre class="console"><code>curl -i http://google.com</code></pre>
 </section>
@@ -176,14 +191,16 @@ curl -s -O https://www.google.com/robots.txt</code></pre>
 <ul>
 <li><code>-L</code>, <code>--location</code></li>
 </ul>
-<div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.twitter.com      <span class="co"># Leeg resultaat!</span></span>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://www.twitter.com      <span class="co"># Leeg resultaat!</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-i</span> https://www.twitter.com   <span class="co"># zie location: veld in de response header</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-L</span> https://www.twitter.com   <span class="co"># volg de redirect</span></span></code></pre></div>
 </section>
 <section id="post-data" class="slide level2">
 <h2>POST data</h2>
 <ul>
-<li><code>-d</code>, <code>--data</code> <code>var=val&amp;var=val</code></li>
+<li><code>-d</code>, <code>--data</code>
+<code>var=val&amp;var=val</code></li>
 </ul>
 <pre class="console"><code>curl -X POST -d &#39;penguin=tux&amp;color=blue&#39; https://httpbin.org/anything</code></pre>
 </section>
@@ -192,7 +209,8 @@ curl -s -O https://www.google.com/robots.txt</code></pre>
 <ol type="1">
 <li>Verzamel data over een bepaalde periode (bv. curl)</li>
 <li>Zet ruwe data om in geschikte vorm (bv. JSON/HTML -&gt; CSV)</li>
-<li>Simuleer analyse van de data (bv. grafiekje, basis-statistieken)</li>
+<li>Simuleer analyse van de data (bv. grafiekje,
+basis-statistieken)</li>
 <li>Genereer rapport (webpagina, PDF)</li>
 </ol>
 <p>Resultaat in te dienen/demonstreren (= 50% examencijfer)</p>
@@ -211,12 +229,21 @@ curl -s -O https://www.google.com/robots.txt</code></pre>
 <section id="voorbeelden-open-datasets" class="slide level2">
 <h2>Voorbeelden open datasets</h2>
 <ul>
-<li><a href="https://data.stad.gent/">Open Dataportaal stad Gent</a></li>
-<li><a href="https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d">CO2-meter in lokaal B.4.037</a></li>
-<li><a href="https://documenter.getpostman.com/view/8854915/Szf7znEe">Lijst van publieke REST APIs</a> (Postman)</li>
-<li><a href="https://github.com/public-apis/public-apis">Public API’s</a> (Github-repo)</li>
-<li><a href="https://rapidapi.com/collection/list-of-free-apis">Free APIs for developers</a> (Rapid API)</li>
-<li><a href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">Big list of free and open APIs</a> (Ana Kravitz)</li>
+<li><a href="https://data.stad.gent/">Open Dataportaal stad
+Gent</a></li>
+<li><a
+href="https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d">CO2-meter
+in lokaal B.4.037</a></li>
+<li><a
+href="https://documenter.getpostman.com/view/8854915/Szf7znEe">Lijst van
+publieke REST APIs</a> (Postman)</li>
+<li><a href="https://github.com/public-apis/public-apis">Public
+API’s</a> (Github-repo)</li>
+<li><a href="https://rapidapi.com/collection/list-of-free-apis">Free
+APIs for developers</a> (Rapid API)</li>
+<li><a
+href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">Big
+list of free and open APIs</a> (Ana Kravitz)</li>
 <li>…</li>
 </ul>
 </section></section>
@@ -260,7 +287,7 @@ curl -s -O https://www.google.com/robots.txt</code></pre>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

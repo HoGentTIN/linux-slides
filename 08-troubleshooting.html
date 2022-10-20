@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -28,7 +36,8 @@
 <section id="title-slide">
   <h1 class="title">8. Troubleshooting, SSH</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -41,7 +50,8 @@
 <h2>Before we begin</h2>
 <p>Set up the test environment:</p>
 <ul>
-<li>download the zipfile <code>trouble-demo.zip</code> (learning path)</li>
+<li>download the zipfile <code>trouble-demo.zip</code> (learning
+path)</li>
 <li>unzip</li>
 <li>go to folder, and prep VMs:</li>
 </ul>
@@ -91,14 +101,16 @@ $ vagrant up
 </tbody>
 </table>
 <ul>
-<li>On <code>webt</code>, a PHP app runs a query on the <code>dbt</code></li>
+<li>On <code>webt</code>, a PHP app runs a query on the
+<code>dbt</code></li>
 <li><code>dbt</code> is set up correctly, <code>webt</code> is not</li>
 </ul>
 </section>
 <section id="objective" class="slide level2">
 <h2>Objective</h2>
 <figure>
-<img data-src="assets/result.png" alt="The PHP application" /><figcaption aria-hidden="true">The PHP application</figcaption>
+<img data-src="assets/result.png" alt="The PHP application" />
+<figcaption aria-hidden="true">The PHP application</figcaption>
 </figure>
 </section>
 <section id="test-the-database-server" class="slide level2">
@@ -116,7 +128,8 @@ $ vagrant up
 + set +x</code></pre>
 <p>Should work from</p>
 <ul>
-<li>your Linux Mint GUI VM (if it is connected to <code>intnet</code> <code>sudo apt install mysql-client</code></li>
+<li>your Linux Mint GUI VM (if it is connected to <code>intnet</code>
+<code>sudo apt install mysql-client</code></li>
 <li>from demo VMs (<code>/vagrant/query_db.sh</code>)</li>
 </ul>
 </section>
@@ -208,7 +221,8 @@ $ vagrant up
 <li>IP address?</li>
 <li>In correct subnet?</li>
 <li>DHCP or fixed IP?</li>
-<li>Check configuration: <code>/etc/sysconfig/network-scripts/ifcfg-*</code></li>
+<li>Check configuration:
+<code>/etc/sysconfig/network-scripts/ifcfg-*</code></li>
 </ul>
 </section>
 <section class="slide level2">
@@ -286,7 +300,8 @@ DEVICE=enp0s8
 <ul>
 <li>Ping between hosts</li>
 <li>Ping default GW/DNS</li>
-<li>Query DNS (<code>dig</code>, <code>nslookup</code>, <code>getent</code>)</li>
+<li>Query DNS (<code>dig</code>, <code>nslookup</code>,
+<code>getent</code>)</li>
 </ul>
 </section>
 <section id="lan-connectivity-ping" class="slide level2">
@@ -348,7 +363,8 @@ DEVICE=enp0s8
 <ul>
 <li>Supported: <code>--get-services</code></li>
 </ul></li>
-<li>Don’t use both <code>--add-service</code> and <code>--add-port</code></li>
+<li>Don’t use both <code>--add-service</code> and
+<code>--add-port</code></li>
 <li>Add <code>--permanent</code></li>
 <li><code>--reload</code> firewall rules</li>
 </ul>
@@ -389,7 +405,8 @@ $ sudo firewall-cmd --reload</code></pre>
 <li>Validate config file <em>syntax</em></li>
 <li>Use (command line) <em>client</em> tools
 <ul>
-<li>e.g. <code>curl</code>, <code>smbclient</code> (Samba), <code>dig</code> (DNS), etc.</li>
+<li>e.g. <code>curl</code>, <code>smbclient</code> (Samba),
+<code>dig</code> (DNS), etc.</li>
 <li>Netcat (<code>ncat</code>, <code>nc</code>)</li>
 </ul></li>
 <li>Other checks are application dependent
@@ -401,7 +418,8 @@ $ sudo firewall-cmd --reload</code></pre>
 <section id="check-the-log-files" class="slide level2">
 <h2>Check the log files</h2>
 <ul>
-<li>Either <code>journalctl</code>: <code>journalctl -f -u httpd.service</code></li>
+<li>Either <code>journalctl</code>:
+<code>journalctl -f -u httpd.service</code></li>
 <li>Or <code>/var/log/</code>:
 <ul>
 <li><code>tail -f /var/log/httpd/error_log</code></li>
@@ -411,13 +429,16 @@ $ sudo firewall-cmd --reload</code></pre>
 <section id="check-config-file-syntax" class="slide level2">
 <h2>Check config file syntax</h2>
 <ul>
-<li>Application dependent, for Apache: <code>apachectl configtest</code></li>
+<li>Application dependent, for Apache:
+<code>apachectl configtest</code></li>
 </ul>
 </section>
 <section id="read-the-fine-manual" class="slide level2">
 <h2>Read the fine manual!</h2>
 <ul>
-<li><a href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/">RedHat Manuals</a>:
+<li><a
+href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/">RedHat
+Manuals</a>:
 <ul>
 <li>System Administrator’s Guide</li>
 <li>Networking guide</li>
@@ -425,7 +446,8 @@ $ sudo firewall-cmd --reload</code></pre>
 </ul></li>
 <li>Reference manuals, e.g.:
 <ul>
-<li><a href="https://httpd.apache.org/docs/2.4/configuring.html" class="uri">https://httpd.apache.org/docs/2.4/configuring.html</a></li>
+<li><a href="https://httpd.apache.org/docs/2.4/configuring.html"
+class="uri">https://httpd.apache.org/docs/2.4/configuring.html</a></li>
 </ul></li>
 <li>Man pages
 <ul>
@@ -445,7 +467,8 @@ $ sudo firewall-cmd --reload</code></pre>
 <li>Settings:
 <ul>
 <li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
-<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>, <code>restorecon</code></li>
+<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>,
+<code>restorecon</code></li>
 <li>Policy modules: <code>sepolicy</code></li>
 </ul></li>
 </ul>
@@ -501,7 +524,10 @@ $ sudo firewall-cmd --reload</code></pre>
 <section id="know-your-log-files" class="slide level2">
 <h2>Know your log files</h2>
 <figure>
-<img data-src="assets/reading-errorlog-files-small.jpg" alt="Credit: @KrisBuytaert" /><figcaption aria-hidden="true">Credit: <span class="citation" data-cites="KrisBuytaert">@KrisBuytaert</span></figcaption>
+<img data-src="assets/reading-errorlog-files-small.jpg"
+alt="Credit: @KrisBuytaert" />
+<figcaption aria-hidden="true">Credit: <span class="citation"
+data-cites="KrisBuytaert">@KrisBuytaert</span></figcaption>
 </figure>
 </section>
 <section id="read-the-f-error-message" class="slide level2">
@@ -524,14 +550,18 @@ $ sudo firewall-cmd --reload</code></pre>
 </section>
 <section id="keep-a-cheat-sheetchecklist" class="slide level2">
 <h2>Keep a cheat sheet/checklist</h2>
-<p>E.g. <a href="https://github.com/bertvv/cheat-sheets" class="uri">https://github.com/bertvv/cheat-sheets</a></p>
+<p>E.g. <a href="https://github.com/bertvv/cheat-sheets"
+class="uri">https://github.com/bertvv/cheat-sheets</a></p>
 </section>
-<section id="use-a-configuration-management-system" class="slide level2">
+<section id="use-a-configuration-management-system"
+class="slide level2">
 <h2>Use a configuration management system</h2>
 </section>
 <section id="automate-tests" class="slide level2">
 <h2>Automate tests</h2>
-<p>E.g. <a href="https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats" class="uri">https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats</a></p>
+<p>E.g. <a
+href="https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats"
+class="uri">https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats</a></p>
 </section>
 <section id="dont-ping-google" class="slide level2">
 <h2>Don’t ping Google!</h2>
@@ -584,7 +614,7 @@ $ sudo firewall-cmd --reload</code></pre>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

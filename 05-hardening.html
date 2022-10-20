@@ -11,12 +11,20 @@
   <link rel="stylesheet" href="./reveal.js/dist/reset.css">
   <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -28,7 +36,8 @@
 <section id="title-slide">
   <h1 class="title">5. Hardening van een webserver</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
@@ -45,7 +54,8 @@ $ sudo firewall-cmd --add-service http --permanent
 $ sudo firewall-cmd --add-service https --permanent
 $ sudo firewall-cmd --reload</code></pre>
 <p>Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.</p>
-<p><a href="https://192.168.76.2/" class="uri">https://192.168.76.2/</a></p>
+<p><a href="https://192.168.76.2/"
+class="uri">https://192.168.76.2/</a></p>
 </section>
 <section id="zones" class="slide level2">
 <h2>Zones</h2>
@@ -64,6 +74,10 @@ $ sudo firewall-cmd --reload</code></pre>
 <section class="slide level2">
 
 <table>
+<colgroup>
+<col style="width: 46%" />
+<col style="width: 53%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Task</th>
@@ -77,11 +91,13 @@ $ sudo firewall-cmd --reload</code></pre>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Actieve zones</td>
-<td style="text-align: left;"><code>firewall-cmd --get-active-zones</code></td>
+<td
+style="text-align: left;"><code>firewall-cmd --get-active-zones</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Voeg IFACE toe aan actieve zone</td>
-<td style="text-align: left;"><code>firewall-cmd --add-interface=IFACE</code></td>
+<td
+style="text-align: left;"><code>firewall-cmd --add-interface=IFACE</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Toon huidige regels</td>
@@ -89,7 +105,8 @@ $ sudo firewall-cmd --reload</code></pre>
 </tr>
 </tbody>
 </table>
-<p>Voor <code>firewall-cmd</code> moet je <em>root-rechten</em> hebben!</p>
+<p>Voor <code>firewall-cmd</code> moet je <em>root-rechten</em>
+hebben!</p>
 </section>
 <section id="firewall-regels-instellen" class="slide level2">
 <h2>Firewall-regels instellen</h2>
@@ -103,15 +120,18 @@ $ sudo firewall-cmd --reload</code></pre>
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Laat service toe</td>
-<td style="text-align: left;"><code>firewall-cmd --add-service=http</code></td>
+<td
+style="text-align: left;"><code>firewall-cmd --add-service=http</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Toon beschikbare services</td>
-<td style="text-align: left;"><code>firewall-cmd --get-services</code></td>
+<td
+style="text-align: left;"><code>firewall-cmd --get-services</code></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Laat poort toe</td>
-<td style="text-align: left;"><code>firewall-cmd --add-port=8080/tcp</code></td>
+<td
+style="text-align: left;"><code>firewall-cmd --add-port=8080/tcp</code></td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Firewall-regels herladen</td>
@@ -131,11 +151,14 @@ $ sudo firewall-cmd --reload</code></pre>
 <section id="persistente-wijzigingen" class="slide level2">
 <h2>Persistente wijzigingen</h2>
 <ul>
-<li><code>--permanent</code> optie wordt niet onmiddellijk toegepast!</li>
+<li><code>--permanent</code> optie wordt niet onmiddellijk
+toegepast!</li>
 <li>Twee werkwijzen:
 <ol type="1">
-<li>Commando 2x uitvoeren, 1x zonder, 1x mét <code>--permanent</code></li>
-<li>Commando enkel met <code>--permanent</code> uitvoeren, firewall herladen</li>
+<li>Commando 2x uitvoeren, 1x zonder, 1x mét
+<code>--permanent</code></li>
+<li>Commando enkel met <code>--permanent</code> uitvoeren, firewall
+herladen</li>
 </ol></li>
 </ul>
 <pre class="console"><code>sudo firewall-cmd --add-service=http --permanent
@@ -201,18 +224,22 @@ SELINUXTYPE=targeted</code></pre>
 <section id="zet-selinux-niet-uit" class="slide level2">
 <h2>Zet SELinux niet uit!</h2>
 <p>Op productie-systemen zou SELinux altijd aan moeten staan!</p>
-<p><a href="https://stopdisablingselinux.com/" class="uri">https://stopdisablingselinux.com/</a></p>
+<p><a href="https://stopdisablingselinux.com/"
+class="uri">https://stopdisablingselinux.com/</a></p>
 </section>
 <section id="soorten-selinux-instellingen" class="slide level2">
 <h2>3 soorten SELinux-instellingen</h2>
 <ul>
 <li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
-<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>, <code>restorecon</code></li>
+<li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>,
+<code>restorecon</code></li>
 <li>Policy modules: <code>sepolicy</code></li>
 </ul>
-<p>In de meeste gevallen is configuratie van booleans/context voldoende!</p>
+<p>In de meeste gevallen is configuratie van booleans/context
+voldoende!</p>
 </section>
-<section id="controleer-de-context-van-een-bestand" class="slide level2">
+<section id="controleer-de-context-van-een-bestand"
+class="slide level2">
 <h2>Controleer de context van een bestand</h2>
 <ul>
 <li>Wat is de SELinux-context van een bestand?
@@ -289,7 +316,7 @@ $ sudo grep denied /var/log/audit/audit.log</code></pre>
 
         // Add the current slide number to the URL hash so that reloading the
         // page/copying the URL will return you to the same slide
-        hash: false,
+        hash: true,
 
         // Start with 1 for the hash rather than 0
         hashOneBasedIndex: false,

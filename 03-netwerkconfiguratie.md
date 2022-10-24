@@ -86,8 +86,11 @@ $ sudo systemctl restart network
 Vanaf RHEL 9:
 
 ```console
+$ sudo systemctl restart NetworkManager
 $ sudo nmcli device reapply eth1
 ```
+
+Bemerk: er is een overgang naar het uitfaseren van het gebruik van `ifcfg` bestanden, en dit te vervangen door `nmcli`. Hierdoor zal je nog geruime tijd beide systemen moeten begrijpen!
 
 # Let's install DHCP!
 

@@ -185,7 +185,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <p>Na aanpassingen, netwerk herstarten (RHEL &lt;=8):</p>
 <pre class="console"><code>$ sudo systemctl restart network</code></pre>
 <p>Vanaf RHEL 9:</p>
-<pre class="console"><code>$ sudo nmcli device reapply eth1</code></pre>
+<pre class="console"><code>$ sudo systemctl restart NetworkManager
+$ sudo nmcli device reapply eth1</code></pre>
+<p>Bemerk: er is een overgang naar het uitfaseren van het gebruik van
+<code>ifcfg</code> bestanden, en dit te vervangen door
+<code>nmcli</code>. Hierdoor zal je nog geruime tijd beide systemen
+moeten begrijpen!</p>
 </section></section>
 <section>
 <section id="lets-install-dhcp" class="title-slide slide level1">

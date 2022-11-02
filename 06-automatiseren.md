@@ -179,11 +179,9 @@ Of ga naar <https://www.vagrantup.com/downloads>
 
 ## Werkomgeving opzetten
 
-- Ga naar Chamilo
-- Volg link voor aanmaken Github repo labo automatisering
-- Kloon deze Github repo lokaal (op je fysieke systeem!)
-- Open terminal (Git Bash of PowerShell)
-- Ga in de directory (`linux-2122-automation-USER`)
+- Kloon je Github-repo voor je labo-taken op je **fysieke systeem**
+- Ga naar de directory `automation/`
+- Lees de README.md
 
 ## Overzicht repo
 
@@ -229,10 +227,10 @@ VM, run `vagrant status NAME`.
 ```console
 $ vagrant up db
 Bringing machine 'db' up with 'virtualbox' provider...
-==> db: Importing base box 'bento/almalinux-8'...
+==> db: Importing base box 'bento/almalinux-9'...
 ==> db: Matching MAC address for NAT networking...
-==> db: Checking if box 'bento/almalinux-8' version '202109.10.0' is up to date...
-==> db: Setting the name of the VM: linux-2122-automation-bertvv_db_1635848839364_33506
+==> db: Checking if box 'bento/almalinux-9' version '202109.10.0' is up to date...
+==> db: Setting the name of the VM: linux-2223-bertvv_db_1635848839364_33506
 ==> db: Clearing any previously set network interfaces...
 ==> db: Preparing network interfaces based on configuration...
     db: Adapter 1: nat
@@ -257,7 +255,7 @@ Bringing machine 'db' up with 'virtualbox' provider...
 ==> db: Setting hostname...
 ==> db: Configuring and enabling network interfaces...
 ==> db: Mounting shared folders...
-    db: /vagrant => /home/bert/Documents/Vakken/Linux/21-22/linux-2122-automation-bertvv
+    db: /vagrant => /home/bert/Documents/Vakken/Linux/22-23/linux-2223-bertvv
 ==> db: Running provisioner: shell...
     db: Running: /tmp/vagrant-shell20211102-9694-yq9qn5.sh
     db: [LOG]  === Starting common provisioning tasks ===
@@ -275,7 +273,7 @@ Bringing machine 'db' up with 'virtualbox' provider...
     - Check in de GUI!
 2. Een zgn. "base box" wordt zo nodig gedownload
     - = VM image met minimale installatie
-    - hier: [bento/almalinux-8](https://app.vagrantup.com/bento/boxes/almalinux-8)
+    - hier: [bento/almalinux-9](https://app.vagrantup.com/bento/boxes/almalinux-9)
     - wordt later hergebruikt
 
 ---

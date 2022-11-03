@@ -10,7 +10,7 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
     - [Curl](03-curl.html)
 - [4. Installatie van een webserver, scripting](04-installatie-webserver.html)
 - [5 - Advanced text processing](05-advanced-text-processing.html)
-- [6 - Automatiseren webserverinstallatie](06-automatiseren.html)
+- [6 - Scripting](06-scripting.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
 - 8 - SSH, Docker (TODO)
 - 9 - Docker (cont'd)

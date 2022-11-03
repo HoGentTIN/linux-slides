@@ -86,17 +86,80 @@ $ git config --global --edit
 
 Voorbeeld: <https://github.com/bertvv/dotfiles/blob/main/.gitconfig>
 
-## Github
+## SSH sleutelpaar genereren
 
 Herhaal dit op elk systeem waar je Git gebruikt!
 
-- Genereer SSH sleutelpaar: `ssh-keygen`
-- Kopieer inhoud van `~/.ssh/id_rsa.pub`
-    - publieke sleutel
-    - =tekstbestand! Geen MS Publisher
-- Registreer op Github
-    - Avatar rechtsboven > Settings > SSH and GPG keys
-    - "New SSH key"
+
+```console
+osboxes@osboxes:~$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/bert/.ssh/id_rsa): 
+Created directory '/home/bert/.ssh'.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/bert/.ssh/id_rsa
+Your public key has been saved in /home/bert/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:S/WtkPaCSXWK/oqs9lywV6XnMf8nYmYMZ4Io1lx8fS4 bert@osboxes
+The key's randomart image is:
++---[RSA 3072]----+
+|                 |
+|                 |
+|       .  o.o    |
+|        o+.B...  |
+|     o.oSoB =o.  |
+|    o +*.*o=E=.  |
+|   . .. B .*+..  |
+|    .o + . .* ...|
+|   ..o= ...+ . .o|
++----[SHA256]-----+
+```
+
+## Publieke sleutel kopiëren
+
+- Open `~/.ssh/id_rsa.pub` en kopieer de **volledige** inhoud
+- Ga in een browser naar <https://github.com/> en meld aan
+- Klik rechtsboven op je avatar, kies "Settings"
+- Klik door op "SSH and GPG keys"
+- Klik "New SSH key"
+
+---
+
+![](assets/github-settings.png)
+
+## Publieke sleutel registreren
+
+Plak in het "Key" veld:
+
+![](assets/github-public-key.png)
+
+# Opzetten werkomgeving
+
+## Github-repo voor labo-taken aanmaken
+
+Ga naar Chamilo, volg de link om een Github-repo aan te maken.
+
+---
+
+![](assets/create-repo-github-classroom.png)
+
+---
+
+![](assets/create-repo-accepted.png)
+
+---
+
+- Persoonlijke private Github-repository
+- Uitnodiging voor Github-organisatie "HogentTIN"
+    - <https://github.com/HoGentTIN>
+
+---
+
+<https://github.com/HoGentTIN/linux-2122-scripts-USERNAME>
+
+![](assets/create-repo-done.png)
+
 
 # Eenvoudige workflow
 
@@ -109,8 +172,33 @@ Herhaal dit op elk systeem waar je Git gebruikt!
 
     - Groene knop "<> Code"
     - Local, SSH, kopieer URL
-- Lokale kopie = directory met subdir `.git`
+- Je hebt nu een lokale kopie van de Github-repo:
+    - `~/linux-2122-scripts-USERNAME`
+    - = directory met subdir `.git`
     - Verplaatsen, naam wijzigen mag!
+
+---
+
+Klik "Code", SSH, Kopieer de URL:
+
+![](assets/github-clone-url.png)
+
+---
+
+```console
+osboxes@osboxes:~$ git clone git@github.com:HoGentTIN/linux-2122-scripts-bertvv.git
+Cloning into 'linux-2122-scripts-bertvv'...
+The authenticity of host 'github.com (140.82.121.4)' can't be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added 'github.com,140.82.121.4' (RSA) to the list of known hosts.
+remote: Enumerating objects: 28, done.
+remote: Counting objects: 100% (28/28), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 28 (delta 1), reused 27 (delta 1), pack-reused 0
+Receiving objects: 100% (28/28), 17.54 KiB | 8.77 MiB/s, done.
+Resolving deltas: 100% (1/1), done.
+```
 
 ## Lokale wijzigingen
 
@@ -148,6 +236,19 @@ Na elke stap, bij twijfel
 ---
 
 ![](assets/workflow-remote-fetch.png)
+
+## Oefening
+
+Maak een bestand `README.md` met deze inhoud:
+
+```markdown
+# Linux scripting labo's
+
+- Student: STUDENTNAAM
+- Klasgroep: GROEPNAAM
+```
+
+Commit, push naar Github, bekijk het resultaat op github.com!
 
 # Conflicten oplossen
 
@@ -227,6 +328,7 @@ $ git status
 $ git push
 $ git status
 ```
+
 # Tips & tricks
 
 ## Aanbevelingen

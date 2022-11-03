@@ -25,69 +25,6 @@
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
-    pre > code.sourceCode > span:empty { height: 1.2em; }
-    .sourceCode { overflow: visible; }
-    code.sourceCode > span { color: inherit; text-decoration: inherit; }
-    div.sourceCode { margin: 1em 0; }
-    pre.sourceCode { margin: 0; }
-    @media screen {
-    div.sourceCode { overflow: auto; }
-    }
-    @media print {
-    pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
-    }
-    pre.numberSource code
-      { counter-reset: source-line 0; }
-    pre.numberSource code > span
-      { position: relative; left: -4em; counter-increment: source-line; }
-    pre.numberSource code > span > a:first-child::before
-      { content: counter(source-line);
-        position: relative; left: -1em; text-align: right; vertical-align: baseline;
-        border: none; display: inline-block;
-        -webkit-touch-callout: none; -webkit-user-select: none;
-        -khtml-user-select: none; -moz-user-select: none;
-        -ms-user-select: none; user-select: none;
-        padding: 0 4px; width: 4em;
-        color: #aaaaaa;
-      }
-    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
-    div.sourceCode
-      {   }
-    @media screen {
-    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
-    }
-    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
-    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-    code span.at { color: #7d9029; } /* Attribute */
-    code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { color: #008000; } /* BuiltIn */
-    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-    code span.ch { color: #4070a0; } /* Char */
-    code span.cn { color: #880000; } /* Constant */
-    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
-    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
-    code span.dt { color: #902000; } /* DataType */
-    code span.dv { color: #40a070; } /* DecVal */
-    code span.er { color: #ff0000; font-weight: bold; } /* Error */
-    code span.ex { } /* Extension */
-    code span.fl { color: #40a070; } /* Float */
-    code span.fu { color: #06287e; } /* Function */
-    code span.im { color: #008000; font-weight: bold; } /* Import */
-    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
-    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
-    code span.op { color: #666666; } /* Operator */
-    code span.ot { color: #007020; } /* Other */
-    code span.pp { color: #bc7a00; } /* Preprocessor */
-    code span.sc { color: #4070a0; } /* SpecialChar */
-    code span.ss { color: #bb6688; } /* SpecialString */
-    code span.st { color: #4070a0; } /* String */
-    code span.va { color: #19177c; } /* Variable */
-    code span.vs { color: #4070a0; } /* VerbatimString */
-    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
     .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
@@ -104,148 +41,6 @@ Vreckem</p>
   <p class="date">2022-2023</p>
 </section>
 
-<section>
-<section id="scripting-vervolg" class="title-slide slide level1">
-<h1>Scripting (vervolg)</h1>
-
-</section>
-<section id="fouten-opsporen-1" class="slide level2">
-<h2>Fouten opsporen (1)</h2>
-<ul>
-<li>Begin met minimaal script, voer het zo snel mogelijk uit!</li>
-<li>Werk altijd <strong>stap voor stap</strong>
-<ul>
-<li>iteratieve toevoegingen</li>
-</ul></li>
-<li><strong>Test</strong> voortdurend het resultaat van elke
-wijziging</li>
-<li>Hou minstens <strong>2 vensters</strong> open naast elkaar:
-<ul>
-<li>Editor</li>
-<li>Terminal voor testen</li>
-</ul></li>
-</ul>
-</section>
-<section id="fouten-opsporen-2" class="slide level2">
-<h2>Fouten opsporen (2)</h2>
-<ul>
-<li>Syntax check: <code>bash -n script.sh</code></li>
-<li>ShellCheck: <code>shellcheck script.sh</code>
-<ul>
-<li>Gebruik editor-plugin waar mogelijk</li>
-</ul></li>
-<li>Druk veel info af (<code>printf</code> of <code>echo</code>)</li>
-<li>Debug-mode:
-<ul>
-<li><code>bash -x script.sh</code></li>
-<li>In het script: <code>set -x</code> en <code>set +x</code></li>
-</ul></li>
-</ul>
-</section>
-<section id="fouten-voorkomen" class="slide level2">
-<h2>Fouten voorkomen</h2>
-<p>Begin elk script met:</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> errexit   <span class="co"># abort on nonzero exitstatus</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> nounset   <span class="co"># abort on unbound variable</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="bu">set</span> <span class="at">-o</span> pipefail  <span class="co"># don&#39;t hide errors within pipes</span></span></code></pre></div>
-</section>
-<section id="booleans-in-bash" class="slide level2">
-<h2>Booleans in Bash</h2>
-<ul>
-<li>In Bash bestaan <strong>geen</strong> booleaanse variabelen!</li>
-<li>Er bestaan wel gelijknamige commando’s <code>true</code> en
-<code>false</code></li>
-<li>Booleaanse waarden zijn gebaseerd op exit-status v/e proces</li>
-</ul>
-</section>
-<section id="de-commandos-true-en-false" class="slide level2">
-<h2>De commando’s <code>true</code> en <code>false</code></h2>
-<p>In Java zou je <code>true</code> als volgt implementeren</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> True <span class="op">{</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">System</span><span class="op">.</span><span class="fu">exit</span><span class="op">(</span><span class="dv">0</span><span class="op">);</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>en <code>false</code>:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode java"><code class="sourceCode java"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">public</span> <span class="kw">class</span> False <span class="op">{</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="kw">public</span> <span class="dt">static</span> <span class="dt">void</span> <span class="fu">main</span><span class="op">(</span><span class="bu">String</span><span class="op">[]</span> args<span class="op">)</span> <span class="op">{</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">System</span><span class="op">.</span><span class="fu">exit</span><span class="op">(</span><span class="dv">1</span><span class="op">);</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="op">}</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span></code></pre></div>
-<p>De echte implementatie <a
-href="https://github.com/coreutils/coreutils/blob/master/src/true.c">vind
-je hier</a></p>
-</section>
-<section id="logische-operatoren" class="slide level2">
-<h2>Logische operatoren</h2>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ex">COMMANDO</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># A</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># B</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
-<ul>
-<li><code>A</code>-blok wordt uitgevoerd als exit-status van
-<code>COMMANDO</code> 0 is (geslaagd, TRUE)</li>
-<li><code>B</code>-blok wordt uitgevoerd als exit-status van
-<code>COMMANDO</code> verschillend is van 0 (gefaald, FALSE)</li>
-</ul>
-</section>
-<section id="toepassing" class="slide level2">
-<h2>Toepassing</h2>
-<p>Maak gebruiker <code>${user}</code> aan als die nog niet bestaat</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ot">! </span><span class="fu">getent</span> passwd <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span> <span class="op">&gt;</span> /dev/null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Adding user </span><span class="va">${user}</span><span class="st">&quot;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">adduser</span> <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;User </span><span class="va">${user}</span><span class="st"> already exists&quot;</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
-</section>
-<section id="operatoren-en" class="slide level2">
-<h2>Operatoren <code>&amp;&amp;</code> en <code>||</code></h2>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="ex">command1</span> <span class="kw">&amp;&amp;</span> <span class="ex">command2</span></span></code></pre></div>
-<p><code>command2</code> wordt enkel uitgevoerd als
-<code>command1</code> succesvol was (exit 0)</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">command1</span> <span class="kw">||</span> <span class="ex">command2</span></span></code></pre></div>
-<p><code>command2</code> wordt enkel uitgevoerd als
-<code>command1</code> <strong>niet</strong> succesvol was (exit ≠ 0)</p>
-</section>
-<section id="het-commando-test" class="slide level2">
-<h2>Het commando <code>test</code></h2>
-<ul>
-<li>Evalueren van logische expressies</li>
-<li>Geeft geschikte exit-status
-<ul>
-<li>0 = TRUE</li>
-<li>1 = FALSE</li>
-</ul></li>
-<li>Alias voor <code>test</code> is <code>[</code>
-<ul>
-<li><code>[</code> is een <em>commando</em>, geen “haakje” in de
-traditionele betekenis</li>
-<li>spaties vóór en na!</li>
-</ul></li>
-</ul>
-</section>
-<section class="slide level2">
-
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fout:</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="va">if</span><span class="op">[</span><span class="va">$#</span>-eq 0<span class="op">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Juist:</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="st">&quot;</span><span class="va">${</span><span class="op">#</span><span class="va">}</span><span class="st">&quot;</span> <span class="ot">-eq</span> <span class="st">&quot;0&quot;</span> <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Expected at least one argument&quot;</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>
-</section></section>
 <section>
 <section id="automatiseren-webserverinstallatie"
 class="title-slide slide level1">
@@ -318,11 +113,10 @@ class="uri">https://www.vagrantup.com/downloads</a></p>
 <section id="werkomgeving-opzetten" class="slide level2">
 <h2>Werkomgeving opzetten</h2>
 <ul>
-<li>Ga naar Chamilo</li>
-<li>Volg link voor aanmaken Github repo labo automatisering</li>
-<li>Kloon deze Github repo lokaal (op je fysieke systeem!)</li>
-<li>Open terminal (Git Bash of PowerShell)</li>
-<li>Ga in de directory (<code>linux-2122-automation-USER</code>)</li>
+<li>Kloon je Github-repo voor je labo-taken op je <strong>fysieke
+systeem</strong></li>
+<li>Ga naar de directory <code>automation/</code></li>
+<li>Lees de README.md</li>
 </ul>
 </section>
 <section id="overzicht-repo" class="slide level2">
@@ -370,10 +164,10 @@ VM, run `vagrant status NAME`.</code></pre>
 <h2>Start de <code>db</code> VM op</h2>
 <pre class="console"><code>$ vagrant up db
 Bringing machine &#39;db&#39; up with &#39;virtualbox&#39; provider...
-==&gt; db: Importing base box &#39;bento/almalinux-8&#39;...
+==&gt; db: Importing base box &#39;bento/almalinux-9&#39;...
 ==&gt; db: Matching MAC address for NAT networking...
-==&gt; db: Checking if box &#39;bento/almalinux-8&#39; version &#39;202109.10.0&#39; is up to date...
-==&gt; db: Setting the name of the VM: linux-2122-automation-bertvv_db_1635848839364_33506
+==&gt; db: Checking if box &#39;bento/almalinux-9&#39; version &#39;202109.10.0&#39; is up to date...
+==&gt; db: Setting the name of the VM: linux-2223-bertvv_db_1635848839364_33506
 ==&gt; db: Clearing any previously set network interfaces...
 ==&gt; db: Preparing network interfaces based on configuration...
     db: Adapter 1: nat
@@ -398,7 +192,7 @@ Bringing machine &#39;db&#39; up with &#39;virtualbox&#39; provider...
 ==&gt; db: Setting hostname...
 ==&gt; db: Configuring and enabling network interfaces...
 ==&gt; db: Mounting shared folders...
-    db: /vagrant =&gt; /home/bert/Documents/Vakken/Linux/21-22/linux-2122-automation-bertvv
+    db: /vagrant =&gt; /home/bert/Documents/Vakken/Linux/22-23/linux-2223-bertvv
 ==&gt; db: Running provisioner: shell...
     db: Running: /tmp/vagrant-shell20211102-9694-yq9qn5.sh
     db: [LOG]  === Starting common provisioning tasks ===
@@ -420,7 +214,7 @@ Bringing machine &#39;db&#39; up with &#39;virtualbox&#39; provider...
 <ul>
 <li>= VM image met minimale installatie</li>
 <li>hier: <a
-href="https://app.vagrantup.com/bento/boxes/almalinux-8">bento/almalinux-8</a></li>
+href="https://app.vagrantup.com/bento/boxes/almalinux-9">bento/almalinux-9</a></li>
 <li>wordt later hergebruikt</li>
 </ul></li>
 </ol>

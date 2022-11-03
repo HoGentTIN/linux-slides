@@ -10,7 +10,9 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
     - [Netwerkconfig, DHCP](03-netwerkconfiguratie.html)
 - [4 - Installatie van een webserver, scripting](04-installatie-webserver.html)
 - [5 - Hardening van een webserver](05-hardening.html)
-- [6 - Automatiseren webserverinstallatie](06-automatiseren.html)
+- 6 - Automatiseren webserverinstallatie, scripting
+    - [Scripting](06-scripting.html)
+    - [Automatiseren webserverinstallatie](06-automatiseren.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
 - [8 - Troubleshooting, SSH](08-troubleshooting.html)
 - [9 - Mount](09-mount.html)
@@ -23,4 +25,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Mon Oct 24 09:52:27 UTC 2022
+Laatste wijziging: Thu Nov  3 13:14:09 UTC 2022

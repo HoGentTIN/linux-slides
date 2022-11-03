@@ -206,22 +206,86 @@ $ git config --global core.autocrlf input</code></pre>
 href="https://github.com/bertvv/dotfiles/blob/main/.gitconfig"
 class="uri">https://github.com/bertvv/dotfiles/blob/main/.gitconfig</a></p>
 </section>
-<section id="github" class="slide level2">
-<h2>Github</h2>
+<section id="ssh-sleutelpaar-genereren" class="slide level2">
+<h2>SSH sleutelpaar genereren</h2>
 <p>Herhaal dit op elk systeem waar je Git gebruikt!</p>
+<pre class="console"><code>osboxes@osboxes:~$ ssh-keygen 
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/bert/.ssh/id_rsa): 
+Created directory &#39;/home/bert/.ssh&#39;.
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/bert/.ssh/id_rsa
+Your public key has been saved in /home/bert/.ssh/id_rsa.pub
+The key fingerprint is:
+SHA256:S/WtkPaCSXWK/oqs9lywV6XnMf8nYmYMZ4Io1lx8fS4 bert@osboxes
+The key&#39;s randomart image is:
++---[RSA 3072]----+
+|                 |
+|                 |
+|       .  o.o    |
+|        o+.B...  |
+|     o.oSoB =o.  |
+|    o +*.*o=E=.  |
+|   . .. B .*+..  |
+|    .o + . .* ...|
+|   ..o= ...+ . .o|
++----[SHA256]-----+</code></pre>
+</section>
+<section id="publieke-sleutel-kopiëren" class="slide level2">
+<h2>Publieke sleutel kopiëren</h2>
 <ul>
-<li>Genereer SSH sleutelpaar: <code>ssh-keygen</code></li>
-<li>Kopieer inhoud van <code>~/.ssh/id_rsa.pub</code>
+<li>Open <code>~/.ssh/id_rsa.pub</code> en kopieer de
+<strong>volledige</strong> inhoud</li>
+<li>Ga in een browser naar <a href="https://github.com/"
+class="uri">https://github.com/</a> en meld aan</li>
+<li>Klik rechtsboven op je avatar, kies “Settings”</li>
+<li>Klik door op “SSH and GPG keys”</li>
+<li>Klik “New SSH key”</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p><img data-src="assets/github-settings.png" /></p>
+</section>
+<section id="publieke-sleutel-registreren" class="slide level2">
+<h2>Publieke sleutel registreren</h2>
+<p>Plak in het “Key” veld:</p>
+<p><img data-src="assets/github-public-key.png" /></p>
+</section></section>
+<section>
+<section id="opzetten-werkomgeving" class="title-slide slide level1">
+<h1>Opzetten werkomgeving</h1>
+
+</section>
+<section id="github-repo-voor-labo-taken-aanmaken" class="slide level2">
+<h2>Github-repo voor labo-taken aanmaken</h2>
+<p>Ga naar Chamilo, volg de link om een Github-repo aan te maken.</p>
+</section>
+<section class="slide level2">
+
+<p><img data-src="assets/create-repo-github-classroom.png" /></p>
+</section>
+<section class="slide level2">
+
+<p><img data-src="assets/create-repo-accepted.png" /></p>
+</section>
+<section class="slide level2">
+
 <ul>
-<li>publieke sleutel</li>
-<li>=tekstbestand! Geen MS Publisher</li>
-</ul></li>
-<li>Registreer op Github
+<li>Persoonlijke private Github-repository</li>
+<li>Uitnodiging voor Github-organisatie “HogentTIN”
 <ul>
-<li>Avatar rechtsboven &gt; Settings &gt; SSH and GPG keys</li>
-<li>“New SSH key”</li>
+<li><a href="https://github.com/HoGentTIN"
+class="uri">https://github.com/HoGentTIN</a></li>
 </ul></li>
 </ul>
+</section>
+<section class="slide level2">
+
+<p><a href="https://github.com/HoGentTIN/linux-2122-scripts-USERNAME"
+class="uri">https://github.com/HoGentTIN/linux-2122-scripts-USERNAME</a></p>
+<p><img data-src="assets/create-repo-done.png" /></p>
 </section></section>
 <section>
 <section id="eenvoudige-workflow" class="title-slide slide level1">
@@ -238,11 +302,33 @@ class="uri">https://github.com/bertvv/dotfiles/blob/main/.gitconfig</a></p>
 <li>Groene knop “&lt;&gt; Code”</li>
 <li>Local, SSH, kopieer URL</li>
 </ul></li>
-<li><p>Lokale kopie = directory met subdir <code>.git</code></p>
+<li><p>Je hebt nu een lokale kopie van de Github-repo:</p>
 <ul>
+<li><code>~/linux-2122-scripts-USERNAME</code></li>
+<li>= directory met subdir <code>.git</code></li>
 <li>Verplaatsen, naam wijzigen mag!</li>
 </ul></li>
 </ul>
+</section>
+<section class="slide level2">
+
+<p>Klik “Code”, SSH, Kopieer de URL:</p>
+<p><img data-src="assets/github-clone-url.png" /></p>
+</section>
+<section class="slide level2">
+
+<pre class="console"><code>osboxes@osboxes:~$ git clone git@github.com:HoGentTIN/linux-2122-scripts-bertvv.git
+Cloning into &#39;linux-2122-scripts-bertvv&#39;...
+The authenticity of host &#39;github.com (140.82.121.4)&#39; can&#39;t be established.
+RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
+Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
+Warning: Permanently added &#39;github.com,140.82.121.4&#39; (RSA) to the list of known hosts.
+remote: Enumerating objects: 28, done.
+remote: Counting objects: 100% (28/28), done.
+remote: Compressing objects: 100% (25/25), done.
+remote: Total 28 (delta 1), reused 27 (delta 1), pack-reused 0
+Receiving objects: 100% (28/28), 17.54 KiB | 8.77 MiB/s, done.
+Resolving deltas: 100% (1/1), done.</code></pre>
 </section>
 <section id="lokale-wijzigingen" class="slide level2">
 <h2>Lokale wijzigingen</h2>
@@ -288,6 +374,16 @@ $ git commit -m &quot;Beschrijving aanpassingen&quot;</code></pre>
 <section class="slide level2">
 
 <p><img data-src="assets/workflow-remote-fetch.png" /></p>
+</section>
+<section id="oefening" class="slide level2">
+<h2>Oefening</h2>
+<p>Maak een bestand <code>README.md</code> met deze inhoud:</p>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linux scripting labo&#39;s</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Student: STUDENTNAAM</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Klasgroep: GROEPNAAM</span></code></pre></div>
+<p>Commit, push naar Github, bekijk het resultaat op github.com!</p>
 </section></section>
 <section>
 <section id="conflicten-oplossen" class="title-slide slide level1">
@@ -379,23 +475,23 @@ opnemen</li>
 <section id="aliases" class="slide level2">
 <h2>Aliases</h2>
 <p>Voeg toe aan <code>~/.bashrc</code></p>
-<div class="sourceCode" id="cb10"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a=<span class="st">&#39;git add&#39;</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> c=<span class="st">&#39;git commit -m&#39;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> d=<span class="st">&#39;git diff&#39;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> g=<span class="st">&#39;git&#39;</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> h=<span class="st">&#39;git log --pretty=&quot;format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar&quot; --date=short --graph --all&#39;</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> p=<span class="st">&#39;git push &amp;&amp; git push --tags&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a=<span class="st">&#39;git add&#39;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> c=<span class="st">&#39;git commit -m&#39;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> d=<span class="st">&#39;git diff&#39;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> g=<span class="st">&#39;git&#39;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> h=<span class="st">&#39;git log --pretty=&quot;format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar&quot; --date=short --graph --all&#39;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> p=<span class="st">&#39;git push &amp;&amp; git push --tags&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pr=<span class="st">&#39;git pull --rebase&#39;</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pt=<span class="st">&#39;git push -u origin --tags&#39;</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Git author stats</span></span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gs=<span class="st">&#39;git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  &quot;^author &quot;|sort|uniq -c|sort -nr&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pr=<span class="st">&#39;git pull --rebase&#39;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pt=<span class="st">&#39;git push -u origin --tags&#39;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Git author stats</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gs=<span class="st">&#39;git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  &quot;^author &quot;|sort|uniq -c|sort -nr&#39;</span></span></code></pre></div>
 <p>Zie: <a
 href="https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh"
 class="uri">https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh</a></p>

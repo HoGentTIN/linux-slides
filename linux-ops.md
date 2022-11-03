@@ -14,7 +14,9 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
     - [Scripting](06-scripting.html)
     - [Automatiseren webserverinstallatie](06-automatiseren.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
-- [8 - Troubleshooting, SSH](08-troubleshooting.html)
+- 8 - Troubleshooting, Secure SHell
+    - [Troubleshooting](08-troubleshooting.html)
+    - [Secure Shell](08-ssh.html)
 - [9 - Mount](09-mount.html)
 - [10 - DNS met BIND](10-bind.html)
 - [11 - Linux installatie: expert-modus](11-expert-installatie.html)
@@ -25,4 +27,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Thu Nov  3 13:14:09 UTC 2022
+Laatste wijziging: Thu Nov  3 13:43:02 UTC 2022

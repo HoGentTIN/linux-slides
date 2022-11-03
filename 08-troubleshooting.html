@@ -212,7 +212,11 @@ $ vagrant up
 <ol type="1">
 <li>IP address: <code>ip a</code></li>
 <li>Default gateway: <code>ip r</code></li>
-<li>DNS service: <code>/etc/resolv.conf</code></li>
+<li>DNS service:
+<ul>
+<li>RHEL: <code>/etc/resolv.conf</code></li>
+<li>Fedora, Debian, etc.: <code>resolvectl dns</code></li>
+</ul></li>
 </ol>
 </section>
 <section id="local-configuration-ip-address" class="slide level2">
@@ -565,14 +569,7 @@ class="uri">https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.ba
 </section>
 <section id="dont-ping-google" class="slide level2">
 <h2>Don’t ping Google!</h2>
-</section></section>
-<section>
-<section id="ssh" class="title-slide slide level1">
-<h1>SSH</h1>
-
-</section>
-<section id="ssh-keys" class="slide level2">
-<h2>SSH keys</h2>
+<p>Why?</p>
 </section></section>
     </div>
   </div>

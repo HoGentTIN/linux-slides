@@ -110,7 +110,9 @@ Checking *Local network configuration:*
 
 1. IP address: `ip a`
 2. Default gateway: `ip r`
-3. DNS service: `/etc/resolv.conf`
+3. DNS service:
+   - RHEL: `/etc/resolv.conf`
+   - Fedora, Debian, etc.: `resolvectl dns`
 
 ## Local configuration: `ip address`
 
@@ -250,7 +252,6 @@ $ sudo firewall-cmd --reload
 - Correct interface?
     - Only loopback?
 
-
 # Application Layer
 
 ## Checklist: Application Layer
@@ -284,7 +285,6 @@ $ sudo firewall-cmd --reload
 - Man pages
     - smb.conf(5), dhcpd.conf(5), named.conf(5), ...
 
-
 # SELinux troubleshooting
 
 ## SELinux
@@ -311,7 +311,6 @@ $ sudo firewall-cmd --reload
 - Know the relevant booleans! (RedHat manuals)
 - Enable boolean:
     - `sudo setsebool -P httpd_can_network_connect_db on`
-
 
 # General guidelines
 
@@ -353,6 +352,4 @@ E.g. <https://github.com/HoGentTIN/elnx-sme/blob/master/test/pu001/lamp.bats>
 
 ## Don't ping Google!
 
-# SSH 
-
-## SSH keys
+Why?

@@ -12,10 +12,10 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - [5 - Advanced text processing](05-advanced-text-processing.html)
 - [6 - Scripting](06-scripting.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
-- 8 - SSH, Docker (TODO)
-- 9 - Docker (cont'd)
-- 10 - Workflow automation (TODO)
-- 11 - Workflow automation (cont'd)
+- 8 - Containervirtualisatie, Secure SHell
+    - [Containervirtualisatie (Docker)](08-containers.html)
+    - [Secure Shell](08-ssh.html)
+- 9 - Workflow automation (Makefiles) (TODO)
 
 Extra:
 

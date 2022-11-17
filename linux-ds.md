@@ -2,6 +2,8 @@
 
 Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux/Infrastructure Automation for Data Scientists binnen het keuzepakket *Data Engineering* in het tweede/derde modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
+**Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
+
 - [0 - Linux for Data Scientists: intro](00-linux-ds-intro.html)
 - [1 - User management](01-user-mgmt.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)

@@ -2,6 +2,8 @@
 
 Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux binnen het keuzepakket *IT Operations* in het tweede modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
+**Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
+
 - [0 - Linux for Ops: intro](00-linux-ops-intro.html)
 - [1 - User management](01-user-mgmt.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)

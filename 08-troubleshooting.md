@@ -11,9 +11,12 @@ date: 2022-2023
 
 Set up the test environment:
 
-- download the zipfile `trouble-demo.zip` (learning path)
-- unzip
-- go to folder, and prep VMs:
+- clone your Github repo for lab assignments
+    - on your physical system!
+- open terminal in directory `troubleshooting`
+- start the VMs
+    - `dbt` - a working database server
+    - `webt` - a web server with faulty configuration
 
 ```console
 $ cd trouble-demo

@@ -17,7 +17,7 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 - 8 - Containervirtualisatie, Secure SHell
     - [Containervirtualisatie (Docker)](08-containers.html)
     - [Secure Shell](08-ssh.html)
-- 9 - Workflow automation (Makefiles) (TODO)
+- 9 - [Workflow automation (Makefiles)](09-makefiles.html)
 
 Extra:
 

@@ -11,13 +11,14 @@ date: 2022-2023
 
 Verbinden met een remote server, via URL of IP-adres
 
-```bash
+```console
 $ ssh <URL> | <IP-address>
 $ ssh remote.hogent.be | 192.168.76.254
 ```
 
 Login naam toevoegen:
-```bash
+
+```console
 $ ssh -l <login name> 192.168.76.254
 $ ssh <login name>@192.168.76.254
 $ ssh -l vagrant 192.168.76.254
@@ -26,16 +27,16 @@ $ ssh vagrant@192.168.76.254
 
 ## password vs keypair
 
-````bash
+```text
 debug1: Authentications that can continue: publickey,password
 ```
 
-### password
+## password
 
 - Linux user/password combinatie
 - Wachtwoord vergeleken met hash string uit `/etc/shadow`
 
-### keypair
+## keypair
 
 - klassiek: RSA keypair
 - generate with `ssh-keygen`, e.g.
@@ -53,23 +54,26 @@ RSA keys are not deprecated; SHA-1 signature scheme is!
 - eerste public/private key algoritme
   (Ron Rivest, Adi Shamir en Len Adleman)
 - vroeger default als SSH-keypair: RSA; deprecated aug/2021 (SHA-1 issue)
-  https://www.openssh.com/txt/release-8.7
+  <https://www.openssh.com/txt/release-8.7>
 - voorganger DSA: deprecated aug/2015
-  https://www.openssh.com/txt/release-7.0 (ssh-dss)
+  <https://www.openssh.com/txt/release-7.0> (ssh-dss)
+
+---
 
 Gevolgen:
+
 - oude RSA keys met SHA-1 werken nog op oude servers, maar niet meer op nieuwere
 - bijwerken van SSH software kan de oude RSA key onbruikbaar maken
 
 Keypairs anno 2022: rsa-sha2-256/512, ssh-ed25519, ECDSA
 
-
 ## persoonlijke ssh bestanden
 
-```bash
+```console
 $ ls .ssh/
 authorized_keys  id_ecdsa  id_ecdsa.pub  known_hosts
 ```
+
 - known_hosts: `fingerprint` van elke server waarmee je al verbonden was
 - authorized_keys: publieke keys die kunnen inloggen op jouw account
 - id_ecdsa: jouw private ECDSA key `(perm 600)`
@@ -77,7 +81,7 @@ authorized_keys  id_ecdsa  id_ecdsa.pub  known_hosts
 
 ## SSH server configuratie
 
-```bash
+```console
 $ ls /etc/ssh/
 $ ls /etc/ssh/ | grep config
 ssh_config
@@ -85,6 +89,7 @@ sshd_config
 ```
 
 Configuratie van de server daemon: `sshd_config`
+
 ```bash
 #Port 22
 #ListenAddress 0.0.0.0
@@ -93,6 +98,7 @@ UsePAM yes
 ```
 
 Configuratie van de client opties: `sshd_config`
+
 ```bash
 HostKeyAlgorithms=-ssh-rsa
 StrictHostKeyChecking accept-new

@@ -112,34 +112,36 @@ Vreckem</p>
 <section id="log-in-on-a-remote-system-ssh" class="slide level2">
 <h2>Log in on a remote system: SSH</h2>
 <p>Verbinden met een remote server, via URL of IP-adres</p>
-<div class="sourceCode" id="cb1"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh <span class="op">&lt;</span>URL<span class="op">&gt;</span> <span class="kw">|</span> <span class="op">&lt;</span>IP-address<span class="op">&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh remote.hogent.be <span class="kw">|</span> <span class="ex">192.168.76.254</span></span></code></pre></div>
+<pre class="console"><code>$ ssh &lt;URL&gt; | &lt;IP-address&gt;
+$ ssh remote.hogent.be | 192.168.76.254</code></pre>
 <p>Login naam toevoegen:</p>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh <span class="at">-l</span> <span class="op">&lt;</span>login name<span class="op">&gt;</span> 192.168.76.254</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh <span class="op">&lt;</span>login name<span class="op">&gt;</span>@192.168.76.254</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh <span class="at">-l</span> vagrant 192.168.76.254</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh vagrant@192.168.76.254</span></code></pre></div>
+<pre class="console"><code>$ ssh -l &lt;login name&gt; 192.168.76.254
+$ ssh &lt;login name&gt;@192.168.76.254
+$ ssh -l vagrant 192.168.76.254
+$ ssh vagrant@192.168.76.254</code></pre>
 </section>
 <section id="password-vs-keypair" class="slide level2">
 <h2>password vs keypair</h2>
-<p>`<code>bash debug1: Authentications that can continue: publickey,password</code></p>
-<h3 id="password">password</h3>
+<pre class="text"><code>debug1: Authentications that can continue: publickey,password</code></pre>
+</section>
+<section id="password" class="slide level2">
+<h2>password</h2>
 <ul>
 <li>Linux user/password combinatie</li>
 <li>Wachtwoord vergeleken met hash string uit
 <code>/etc/shadow</code></li>
 </ul>
-<h3 id="keypair">keypair</h3>
+</section>
+<section id="keypair" class="slide level2">
+<h2>keypair</h2>
 <ul>
 <li>klassiek: RSA keypair</li>
 <li>generate with <code>ssh-keygen</code>, e.g.</li>
 </ul>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh-keygen <span class="at">-t</span> rsa-sha2-512</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Generating</span> public/private rsa-sha2-512 key pair.</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> file in which to save the key <span class="er">(</span><span class="ex">.ssh/id_rsa</span><span class="kw">)</span><span class="bu">:</span></span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ssh-keygen <span class="at">-t</span> rsa-sha2-512</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">Generating</span> public/private rsa-sha2-512 key pair.</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="ex">Enter</span> file in which to save the key <span class="er">(</span><span class="ex">.ssh/id_rsa</span><span class="kw">)</span><span class="bu">:</span></span></code></pre></div>
 </section>
 <section id="rsa-1977----sha-1-1995-2013" class="slide level2">
 <h2>RSA (1977-…) - SHA-1 (1995-2013)</h2>
@@ -148,20 +150,28 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <li>eerste public/private key algoritme (Ron Rivest, Adi Shamir en Len
 Adleman)</li>
 <li>vroeger default als SSH-keypair: RSA; deprecated aug/2021 (SHA-1
-issue) https://www.openssh.com/txt/release-8.7</li>
-<li>voorganger DSA: deprecated aug/2015
-https://www.openssh.com/txt/release-7.0 (ssh-dss)</li>
+issue) <a href="https://www.openssh.com/txt/release-8.7"
+class="uri">https://www.openssh.com/txt/release-8.7</a></li>
+<li>voorganger DSA: deprecated aug/2015 <a
+href="https://www.openssh.com/txt/release-7.0"
+class="uri">https://www.openssh.com/txt/release-7.0</a> (ssh-dss)</li>
 </ul>
-<p>Gevolgen: - oude RSA keys met SHA-1 werken nog op oude servers, maar
-niet meer op nieuwere - bijwerken van SSH software kan de oude RSA key
-onbruikbaar maken</p>
+</section>
+<section class="slide level2">
+
+<p>Gevolgen:</p>
+<ul>
+<li>oude RSA keys met SHA-1 werken nog op oude servers, maar niet meer
+op nieuwere</li>
+<li>bijwerken van SSH software kan de oude RSA key onbruikbaar
+maken</li>
+</ul>
 <p>Keypairs anno 2022: rsa-sha2-256/512, ssh-ed25519, ECDSA</p>
 </section>
 <section id="persoonlijke-ssh-bestanden" class="slide level2">
 <h2>persoonlijke ssh bestanden</h2>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls .ssh/</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">authorized_keys</span>  id_ecdsa  id_ecdsa.pub  known_hosts</span></code></pre></div>
+<pre class="console"><code>$ ls .ssh/
+authorized_keys  id_ecdsa  id_ecdsa.pub  known_hosts</code></pre>
 <ul>
 <li>known_hosts: <code>fingerprint</code> van elke server waarmee je al
 verbonden was</li>
@@ -173,21 +183,20 @@ account</li>
 </section>
 <section id="ssh-server-configuratie" class="slide level2">
 <h2>SSH server configuratie</h2>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /etc/ssh/</span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> ls /etc/ssh/ <span class="kw">|</span> <span class="fu">grep</span> config</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ex">ssh_config</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">sshd_config</span></span></code></pre></div>
+<pre class="console"><code>$ ls /etc/ssh/
+$ ls /etc/ssh/ | grep config
+ssh_config
+sshd_config</code></pre>
 <p>Configuratie van de server daemon: <code>sshd_config</code></p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Port 22</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ListenAddress 0.0.0.0</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ex">PermitRootLogin</span> prohibit-password</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ex">UsePAM</span> yes</span></code></pre></div>
-<p>Configuratie van de client opties: <code>sshd_config</code></p>
 <div class="sourceCode" id="cb7"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="va">HostKeyAlgorithms</span><span class="op">=</span>-ssh-rsa</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="ex">StrictHostKeyChecking</span> accept-new</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co">#Port 22</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co">#ListenAddress 0.0.0.0</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="ex">PermitRootLogin</span> prohibit-password</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">UsePAM</span> yes</span></code></pre></div>
+<p>Configuratie van de client opties: <code>sshd_config</code></p>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="va">HostKeyAlgorithms</span><span class="op">=</span>-ssh-rsa</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="ex">StrictHostKeyChecking</span> accept-new</span></code></pre></div>
 </section></section>
     </div>
   </div>

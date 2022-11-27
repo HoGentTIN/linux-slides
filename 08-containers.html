@@ -177,6 +177,44 @@ dockerlab                 not created (virtualbox)
 
 $ vagrant up</code></pre>
 </section>
+<section id="op-het-einde-van-het-labo" class="slide level2">
+<h2>Op het einde van het labo:</h2>
+<pre class="console"><code>$ vagrant halt</code></pre>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Taak</th>
+<th style="text-align: left;">Commando</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Overzicht Vagrant-omgeving</td>
+<td style="text-align: left;"><code>vagrant status</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VM aanmaken/Opstarten</td>
+<td style="text-align: left;"><code>vagrant up</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">VM Afsluiten</td>
+<td style="text-align: left;"><code>vagrant halt</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Herstarten</td>
+<td style="text-align: left;"><code>vagrant reload</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Inloggen</td>
+<td style="text-align: left;"><code>vagrant ssh</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">VM vernietigen</td>
+<td style="text-align: left;"><code>vagrant destroy</code></td>
+</tr>
+</tbody>
+</table>
+</section>
 <section id="docker-vm" class="slide level2">
 <h2>Docker-VM</h2>
 <ul>
@@ -236,18 +274,18 @@ docker volume prune</code></pre>
 <section id="custom-images" class="slide level2">
 <h2>Custom images</h2>
 <p>Voorbeeld Dockerfile:</p>
-<div class="sourceCode" id="cb6"><pre
-class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
 </section>
 <section id="custom-images-1" class="slide level2">
 <h2>Custom images</h2>

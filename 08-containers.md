@@ -60,6 +60,21 @@ dockerlab                 not created (virtualbox)
 $ vagrant up
 ```
 
+## Op het einde van het labo:
+
+```console
+$ vagrant halt
+```
+
+| Taak                       | Commando          |
+| :------------------------- | :---------------- |
+| Overzicht Vagrant-omgeving | `vagrant status`  |
+| VM aanmaken/Opstarten      | `vagrant up`      |
+| VM Afsluiten               | `vagrant halt`    |
+| Herstarten                 | `vagrant reload`  |
+| Inloggen                   | `vagrant ssh`     |
+| VM vernietigen             | `vagrant destroy` |
+
 ## Docker-VM
 
 - Ubuntu 20.04 LTS

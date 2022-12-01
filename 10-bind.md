@@ -20,7 +20,7 @@ date: 2022-2023
 ## Opstelling
 
 - We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
-    - Github repo: "linux-2122-automation-USERNAME"
+    - Github repo: "linux-2122-USERNAME/automation"
 - In de les: stap voor stap, manueel
 - Labo-taak: automatiseren!
 
@@ -30,7 +30,7 @@ date: 2022-2023
   
     ```yaml
     - name: srv
-      box: bento/almalinux-8
+      box: bento/almalinux-9
       ip: 192.168.76.254
       intnet: true
     ```

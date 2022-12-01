@@ -125,7 +125,7 @@ class="uri">http://www.zytrax.com/books/dns/</a></p>
 <ul>
 <li>We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
 <ul>
-<li>Github repo: “linux-2122-automation-USERNAME”</li>
+<li>Github repo: “linux-2122-USERNAME/automation”</li>
 </ul></li>
 <li>In de les: stap voor stap, manueel</li>
 <li>Labo-taak: automatiseren!</li>
@@ -137,7 +137,7 @@ class="uri">http://www.zytrax.com/books/dns/</a></p>
 <li><p>In <code>vagrant-hosts.yml</code>:</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> srv</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-8</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-9</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ip</span><span class="kw">:</span><span class="at"> </span><span class="fl">192.168.76.254</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">intnet</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div></li>
 <li><p>In <code>provisioning/</code> script <code>srv.sh</code>

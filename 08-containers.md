@@ -2,7 +2,7 @@
 title: "8. Container virtualisation"
 subtitle: "Linux (for data Scientists)<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2022-2023
+date: 2023-2024
 ---
 
 # Intro

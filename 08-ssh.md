@@ -2,7 +2,7 @@
 title: "8. Secure Shell (SSH)"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2022-2023
+date: 2023-2024
 ---
 
 # SSH
@@ -102,4 +102,23 @@ Configuratie van de client opties: `sshd_config`
 ```bash
 HostKeyAlgorithms=-ssh-rsa
 StrictHostKeyChecking accept-new
+```
+
+## SSH key checking
+
+```console
+$ ssh -p 2222 osboxes@localhost
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@    WARNING: REMOTE HOST IDENTIFICATION HAS CHANGED!     @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+IT IS POSSIBLE THAT SOMEONE IS DOING SOMETHING NASTY!
+Someone could be eavesdropping on you right now (man-in-the-middle attack)!
+It is also possible that a host key has just been changed.
+The fingerprint for the ED25519 key sent by the remote host is
+SHA256:WaS4xm8g/lJFkWsUTw3mLF0FqiDOqolH2Sn1nNUwLtM.
+Please contact your system administrator.
+Add correct host key in /home/bert/.ssh/known_hosts to get rid of this message.
+Offending ECDSA key in /home/bert/.ssh/known_hosts:14
+Host key for [localhost]:2222 has changed and you have requested strict checking.
+Host key verification failed.
 ```

@@ -2,7 +2,7 @@
 title: "3.2. Collecting data, web scraping with curl"
 subtitle: "Linux for Data Scientists<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2022-2023
+date: 2023-2024
 ---
 
 # Interacting with web servers from the terminal

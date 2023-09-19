@@ -41,7 +41,7 @@ printf 'Checking out gh-pages branch\n'
 git worktree add -B gh-pages ${output_dir} origin/gh-pages
 
 printf 'Deleting generated files\n'
-rm -rf "${output_dir:?}/*.html"
+make clean
 
 printf 'Running make to generate new version\n'
 make all    # Generate slides

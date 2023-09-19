@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
+  <title>0. Linux for Ops: intro</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">0. Linux for Ops: intro</h1>
+  <p class="subtitle">HOGENT toegepaste informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2023-2024</p>
+</section>
+
+<section>
+<section id="praktische-afspraken" class="title-slide slide level1">
+<h1>Praktische afspraken</h1>
+
+</section>
+<section id="lectoren" class="slide level2">
+<h2>Lectoren</h2>
+<ul>
+<li>Thomas Parmentier</li>
+<li>Andy Van Maele</li>
+<li>Bert Van Vreckem</li>
+</ul>
+</section>
+<section id="studiemethode" class="slide level2">
+<h2>Studiemethode</h2>
+<ul>
+<li>3 lesuur / week</li>
+<li>4 studiepunten</li>
+<li>equivalente hoeveelheid voor- en nawerk thuis</li>
+</ul>
+</section>
+<section id="linux-flavour" class="slide level2">
+<h2>Linux flavour</h2>
+<ul>
+<li>Debian or Red Hat?</li>
+<li>Linux Mint als GUI-Linux VM
+<ul>
+<li>Download ova file</li>
+<li>import &amp; get started</li>
+</ul></li>
+</ul>
+</section></section>
+<section>
+<section id="intro" class="title-slide slide level1">
+<h1>Intro</h1>
+
+</section>
+<section id="waarom-linux" class="slide level2">
+<h2>Waarom Linux?</h2>
+</section>
+<section id="linux-is-overal" class="slide level2">
+<h2>Linux is overal</h2>
+<p>… en je kan er gewoon niet meer omheen</p>
+<ul>
+<li>Grootste websites
+<ul>
+<li>webdev =&gt; jouw apps zullen op Linux draaien</li>
+<li>e-business: Drupal</li>
+</ul></li>
+<li>MacOS X
+<ul>
+<li>Ook UNIX</li>
+<li>Bash-shell + commando’s</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<ul>
+<li>Moderne tools voor software release management
+<ul>
+<li>Continuous Integration/Delivery</li>
+<li>Docker</li>
+</ul></li>
+<li>Embedded systemen
+<ul>
+<li>Arduino, Raspberry Pi, …</li>
+<li>Multimedia-apparatuur, TV’s, NAS, …</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p>Ik wil me specialiseren in Windows. Linux interesseert mij niet</p>
+</blockquote>
+</section>
+<section id="ook-in-de-windows-wereld" class="slide level2">
+<h2>Ook in de Windows-wereld</h2>
+<ul>
+<li>Azure cloud platform draait &gt;50% Linux VMs</li>
+<li>Microsoft loves Linux!</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<blockquote>
+<p>The ’70’s called, they want their terminal back!</p>
+</blockquote>
+</section>
+<section id="de-kracht-van-de-cli" class="slide level2">
+<h2>De kracht van de CLI</h2>
+<ul>
+<li>Command line interface (CLI) is de sleutel tot <strong>automatisering</strong>
+<ul>
+<li>Miljoenen servers beheren gaat niet via GUI</li>
+<li>Ook in Windows ziet men dit nu in (PowerShell)</li>
+</ul></li>
+<li>CLI Instructies zijn <strong>bondiger</strong> en makkelijker reproduceerbaar dan GUI instructies</li>
+</ul>
+</section>
+<section id="verloop-contactmoment" class="slide level2">
+<h2>Verloop contactmoment</h2>
+<ul>
+<li>Klassikale instructie</li>
+<li>Werken aan labo-oefeningen
+<ul>
+<li>individuele feedback</li>
+<li>extra klassikale uitleg</li>
+</ul></li>
+<li>Korte intro volgende sessie</li>
+</ul>
+</section>
+<section id="buiten-contactmomenten" class="slide level2">
+<h2>Buiten contactmomenten</h2>
+<ul>
+<li>Bereid volgende sessie voor
+<ul>
+<li>Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen</li>
+</ul></li>
+<li>Werk verder aan labo’s</li>
+</ul>
+</section>
+<section class="slide level2">
+
+<p>Van een sysadmin wordt <strong>zelfstandigheid</strong> verwacht</p>
+<p>De werkwijze in deze cursus is een eerste stap in die richting!</p>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

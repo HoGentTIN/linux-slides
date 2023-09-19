@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
+  <title>0. Linux for Data Scientists: intro</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/css/reset.css">
+  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
+  <!-- Printing and PDF exports -->
+  <script>
+    var link = document.createElement( 'link' );
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
+    document.getElementsByTagName( 'head' )[0].appendChild( link );
+  </script>
+  <!--[if lt IE 9]>
+  <script src="./reveal.js/lib/js/html5shiv.js"></script>
+  <![endif]-->
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">0. Linux for Data Scientists: intro</h1>
+  <p class="subtitle">HOGENT toegepaste informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="date">2023-2024</p>
+</section>
+
+<section id="studiewijzer" class="slide level1">
+<h1>Studiewijzer</h1>
+<h2 id="lectoren">Lectoren</h2>
+<ul>
+<li>Thomas Parmentier (Gent)</li>
+<li>Bert Van Vreckem (titularis, Aalst+VC, TIAO)</li>
+</ul>
+<p>Contactinfo - zie verder/studiewijzer</p>
+</section>
+<section id="plaats-in-het-curriculum" class="slide level1">
+<h1>Plaats in het curriculum</h1>
+<figure>
+<img data-src="assets/datalinux-curriculum.png" alt="" /><figcaption>Overzicht gerelateerde vakken</figcaption>
+</figure>
+<h2 id="waarom-linux">Waarom Linux?</h2>
+<h2 id="linux-is-overal">Linux is overal</h2>
+<p>… en je kan er gewoon niet meer omheen</p>
+<ul>
+<li>Grootste websites
+<ul>
+<li>webapps draaien meestal op Linux</li>
+<li>ook .Net (meer en meer)!</li>
+</ul></li>
+<li>MacOS X
+<ul>
+<li>Ook UNIX (BSD)</li>
+<li>Bash-shell + commando’s</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<ul>
+<li>Moderne tools voor software release management
+<ul>
+<li>Continuous Integration/Delivery</li>
+<li>Docker</li>
+</ul></li>
+<li>Embedded systemen
+<ul>
+<li>Arduino, Raspberry Pi, …</li>
+<li>Multimedia-apparatuur, TV’s, NAS, …</li>
+</ul></li>
+</ul>
+</section>
+<section class="slide level1">
+
+<figure>
+<img data-src="assets/automate.jpg" alt="" /><figcaption>Automate all the things!</figcaption>
+</figure>
+</section>
+<section class="slide level1">
+
+<ul>
+<li>Toolbox voor automatisering
+<ul>
+<li>Filtercommando’s</li>
+<li><code>grep</code>/<code>ag</code>, <code>sed</code>, <code>awk</code></li>
+<li><code>curl</code>, <code>jq</code>, <code>pandoc</code>, …</li>
+<li>Shell scripts</li>
+<li>Configuration Management Systems (Ansible, …)</li>
+</ul></li>
+</ul>
+<h2 id="ook-in-de-windows-wereld">Ook in de Windows-wereld</h2>
+<ul>
+<li>Azure cloud platform draait &gt;50% Linux VMs</li>
+<li>Microsoft loves Linux!</li>
+</ul>
+</section>
+<section class="slide level1">
+
+<blockquote>
+<p>The ’70’s called, they want their terminal back!</p>
+</blockquote>
+<h2 id="de-kracht-van-de-cli">De kracht van de CLI</h2>
+<ul>
+<li>Command line interface (CLI) is de sleutel tot <strong>automatisering</strong>
+<ul>
+<li>Miljoenen servers beheren gaat niet via GUI</li>
+<li>Ook in Windows ziet men dit nu in (PowerShell)</li>
+</ul></li>
+<li>CLI Instructies zijn <strong>bondiger</strong> en makkelijker reproduceerbaar dan GUI instructies</li>
+</ul>
+<h2 id="waarom-linux-for-data-scientists">Waarom Linux for Data Scientists?</h2>
+<ul>
+<li>Je hebt niet altijd een commerciële oplossing nodig voor data processing!</li>
+<li>Linux zit vol krachtige tools waarmee je zelf een oplossing kan bouwen</li>
+<li>Linux + Docker + Python = basisplatform voor Data Engineers</li>
+</ul>
+</section>
+<section id="leerinhoud" class="slide level1">
+<h1>Leerinhoud</h1>
+<h2 id="topics">Topics</h2>
+<ul>
+<li>Werken met Virtuele Machines &amp; containers</li>
+<li>Basiskennis Linux server, SSH, software-installatie, web-/database-serverconfiguratie</li>
+<li>Bash scripting</li>
+<li>Text processing: I/O redirection, filters, web scraping</li>
+<li>Systeembeheertaken plannen</li>
+<li>Automatiseren van gegevensverwerking met Linux tools</li>
+</ul>
+</section>
+<section id="leerdoelen-zie-studiewijzerstudiefiche" class="slide level1">
+<h1>Leerdoelen: zie studiewijzer/studiefiche</h1>
+</section>
+<section id="leermateriaal" class="slide level1">
+<h1>Leermateriaal</h1>
+<h2 id="leermateriaal-op-chamilo">Leermateriaal op Chamilo</h2>
+<ul>
+<li>Leerpad</li>
+<li>Cobbaut (2015) <em>Linux Fundamentals</em></li>
+<li>Labo-opgave (Github-repo)</li>
+</ul>
+<h2 id="software">Software</h2>
+<ul>
+<li>Git client (incl Git Bash)</li>
+<li>Teksteditor, bv. VS Code met (aanbevolen) plugins:
+<ul>
+<li>Remote Development</li>
+<li>ShellCheck</li>
+</ul></li>
+<li>Oracle VirtualBox + Extension Pack</li>
+<li>Linux Mint als GUI-Linux VM
+<ul>
+<li>Download ova file</li>
+<li>import &amp; get started</li>
+</ul></li>
+</ul>
+</section>
+<section id="werkvormen" class="slide level1">
+<h1>Werkvormen</h1>
+<h2 id="dagonderwijs-virtuele-campus">Dagonderwijs, virtuele campus</h2>
+<ul>
+<li>3 lesuur / week</li>
+<li>4 studiepunten</li>
+<li>equivalente hoeveelheid voor- en nawerk thuis</li>
+</ul>
+<h2 id="verloop-contactmoment">Verloop contactmoment</h2>
+<ul>
+<li>Klassikale instructie</li>
+<li>Werken aan labo-oefeningen
+<ul>
+<li>individuele feedback</li>
+<li>extra klassikale uitleg</li>
+</ul></li>
+<li>Korte intro volgende sessie</li>
+</ul>
+<h2 id="buiten-contactmomenten">Buiten contactmomenten</h2>
+<ul>
+<li>Bereid volgende sessie voor
+<ul>
+<li>Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen</li>
+</ul></li>
+<li>Werk verder aan labo’s</li>
+</ul>
+<h2 id="afstandsleren-tiao">Afstandsleren (TIAO)</h2>
+<ul>
+<li>Op eigen tempo, ahv studiemateriaal</li>
+<li>Zie ook Studiewijzer - Studiebegeleiding</li>
+</ul>
+</section>
+<section id="werk--en-leeraanwijzingen" class="slide level1">
+<h1>Werk- en leeraanwijzingen</h1>
+<h2 id="leerpad-per-hoofdstuk">Leerpad: per hoofdstuk</h2>
+<ul>
+<li><strong>Voorbereiding</strong>: vóór het contactmoment</li>
+<li><strong>Achtergrondinfo</strong>: interessant, maar geen leerstof</li>
+<li><strong>Oefeningen met oplossingen</strong>: buiten contactmomenten</li>
+<li><strong>Labo-oefeningen</strong>: tijdens/buiten contactmomenten</li>
+</ul>
+<h2 id="tips-voor-slagen">Tips voor slagen</h2>
+<ul>
+<li>Kom naar de les!</li>
+<li>Lees de studiewijzer!</li>
+<li>Maak de labo’s!</li>
+</ul>
+</section>
+<section id="evaluatie" class="slide level1">
+<h1>Evaluatie</h1>
+<ul>
+<li>70% Vaardigheidstest binnen examenrooster
+<ul>
+<li>30% Schriftelijk examen (op PC)</li>
+<li>40% Scripting-opdracht (op PC)</li>
+</ul></li>
+<li>30% Portfolio met mondelinge verdediging
+<ul>
+<li>Opdracht: automatiseren van een data-workflow</li>
+</ul></li>
+</ul>
+</section>
+<section id="studiebegeleiding" class="slide level1">
+<h1>Studiebegeleiding</h1>
+<h2 id="heb-je-een-vraag">Heb je een vraag?</h2>
+<ol type="1">
+<li>Stel ze tijdens de contactmomenten</li>
+<li>Stel ze via Teams (cursusintro, rechtertegel)</li>
+<li>Contacteer jouw lector
+<ul>
+<li>Enkel voor persoonlijke/vertrouwelijke zaken!</li>
+</ul></li>
+</ol>
+</section>
+<section id="planning-zie-studiewijzer" class="slide level1">
+<h1>Planning: zie studiewijzer</h1>
+</section>
+<section id="veel-succes" class="slide level1">
+<h1>Veel succes!</h1>
+</section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/js/reveal.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://github.com/hakimel/reveal.js#configuration
+      Reveal.initialize({
+        // Push each slide change to the browser history
+        history: true,
+
+        // Optional reveal.js plugins
+        dependencies: [
+          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
+          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        ]
+      });
+    </script>
+    </body>
+</html>

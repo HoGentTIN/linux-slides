@@ -5,12 +5,12 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 **Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
 
 - [0 - Linux for Data Scientists: intro](00-datalinux-intro.html)
-- [1 - Software-installatie](03software-installatie.html)
+- [1 - Software-installatie](03-software-installatie.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)
 - 3 - User Management, curl
     - [User Management](01-user-mgmt.html)
     - [Curl](03-curl.html)
-- [4. Installatie van een webserver, scripting](04-installatie-webserver.html)
+- [4 - Installatie van een webserver, scripting](04-installatie-webserver.html)
 - [5 - Advanced text processing](05-advanced-text-processing.html)
 - [6 - Scripting](06-scripting.html)
 - [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)

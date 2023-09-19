@@ -29,7 +29,7 @@ ASSETS_DIR := assets
 # File name of the reveal.js tarball
 # Remark: Pandoc 2.9.2.1 and earlier must use reveal.js 3.x:
 # See Pandoc Wiki <https://github.com/jgm/pandoc/wiki/Using-pandoc-to-produce-reveal.js-slides>
-REVEAL_JS_TAR := 3.9.2.tar.gz
+REVEAL_JS_TAR := 4.6.0.tar.gz
 
 # Download URL
 REVEAL_JS_URL := https://github.com/hakimel/reveal.js/archive/$(REVEAL_JS_TAR)

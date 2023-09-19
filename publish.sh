@@ -40,15 +40,18 @@ git fetch origin gh-pages
 printf 'Checking out gh-pages branch\n'
 git worktree add -B gh-pages ${output_dir} origin/gh-pages
 
+printf 'Deleting generated files\n'
+rm -rf "${output_dir:?}/*.html"
+
 printf 'Running make to generate new version\n'
 make all    # Generate slides
 # Copy tables of content
-cp linux-ds.md "${output_dir}"
-cp linux-ops.md "${output_dir}"
+cp datalinux.md "${output_dir}"
+cp opslinux.md "${output_dir}"
 cp index.md  "${output_dir}"/README.md
 
-update_changed_on_message "${output_dir}/linux-ds.md"
-update_changed_on_message "${output_dir}/linux-ops.md"
+update_changed_on_message "${output_dir}/datalinux.md"
+update_changed_on_message "${output_dir}/opslinux.md"
 update_changed_on_message "${output_dir}/README.md"
 
 printf 'Updating gh-pages branch\n'

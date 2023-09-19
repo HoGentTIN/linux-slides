@@ -29,7 +29,7 @@ ASSETS_DIR := assets
 # File name of the reveal.js tarball
 # Remark: Pandoc 2.9.2.1 and earlier must use reveal.js 3.x:
 # See Pandoc Wiki <https://github.com/jgm/pandoc/wiki/Using-pandoc-to-produce-reveal.js-slides>
-REVEAL_JS_TAR := 4.3.1.tar.gz
+REVEAL_JS_TAR := 3.9.2.tar.gz
 
 # Download URL
 REVEAL_JS_URL := https://github.com/hakimel/reveal.js/archive/$(REVEAL_JS_TAR)
@@ -51,9 +51,9 @@ all: $(STYLE_FILE) $(PRESENTATION_FILES) assets ## Build the presentation (but n
 assets: ## Copy asset files (images, etc.) to the appropriate directory
 	rsync -avu $(ASSETS_DIR)/ $(OUTPUT)/$(ASSETS_DIR)/
 
-clean: ## Deletes the presentation and handouts (not reveal.js)
+clean: ## Deletes the presentation and index pages (not reveal.js)
 	rm -f $(OUTPUT)/*.html
-#	rm -f $(OUTPUT)/*.pdf
+	rm -f $(OUTPUT)/*.md
 
 mrproper: clean ## Thorough cleanup (also removes reveal.js)
 	rm -rf $(REVEAL_JS_DIR)

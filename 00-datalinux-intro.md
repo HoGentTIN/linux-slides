@@ -16,6 +16,8 @@ Contactinfo - zie verder/studiewijzer
 
 # Plaats in het curriculum
 
+## Overzicht gerelateerde vakken
+
 ![Overzicht gerelateerde vakken](assets/datalinux-curriculum.png)
 
 ## Waarom Linux?
@@ -150,6 +152,8 @@ Contactinfo - zie verder/studiewijzer
 - Maak de labo's!
 
 # Evaluatie
+
+## Evaluatie - studiefiche
 
 - 70% Vaardigheidstest binnen examenrooster
     - 30% Schriftelijk examen (op PC)

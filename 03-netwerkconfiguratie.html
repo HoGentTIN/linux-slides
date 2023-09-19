@@ -8,18 +8,32 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="./reveal.js/css/reset.css">
-  <link rel="stylesheet" href="./reveal.js/css/reveal.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
   <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
     div.sourceCode { margin: 1em 0; }
     pre.sourceCode { margin: 0; }
@@ -54,7 +68,7 @@
     code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
     code span.at { color: #7d9029; } /* Attribute */
     code span.bn { color: #40a070; } /* BaseN */
-    code span.bu { } /* BuiltIn */
+    code span.bu { color: #008000; } /* BuiltIn */
     code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
     code span.ch { color: #4070a0; } /* Char */
     code span.cn { color: #880000; } /* Constant */
@@ -67,7 +81,7 @@
     code span.ex { } /* Extension */
     code span.fl { color: #40a070; } /* Float */
     code span.fu { color: #06287e; } /* Function */
-    code span.im { } /* Import */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
     code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
     code span.kw { color: #007020; font-weight: bold; } /* Keyword */
     code span.op { color: #666666; } /* Operator */
@@ -80,18 +94,7 @@
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
   </style>
-  <link rel="stylesheet" href="./reveal.js/css/theme/hogent.css" id="theme">
-  <!-- Printing and PDF exports -->
-  <script>
-    var link = document.createElement( 'link' );
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
-    link.href = window.location.search.match( /print-pdf/gi ) ? './reveal.js/css/print/pdf.css' : './reveal.js/css/print/paper.css';
-    document.getElementsByTagName( 'head' )[0].appendChild( link );
-  </script>
-  <!--[if lt IE 9]>
-  <script src="./reveal.js/lib/js/html5shiv.js"></script>
-  <![endif]-->
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
 </head>
 <body>
   <div class="reveal">
@@ -100,7 +103,8 @@
 <section id="title-slide">
   <h1 class="title">3.2. Netwerkconfiguratie</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
-  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
+Vreckem</p>
   <p class="date">2023-2024</p>
 </section>
 
@@ -111,7 +115,8 @@
 </section>
 <section id="netwerkinstellingen-controleren" class="slide level2">
 <h2>Netwerkinstellingen controleren</h2>
-<p>Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:</p>
+<p>Om Internettoegang mogelijk te maken zijn er 3 instellingen
+nodig:</p>
 <ol type="1">
 <li>IP-adres en subnetmasker</li>
 <li>Default gateway</li>
@@ -132,30 +137,35 @@
 </section>
 <section id="wat-is-het-ip-adres-van" class="slide level2">
 <h2>Wat is het IP-adres van…?</h2>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>$ <span class="ex">nslookup</span> www.hogent.be</span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>$ <span class="ex">dig</span> www.hogent.be</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> nslookup www.hogent.be</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dig www.hogent.be</span></code></pre></div>
 <p>Wat is <em>mijn publiek</em> IP-adres?</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>$ <span class="ex">curl</span> icanhazip.com</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> curl icanhazip.com</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">81.164.175.191</span></span></code></pre></div>
 </section>
 <section id="controleer-eerst-netwerkinstellingen" class="slide level2">
 <h2>Controleer eerst netwerkinstellingen</h2>
 <p>(op de AlmaLinux VM, vóór uitvoeren van labo 3.4)</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a>[<span class="ex">osboxes@almaserver</span>] $ ip -4 a</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="ex">1</span>: lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="ex">2</span>: eth0: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[osboxes@almaserver]</span> $ ip <span class="at">-4</span> a</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1:</span> lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2:</span> eth0: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span></code></pre></div>
 <p>Probeer dit ook op de Linux Mint VM. Overeenkomsten? Verschillen?</p>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>
 <ul>
 <li><code>lo</code> (loopback): 127.0.0.1/8</li>
-<li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT): 10.0.2.15/24</li>
-<li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter (intnet):
+<li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT):
+10.0.2.15/24</li>
+<li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter
+(intnet):
 <ul>
 <li>Linux Mint: 192.168.76.10/24</li>
 <li>AlmaLinux: 192.168.76.12/24</li>
@@ -165,13 +175,14 @@
 <section id="netwerkinstellingen-aanpassen-redhat" class="slide level2">
 <h2>Netwerkinstellingen aanpassen (RedHat)</h2>
 <p><code>/etc/sysconfig/network-scripts/ifcfg-&lt;interface_name&gt;</code></p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="va">NM_CONTROLLED=</span>yes</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="va">BOOTPROTO=</span>none</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="va">ONBOOT=</span>yes</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a><span class="va">IPADDR=</span>192.168.76.12</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="va">NETMASK=</span>255.255.255.0</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a><span class="va">DEVICE=</span>eth1</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="va">PEERDNS=</span>no</span></code></pre></div>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NM_CONTROLLED</span><span class="op">=</span>yes</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span>none</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span>yes</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span>192.168.76.12</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">NETMASK</span><span class="op">=</span>255.255.255.0</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">DEVICE</span><span class="op">=</span>eth1</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="va">PEERDNS</span><span class="op">=</span>no</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -180,7 +191,10 @@
 <p>Vanaf RHEL 9:</p>
 <pre class="console"><code>$ sudo systemctl restart NetworkManager
 $ sudo nmcli device reapply eth1</code></pre>
-<p>Bemerk: er is een overgang naar het uitfaseren van het gebruik van <code>ifcfg</code> bestanden, en dit te vervangen door <code>nmcli</code>. Hierdoor zal je nog geruime tijd beide systemen moeten begrijpen!</p>
+<p>Bemerk: er is een overgang naar het uitfaseren van het gebruik van
+<code>ifcfg</code> bestanden, en dit te vervangen door
+<code>nmcli</code>. Hierdoor zal je nog geruime tijd beide systemen
+moeten begrijpen!</p>
 </section></section>
 <section>
 <section id="lets-install-dhcp" class="title-slide slide level1">
@@ -196,7 +210,8 @@ $ sudo nmcli device reapply eth1</code></pre>
 <p>Zie opgave labo 3.4</p>
 <ul>
 <li>Configbestand: <code>/etc/dhcp/dhcpd.conf</code></li>
-<li>Zie voorbeeld: <code>/usr/share/doc/dhcp-server/dhcpd.conf.example</code></li>
+<li>Zie voorbeeld:
+<code>/usr/share/doc/dhcp-server/dhcpd.conf.example</code></li>
 <li>Wat hebben we nodig voor onze opstelling?</li>
 </ul>
 </section>
@@ -225,27 +240,170 @@ $ sudo nmcli device reapply eth1</code></pre>
 </ul></li>
 <li>Kan je pingen tussen de VMs?</li>
 <li>Heb je Internet-toegang? Waarom (niet)?</li>
-<li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden</li>
+<li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden
+worden</li>
 </ul>
 </section></section>
     </div>
   </div>
 
-  <script src="./reveal.js/js/reveal.js"></script>
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
 
   <script>
 
       // Full list of configuration options available at:
-      // https://github.com/hakimel/reveal.js#configuration
+      // https://revealjs.com/config/
       Reveal.initialize({
-        // Push each slide change to the browser history
-        history: true,
+        // Display controls in the bottom right corner
+        controls: true,
 
-        // Optional reveal.js plugins
-        dependencies: [
-          { src: './reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-          { src: './reveal.js/plugin/zoom-js/zoom.js', async: true },
-          { src: './reveal.js/plugin/notes/notes.js', async: true }
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
         ]
       });
     </script>

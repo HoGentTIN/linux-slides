@@ -229,6 +229,13 @@ epel-playground.repo  epel-testing-modular.repo  epel-testing.repo  epel.repo
 - **Gem** - Ruby
 - ...
 
+## Container-based package managers
+
+Install package inside container
+
+- Flatpak (o.a. Red Hat)
+- Snap (Canonical)
+
 ## It's complicated
 
 - Sommige packages zijn beschikbaar via bv. apt én pip
@@ -241,4 +248,6 @@ epel-playground.repo  epel-testing-modular.repo  epel-testing.repo  epel.repo
 ## On other OSs
 
 - MacOS: [Homebrew](https://brew.sh)
-- Windows: [Chocolatey](https://chocolatey.org)/NuGet
+- Windows: 
+    - [WinGet](https://learn.microsoft.com/en-us/windows/package-manager/winget/)
+    - [Chocolatey](https://chocolatey.org)/NuGet

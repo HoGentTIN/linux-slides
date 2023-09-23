@@ -19,4 +19,4 @@ jobs:
       - name: Publish Site
         env:
           REPOSITORY: "https://${{ secrets.GITHUB_PAT }}@github.com/${{ github.repository }}.git"
-        run: ./publish.sh
+        run: bash publish.sh

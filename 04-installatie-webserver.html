@@ -17,21 +17,16 @@
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
+    ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -93,6 +88,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
 </head>
@@ -394,9 +390,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> mysql <span class="at">-uroot</span> <span class="at">-pR2rrbLV02TA1hAjN</span> mysql</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="ex">...</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> <span class="pp">[</span><span class="ss">mysql</span><span class="pp">]</span><span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> <span class="pp">[</span><span class="ss">mysql</span><span class="pp">]</span><span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> <span class="pp">[</span><span class="ss">mysql</span><span class="pp">]</span><span class="op">&gt;</span> quit</span></code></pre></div>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SHOW DATABASES<span class="kw">;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
 <ul>
 <li><code>-uroot</code>: inloggen als MariaDB-root</li>
 <li><code>-pR2rrbLV02TA1hAjN</code>: gekozen wachtwoord

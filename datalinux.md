@@ -4,16 +4,16 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 
 **Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
 
-- [0 - Linux for Data Scientists: intro](00-datalinux-intro.html)
-- [1 - Software-installatie](03-software-installatie.html)
-- [2 - Combining commands towards scripting](02-towards-scripting.html)
-- 3 - User Management, curl
-    - [User Management](01-user-mgmt.html)
+- 0 - [Linux for Data Scientists: intro](00-datalinux-intro.html)
+- 1 - Software-installatie, curl
+    - [Software-installatie](03-software-installatie.html)
     - [Curl](03-curl.html)
-- [4 - Installatie van een webserver, scripting](04-installatie-webserver.html)
-- [5 - Advanced text processing](05-advanced-text-processing.html)
-- [6 - Scripting](06-scripting.html)
-- [7 - Complexe scripts, cronjobs](07-scripting-cronjobs.html)
+- 2 - [I/O-redirection, filters, scripting](02-towards-scripting.html)
+- 3 - [User Management](01-user-mgmt.html)
+- 4 - [Installatie van een webserver, scripting](04-installatie-webserver.html)
+- 5 - [Advanced text processing](05-advanced-text-processing.html)
+- 6 - [Scripting](06-scripting.html)
+- 7 - [Complexe scripts, cronjobs](07-scripting-cronjobs.html)
 - 8 - Containervirtualisatie, Secure SHell
     - [Containervirtualisatie (Docker)](08-containers.html)
     - [Secure Shell](08-ssh.html)
@@ -24,4 +24,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Tue Sep 19 12:47:57 CEST 2023
+Laatste wijziging: Sat Sep 23 10:45:01 UTC 2023

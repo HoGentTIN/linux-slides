@@ -17,21 +17,16 @@
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
     div.columns{display: flex; gap: min(4vw, 1.5em);}
-    div.column{flex: auto; overflow-x: auto;}
+    div.column{flex: 1;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    /* The extra [class] is a hack that increases specificity enough to
-       override a similar rule in reveal.js */
-    ul.task-list[class]{list-style: none;}
+    ul.task-list{list-style: none;}
     ul.task-list li input[type="checkbox"] {
-      font-size: inherit;
       width: 0.8em;
       margin: 0 0.8em 0.2em -1.6em;
       vertical-align: middle;
     }
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
-    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { line-height: 1.25; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -93,6 +88,7 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
   <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
 </head>
@@ -138,7 +134,7 @@ software-ontwikkeling op Unix
 <h2>Makefile</h2>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="dv">doel:</span><span class="dt"> bronnen...</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>recept</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    recept</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    <span class="ch">@</span><span class="fu">cmd</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>    ...</span></code></pre></div>
 <ul>
@@ -159,7 +155,7 @@ getoond</li>
 <p><code>Makefile</code>:</p>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="dv">hello:</span><span class="dt"> hello.c</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>gcc -o hello hello.c</span></code></pre></div>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    gcc -o hello hello.c</span></code></pre></div>
 <p><code>hello.c</code>:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode c"><code class="sourceCode c"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="pp">#include </span><span class="im">&lt;stdio.h&gt;</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="dt">int</span> main<span class="op">()</span></span>
@@ -209,11 +205,11 @@ class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb7-1"><
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="dv">all:</span><span class="dt"> true false</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="dv">true:</span><span class="dt"> true.c booleans.h</span></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>gcc -o true true.c</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    gcc -o true true.c</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="dv">false:</span><span class="dt"> false.c booleans.h</span></span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>gcc -o false false.c</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    gcc -o false false.c</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>rm -vf true false</span></code></pre></div>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    rm -vf true false</span></code></pre></div>
 <ul>
 <li><code>all</code>
 <ul>
@@ -235,12 +231,12 @@ uitgevoerd worden</li>
 <div class="sourceCode" id="cb8"><pre
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Makefile - part 1</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">sources</span> <span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">wildcard</span><span class="st"> *.c</span><span class="ch">)</span></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">objects</span> <span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.c</span><span class="kw">,</span><span class="st">%.o</span><span class="kw">,</span><span class="ch">$(</span><span class="dt">sources</span><span class="ch">))</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">executables</span> <span class="ch">:=</span><span class="st"> true false</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">sources </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">wildcard</span><span class="st"> *.c</span><span class="ch">)</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">objects </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.c</span><span class="kw">,</span><span class="st">%.o</span><span class="kw">,</span><span class="ch">$(</span><span class="dt">sources</span><span class="ch">))</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">executables </span><span class="ch">:=</span><span class="st"> true false</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">CC</span> <span class="ch">:=</span><span class="st"> gcc</span></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="dt">CFLAGS</span> <span class="ch">:=</span><span class="st"> -Wall -O</span></span></code></pre></div>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">CC </span><span class="ch">:=</span><span class="st"> gcc</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="dt">CFLAGS </span><span class="ch">:=</span><span class="st"> -Wall -O</span></span></code></pre></div>
 <ul>
 <li>Variabelen:
 <ul>
@@ -268,13 +264,13 @@ class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb9-1"><
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="dv">all:</span><span class="dt"> </span><span class="ch">$(</span><span class="dt">executables</span><span class="ch">)</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="dv">true:</span><span class="dt"> true.o</span></span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="er">    </span><span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -o true true.o</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -o true true.o</span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="dv">false:</span><span class="dt"> false.o</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="er">    </span><span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -o false false.o</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -o false false.o</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="dv">%.o:</span><span class="dt"> %.c booleans.h</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="er">    </span><span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -c <span class="ch">$&lt;</span></span></code></pre></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>    <span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span> -c <span class="ch">$&lt;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -293,13 +289,13 @@ variabele</a>
 </ul>
 <div class="sourceCode" id="cb10"><pre
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="dv">%.o:</span><span class="dt"> %.c booleans.h</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="er">    </span><span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span>  -c <span class="ch">$&lt;</span></span></code></pre></div>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="ch">$(</span><span class="dt">CC</span><span class="ch">)</span> <span class="ch">$(</span><span class="dt">CFLAGS</span><span class="ch">)</span>  -c <span class="ch">$&lt;</span></span></code></pre></div>
 <p>wordt vertaald naar:</p>
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="dv">true.o:</span><span class="dt"> true.c booleans.h</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>gcc -Wall -O -c true.c</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    gcc -Wall -O -c true.c</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="dv">false.o:</span><span class="dt"> false.c booleans.h</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>gcc -Wall -O -c false.c</span></code></pre></div>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    gcc -Wall -O -c false.c</span></code></pre></div>
 </section>
 <section class="slide level2">
 
@@ -307,10 +303,10 @@ class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb11-1">
 class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Makefile - part 3</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="dv">clean:</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>rm -vf <span class="ch">$(</span><span class="dt">objects</span><span class="ch">)</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    rm -vf <span class="ch">$(</span><span class="dt">objects</span><span class="ch">)</span></span>
 <span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dv">mrproper:</span><span class="dt"> clean</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="er">    </span>rm -vf <span class="ch">$(</span><span class="dt">executables</span><span class="ch">)</span></span></code></pre></div>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    rm -vf <span class="ch">$(</span><span class="dt">executables</span><span class="ch">)</span></span></code></pre></div>
 </section>
 <section id="portable-makefiles" class="slide level2">
 <h2><em>Portable</em> Makefiles</h2>

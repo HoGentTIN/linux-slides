@@ -198,16 +198,15 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> all.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># invoer én uitvoer omleiden</span></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span></code></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&amp;&gt;</span> all.txt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># invoer én uitvoer omleiden</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span></code></pre></div>
 </section>
-<section id="foutboodschappen-afdrukken" class="slide level2">
-<h2>Foutboodschappen afdrukken</h2>
-<p>(Equivalent van <a
-href="https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)">System.err.printf()</a>)</p>
+<section id="foutboodschappen-afdrukken-op-stderr" class="slide level2">
+<h2>Foutboodschappen afdrukken (op stderr)</h2>
 <div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">printf</span> <span class="st">&#39;Error: %s is not a directory\n&#39;</span> <span class="st">&quot;</span><span class="va">${dir}</span><span class="st">&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Error: </span><span class="va">${dir}</span><span class="st"> is not a directory&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span></code></pre></div>
 </section>
 <section id="here-documents-1" class="slide level2">
 <h2>Here documents (1)</h2>
@@ -253,8 +252,8 @@ $ fortune | cowsay | lolcat</code></pre>
 <h1>Filters</h1>
 
 </section>
-<section id="filters-1" class="slide level2">
-<h2>Filters</h2>
+<section id="filtercommandos" class="slide level2">
+<h2>Filtercommando’s</h2>
 <ul>
 <li>Filter = commando dat:
 <ol type="1">
@@ -269,8 +268,8 @@ op tekst toe te passen
 </ul></li>
 </ul>
 </section>
-<section id="filters-2" class="slide level2">
-<h2>Filters (2)</h2>
+<section id="filtercommandos-2" class="slide level2">
+<h2>Filtercommando’s (2)</h2>
 <p>Ofwel bestand meegeven, ofwel stdin</p>
 <pre class="console"><code>filter file1 file2...
 
@@ -279,6 +278,13 @@ filter &lt; file
 cmd | filter</code></pre>
 <p>Merk op: <code>cat file | filter</code> kan je beter anders
 schrijven!</p>
+</section>
+<section id="io-redirection-naar-bestand-én-stdout"
+class="slide level2">
+<h2>I/O redirection naar bestand én stdout</h2>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="kw">|</span> <span class="fu">tee</span> directories.txt</span></code></pre></div>
+<p><code>tee</code> schrijft weg naar bestand én stdout.</p>
 </section>
 <section id="cat-tac-en-shuf" class="slide level2">
 <h2><code>cat</code>, <code>tac</code> en <code>shuf</code></h2>
@@ -374,34 +380,48 @@ $ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
 </section>
 <section id="de-stream-editor-sed" class="slide level2">
 <h2>De Stream EDitor, <code>sed</code></h2>
-<div class="sourceCode" id="cb20"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
-<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
-<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lege regels verwijderen</span></span>
-<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lege regels verwijderen</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
 </section>
 <section id="de-awk-taal" class="slide level2">
 <h2>De AWK-taal</h2>
 <p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
-<div class="sourceCode" id="cb21"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
-<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
-<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
-<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
-<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
-<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span>
-<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk de namen van de &quot;gewone&quot; gebruikers af</span></span>
-<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">&#39;{ if($3 &gt; 1000) print $1 }&#39;</span> /etc/passwd</span></code></pre></div>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk de namen van de &quot;gewone&quot; gebruikers af</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">&#39;{ if($3 &gt; 1000) print $1 }&#39;</span> /etc/passwd</span></code></pre></div>
+</section>
+<section id="code-smells" class="slide level2">
+<h2>Code smells</h2>
+<p>Vermijd opstart van overbodige processen:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overbodige `cat`!</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> bestand <span class="kw">|</span> <span class="ex">filter</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter:</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">filter</span> bestand</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Overbodige `echo`!</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;String&quot;</span> <span class="kw">|</span> <span class="ex">filter</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter: here string</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">filter</span> <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;String&quot;</span></span></code></pre></div>
 </section></section>
 <section>
 <section id="intro-bash-scripts" class="title-slide slide level1">
@@ -413,9 +433,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href=
 <ol type="1">
 <li><p>Maak bestand aan (bv. <code>script.sh</code>) met een
 teksteditor, bv.</p>
-<div class="sourceCode" id="cb22"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
 <li><p>Maak bestand uitvoerbaar:
 <code>chmod +x script.sh</code></p></li>
 <li><p>Voer uit: <code>./script.sh</code></p></li>
@@ -441,19 +461,19 @@ bang)</li>
 <section id="tekst-afdrukken" class="slide level2">
 <h2>Tekst afdrukken</h2>
 <p>Wat is het verschil?</p>
-<div class="sourceCode" id="cb23"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
-<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb24"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
 </section>
 <section id="variabelen" class="slide level2">
 <h2>Variabelen</h2>
@@ -466,8 +486,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href=
 <li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
 <li>Gebruik in strings (met dubbele aanhalingstekens):</li>
 </ul>
-<div class="sourceCode" id="cb25"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
 </section>
 <section id="variabelen-codestijl" class="slide level2">
 <h2>Variabelen: codestijl</h2>
@@ -481,10 +501,10 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href=
 <li>vermijd <em>splitsen</em> van woorden</li>
 </ul></li>
 </ul>
-<div class="sourceCode" id="cb26"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">bestand</span><span class="op">=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
-<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="va">bestand</span><span class="op">=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
 </section>
 <section id="onbestaande-variabelen-opvragen" class="slide level2">
 <h2>Onbestaande variabelen opvragen</h2>
@@ -504,11 +524,11 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href=
 <li>Maak “globale”, of <em>omgevingsvariabele</em> met
 <code>export</code>:</li>
 </ul>
-<div class="sourceCode" id="cb27"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE1</span><span class="op">=</span>value</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a><span class="va">VARIABLE2</span><span class="op">=</span>value</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE1</span><span class="op">=</span>value</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="va">VARIABLE2</span><span class="op">=</span>value</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
 </section>
 <section id="variabelen-naamgeving" class="slide level2">
 <h2>Variabelen: naamgeving</h2>

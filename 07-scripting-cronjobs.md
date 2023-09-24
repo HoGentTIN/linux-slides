@@ -34,6 +34,14 @@ Een functie gedraagt zich als een script!
 - positionele parameters: `${1}`, `${2}`, enz.
 - `return STATUS` ipv `exit`
 
+## Uitvoer opvangen: command substitution
+
+```bash
+output=$(command arg1 arg2)
+```
+
+`stdout` van `command` wordt opgevangen en opgeslagen in variabele `${output}`.
+
 ## Scope variabelen bij functies - global
 
 Wat is de uitvoer van dit script?

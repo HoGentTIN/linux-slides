@@ -58,17 +58,16 @@ find / -type d > directories.txt 2> /dev/null
 
 # stdout en stderr samen wegschrijven
 find / -type d > all.txt 2>&1
+find / -type d &> all.txt
 
 # invoer én uitvoer omleiden
 sort < unsorted.txt > sorted.txt 2> errors.txt
 ```
 
-## Foutboodschappen afdrukken
-
-(Equivalent van [System.err.printf()](https://docs.oracle.com/javase/7/docs/api/java/io/PrintStream.html#printf(java.lang.String,%20java.lang.Object...)))
+## Foutboodschappen afdrukken (op stderr)
 
 ```bash
-printf 'Error: %s is not a directory\n' "${dir}" >&2
+echo "Error: ${dir} is not a directory" >&2
 ```
 
 ## Here documents (1)
@@ -126,7 +125,7 @@ figlet <<< "Hello world!"
 
 # Filters
 
-## Filters
+## Filtercommando's
 
 - Filter = commando dat:
     1. leest van `stdin` of bestand,
@@ -135,7 +134,7 @@ figlet <<< "Hello world!"
 - Combineer filters via `|` (pipe) om complexe bewerkingen op tekst toe te passen
     - De *UNIX-filosofie*
 
-## Filters (2)
+## Filtercommando's (2)
 
 Ofwel bestand meegeven, ofwel stdin
 
@@ -148,6 +147,14 @@ cmd | filter
 ```
 
 Merk op: `cat file | filter` kan je beter anders schrijven!
+
+## I/O redirection naar bestand én stdout
+
+```bash
+find / -type d | tee directories.txt
+```
+
+`tee` schrijft weg naar bestand én stdout.
 
 ## `cat`, `tac` en `shuf`
 
@@ -292,6 +299,22 @@ awk '{ printf "%s;%s", $2, $4 }'
 
 # Druk de namen van de "gewone" gebruikers af
 awk -F: '{ if($3 > 1000) print $1 }' /etc/passwd
+```
+
+## Code smells
+
+Vermijd opstart van overbodige processen:
+
+```bash
+# Overbodige `cat`!
+cat bestand | filter
+# Beter:
+filter bestand
+
+# Overbodige `echo`!
+echo "String" | filter
+# Beter: here string
+filter <<< "String"
 ```
 
 # Intro Bash scripts

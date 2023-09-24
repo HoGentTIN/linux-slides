@@ -284,6 +284,14 @@ done
 
 `$(( ... ))` is *arithmetic expansion*
 
+## Itereren over lijnen in een bestand
+
+```bash
+while read -r line; do
+    # process "${line}"
+done < file.txt
+```
+
 ## For-lus
 
 Itereren over een lijst
@@ -356,6 +364,21 @@ for arg in "${@}"; do
   printf 'Arg: %s\n' "${arg}"
   # ...
 done
+```
+
+## Let op! Een lus is niet altijd nodig!
+
+Find is zelf een "lus", dus `| while` is overbodig
+
+```bash
+# find | while is overbodig!
+find . -type d | while read -r dir; do chmod 700 "${dir}"; done
+```
+
+Beter:
+
+```bash
+find . -type d -exec chmod 700 "{}" \;
 ```
 
 ## Labo-oefeningen

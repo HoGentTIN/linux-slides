@@ -9,9 +9,8 @@ date: 2023-2024
 
 ## Lectoren
 
-- Thomas Parmentier
-- Andy Van Maele
-- Bert Van Vreckem
+- Andy Van Maele (titularis, Gent)
+- Bert Van Vreckem (Aalst, TIAO)
 
 ## Studiemethode
 
@@ -38,7 +37,7 @@ date: 2023-2024
     - webdev => jouw apps zullen op Linux draaien
     - e-business: Drupal
 - MacOS X
-    - Ook UNIX
+    - Ook UNIX (BSD)
     - Bash-shell + commando's
 
 ---

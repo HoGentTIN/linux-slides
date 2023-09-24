@@ -92,6 +92,32 @@ copy_iso_to_usb() {
 }
 ```
 
+## Parameter substitution
+
+Zie [Parameter Substitution](https://tldp.org/LDP/abs/html/parameter-substitution.html) in de *Advanced Bash-Scripting Guide*.
+
+```bash
+var="Hello world!"
+echo "${other_var:-default}" # default
+echo "${var,,}"              # hello world! (lowercase)
+echo "${var^^}"              # HELLO WORLD!
+echo "${var//o/a}"           # Hella warld!
+echo "${var:2}"              # llo world!
+echo "${var:6:5}"            # world
+```
+
+## Parameter substitution (2)
+
+Verwijder patroon van begin/einde van een string:
+
+```bash
+path="some/path/archive.tar.gz"
+echo "${path#*/}"   # path/archive.tar.gz
+echo "${path##*/}"  # archive.tar.gz
+echo "${path%.*}"   # some/path/archive.tar
+echo "${path%%.*}"  # some/path/archive
+```
+
 ## Case (1)
 
 ```bash
@@ -137,7 +163,6 @@ esac
 - Gebruik "lange" opties: maakt script leesbaarder
 - Gebruik lokale variabelen in functies
 - Deel script op in (herbruikbare) functies
-
 
 # Plannen van systeembeheertaken: cronjobs
 

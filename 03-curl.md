@@ -114,7 +114,7 @@ curl -X POST -d 'penguin=tux&color=blue' https://httpbin.org/anything
 3. Simuleer analyse van de data (bv. grafiekje, basis-statistieken)
 4. Genereer rapport (webpagina, PDF)
 
-Resultaat in te dienen/demonstreren (= 50% examencijfer)
+Resultaat in te dienen/demonstreren (= 30% examencijfer)
 
 ## Stap 1. Verzamel data
 

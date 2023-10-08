@@ -26,8 +26,9 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 ## Wat is het IP-adres van...?
 
 ```bash
-$ nslookup www.hogent.be
+$ host www.hogent.be
 $ dig www.hogent.be
+$ nslookup www.hogent.be # old command
 ```
 
 Wat is *mijn publiek* IP-adres?

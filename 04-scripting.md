@@ -182,14 +182,6 @@ for arg in "${@}"; do
 done
 ```
 
-## Itereren over de lijnen van een bestand
-
-```bash
-while read -r line; do
-    printf "${line}\n"
-done < input_file.txt
-```
-
 ## Let op! Een lus is niet altijd nodig!
 
 Find is zelf een "lus", dus `| while` is overbodig

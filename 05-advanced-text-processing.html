@@ -319,9 +319,9 @@ osboxes 1000</code></pre>
 <div class="sourceCode" id="cb9"><pre
 class="sourceCode awk"><code class="sourceCode awk"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/awk -f</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="op">{</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$2</span>] <span class="op">+=</span> <span class="dt">$2</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$3</span>] <span class="op">+=</span> <span class="dt">$3</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dt">$4</span>] <span class="op">+=</span> <span class="dt">$4</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dv">2</span>] <span class="op">+=</span> <span class="dt">$2</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dv">3</span>] <span class="op">+=</span> <span class="dt">$3</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    sums[<span class="dv">4</span>] <span class="op">+=</span> <span class="dt">$4</span></span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="op">}</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="cf">END</span> <span class="op">{</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span><span class="op">(</span>s <span class="kw">in</span> sums<span class="op">)</span></span>

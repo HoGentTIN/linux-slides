@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
-  <title>6. Scripting</title>
+  <title>6. Scripting 103</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +97,7 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">6. Scripting</h1>
+  <h1 class="title">6. Scripting 103</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
   <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
 Vreckem</p>
@@ -200,7 +200,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <div class="sourceCode" id="cb5"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="ot">! </span><span class="fu">getent</span> passwd <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span> <span class="op">&gt;</span> /dev/null <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span><span class="kw">;</span> <span class="cf">then</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;Adding user </span><span class="va">${user}</span><span class="st">&quot;</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">adduser</span> <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="ex">useradd</span> <span class="st">&quot;</span><span class="va">${user}</span><span class="st">&quot;</span></span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span></span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="bu">echo</span> <span class="st">&quot;User </span><span class="va">${user}</span><span class="st"> already exists&quot;</span></span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code></pre></div>

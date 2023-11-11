@@ -4,6 +4,8 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 
 **Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
 
+Je kan **handouts** van de slides genereren door ze te openen in de browser en Ctrl+P te drukken (of Afdrukken te kiezen in het menu). Kies vervolgens voor "Save as PDF".
+
 - [0 - Linux for Ops: intro](00-opslinux-intro.html)
 - [1 - User management](01-user-mgmt.html)
 - [2 - Combining commands towards scripting](02-towards-scripting.html)
@@ -31,4 +33,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Sat Nov 11 13:41:19 UTC 2023
+Laatste wijziging: Sat Nov 11 13:45:30 UTC 2023

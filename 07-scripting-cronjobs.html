@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
-  <title>7. Complexe scripts, cronjobs</title>
+  <title>7. Geavanceerde scripting 201, taken plannen</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -97,7 +97,7 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">7. Complexe scripts, cronjobs</h1>
+  <h1 class="title">7. Geavanceerde scripting 201, taken plannen</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
   <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
 Vreckem</p>
@@ -128,7 +128,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">functie_naam()</span> <span class="kw">{</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># code</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="kw">}</span></span></code></pre></div>
-<p>Een functie gedraagt zich als een script!</p>
+<p>Een functie gedraagt zich als een commando!</p>
 <ul>
 <li>oproepen: <code>functie_naam arg1 arg2 arg3</code></li>
 <li>positionele parameters: <code>${1}</code>, <code>${2}</code>,
@@ -139,6 +139,8 @@ enz.</li>
 <section id="uitvoer-opvangen-command-substitution"
 class="slide level2">
 <h2>Uitvoer opvangen: command substitution</h2>
+<p>Hoe kan je een functie een “waarde” laten teruggeven? Via
+<code>stdout</code>!</p>
 <div class="sourceCode" id="cb3"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="va">output</span><span class="op">=</span><span class="va">$(</span><span class="bu">command</span> arg1 arg2<span class="va">)</span></span></code></pre></div>
 <p><code>stdout</code> van <code>command</code> wordt opgevangen en
@@ -237,6 +239,8 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="co"># ...</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="cf">;;</span></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="cf">esac</span></span></code></pre></div>
+<p><code>PATROON</code> in globbing syntax!
+(<code>man 7 glob</code>)</p>
 </section>
 <section id="case-2" class="slide level2">
 <h2>Case (2)</h2>
@@ -252,7 +256,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href=
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>    <span class="va">verbose</span><span class="op">=</span>y</span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">shift</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">;;</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="pp">*</span><span class="kw">)</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="ss">-</span><span class="pp">*</span><span class="kw">)</span></span>
 <span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>    <span class="bu">printf</span> <span class="st">&#39;Unrecognized option: %s\n&#39;</span> <span class="st">&quot;</span><span class="va">${option}</span><span class="st">&quot;</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>    <span class="ex">usage</span></span>
 <span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>    <span class="bu">exit</span> 1</span>

@@ -4,6 +4,8 @@ Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Li
 
 **Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
 
+Je kan **handouts** van de slides genereren door ze te openen in de browser en Ctrl+P te drukken (of Afdrukken te kiezen in het menu). Kies vervolgens voor "Save as PDF".
+
 - 0 - [Linux for Data Scientists: intro](00-datalinux-intro.html)
 - 1 - Software-installatie, curl
     - [Software-installatie](03-software-installatie.html)

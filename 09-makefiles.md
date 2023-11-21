@@ -147,11 +147,8 @@ CFLAGS := -Wall -O
 
 all: $(executables)
 
-true: true.o
-	$(CC) $(CFLAGS) -o true true.o
-
-false: false.o
-	$(CC) $(CFLAGS) -o false false.o
+%: %.o
+	$(CC) $(CFLAGS) -o $@ $<
 
 %.o: %.c booleans.h
 	$(CC) $(CFLAGS) -c $<
@@ -163,6 +160,7 @@ false: false.o
     - `%` matcht met `true` en `false`
 - `$<` = [Automatische variabele](https://www.gnu.org/software/make/manual/html_node/Automatic-Variables.html)
     - Eerste bron voor deze regel
+- `$@` = target van deze regel (hier: `true` of `false`)
 
 ```Makefile
 %.o: %.c booleans.h

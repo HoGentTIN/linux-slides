@@ -309,12 +309,28 @@ class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb12-1">
 <span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="dv">mrproper:</span><span class="dt"> clean</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    rm -vf <span class="ch">$(</span><span class="dt">executables</span><span class="ch">)</span></span></code></pre></div>
 </section>
+<section id="resultaat" class="slide level2">
+<h2>Resultaat:</h2>
+<pre class="console"><code>$ make mrproper
+rm -vf *.o
+rm -vf true false
+removed &#39;true&#39;
+removed &#39;false&#39;
+$ make all
+gcc -Wall -O -c false.c
+gcc -Wall -O -o false false.o
+gcc -Wall -O -c true.c
+gcc -Wall -O -o true true.o
+rm false.o true.o</code></pre>
+<p>Voeg <code>.SECONDARY:</code> toe om <code>.o</code>-bestanden te
+bewaren:</p>
+</section>
 <section id="portable-makefiles" class="slide level2">
 <h2><em>Portable</em> Makefiles</h2>
 <p>Begin Makefile met:</p>
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.POSIX:</span><span class="dt">     </span><span class="co"># Get reliable POSIX behaviour</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ot">.SUFFIXES:</span><span class="dt">  </span><span class="co"># Clear built-in inference rules</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ot">.POSIX:</span><span class="dt">     </span><span class="co"># Get reliable POSIX behaviour</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ot">.SUFFIXES:</span><span class="dt">  </span><span class="co"># Clear built-in inference rules</span></span></code></pre></div>
 <ul>
 <li><code>.POSIX</code>: Makefile werkt beter op andere platformen
 <ul>

@@ -188,6 +188,24 @@ mrproper: clean
 	rm -vf $(executables)
 ```
 
+## Resultaat:
+
+```console
+$ make mrproper
+rm -vf *.o
+rm -vf true false
+removed 'true'
+removed 'false'
+$ make all
+gcc -Wall -O -c false.c
+gcc -Wall -O -o false false.o
+gcc -Wall -O -c true.c
+gcc -Wall -O -o true true.o
+rm false.o true.o
+```
+
+Voeg `.SECONDARY:` toe om `.o`-bestanden te bewaren:
+
 ## *Portable* Makefiles
 
 Begin Makefile met:

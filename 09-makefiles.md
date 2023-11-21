@@ -20,6 +20,8 @@ date: 2023-2024
     - bv. java-code > javac > .class-files
     - ...
 
+<https://www.gnu.org/software/make/manual/>
+
 ## Makefile
 
 ```Makefile
@@ -201,3 +203,13 @@ Begin Makefile met:
     - bv. MacOS, Windows, BSD, ...
 - `.SUFFIXES`: ingebouwde regels (voor C-compilatie) wissen
 - `.PHONY` is een GNU make uitbreiding, werkt misschien niet op andere platformen
+
+## Praktijkvoorbeelden van Makefiles
+
+- Omzetten van Markdown naar [Reveal.js](https://revealjs.com/)-presentatie:
+    - <https://github.com/HoGentTIN/linux-slides/blob/main/Makefile>
+- Compileren van LaTeX naar PDF:
+    - <https://github.com/HoGentTIN/latex-hogent-article/blob/main/Makefile>
+    - <https://github.com/HoGentTIN/latex-hogent-exam/blob/main/Makefile>
+- ABC muzieknotatie naar PDF, MIDI, PNG, JPEG:
+    - <https://github.com/bertvv/abc-transcriptions/blob/main/Makefile>

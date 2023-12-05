@@ -40,7 +40,9 @@ Solomon Hykes @ PyCon 2013
 ## Docker opzetten
 
 - Je zou het labo met Docker Desktop kunnen doen, maar...
-- ... we gaan het doen met een VM
+    - Gebaseerd op Hyper-V + Windows Subsystem for Linux
+- ... we gaan het doen met een VirtualBox VM
+    - Installatie geautomatiseerd met Vagrant
 
 ## Lokale labo-omgeving
 

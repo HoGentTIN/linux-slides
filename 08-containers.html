@@ -148,23 +148,26 @@ class="uri">https://www.redhat.com/en/topics/containers/containers-vs-vms</a></p
 <h1>Labo-omgeving opzetten</h1>
 
 </section>
+<section id="docker-opzetten" class="slide level2">
+<h2>Docker opzetten</h2>
+<ul>
+<li>Je zou het labo met Docker Desktop kunnen doen, maar…</li>
+<li>… we gaan het doen met een VM</li>
+</ul>
+</section>
 <section id="lokale-labo-omgeving" class="slide level2">
 <h2>Lokale labo-omgeving</h2>
 <ul>
-<li>Ga naar het leerpad op Chamilo, 8.4 Labo-oefeningen</li>
-<li>Download het .zip-bestand en pak uit
-<ul>
-<li>Directory <code>dockerlab</code></li>
-<li>Op je fysieke systeem!</li>
-<li>In lokale kopie van je Github-repo</li>
-</ul></li>
 <li>Installeer Vagrant
 <ul>
 <li><a href="https://developer.hashicorp.com/vagrant/downloads"
 class="uri">https://developer.hashicorp.com/vagrant/downloads</a></li>
-<li><code>choco install vagrant</code>, <code>brew install...</code>,
-etc</li>
+<li><code>winget install Hashicorp.Vagrant</code>,
+<code>brew install...</code>, etc</li>
 </ul></li>
+<li>Zorg dat je een lokale kopie hebt van je Github-repo op je fysieke
+systeem</li>
+<li>Open terminal, ga naar subdirectory <code>dockerlab/</code></li>
 </ul>
 </section>
 <section id="start-de-docker-vm-op" class="slide level2">
@@ -176,6 +179,17 @@ Current machine states:
 dockerlab                 not created (virtualbox)
 
 $ vagrant up</code></pre>
+</section>
+<section id="foutmelding" class="slide level2">
+<h2>Foutmelding?</h2>
+<pre class="console"><code>vm.rb:326:in `network&#39;: wrong number of arguments (given 2, expected 1) (ArgumentError)</code></pre>
+<p>Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>node<span class="at">.vm.network</span> <span class="wa">:private_network</span>, <span class="kw">**</span>network_options(host)</span></code></pre></div>
+<p>(sterretjes toevoegen)</p>
+<p>Zie ook <a
+href="https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143"
+class="uri">https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143</a></p>
 </section>
 <section id="op-het-einde-van-het-labo" class="slide level2">
 <h2>Op het einde van het labo:</h2>
@@ -274,18 +288,18 @@ docker volume prune</code></pre>
 <section id="custom-images" class="slide level2">
 <h2>Custom images</h2>
 <p>Voorbeeld Dockerfile:</p>
-<div class="sourceCode" id="cb7"><pre
-class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
 </section>
 <section id="custom-images-1" class="slide level2">
 <h2>Custom images</h2>

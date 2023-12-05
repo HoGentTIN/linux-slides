@@ -9,7 +9,7 @@ date: 2023-2024
 
 ## Containervirtualisatie
 
-![](https://www.redhat.com/cms/managed-files/styles/wysiwyg_full_width/s3/virtualization-vs-containers_transparent.png?itok=q-E2I2-L)
+![](assets/virtualization-vs-containers_transparent.png)
 
 <https://www.redhat.com/en/topics/containers/containers-vs-vms>
 

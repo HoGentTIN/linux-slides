@@ -97,7 +97,7 @@ PermitRootLogin prohibit-password
 UsePAM yes
 ```
 
-Configuratie van de client opties: `sshd_config`
+Configuratie van de client opties: `ssh_config`
 
 ```bash
 HostKeyAlgorithms=-ssh-rsa

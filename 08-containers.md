@@ -9,7 +9,7 @@ date: 2023-2024
 
 ## Containervirtualisatie
 
-![](https://www.redhat.com/cms/managed-files/styles/wysiwyg_full_width/s3/virtualization-vs-containers_transparent.png?itok=q-E2I2-L)
+![](assets/virtualization-vs-containers_transparent.png)
 
 <https://www.redhat.com/en/topics/containers/containers-vs-vms>
 
@@ -37,16 +37,20 @@ Solomon Hykes @ PyCon 2013
 
 # Labo-omgeving opzetten
 
+## Docker opzetten
+
+- Je zou het labo met Docker Desktop kunnen doen, maar...
+    - Gebaseerd op Hyper-V + Windows Subsystem for Linux
+- ... we gaan het doen met een VirtualBox VM
+    - Installatie geautomatiseerd met Vagrant
+
 ## Lokale labo-omgeving
 
-- Ga naar het leerpad op Chamilo, 8.4 Labo-oefeningen
-- Download het .zip-bestand en pak uit
-    - Directory `dockerlab`
-    - Op je fysieke systeem!
-    - In lokale kopie van je Github-repo
 - Installeer Vagrant
     - <https://developer.hashicorp.com/vagrant/downloads>
-    - `choco install vagrant`, `brew install...`, etc
+    - `winget install Hashicorp.Vagrant`, `brew install...`, etc
+- Zorg dat je een lokale kopie hebt van je Github-repo op je fysieke systeem
+- Open terminal, ga naar subdirectory `dockerlab/`
 
 ## Start de Docker-VM op
 
@@ -59,6 +63,22 @@ dockerlab                 not created (virtualbox)
 
 $ vagrant up
 ```
+
+## Foutmelding?
+
+```console
+vm.rb:326:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
+```
+
+Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:
+
+```ruby
+node.vm.network :private_network, **network_options(host)
+```
+
+(sterretjes toevoegen)
+
+Zie ook <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143>
 
 ## Op het einde van het labo:
 

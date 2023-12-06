@@ -1,5 +1,5 @@
 ---
-title: "7. Complexe scripts, cronjobs"
+title: "7. Geavanceerde scripting 201, taken plannen"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
 date: 2023-2024
@@ -28,13 +28,15 @@ functie_naam() {
 }
 ```
 
-Een functie gedraagt zich als een script!
+Een functie gedraagt zich als een commando!
 
 - oproepen: `functie_naam arg1 arg2 arg3`
 - positionele parameters: `${1}`, `${2}`, enz.
 - `return STATUS` ipv `exit`
 
 ## Uitvoer opvangen: command substitution
+
+Hoe kan je een functie een "waarde" laten teruggeven? Via `stdout`!
 
 ```bash
 output=$(command arg1 arg2)
@@ -142,6 +144,8 @@ case EXPR in
 esac
 ```
 
+`PATROON` in globbing syntax! (`man 7 glob`)
+
 ## Case (2)
 
 ```bash
@@ -156,7 +160,7 @@ case "${option}" in
     verbose=y
     shift
     ;;
-  *)
+  -*)
     printf 'Unrecognized option: %s\n' "${option}"
     usage
     exit 1

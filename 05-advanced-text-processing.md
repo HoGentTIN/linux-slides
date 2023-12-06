@@ -168,9 +168,9 @@ Bereken de som van kolommen 2, 3 en 4:
 ```awk
 #! /usr/bin/awk -f
 {
-    sums[$2] += $2
-    sums[$3] += $3
-    sums[$4] += $4
+    sums[2] += $2
+    sums[3] += $3
+    sums[4] += $4
 }
 END {
     for(s in sums)

@@ -1,5 +1,5 @@
 ---
-title: "6. Scripting"
+title: "6. Scripting 103"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
 date: 2023-2024
@@ -87,7 +87,7 @@ Maak gebruiker `${user}` aan als die nog niet bestaat
 ```bash
 if ! getent passwd "${user}" > /dev/null 2>&1; then
   echo "Adding user ${user}"
-  adduser "${user}"
+  useradd "${user}"
 else
   echo "User ${user} already exists"
 fi

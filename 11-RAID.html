@@ -88,7 +88,7 @@ automatically</li>
 <tr class="header">
 <th style="text-align: center;">A</th>
 <th style="text-align: center;">B</th>
-<th style="text-align: center;">A XOR B</th>
+<th style="text-align: center;">XOR</th>
 </tr>
 </thead>
 <tbody>
@@ -133,6 +133,9 @@ data1:  0100 1110</code></pre>
 <img data-src="assets/raid-5-parity.png" alt="RAID 5" />
 <figcaption aria-hidden="true">RAID 5</figcaption>
 </figure>
+</section>
+<section class="slide level2">
+
 <ul>
 <li>At least 3 disks needed
 <ul>
@@ -140,7 +143,7 @@ data1:  0100 1110</code></pre>
 </ul></li>
 <li>Safe against HW failure of one disk
 <ul>
-<li>One disk fails =&gt; RAID 0-like situation</li>
+<li>One disk fails ⇒ RAID 0-like situation</li>
 <li>If hot spare is configured, rebuild action starts</li>
 <li>Warning: increased load on other disks, may trigger other
 failures</li>

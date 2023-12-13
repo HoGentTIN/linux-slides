@@ -28,4 +28,4 @@ Extra:
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Wed Dec 13 20:16:13 UTC 2023
+Laatste wijziging: Wed Dec 13 20:26:41 UTC 2023

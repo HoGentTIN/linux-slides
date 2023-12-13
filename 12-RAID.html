@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
-  <title>12. LVM, RAID</title>
+  <title>11.1. RAID</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -34,17 +34,225 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">12. LVM, RAID</h1>
+  <h1 class="title">11.1. RAID</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
   <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
 Vreckem</p>
   <p class="date">2023-2024</p>
 </section>
 
-<section id="todo" class="title-slide slide level1">
-<h1>TODO</h1>
+<section>
+<section id="raid---redundant-array-of-independent-disks"
+class="title-slide slide level1">
+<h1>RAID - Redundant Array of Independent Disks</h1>
 
 </section>
+<section id="jbod---just-a-bunch-of-disks" class="slide level2">
+<h2>JBOD - Just a Bunch of Disks</h2>
+<figure>
+<img data-src="assets/raid-jbod.png" alt="JBOD" />
+<figcaption aria-hidden="true">JBOD</figcaption>
+</figure>
+</section>
+<section id="raid-0---striping" class="slide level2">
+<h2>RAID 0 - Striping</h2>
+<figure>
+<img data-src="assets/raid-0-striping.png" alt="RAID 0" />
+<figcaption aria-hidden="true">RAID 0</figcaption>
+</figure>
+<ul>
+<li>Secure against single theft</li>
+<li>Unsecure against hardware failure</li>
+</ul>
+</section>
+<section id="raid-1---mirroring" class="slide level2">
+<h2>RAID 1 - Mirroring</h2>
+<figure>
+<img data-src="assets/raid-1-mirroring.gif" alt="RAID 1" />
+<figcaption aria-hidden="true">RAID 1</figcaption>
+</figure>
+<ul>
+<li>Safe against HW failure</li>
+<li>COMPLETELY unsafe against theft
+<ul>
+<li>Use volume encryption! LUKS, Bitlocker, …</li>
+</ul></li>
+<li>Hot spare disk = idle disk, if needed a rebuild action can start
+automatically</li>
+</ul>
+</section>
+<section id="parity-calculations-xor" class="slide level2">
+<h2>Parity calculations: XOR</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: center;">A</th>
+<th style="text-align: center;">B</th>
+<th style="text-align: center;">A XOR B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">0</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+<td style="text-align: center;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">1</td>
+<td style="text-align: center;">0</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="calculating-parity" class="slide level2">
+<h2>Calculating parity</h2>
+<pre class="text"><code>data1:  0100 1110
+data2:  1010 1011
+-----------------
+parity: 1110 0101</code></pre>
+<p>Recovering data1 using parity:</p>
+<pre class="text"><code>data2:  1010 1011
+parity: 1110 0101
+-----------------
+data1:  0100 1110</code></pre>
+</section>
+<section id="raid-5---striping-with-parity" class="slide level2">
+<h2>RAID 5 - Striping with parity</h2>
+<figure>
+<img data-src="assets/raid-5-parity.png" alt="RAID 5" />
+<figcaption aria-hidden="true">RAID 5</figcaption>
+</figure>
+<ul>
+<li>At least 3 disks needed
+<ul>
+<li>One disk lost for capacity</li>
+</ul></li>
+<li>Safe against HW failure of one disk
+<ul>
+<li>One disk fails =&gt; RAID 0-like situation</li>
+<li>If hot spare is configured, rebuild action starts</li>
+<li>Warning: increased load on other disks, may trigger other
+failures</li>
+</ul></li>
+<li>Current processors make RAID 5 as fast as RAID 1 (or better!)</li>
+</ul>
+</section>
+<section id="parity-with-4-disks" class="slide level2">
+<h2>Parity with 4 disks</h2>
+<pre class="text"><code>block1a:    0100 1110
+block2a:    1010 1011
+---------------------
+parity-tmp: 1110 0101
+block3a:    1101 0011
+---------------------
+parity:     0011 0110</code></pre>
+</section>
+<section id="recovering-block2a-using-parity" class="slide level2">
+<h2>Recovering block2a using parity</h2>
+<pre class="text"><code>block3a:    1101 0011
+parity:     0011 0110
+---------------------
+parity-tmp: 1110 0101
+block1a:    0100 1110
+---------------------
+block2a:    1010 1011</code></pre>
+</section>
+<section id="raid-10---mirroring-striping" class="slide level2">
+<h2>RAID 10 - Mirroring + striping</h2>
+<figure>
+<img data-src="assets/raid-10.gif" alt="RAID 10" />
+<figcaption aria-hidden="true">RAID 10</figcaption>
+</figure>
+<ul>
+<li>Is RAID 1 (mirroring) combined with RAID 0 (striping)</li>
+<li>At least 4 disks needed
+<ul>
+<li>Half capacity usable!</li>
+</ul></li>
+<li>Very frequently used in enterprise environments</li>
+</ul>
+</section>
+<section id="software-vs-hardware-raid" class="slide level2">
+<h2>Software vs Hardware RAID</h2>
+<ul>
+<li>Difference = where are the calculations done?
+<ul>
+<li>HW RAID: dedicated RAID chip (controller - onboard or plugin
+card)</li>
+<li>SW RAID: CPU</li>
+</ul></li>
+<li>Directly Attached Storage (DAS): not much use for HW RAID
+<ul>
+<li>Main CPU is strong enough for added RAID functionality</li>
+<li>Recovery/forensic analysis is easier with SW RAID</li>
+</ul></li>
+<li>Network Attached Storage (NAS)/Storage Area Network (SAN): HW RAID
+<ul>
+<li>Not much choice, often embedded in the device!</li>
+<li>Dedicated RAID controller with proprietary firmware</li>
+</ul></li>
+</ul>
+</section>
+<section id="the-big-problem-with-hw-raid" class="slide level2">
+<h2>The big problem with HW RAID</h2>
+<ul>
+<li>Proprietary firmware
+<ul>
+<li>In case of data loss: recovery/forensic analysis is
+difficult/impossible</li>
+</ul></li>
+<li>Good RAID controller duplicates config on each disk for recovery
+purposes
+<ul>
+<li>Not a standard! Depends on implementation</li>
+</ul></li>
+<li>RAID controllers are <em>aging</em>
+<ul>
+<li>E.g. RAID 10 on Areca RAID controller is not recognized if the disks
+are connected to an Adaptec RAID controller</li>
+<li>OR: RAID 10 on a 5 year old Areca RAID is not recognized in recend
+Areca RAID controller</li>
+<li>RAID controller has become a single point of failure!</li>
+</ul></li>
+</ul>
+</section>
+<section id="software-raid" class="slide level2">
+<h2>Software RAID</h2>
+<ul>
+<li>Can be done by the OS
+<ul>
+<li>Linux Software RAID (mdadm), Linux Volume Management (LVM)</li>
+<li>Windows Dynamic Volumes, Storage Spaces</li>
+<li>3rd party software (e.g. Starwind)</li>
+</ul></li>
+<li>Usually easily expandable</li>
+<li>Recoverable</li>
+<li>Backwards compatible</li>
+<li>“Free” (included in OS)</li>
+<li>Independent of interface (IDE, SATA, SCSI, …)</li>
+<li>Fast (with modern CPUs)</li>
+</ul>
+</section>
+<section id="disadvantages-of-sw-raid" class="slide level2">
+<h2>Disadvantages of SW RAID</h2>
+<ul>
+<li>CPU load</li>
+<li>OS is not easy to install on a RAID volume</li>
+<li>Not all RAID levels are supported</li>
+<li>Hot swap not always supported</li>
+</ul>
+</section></section>
     </div>
   </div>
 

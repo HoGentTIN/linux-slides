@@ -29,12 +29,12 @@ date: 2023-2024
 
 ## Parity calculations: XOR
 
-|   A   |   B   | A XOR B |
-| :---: | :---: | :-----: |
-|   0   |   0   |    0    |
-|   0   |   1   |    1    |
-|   1   |   0   |    1    |
-|   1   |   1   |    0    |
+|   A   |   B   |  XOR  |
+| :---: | :---: | :---: |
+|   0   |   0   |   0   |
+|   0   |   1   |   1   |
+|   1   |   0   |   1   |
+|   1   |   1   |   0   |
 
 ## Calculating parity
 
@@ -58,10 +58,12 @@ data1:  0100 1110
 
 ![RAID 5](assets/raid-5-parity.png)
 
+---
+
 - At least 3 disks needed
     - One disk lost for capacity
 - Safe against HW failure of one disk
-    - One disk fails => RAID 0-like situation
+    - One disk fails ⇒ RAID 0-like situation
     - If hot spare is configured, rebuild action starts
     - Warning: increased load on other disks, may trigger other failures
 - Current processors make RAID 5 as fast as RAID 1 (or better!)

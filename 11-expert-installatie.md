@@ -34,10 +34,10 @@ Leerpad 11.4, Downloadknop helemaal onderaan
     - `/boot`-partitie
     - swap-partitie
 - "sdb", "sdc", "sdd" zijn de 128GB schijven
-    - `/` partitie: RAID-10
-    - `/var/www/html``: RAID-5
+    - `/` (root-)partitie: RAID-10
+    - `/var/www/html`: RAID-5
 
 ## Expert installatie
 
 - In GRUB-menu, kies "Advanced options" > "Expert install"
-- Volg de instructies in het labo! Leerpad, stap 11.4
+- Volg de instructies in het labo! Leerpad, 11.4

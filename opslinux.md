@@ -25,12 +25,13 @@ Je kan **handouts** van de slides genereren door ze te openen in de browser en C
     - [Secure Shell](08-ssh.html)
 - [9 - Mount](09-mount.html)
 - [10 - DNS met BIND](10-bind.html)
-- [11 - Linux installatie: expert-modus](11-expert-installatie.html)
-- [12 - LVM, RAID](12-LVM-RAID.html)
+- RAID, Expert install
+    - [RAID](11-RAID.html)
+    - [Linux installatie: expert-modus](11-expert-installatie.html)
 
 Extra:
 
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Wed Dec 13 18:17:28 UTC 2023
+Laatste wijziging: Wed Dec 13 20:16:13 UTC 2023

@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem">
-  <title>11. Linux installatie: expert-modus</title>
+  <title>11.2. Linux installatie: expert-modus</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -34,17 +34,70 @@
     <div class="slides">
 
 <section id="title-slide">
-  <h1 class="title">11. Linux installatie: expert-modus</h1>
+  <h1 class="title">11.2. Linux installatie: expert-modus</h1>
   <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
   <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van
 Vreckem</p>
   <p class="date">2023-2024</p>
 </section>
 
-<section id="todo" class="title-slide slide level1">
-<h1>TODO</h1>
+<section>
+<section id="os-installatie-op-servers"
+class="title-slide slide level1">
+<h1>OS-installatie op servers</h1>
 
 </section>
+<section id="hoe-installeer-je-hier-een-os-op" class="slide level2">
+<h2>Hoe installeer je hier een OS op?</h2>
+<figure>
+<img data-src="assets/expert-install-hw.jpg" alt="HP Proliant" />
+<figcaption aria-hidden="true">HP Proliant</figcaption>
+</figure>
+</section>
+<section id="labo-vm-representatief-voor-server-hw"
+class="slide level2">
+<h2>Labo-VM representatief voor server-HW</h2>
+<p>Leerpad 11.4, Downloadknop helemaal onderaan</p>
+<ul>
+<li>1.5GB RAM</li>
+<li>2 NICs (NAT, intnet)</li>
+<li>4HDDs:
+<ul>
+<li>1x 8GB (zoals flash-geheugen of SSD op server)</li>
+<li>3x 128GB (zoals HDDs op server)</li>
+</ul></li>
+</ul>
+</section>
+<section id="debian-netinstall" class="slide level2">
+<h2>Debian Netinstall</h2>
+<ul>
+<li>Download Debian Netinstall ISO</li>
+<li>Selecteer als “Optical drive” in VM</li>
+</ul>
+<p><img data-src="assets/expert-install-iso.png" /></p>
+</section>
+<section id="partitioneringsplan" class="slide level2">
+<h2>Partitioneringsplan</h2>
+<ul>
+<li>“sda” is de 8GB schijf
+<ul>
+<li><code>/boot</code>-partitie</li>
+<li>swap-partitie</li>
+</ul></li>
+<li>“sdb”, “sdc”, “sdd” zijn de 128GB schijven
+<ul>
+<li><code>/</code> partitie: RAID-10</li>
+<li>`/var/www/html``: RAID-5</li>
+</ul></li>
+</ul>
+</section>
+<section id="expert-installatie" class="slide level2">
+<h2>Expert installatie</h2>
+<ul>
+<li>In GRUB-menu, kies “Advanced options” &gt; “Expert install”</li>
+<li>Volg de instructies in het labo! Leerpad, stap 11.4</li>
+</ul>
+</section></section>
     </div>
   </div>
 

@@ -9,8 +9,8 @@ date: 2023-2024
 
 ## Lectoren
 
-- Thomas Parmentier (Gent)
-- Bert Van Vreckem (titularis, Aalst+VC, TIAO)
+- Thomas Parmentier (titularis, Gent, Aalst+VC, TIAO)
+- Bert Van Vreckem (Gent)
 
 Contactinfo - zie verder/studiewijzer
 
@@ -156,7 +156,7 @@ Contactinfo - zie verder/studiewijzer
 ## Evaluatie - studiefiche
 
 - 70% Vaardigheidstest binnen examenrooster
-    - 30% Schriftelijk examen (op PC)
+    - 30% Schriftelijk examen in ans (op PC)
     - 40% Scripting-opdracht (op PC)
 - 30% Portfolio met mondelinge verdediging
     - Opdracht: automatiseren van een data-workflow

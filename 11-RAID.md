@@ -2,7 +2,7 @@
 title: "11.1. RAID"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2023-2024
+date: 2024-2025
 ---
 
 # RAID - Redundant Array of Independent Disks

@@ -2,19 +2,19 @@
 title: "0. Linux for Ops: intro"
 subtitle: "HOGENT toegepaste informatica"
 author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2023-2024
+date: 2024-2025
 ---
 
 # Praktische afspraken
 
 ## Lectoren
 
-- Andy Van Maele (titularis, Gent)
-- Bert Van Vreckem (Aalst, TIAO)
+- Andy Van Maele (vaktitularis, Gent)
+- Bert Van Vreckem (Gent, Aalst, TIAO)
 
 ## Studiemethode
 
-- 3 lesuur / week 
+- 3 lesuur / week
 - 4 studiepunten
 - equivalente hoeveelheid voor- en nawerk thuis
 
@@ -24,6 +24,7 @@ date: 2023-2024
 - Linux Mint als GUI-Linux VM
     - Download ova file
     - import & get started
+- Later: AlmaLinux (zonder GUI)
 
 # Intro
 
@@ -33,12 +34,19 @@ date: 2023-2024
 
 ... en je kan er gewoon niet meer omheen
 
-- Grootste websites
-    - webdev => jouw apps zullen op Linux draaien
-    - e-business: Drupal
+- Linux is hét server-OS
+    - Grootste websites draaien op Linux
+    - Ruim aanbod bij cloud-providers
 - MacOS X
     - Ook UNIX (BSD)
     - Bash-shell + commando's
+
+---
+
+- Desktop-systeem voor power users en it-professionals
+    - i.h.b. webdevs, security experts, ops
+
+![](assets/linux-desktop.jpeg)
 
 ---
 
@@ -55,8 +63,13 @@ date: 2023-2024
 
 ## Ook in de Windows-wereld
 
+Microsoft loves Linux!
+
+- Linux Kernel Project contributor
 - Azure cloud platform draait >50% Linux VMs
-- Microsoft loves Linux!
+    - <https://azure.microsoft.com/en-us/solutions/linux-on-azure>
+    - [Azure Linux](https://learn.microsoft.com/en-us/azure/azure-linux/intro-azure-linux) Container Host, eigen distro!
+- Windows Subsystem for Linux (WSL/WSL2)
 
 ---
 
@@ -65,9 +78,10 @@ date: 2023-2024
 ## De kracht van de CLI
 
 - Command line interface (CLI) is de sleutel tot **automatisering**
-    - Miljoenen servers beheren gaat niet via GUI
-    - Ook in Windows ziet men dit nu in (PowerShell)
+    - 100/1000/... servers/VMs beheren gaat niet via GUI
+    - Ook in Windows ziet men dit in (PowerShell)!
 - CLI Instructies zijn **bondiger** en makkelijker reproduceerbaar dan GUI instructies
+    - én te combineren in een script!
 
 ## Verloop contactmoment
 

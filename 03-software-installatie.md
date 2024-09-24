@@ -23,7 +23,7 @@ Wat is een distributie?
     - bijhorende bestanden (configuratie, man, ...)
     - informatie over waar deze bestanden terecht horen
     - eventuele afhankelijkheden van libraries of andere software
-    - = dependency (zie verder)
+    - =         dency (zie verder)
 - packages worden aangeboden op specifieke servers
     - repository servers
     - werken zoals 'Play Store' (of liever: omgekeerd)
@@ -67,7 +67,7 @@ Tool die een .deb package installeert op een systeem.
     $ dpkg -i <package_name>.deb
     ```
 
-3. Los eventuele depencencies manueel op (zie later)
+3. Los eventuele dependencies manueel op (zie later)
 
 ---
 
@@ -90,7 +90,9 @@ dpkg -I vim_2%3a8.1.2269-1ubuntu5.3_amd64.deb
  Package: vim
  Version: 2:8.1.2269-1ubuntu5.3
  Architecture: amd64
- Depends: vim-common (= 2:8.1.2269-1ubuntu5.3), vim-runtime (= 2:8.1.2269-1ubuntu5.3), libacl1 (>= 2.2.23), libc6 (>= 2.29), libcanberra0 (>= 0.2), libgpm2 (>= 1.20.7), libpython3.8 (>= 3.8.2), libselinux1 (>= 1.32), libtinfo6 (>= 6)
+ Depends: vim-common (= 2:8.1.2269-1ubuntu5.3), vim-runtime (= 2:8.1.2269-1ubuntu5.3), 
+ libacl1 (>= 2.2.23), libc6 (>= 2.29), libcanberra0 (>= 0.2), 
+ libgpm2 (>= 1.20.7), libpython3.8 (>= 3.8.2), libselinux1 (>= 1.32), libtinfo6 (>= 6)
 ```
 
 ## Debian apt
@@ -99,7 +101,7 @@ APT = Advanced Package Tool
 
 1. Zoek een package op de (aanvaarde) repository servers 
 2. download de .deb package (automatisch)
-3. controlleer depencencies, download eventuele extra packages
+3. controlleer dependencies, download eventuele extra packages
 4. installeert (achterliggend) met dpkg
 
 ```bash

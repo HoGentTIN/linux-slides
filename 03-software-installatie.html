@@ -128,7 +128,7 @@ Vreckem</p>
 <li>bijhorende bestanden (configuratie, man, …)</li>
 <li>informatie over waar deze bestanden terecht horen</li>
 <li>eventuele afhankelijkheden van libraries of andere software</li>
-<li>= dependency (zie verder)</li>
+<li>= dency (zie verder)</li>
 </ul></li>
 <li>packages worden aangeboden op specifieke servers
 <ul>
@@ -180,7 +180,7 @@ Linux</p>
 <li><p>installeer met dpkg</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> dpkg <span class="at">-i</span> <span class="op">&lt;</span>package_name<span class="op">&gt;</span>.deb</span></code></pre></div></li>
-<li><p>Los eventuele depencencies manueel op (zie later)</p></li>
+<li><p>Los eventuele dependencies manueel op (zie later)</p></li>
 </ol>
 </section>
 <section class="slide level2">
@@ -202,7 +202,9 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a> <span class="ex">Package:</span> vim</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a> <span class="ex">Version:</span> 2:8.1.2269-1ubuntu5.3</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a> <span class="ex">Architecture:</span> amd64</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">Depends:</span> vim-common <span class="er">(</span><span class="ex">=</span> 2:8.1.2269-1ubuntu5.3<span class="kw">)</span><span class="ex">,</span> vim-runtime <span class="er">(</span><span class="ex">=</span> 2:8.1.2269-1ubuntu5.3<span class="kw">)</span><span class="ex">,</span> libacl1 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">2.2.23</span><span class="kw">)</span><span class="ex">,</span> libc6 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">2.29</span><span class="kw">)</span><span class="ex">,</span> libcanberra0 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">0.2</span><span class="kw">)</span><span class="ex">,</span> libgpm2 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">1.20.7</span><span class="kw">)</span><span class="ex">,</span> libpython3.8 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">3.8.2</span><span class="kw">)</span><span class="ex">,</span> libselinux1 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">1.32</span><span class="kw">)</span><span class="ex">,</span> libtinfo6 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">6</span><span class="kw">)</span></span></code></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a> <span class="ex">Depends:</span> vim-common <span class="er">(</span><span class="ex">=</span> 2:8.1.2269-1ubuntu5.3<span class="kw">)</span><span class="ex">,</span> vim-runtime <span class="er">(</span><span class="ex">=</span> 2:8.1.2269-1ubuntu5.3<span class="kw">)</span><span class="ex">,</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a> <span class="ex">libacl1</span> <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">2.2.23</span><span class="kw">)</span><span class="ex">,</span> libc6 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">2.29</span><span class="kw">)</span><span class="ex">,</span> libcanberra0 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">0.2</span><span class="kw">)</span><span class="ex">,</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a> <span class="ex">libgpm2</span> <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">1.20.7</span><span class="kw">)</span><span class="ex">,</span> libpython3.8 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">3.8.2</span><span class="kw">)</span><span class="ex">,</span> libselinux1 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">1.32</span><span class="kw">)</span><span class="ex">,</span> libtinfo6 <span class="er">(</span><span class="op">&gt;</span>= <span class="ex">6</span><span class="kw">)</span></span></code></pre></div>
 </section>
 <section id="debian-apt" class="slide level2">
 <h2>Debian apt</h2>
@@ -210,7 +212,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <ol type="1">
 <li>Zoek een package op de (aanvaarde) repository servers</li>
 <li>download de .deb package (automatisch)</li>
-<li>controlleer depencencies, download eventuele extra packages</li>
+<li>controlleer dependencies, download eventuele extra packages</li>
 <li>installeert (achterliggend) met dpkg</li>
 </ol>
 <div class="sourceCode" id="cb4"><pre

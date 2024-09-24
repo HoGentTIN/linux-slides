@@ -23,7 +23,7 @@ Wat is een distributie?
     - bijhorende bestanden (configuratie, man, ...)
     - informatie over waar deze bestanden terecht horen
     - eventuele afhankelijkheden van libraries of andere software
-    - =         dency (zie verder)
+    - = dependency (zie verder)
 - packages worden aangeboden op specifieke servers
     - repository servers
     - werken zoals 'Play Store' (of liever: omgekeerd)
@@ -101,7 +101,7 @@ APT = Advanced Package Tool
 
 1. Zoek een package op de (aanvaarde) repository servers 
 2. download de .deb package (automatisch)
-3. controlleer dependencies, download eventuele extra packages
+3. controleer dependencies, download eventuele extra packages
 4. installeert (achterliggend) met dpkg
 
 ```bash

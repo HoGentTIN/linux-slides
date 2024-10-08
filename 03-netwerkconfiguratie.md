@@ -87,7 +87,6 @@ $ sudo systemctl restart network
 Vanaf RHEL 9:
 
 ```console
-$ sudo systemctl restart NetworkManager
 $ sudo nmcli device reapply eth1
 ```
 
@@ -113,11 +112,16 @@ Zie opgave labo 3.4
 - `systemctl status dhcpd`
 - `sudo systemctl restart dhcpd`
     - Na elke wijziging config!
-- `sudo systemctl enable dhcpd`
+- `sudo systemctl enable [--now] dhcpd`
     - Start altijd bij booten
+    - `--now` start meteen
 
 ## Sluit de Linux-Mint VM aan op intnet
 
+- Vang netwerkverkeer op met `tcpdump`, bv.
+    - `sudo tcpdump -w dhcp.pcap -i eth1 port 67 or port 68`
+    - `sudo tcpdump -r dhcp.pcap -ne#`
+    - Open het bestand met Wireshark
 - Krijgt je VM een IP-adres? welk?
 - Zie je iets in de DHCP logs?
     - Doe: `sudo journalctl -f -u dhcpd.service`

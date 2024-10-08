@@ -186,8 +186,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="
 <p>Na aanpassingen, netwerk herstarten (RHEL &lt;=8):</p>
 <pre class="console"><code>$ sudo systemctl restart network</code></pre>
 <p>Vanaf RHEL 9:</p>
-<pre class="console"><code>$ sudo systemctl restart NetworkManager
-$ sudo nmcli device reapply eth1</code></pre>
+<pre class="console"><code>$ sudo nmcli device reapply eth1</code></pre>
 <p>Bemerk: er is een overgang naar het uitfaseren van het gebruik van
 <code>ifcfg</code> bestanden, en dit te vervangen door
 <code>nmcli</code>. Hierdoor zal je nog geruime tijd beide systemen
@@ -221,15 +220,22 @@ moeten begrijpen!</p>
 <ul>
 <li>Na elke wijziging config!</li>
 </ul></li>
-<li><code>sudo systemctl enable dhcpd</code>
+<li><code>sudo systemctl enable [--now] dhcpd</code>
 <ul>
 <li>Start altijd bij booten</li>
+<li><code>--now</code> start meteen</li>
 </ul></li>
 </ul>
 </section>
 <section id="sluit-de-linux-mint-vm-aan-op-intnet" class="slide level2">
 <h2>Sluit de Linux-Mint VM aan op intnet</h2>
 <ul>
+<li>Vang netwerkverkeer op met <code>tcpdump</code>, bv.
+<ul>
+<li><code>sudo tcpdump -w dhcp.pcap -i eth1 port 67 or port 68</code></li>
+<li><code>sudo tcpdump -r dhcp.pcap -ne#</code></li>
+<li>Open het bestand met Wireshark</li>
+</ul></li>
 <li>Krijgt je VM een IP-adres? welk?</li>
 <li>Zie je iets in de DHCP logs?
 <ul>

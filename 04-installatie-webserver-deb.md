@@ -21,10 +21,10 @@ $ sudo apt install apache2 mariadb-server php
 ## Belangrijke directories
 
 - `/etc/apache2/`: configuratie Apache
-    - `/etc/httpd/apache2.conf`
-    - `/etc/httpd/conf-enabled/*.conf`
-    - `/etc/httpd/mods-enabled/*.conf`
-    - `/etc/httpd/sites-enabled/*.conf`
+    - `/etc/apache2/apache2.conf`
+    - `/etc/apache2/conf-enabled/*.conf`
+    - `/etc/apache2/mods-enabled/*.conf`
+    - `/etc/apache2/sites-enabled/*.conf`
 - `/var/www/html/`: Apache DocumentRoot
 - `/var/log/apache2/`: logbestanden
     - `access.log`

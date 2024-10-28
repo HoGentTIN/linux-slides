@@ -373,13 +373,13 @@ class="uri">https://stedolan.github.io/jq/manual/</a></li>
 </section>
 <section id="jq-als-pretty-printer" class="slide level2">
 <h2>jq als “pretty printer”</h2>
-<pre class="console"><code>curl -s &#39;https://api.github.com/repos/stedolan/jq/commits?per_page=5&#39; | jq</code></pre>
+<pre class="console"><code>curl -s &#39;https://api.github.com/repositories/5101141/commits?per_page=5&#39; | jq</code></pre>
 <p>of: <code>jq '.'</code> (met <code>.</code> de <em>identity
 operator</em>)</p>
 </section>
 <section id="toon-enkel-eerste-element" class="slide level2">
 <h2>Toon enkel eerste element</h2>
-<pre class="console"><code>curl -s &#39;https://api.github.com/repos/stedolan/jq/commits?per_page=5&#39; | jq &#39;.[0]&#39;</code></pre>
+<pre class="console"><code>curl -s &#39;https://api.github.com/repositories/5101141/commits?per_page=5&#39; | jq &#39;.[0]&#39;</code></pre>
 <p>(in de volgende voorbeelden: enkel het <code>jq</code>-commando)</p>
 </section>
 <section id="toon-enkel-specifieke-velden" class="slide level2">

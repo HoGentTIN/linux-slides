@@ -212,7 +212,7 @@ END {
 ## jq als "pretty printer"
 
 ```console
-curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq
+curl -s 'https://api.github.com/repositories/5101141/commits?per_page=5' | jq
 ```
 
 of: `jq '.'` (met `.` de *identity operator*)
@@ -220,7 +220,7 @@ of: `jq '.'` (met `.` de *identity operator*)
 ## Toon enkel eerste element
 
 ```console
-curl -s 'https://api.github.com/repos/stedolan/jq/commits?per_page=5' | jq '.[0]'
+curl -s 'https://api.github.com/repositories/5101141/commits?per_page=5' | jq '.[0]'
 ```
 
 (in de volgende voorbeelden: enkel het `jq`-commando)

@@ -153,11 +153,9 @@ Much more options in the man-page!
 ## Website vanaf GUI Linux VM bekijken
 
 - Controleer IP-adres VM: `ip a`
-    - waarschijnlijk 192.168.76.2
+    - waarschijnlijk 192.168.76.12
 		- verifieer dat je GUI Linux VM een IP-adres in dit netwerk heeft
 		- ping ?!
-- Open webbrowser *op fysiek systeem*
-    - surf naar <http://192.168.76.2/>
 
 ## Database beveiligen
 

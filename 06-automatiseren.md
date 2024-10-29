@@ -45,7 +45,7 @@ Opbouw in de opleiding:
 
 Op je fysieke systeem!
 
-- Windows: `choco install vagrant`
+- Windows: `winget install vagrant`
 - MacOS: `brew install vagrant`
 - Linux: `apt install vagrant` (of `dnf`)
 

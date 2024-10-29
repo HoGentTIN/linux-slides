@@ -19,7 +19,7 @@ $ sudo firewall-cmd --reload
 
 Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.
 
-<https://192.168.76.2/>
+<https://192.168.76.12/>
 
 ## Zones
 

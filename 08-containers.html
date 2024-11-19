@@ -157,97 +157,62 @@ class="uri">https://www.redhat.com/en/topics/containers/containers-vs-vms</a></p
 </ul></li>
 <li>… we gaan het doen met een VirtualBox VM
 <ul>
-<li>Installatie geautomatiseerd met Vagrant</li>
+<li>Installatie geautomatiseerd via script</li>
 </ul></li>
 </ul>
 </section>
-<section id="lokale-labo-omgeving" class="slide level2">
-<h2>Lokale labo-omgeving</h2>
+<section id="installeer-en-start-docker" class="slide level2">
+<h2>Installeer en start Docker</h2>
 <ul>
-<li>Installeer Vagrant
-<ul>
-<li><a href="https://developer.hashicorp.com/vagrant/downloads"
-class="uri">https://developer.hashicorp.com/vagrant/downloads</a></li>
-<li><code>winget install Hashicorp.Vagrant</code>,
-<code>brew install...</code>, etc</li>
-</ul></li>
-<li>Zorg dat je een lokale kopie hebt van je Github-repo op je fysieke
-systeem</li>
-<li>Open terminal, ga naar subdirectory <code>dockerlab/</code></li>
+<li>Open terminal, ga naar subdirectory <code>dockerlab/</code> binnen
+je repository.</li>
+<li>Voer het script <code>install-docker.sh</code> uit als root.</li>
 </ul>
-</section>
-<section id="start-de-docker-vm-op" class="slide level2">
-<h2>Start de Docker-VM op</h2>
-<pre class="console"><code>$ cd dockerlab
-$ vagrant status
-Current machine states:
+<!-- ## Installeer en start Docker
 
-dockerlab                 not created (virtualbox)
+```console
+$ cd dockerlab
+$ sudo ./install-docker.sh
+``` -->
+<!-- ## Foutmelding?
 
-$ vagrant up</code></pre>
-</section>
-<section id="foutmelding" class="slide level2">
-<h2>Foutmelding?</h2>
-<pre class="console"><code>vm.rb:326:in `network&#39;: wrong number of arguments (given 2, expected 1) (ArgumentError)</code></pre>
-<p>Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:</p>
-<div class="sourceCode" id="cb3"><pre
-class="sourceCode ruby"><code class="sourceCode ruby"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>node<span class="at">.vm.network</span> <span class="wa">:private_network</span>, <span class="kw">**</span>network_options(host)</span></code></pre></div>
-<p>(sterretjes toevoegen)</p>
-<p>Zie ook <a
-href="https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143"
-class="uri">https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143</a></p>
-</section>
-<section id="op-het-einde-van-het-labo" class="slide level2">
-<h2>Op het einde van het labo:</h2>
-<pre class="console"><code>$ vagrant halt</code></pre>
-<table>
-<thead>
-<tr class="header">
-<th style="text-align: left;">Taak</th>
-<th style="text-align: left;">Commando</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td style="text-align: left;">Overzicht Vagrant-omgeving</td>
-<td style="text-align: left;"><code>vagrant status</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">VM aanmaken/Opstarten</td>
-<td style="text-align: left;"><code>vagrant up</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">VM Afsluiten</td>
-<td style="text-align: left;"><code>vagrant halt</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Herstarten</td>
-<td style="text-align: left;"><code>vagrant reload</code></td>
-</tr>
-<tr class="odd">
-<td style="text-align: left;">Inloggen</td>
-<td style="text-align: left;"><code>vagrant ssh</code></td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">VM vernietigen</td>
-<td style="text-align: left;"><code>vagrant destroy</code></td>
-</tr>
-</tbody>
-</table>
-</section>
-<section id="docker-vm" class="slide level2">
-<h2>Docker-VM</h2>
-<ul>
-<li>Ubuntu 20.04 LTS</li>
-<li>4GiB RAM</li>
-<li>Geïnstalleerde software:
-<ul>
-<li>Docker, Docker-compose</li>
-<li>Portainer</li>
-<li>Nuttige commando’s</li>
-</ul></li>
-<li>Bash aliases</li>
-</ul>
+```console
+vm.rb:326:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
+```
+
+Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:
+
+```ruby
+node.vm.network :private_network, **network_options(host)
+```
+
+(sterretjes toevoegen)
+
+Zie ook <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143>
+
+## Op het einde van het labo:
+
+```console
+$ vagrant halt
+```
+
+| Taak                       | Commando          |
+| :------------------------- | :---------------- |
+| Overzicht Vagrant-omgeving | `vagrant status`  |
+| VM aanmaken/Opstarten      | `vagrant up`      |
+| VM Afsluiten               | `vagrant halt`    |
+| Herstarten                 | `vagrant reload`  |
+| Inloggen                   | `vagrant ssh`     |
+| VM vernietigen             | `vagrant destroy` | -->
+<!-- ## Docker-VM
+
+- Ubuntu 20.04 LTS
+- 4GiB RAM
+- Geïnstalleerde software:
+    - Docker, Docker-compose
+    - Portainer
+    - Nuttige commando's
+- Bash aliases -->
 </section>
 <section id="aan-de-slag" class="slide level2">
 <h2>Aan de slag!</h2>
@@ -294,18 +259,18 @@ docker volume prune</code></pre>
 <section id="custom-images" class="slide level2">
 <h2>Custom images</h2>
 <p>Voorbeeld Dockerfile:</p>
-<div class="sourceCode" id="cb9"><pre
-class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> alpine:latest</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="kw">LABEL</span> description=<span class="st">&quot;This example Dockerfile installs NGINX.&quot;</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">apk</span> add <span class="at">--update</span> nginx <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">rm</span> <span class="at">-rf</span> /var/cache/apk/<span class="pp">*</span> <span class="kw">&amp;&amp;</span> <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mkdir</span> <span class="at">-p</span> /tmp/nginx/</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/nginx.conf /etc/nginx/nginx.conf</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> files/default.conf /etc/nginx/conf.d/default.conf</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="kw">ADD</span> files/site-contents.tar.bz2 /usr/share/nginx/</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="kw">EXPOSE</span> 80/tcp</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="kw">ENTRYPOINT</span> [<span class="st">&quot;nginx&quot;</span>]</span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [<span class="st">&quot;-g&quot;</span>, <span class="st">&quot;daemon off;&quot;</span>]</span></code></pre></div>
 </section>
 <section id="custom-images-1" class="slide level2">
 <h2>Custom images</h2>

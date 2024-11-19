@@ -42,29 +42,21 @@ Solomon Hykes @ PyCon 2013
 - Je zou het labo met Docker Desktop kunnen doen, maar...
     - Gebaseerd op Hyper-V + Windows Subsystem for Linux
 - ... we gaan het doen met een VirtualBox VM
-    - Installatie geautomatiseerd met Vagrant
+    - Installatie geautomatiseerd via script
 
-## Lokale labo-omgeving
+## Installeer en start Docker
 
-- Installeer Vagrant
-    - <https://developer.hashicorp.com/vagrant/downloads>
-    - `winget install Hashicorp.Vagrant`, `brew install...`, etc
-- Zorg dat je een lokale kopie hebt van je Github-repo op je fysieke systeem
-- Open terminal, ga naar subdirectory `dockerlab/`
+- Open terminal, ga naar subdirectory `dockerlab/` binnen je repository.
+- Voer het script `install-docker.sh` uit als root.
 
-## Start de Docker-VM op
+<!-- ## Installeer en start Docker
 
 ```console
 $ cd dockerlab
-$ vagrant status
-Current machine states:
+$ sudo ./install-docker.sh
+``` -->
 
-dockerlab                 not created (virtualbox)
-
-$ vagrant up
-```
-
-## Foutmelding?
+<!-- ## Foutmelding?
 
 ```console
 vm.rb:326:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
@@ -93,9 +85,9 @@ $ vagrant halt
 | VM Afsluiten               | `vagrant halt`    |
 | Herstarten                 | `vagrant reload`  |
 | Inloggen                   | `vagrant ssh`     |
-| VM vernietigen             | `vagrant destroy` |
+| VM vernietigen             | `vagrant destroy` | -->
 
-## Docker-VM
+<!-- ## Docker-VM
 
 - Ubuntu 20.04 LTS
 - 4GiB RAM
@@ -103,7 +95,7 @@ $ vagrant halt
     - Docker, Docker-compose
     - Portainer
     - Nuttige commando's
-- Bash aliases
+- Bash aliases -->
 
 ## Aan de slag!
 

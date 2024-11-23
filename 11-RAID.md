@@ -20,7 +20,7 @@ date: 2024-2025
 
 ## RAID 1 - Mirroring
 
-![RAID 1](assets/raid-1-mirroring.gif)
+![RAID 1](assets/raid-1-mirroring.png)
 
 - Safe against HW failure
 - COMPLETELY unsafe against theft
@@ -94,7 +94,7 @@ block2a:    1010 1011
 
 ## RAID 10 - Mirroring + striping
 
-![RAID 10](assets/raid-10.gif)
+![RAID 10](assets/raid-10.png)
 
 - Is RAID 1 (mirroring) combined with RAID 0 (striping)
 - At least 4 disks needed

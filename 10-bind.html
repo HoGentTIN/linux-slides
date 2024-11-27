@@ -421,7 +421,7 @@ server!</li>
 <pre class="text"><code>$ORIGIN example.com.
 $TTL 1W
 
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA n1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 
        IN  NS     ns1
@@ -437,7 +437,7 @@ www    IN  CNAME  web
 
 mail   IN  A      192.0.2.20
 smtp   IN  CNAME  mail
-imap   IN  CNAME  smtp</code></pre>
+imap   IN  CNAME  mail</code></pre>
 </section>
 <section id="resource-records-rrs" class="slide level2">
 <h2>Resource records (RRs)</h2>
@@ -461,10 +461,10 @@ www    IN  CNAME  web</code></pre>
 </section>
 <section id="start-of-authority" class="slide level2">
 <h2>Start of Authority</h2>
-<pre class="text"><code>@ IN SOA ns.example.com. hostmaster.example.com. (
+<pre class="text"><code>@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )</code></pre>
 <ul>
-<li><code>srv.example.com.</code>: primaire DNS-server</li>
+<li><code>ns1.example.com.</code>: primaire DNS-server</li>
 <li><code>hostmaster.example.com.</code>: email adres v/d sysadmin
 <ul>
 <li><code>hostmaster@example.com</code></li>
@@ -478,7 +478,7 @@ www    IN  CNAME  web</code></pre>
 </section>
 <section id="start-of-authority-timeouts" class="slide level2">
 <h2>Start of Authority: timeouts</h2>
-<pre class="text"><code>@ IN SOA ns.example.com. hostmaster.example.com. (
+<pre class="text"><code>@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )</code></pre>
 <ul>
 <li><code>1D</code>: waneer zal secundaire ns proberen de zone te
@@ -554,7 +554,7 @@ class="uri">http://www.zytrax.com/books/dns/ch8/soa.html</a></p>
 <pre class="text"><code>$TTL 1W
 $ORIGIN 2.0.192.in-addr.arpa.
 
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 
        IN  NS     ns1.example.com.

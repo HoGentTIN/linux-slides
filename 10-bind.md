@@ -251,7 +251,7 @@ zone "example.com" IN {
 $ORIGIN example.com.
 $TTL 1W
 
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA n1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 
        IN  NS     ns1
@@ -267,7 +267,7 @@ www    IN  CNAME  web
 
 mail   IN  A      192.0.2.20
 smtp   IN  CNAME  mail
-imap   IN  CNAME  smtp
+imap   IN  CNAME  mail
 ```
 
 ## Resource records (RRs)
@@ -293,11 +293,11 @@ www    IN  CNAME  web
 ## Start of Authority
 
 ```text
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 ```
 
-- `srv.example.com.`: primaire DNS-server
+- `ns1.example.com.`: primaire DNS-server
 - `hostmaster.example.com.`: email adres v/d sysadmin
     - `hostmaster@example.com`
 - `21120120`: serial
@@ -306,7 +306,7 @@ www    IN  CNAME  web
 ## Start of Authority: timeouts
 
 ```text
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 ```
 
@@ -369,7 +369,7 @@ Resutaat: `2.0.192.in-addr.arpa.`
 $TTL 1W
 $ORIGIN 2.0.192.in-addr.arpa.
 
-@ IN SOA ns.example.com. hostmaster.example.com. (
+@ IN SOA ns1.example.com. hostmaster.example.com. (
   21120117 1D 1H 1W 1D )
 
        IN  NS     ns1.example.com.

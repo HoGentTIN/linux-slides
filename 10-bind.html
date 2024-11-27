@@ -409,7 +409,7 @@ server!</li>
 <h2>Configuratie zone:</h2>
 <p>Forward lookup zone voor <em>example.com</em></p>
 <pre class="text"><code>zone &quot;example.com&quot; IN {
-  type master;
+  type primary;
   file &quot;example.com&quot;;
   notify yes;
   allow-update { none; };
@@ -532,7 +532,7 @@ class="uri">http://www.zytrax.com/books/dns/ch8/soa.html</a></p>
 <section id="reverse-lookup-zone" class="slide level2">
 <h2>Reverse lookup zone</h2>
 <pre class="text"><code>zone &quot;2.0.192.in-addr.arpa&quot; IN {
-  type master;
+  type primary;
   file &quot;2.0.192.in-addr.arpa&quot;;
   notify yes;
   allow-update { none; };

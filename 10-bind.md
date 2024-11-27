@@ -236,7 +236,7 @@ Forward lookup zone voor *example.com*
 
 ```text
 zone "example.com" IN {
-  type master;
+  type primary;
   file "example.com";
   notify yes;
   allow-update { none; };
@@ -345,7 +345,7 @@ Ook combinaties, bv. `2H30M`
 
 ```text
 zone "2.0.192.in-addr.arpa" IN {
-  type master;
+  type primary;
   file "2.0.192.in-addr.arpa";
   notify yes;
   allow-update { none; };

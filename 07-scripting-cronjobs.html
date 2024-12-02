@@ -283,12 +283,12 @@ class="title-slide slide level1">
 <section id="processen-op-de-achtergrond" class="slide level2">
 <h2>Processen op de achtergrond</h2>
 <p>Probeer dit:</p>
-<pre class="console"><code>$ vi test.txt
+<pre class="console"><code>$ sleep 60
 Ctrl+Z
 
-[1]+  Stopped                 gvim -v test.txt
+[1]+  Stopped                 sleep 60
 $ bg
-[1]+ sleep 30 &amp;
+[1]+ sleep 60 &amp;
 
 $ find / -type f &gt; all-files.txt 2&gt;&amp;1 &amp;
 [2] 4321</code></pre>

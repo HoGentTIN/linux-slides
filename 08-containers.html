@@ -218,9 +218,8 @@ $ vagrant halt
 <h2>Aan de slag!</h2>
 <ul>
 <li>Open de labo-opdracht (dockerlab/assignment.md)</li>
-<li>Open een browsertabblad en surf naar <a
-href="http://192.168.56.20:9000"
-class="uri">http://192.168.56.20:9000</a> (Portainer UI)</li>
+<li>Open een browsertabblad en surf naar <a href="http://localhost:9000"
+class="uri">http://localhost:9000</a> (Portainer UI)</li>
 <li>Volg de stappen in de opgave!</li>
 </ul>
 </section></section>
@@ -286,8 +285,14 @@ docker image history</code></pre>
 </section>
 <section id="docker-compose" class="slide level2">
 <h2>Docker-compose</h2>
-<pre class="console"><code>edit docker-compose.yml
-docker-compose up -d</code></pre>
+<ul>
+<li>Download <a
+href="https://github.com/docker/getting-started-app">docker/getting-started-app</a>
+repo as .ZIP</li>
+<li>extract in <code>dockerlab/labs/</code></li>
+<li>follow instructions in lab assignment</li>
+</ul>
+<pre class="console"><code>docker-compose up -d</code></pre>
 <p>Voorbeeld:
 <code>dockerlab/labs/todo-app/docker-compose.yml</code></p>
 </section></section>

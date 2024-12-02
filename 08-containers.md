@@ -100,7 +100,7 @@ $ vagrant halt
 ## Aan de slag!
 
 - Open de labo-opdracht (dockerlab/assignment.md)
-- Open een browsertabblad en surf naar <http://192.168.56.20:9000> (Portainer UI)
+- Open een browsertabblad en surf naar <http://localhost:9000> (Portainer UI)
 - Volg de stappen in de opgave!
 
 # Belangrijke competenties
@@ -176,8 +176,11 @@ docker image history
 
 ## Docker-compose
 
+- Download [docker/getting-started-app](https://github.com/docker/getting-started-app) repo as .ZIP
+- extract in `dockerlab/labs/`
+- follow instructions in lab assignment
+
 ```console
-edit docker-compose.yml
 docker-compose up -d
 ```
 

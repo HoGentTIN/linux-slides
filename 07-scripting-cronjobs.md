@@ -183,12 +183,12 @@ esac
 Probeer dit:
 
 ```console
-$ vi test.txt
+$ sleep 60
 Ctrl+Z
 
-[1]+  Stopped                 gvim -v test.txt
+[1]+  Stopped                 sleep 60
 $ bg
-[1]+ sleep 30 &
+[1]+ sleep 60 &
 
 $ find / -type f > all-files.txt 2>&1 &
 [2] 4321

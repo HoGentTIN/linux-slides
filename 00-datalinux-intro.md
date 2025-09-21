@@ -9,10 +9,10 @@ date: 2025-2026
 
 ## Lectoren
 
-- Thomas Parmentier (titularis, Gent, Aalst+VC, TIAO)
-- Bert Van Vreckem (Gent)
+- Bert Van Vreckem (titularis, Gent, Aalst+VC, TIAO)
+- Jan Willem (Gent)
 
-Contactinfo - zie verder/studiewijzer
+Contactinfo - zie studiewijzer
 
 # Plaats in het curriculum
 
@@ -68,7 +68,7 @@ Contactinfo - zie verder/studiewijzer
 
 - Command line interface (CLI) is de sleutel tot **automatisering**
     - Miljoenen servers beheren gaat niet via GUI
-    - Ook in Windows ziet men dit nu in (PowerShell)
+    - Ook in Windows heeft men dit ingezien (PowerShell)
 - CLI Instructies zijn **bondiger** en makkelijker reproduceerbaar dan GUI instructies
 
 ## Waarom Linux for Data Scientists?
@@ -95,8 +95,9 @@ Contactinfo - zie verder/studiewijzer
 ## Leermateriaal op Chamilo
 
 - Leerpad
-- Cobbaut (2015) *Linux Fundamentals*
-- Labo-opgave (Github-repo)
+- Cursus *Linux for Data Scientists*
+- Slides
+- Github-repo met labo-opgaven
 
 ## Software
 
@@ -113,8 +114,16 @@ Contactinfo - zie verder/studiewijzer
 
 ## Dagonderwijs, virtuele campus
 
+Linux for Data Scientists
+
 - 3 lesuur / week
 - 4 studiepunten
+- equivalente hoeveelheid voor- en nawerk thuis
+
+Linux & Data Processing Automation
+
+- 2 lesuur / week
+- 3 studiepunten
 - equivalente hoeveelheid voor- en nawerk thuis
 
 ## Verloop contactmoment
@@ -134,7 +143,9 @@ Contactinfo - zie verder/studiewijzer
 ## Afstandsleren (TIAO)
 
 - Op eigen tempo, ahv studiemateriaal
-- Zie ook Studiewijzer - Studiebegeleiding
+- Zie ook Studiewijzer
+    - Studiebegeleiding
+    - Extra info voor TIAO
 
 # Werk- en leeraanwijzingen
 
@@ -153,13 +164,19 @@ Contactinfo - zie verder/studiewijzer
 
 # Evaluatie
 
-## Evaluatie - studiefiche
+## Linux for Data Scientists
 
 - 70% Vaardigheidstest binnen examenrooster
     - 30% Schriftelijk examen in ans (op PC)
     - 40% Scripting-opdracht (op PC)
 - 30% Portfolio met mondelinge verdediging
     - Opdracht: automatiseren van een data-workflow
+
+## Linux & Data Processing Automation
+
+- 100% Vaardigheidstest binnen examenrooster
+    - 40% Schriftelijk examen in ans (op PC)
+    - 60% Scripting-opdracht (op PC)
 
 # Studiebegeleiding
 

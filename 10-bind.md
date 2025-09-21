@@ -1,8 +1,8 @@
 ---
 title: "10. DNS met BIND"
 subtitle: "Linux<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2024-2025
+author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
+date: 2025-2026
 ---
 
 # DNS-server met BIND

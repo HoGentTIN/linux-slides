@@ -1,8 +1,8 @@
 ---
 title: "4.1. Installatie van een webserver (Debian)"
 subtitle: "Linux for Data Scientists<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2024-2025
+author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
+date: 2025-2026
 ---
 
 # Webserver installatie

@@ -1,8 +1,8 @@
 ---
 title: "0. Linux for Data Scientists: intro"
 subtitle: "HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem
-date: 2024-2025
+author: Andy Van Maele, Bert Van Vreckem, Jan Willem
+date: 2025-2026
 ---
 
 # Studiewijzer

@@ -9,8 +9,8 @@ date: 2025-2026
 
 ## Lectoren
 
-- Andy Van Maele (vaktitularis, Gent)
-- Bert Van Vreckem (Gent, Aalst, TIAO)
+- Andy Van Maele (vaktitularis, Gent, TIAO)
+- Bert Van Vreckem (Gent, Aalst)
 
 ## Studiemethode
 
@@ -21,10 +21,11 @@ date: 2025-2026
 ## Linux flavour
 
 - Debian or Red Hat?
-- Linux Mint als GUI-Linux VM
+- Debian 13 als GUI-Linux VM
     - Download ova file
+    - zowel amd64 als arm
     - import & get started
-- Later: AlmaLinux (zonder GUI)
+- Later: AlmaLinux (zonder GUI, RedHat style)
 
 # Intro
 
@@ -59,7 +60,8 @@ date: 2025-2026
 
 ---
 
-> Ik wil me specialiseren in Windows. Linux interesseert mij niet
+> Ik wil me specialiseren in Windows.
+> Linux interesseert mij niet
 
 ## Ook in de Windows-wereld
 
@@ -74,6 +76,8 @@ Microsoft loves Linux!
 ---
 
 > The '70's called, they want their terminal back!
+
+![](assets/linux-gui.jpg)
 
 ## De kracht van de CLI
 
@@ -93,8 +97,10 @@ Microsoft loves Linux!
 
 ## Buiten contactmomenten
 
-- Bereid volgende sessie voor
-    - Leerpad: voorbereiding, achtergrondinfo, oefeningen met oplossingen
+- Bereid volgende sessie voor adhv leerpad:
+    - voorbereiding
+    - achtergrondinfo
+    - oefeningen met oplossingen
 - Werk verder aan labo's
 
 ---

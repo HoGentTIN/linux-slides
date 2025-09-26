@@ -31,7 +31,6 @@ $ curl icanhazip.com
 Try this:
 
 - `curl 'https://icanhazdadjoke.com/'`
-- `curl 'https://covid19.mathdro.id/api/countries/BE'`
 - `curl 'https://api.coinlore.net/api/ticker/?id=90'`
 - `curl 'https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d'`
 
@@ -125,9 +124,8 @@ Resultaat in te dienen/demonstreren (= 30% examencijfer)
 
 ## Voorbeelden open datasets
 
-- [Open Dataportaal stad Gent](https://data.stad.gent/)
 - [CO2-meter in lokaal B.4.037](https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d)
-- [Lijst van publieke REST APIs](https://documenter.getpostman.com/view/8854915/Szf7znEe) (Postman)
+- [Lijst van publieke REST APIs](https://www.postman.com/cs-demo/public-rest-apis/collection/tfzpqfc/public-rest-apis) (Postman)
 - [Public API's](https://github.com/public-apis/public-apis) (Github-repo)
 - [Free APIs for developers](https://rapidapi.com/collection/list-of-free-apis) (Rapid API)
 - [Big list of free and open APIs](https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/) (Ana Kravitz)

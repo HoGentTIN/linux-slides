@@ -153,7 +153,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2:</span> eth0: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0</span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span></code></pre></div>
-<p>Probeer dit ook op de Linux Mint VM. Overeenkomsten? Verschillen?</p>
+<p>Probeer dit ook op de Linux GUI VM. Overeenkomsten? Verschillen?</p>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>
@@ -164,7 +164,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 <li><code>eth1</code>/<code>enp0s8</code> = 2e VirtualBox adapter
 (intnet):
 <ul>
-<li>Linux Mint: 192.168.76.10/24</li>
+<li>GUI VM: 192.168.76.10/24</li>
 <li>AlmaLinux: 192.168.76.12/24</li>
 </ul></li>
 </ul>
@@ -226,9 +226,47 @@ moeten begrijpen!</p>
 <li><code>--now</code> start meteen</li>
 </ul></li>
 </ul>
+</section></section>
+<section>
+<section id="lets-install-kea" class="title-slide slide level1">
+<h1>Let’s install Kea!</h1>
+
 </section>
-<section id="sluit-de-linux-mint-vm-aan-op-intnet" class="slide level2">
-<h2>Sluit de Linux-Mint VM aan op intnet</h2>
+<section id="installatie-1" class="slide level2">
+<h2>Installatie</h2>
+<p>Zoek de naam van de package om ISC Kea te installeren!</p>
+</section>
+<section id="configuratie-1" class="slide level2">
+<h2>Configuratie</h2>
+<p>Zie <a
+href="https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/"
+class="uri">https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/</a></p>
+<ul>
+<li>Configbestand: <code>/etc/kea/kea-dhcp4.conf</code></li>
+<li>Zie voorbeeld:
+<code>/usr/share/doc/kea/examples/kea4/single-subnet.json</code></li>
+<li>Wat hebben we nodig voor onze opstelling?</li>
+</ul>
+</section>
+<section id="opstarten-systemctl-1" class="slide level2">
+<h2>Opstarten <code>systemctl</code></h2>
+<ul>
+<li><code>sudo systemctl start kea-dhcp4</code></li>
+<li><code>systemctl status kea-dhcp4</code></li>
+<li><code>sudo systemctl restart kea-dhcp4</code>
+<ul>
+<li>Na elke wijziging config!</li>
+</ul></li>
+<li><code>sudo systemctl enable [--now] kea-dhcp4</code></li>
+</ul>
+</section></section>
+<section>
+<section id="opstelling-testen" class="title-slide slide level1">
+<h1>Opstelling testen</h1>
+
+</section>
+<section id="sluit-de-gui-vm-aan-op-intnet" class="slide level2">
+<h2>Sluit de GUI VM aan op intnet</h2>
 <ul>
 <li>Vang netwerkverkeer op met <code>tcpdump</code>, bv.
 <ul>
@@ -239,7 +277,8 @@ moeten begrijpen!</p>
 <li>Krijgt je VM een IP-adres? welk?</li>
 <li>Zie je iets in de DHCP logs?
 <ul>
-<li>Doe: <code>sudo journalctl -f -u dhcpd.service</code></li>
+<li><code>sudo journalctl -f -u dhcpd.service</code></li>
+<li><code>sudo journalctl -f -u kea-dhcp4.service</code></li>
 </ul></li>
 <li>Kan je pingen tussen de VMs?</li>
 <li>Heb je Internet-toegang? Waarom (niet)?</li>

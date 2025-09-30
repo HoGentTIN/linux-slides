@@ -52,14 +52,14 @@ $ curl icanhazip.com
        valid_lft 85546sec preferred_lft 85546sec
 ```
 
-Probeer dit ook op de Linux Mint VM. Overeenkomsten? Verschillen?
+Probeer dit ook op de Linux GUI VM. Overeenkomsten? Verschillen?
 
 ## Netwerkinstellingen
 
 - `lo` (loopback): 127.0.0.1/8
 - `eth0`/`enp0s3` = 1e VirtualBox adapter (NAT): 10.0.2.15/24
 - `eth1`/`enp0s8` = 2e VirtualBox adapter (intnet):
-    - Linux Mint: 192.168.76.10/24
+    - GUI VM: 192.168.76.10/24
     - AlmaLinux: 192.168.76.12/24
 
 ## Netwerkinstellingen aanpassen (RedHat)
@@ -116,7 +116,31 @@ Zie opgave labo 3.4
     - Start altijd bij booten
     - `--now` start meteen
 
-## Sluit de Linux-Mint VM aan op intnet
+# Let's install Kea!
+
+## Installatie
+
+Zoek de naam van de package om ISC Kea te installeren!
+
+## Configuratie
+
+Zie <https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/>
+
+- Configbestand: `/etc/kea/kea-dhcp4.conf`
+- Zie voorbeeld: `/usr/share/doc/kea/examples/kea4/single-subnet.json`
+- Wat hebben we nodig voor onze opstelling?
+
+## Opstarten `systemctl`
+
+- `sudo systemctl start kea-dhcp4`
+- `systemctl status kea-dhcp4`
+- `sudo systemctl restart kea-dhcp4`
+  - Na elke wijziging config!
+- `sudo systemctl enable [--now] kea-dhcp4`
+
+# Opstelling testen
+
+## Sluit de GUI VM aan op intnet
 
 - Vang netwerkverkeer op met `tcpdump`, bv.
     - `sudo tcpdump -w dhcp.pcap -i eth1 port 67 or port 68`
@@ -124,7 +148,8 @@ Zie opgave labo 3.4
     - Open het bestand met Wireshark
 - Krijgt je VM een IP-adres? welk?
 - Zie je iets in de DHCP logs?
-    - Doe: `sudo journalctl -f -u dhcpd.service`
+    - `sudo journalctl -f -u dhcpd.service`
+    - `sudo journalctl -f -u kea-dhcp4.service`
 - Kan je pingen tussen de VMs?
 - Heb je Internet-toegang? Waarom (niet)?
 - Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden

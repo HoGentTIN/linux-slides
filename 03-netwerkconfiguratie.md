@@ -20,8 +20,8 @@ Om Internettoegang mogelijk te maken zijn er 3 instellingen nodig:
 1. IP-adress/netmask: `ip address` (`ip a`)
 2. Default gateway: `ip route` (`ip r`)
 3. DNS-server:
-    - EL: `cat /etc/resolv.conf`
-    - Debian, Fedora: `resolvectl dns`
+    - traditionally: `cat /etc/resolv.conf`
+    - `systemd-resolved`: `resolvectl dns`
 
 ## Wat is het IP-adres van...?
 
@@ -43,58 +43,106 @@ $ curl icanhazip.com
 (op de AlmaLinux VM, vóór uitvoeren van labo 3.4)
 
 ```bash
-[osboxes@almaserver] $ ip -4 a
+hogent@almaserver:~$ ip -4 a
 1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
     inet 127.0.0.1/8 scope host lo
        valid_lft forever preferred_lft forever
-2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0
-       valid_lft 85546sec preferred_lft 85546sec
+2: enp0s3: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    altname enx08002743cbc1
+    inet 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3
+       valid_lft 86250sec preferred_lft 86250sec
 ```
 
 Probeer dit ook op de Linux GUI VM. Overeenkomsten? Verschillen?
 
 ## Netwerkinstellingen
 
+Probeer ook:
+
+- `ip a show dev enp0s3`
+- `ip -br a`
+- `ip -6 a`
+- `ip link` of `ip l`
+- `ip route`, `ip -6 route`
+- `ip neigh` of `ip n`
+
+Tip: tab-completion werkt ook (mits installatie `bash-completion`)
+
+## Verwachte IP-adressen
+
+Voor deze opstelling:
+
 - `lo` (loopback): 127.0.0.1/8
 - `eth0`/`enp0s3` = 1e VirtualBox adapter (NAT): 10.0.2.15/24
 - `eth1`/`enp0s8` = 2e VirtualBox adapter (intnet):
     - GUI VM: 192.168.76.10/24
-    - AlmaLinux: 192.168.76.12/24
+    - AlmaLinux: 192.168.76.254/24
 
-## Netwerkinstellingen aanpassen (RedHat)
+## Netwerkconfiguratie opvragen (EL10)
 
-`/etc/sysconfig/network-scripts/ifcfg-<interface_name>`
+Met NetworkManager, via `nmcli`. Probeer:
+
+```console
+$ nmcli connection show
+$ nmcli -f ipv4 connection show enp0s3
+$ nmcli device status
+$ nmcli device show enp0s3
+$ nmcli -f IP4 device show enp0s3
+```
+
+## Vast IP-adres instellen (EL10)
+
+```console
+hogent@almaserver:~$ sudo nmcli connection modify enp0s8 ipv4.method static ipv4.addresses 192.168.76.254/24
+hogent@almaserver:~$ sudo nmcli connection up enp0s8 
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/6)
+hogent@almaserver:~$ ip -br -4 a show dev enp0s8
+enp0s8           UP             192.168.76.254/24
+```
+
+## Netwerkconfiguratie aanpassen (Debian 13)
+
+Configuratiebestand `/etc/network/interfaces`
+
+Voorbeeld met DHCP:
+
+```conf
+# DHCP
+allow-hotplug enp0s3
+iface enp0s3 inet dhcp
+iface enp0s3 inet6 auto
+pre-up sleep 2
+```
+
+## Netwerkconfiguratie aanpassen (Debian 13)
+
+Voorbeeld met vast IP-adres:
+
+```conf
+# Static
+allow-hotplug enp0s8
+iface enp0s8 inet static
+    address 192.168.76.13
+    netmask 255.255.255.0
+```
+
+## Wijzigingen toepassen (Debian 13):
 
 ```bash
-NM_CONTROLLED=yes
-BOOTPROTO=none
-ONBOOT=yes
-IPADDR=192.168.76.12
-NETMASK=255.255.255.0
-DEVICE=eth1
-PEERDNS=no
+sudo ifdown enp0s8; sudo ifup enp0s8
 ```
 
----
+of
 
-Na aanpassingen, netwerk herstarten (RHEL <=8):
-
-```console
-$ sudo systemctl restart network
+```bash
+sudo systemctl restart networking
 ```
 
-Vanaf RHEL 9:
-
-```console
-$ sudo nmcli device reapply eth1
-```
-
-Bemerk: er is een overgang naar het uitfaseren van het gebruik van `ifcfg` bestanden, en dit te vervangen door `nmcli`. Hierdoor zal je nog geruime tijd beide systemen moeten begrijpen!
-
-# Let's install DHCP!
+# Let's install ISC DHCP!
 
 ## Installatie
+
+Let op: kan niet op EL10!
 
 Zoek de naam van de package om ISC DHCP te installeren!
 
@@ -120,7 +168,8 @@ Zie opgave labo 3.4
 
 ## Installatie
 
-Zoek de naam van de package om ISC Kea te installeren!
+- Zoek de naam van de package om ISC Kea te installeren!
+- Installeer ook de documentatie-package!
 
 ## Configuratie
 
@@ -128,7 +177,7 @@ Zie <https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/>
 
 - Configbestand: `/etc/kea/kea-dhcp4.conf`
 - Zie voorbeeld: `/usr/share/doc/kea/examples/kea4/single-subnet.json`
-- Wat hebben we nodig voor onze opstelling?
+- Wat hebben we nodig voor onze opstelling? Pas aan!
 
 ## Opstarten `systemctl`
 
@@ -142,6 +191,7 @@ Zie <https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/>
 
 ## Sluit de GUI VM aan op intnet
 
+- Pas netwerkconfiguratie aan (automatisch via DHCP)
 - Vang netwerkverkeer op met `tcpdump`, bv.
     - `sudo tcpdump -w dhcp.pcap -i eth1 port 67 or port 68`
     - `sudo tcpdump -r dhcp.pcap -ne#`
@@ -153,3 +203,8 @@ Zie <https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/>
 - Kan je pingen tussen de VMs?
 - Heb je Internet-toegang? Waarom (niet)?
 - Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden worden
+
+## Volgende weken
+
+- Vanaf nu werken we meestal met meerdere VMs
+- Zorg ervoor dat je de opstelling snel kan reproduceren!

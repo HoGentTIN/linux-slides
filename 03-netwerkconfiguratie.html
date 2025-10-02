@@ -126,8 +126,8 @@ nodig:</p>
 <li>Default gateway: <code>ip route</code> (<code>ip r</code>)</li>
 <li>DNS-server:
 <ul>
-<li>EL: <code>cat /etc/resolv.conf</code></li>
-<li>Debian, Fedora: <code>resolvectl dns</code></li>
+<li>traditionally: <code>cat /etc/resolv.conf</code></li>
+<li><code>systemd-resolved</code>: <code>resolvectl dns</code></li>
 </ul></li>
 </ol>
 </section>
@@ -146,17 +146,33 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="
 <h2>Controleer eerst netwerkinstellingen</h2>
 <p>(op de AlmaLinux VM, vóór uitvoeren van labo 3.4)</p>
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">[osboxes@almaserver]</span> $ ip <span class="at">-4</span> a</span>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">hogent@almaserver:~$</span> ip <span class="at">-4</span> a</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="ex">1:</span> lo: <span class="op">&lt;</span>LOOPBACK,UP,LOWER_UP<span class="op">&gt;</span> mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 127.0.0.1/8 scope host lo</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> forever preferred_lft forever</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2:</span> eth0: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute eth0</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 85546sec preferred_lft 85546sec</span></code></pre></div>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="ex">2:</span> enp0s3: <span class="op">&lt;</span>BROADCAST,MULTICAST,UP,LOWER_UP<span class="op">&gt;</span> mtu 1500 qdisc fq_codel state UP group default qlen 1000</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="ex">altname</span> enx08002743cbc1</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="ex">inet</span> 10.0.2.15/24 brd 10.0.2.255 scope global dynamic noprefixroute enp0s3</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>       <span class="ex">valid_lft</span> 86250sec preferred_lft 86250sec</span></code></pre></div>
 <p>Probeer dit ook op de Linux GUI VM. Overeenkomsten? Verschillen?</p>
 </section>
 <section id="netwerkinstellingen" class="slide level2">
 <h2>Netwerkinstellingen</h2>
+<p>Probeer ook:</p>
+<ul>
+<li><code>ip a show dev enp0s3</code></li>
+<li><code>ip -br a</code></li>
+<li><code>ip -6 a</code></li>
+<li><code>ip link</code> of <code>ip l</code></li>
+<li><code>ip route</code>, <code>ip -6 route</code></li>
+<li><code>ip neigh</code> of <code>ip n</code></li>
+</ul>
+<p>Tip: tab-completion werkt ook (mits installatie
+<code>bash-completion</code>)</p>
+</section>
+<section id="verwachte-ip-adressen" class="slide level2">
+<h2>Verwachte IP-adressen</h2>
+<p>Voor deze opstelling:</p>
 <ul>
 <li><code>lo</code> (loopback): 127.0.0.1/8</li>
 <li><code>eth0</code>/<code>enp0s3</code> = 1e VirtualBox adapter (NAT):
@@ -165,40 +181,64 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="
 (intnet):
 <ul>
 <li>GUI VM: 192.168.76.10/24</li>
-<li>AlmaLinux: 192.168.76.12/24</li>
+<li>AlmaLinux: 192.168.76.254/24</li>
 </ul></li>
 </ul>
 </section>
-<section id="netwerkinstellingen-aanpassen-redhat" class="slide level2">
-<h2>Netwerkinstellingen aanpassen (RedHat)</h2>
-<p><code>/etc/sysconfig/network-scripts/ifcfg-&lt;interface_name&gt;</code></p>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="va">NM_CONTROLLED</span><span class="op">=</span>yes</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="va">BOOTPROTO</span><span class="op">=</span>none</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="va">ONBOOT</span><span class="op">=</span>yes</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="va">IPADDR</span><span class="op">=</span>192.168.76.12</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="va">NETMASK</span><span class="op">=</span>255.255.255.0</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="va">DEVICE</span><span class="op">=</span>eth1</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="va">PEERDNS</span><span class="op">=</span>no</span></code></pre></div>
+<section id="netwerkconfiguratie-opvragen-el10" class="slide level2">
+<h2>Netwerkconfiguratie opvragen (EL10)</h2>
+<p>Met NetworkManager, via <code>nmcli</code>. Probeer:</p>
+<pre class="console"><code>$ nmcli connection show
+$ nmcli -f ipv4 connection show enp0s3
+$ nmcli device status
+$ nmcli device show enp0s3
+$ nmcli -f IP4 device show enp0s3</code></pre>
 </section>
-<section class="slide level2">
-
-<p>Na aanpassingen, netwerk herstarten (RHEL &lt;=8):</p>
-<pre class="console"><code>$ sudo systemctl restart network</code></pre>
-<p>Vanaf RHEL 9:</p>
-<pre class="console"><code>$ sudo nmcli device reapply eth1</code></pre>
-<p>Bemerk: er is een overgang naar het uitfaseren van het gebruik van
-<code>ifcfg</code> bestanden, en dit te vervangen door
-<code>nmcli</code>. Hierdoor zal je nog geruime tijd beide systemen
-moeten begrijpen!</p>
+<section id="vast-ip-adres-instellen-el10" class="slide level2">
+<h2>Vast IP-adres instellen (EL10)</h2>
+<pre class="console"><code>hogent@almaserver:~$ sudo nmcli connection modify enp0s8 ipv4.method static ipv4.addresses 192.168.76.254/24
+hogent@almaserver:~$ sudo nmcli connection up enp0s8 
+Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/6)
+hogent@almaserver:~$ ip -br -4 a show dev enp0s8
+enp0s8           UP             192.168.76.254/24</code></pre>
+</section>
+<section id="netwerkconfiguratie-aanpassen-debian-13"
+class="slide level2">
+<h2>Netwerkconfiguratie aanpassen (Debian 13)</h2>
+<p>Configuratiebestand <code>/etc/network/interfaces</code></p>
+<p>Voorbeeld met DHCP:</p>
+<pre class="conf"><code># DHCP
+allow-hotplug enp0s3
+iface enp0s3 inet dhcp
+iface enp0s3 inet6 auto
+pre-up sleep 2</code></pre>
+</section>
+<section id="netwerkconfiguratie-aanpassen-debian-13-1"
+class="slide level2">
+<h2>Netwerkconfiguratie aanpassen (Debian 13)</h2>
+<p>Voorbeeld met vast IP-adres:</p>
+<pre class="conf"><code># Static
+allow-hotplug enp0s8
+iface enp0s8 inet static
+    address 192.168.76.13
+    netmask 255.255.255.0</code></pre>
+</section>
+<section id="wijzigingen-toepassen-debian-13" class="slide level2">
+<h2>Wijzigingen toepassen (Debian 13):</h2>
+<div class="sourceCode" id="cb8"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ifdown enp0s8<span class="kw">;</span> <span class="fu">sudo</span> ifup enp0s8</span></code></pre></div>
+<p>of</p>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart networking</span></code></pre></div>
 </section></section>
 <section>
-<section id="lets-install-dhcp" class="title-slide slide level1">
-<h1>Let’s install DHCP!</h1>
+<section id="lets-install-isc-dhcp" class="title-slide slide level1">
+<h1>Let’s install ISC DHCP!</h1>
 
 </section>
 <section id="installatie" class="slide level2">
 <h2>Installatie</h2>
+<p>Let op: kan niet op EL10!</p>
 <p>Zoek de naam van de package om ISC DHCP te installeren!</p>
 </section>
 <section id="configuratie" class="slide level2">
@@ -234,7 +274,10 @@ moeten begrijpen!</p>
 </section>
 <section id="installatie-1" class="slide level2">
 <h2>Installatie</h2>
-<p>Zoek de naam van de package om ISC Kea te installeren!</p>
+<ul>
+<li>Zoek de naam van de package om ISC Kea te installeren!</li>
+<li>Installeer ook de documentatie-package!</li>
+</ul>
 </section>
 <section id="configuratie-1" class="slide level2">
 <h2>Configuratie</h2>
@@ -245,7 +288,7 @@ class="uri">https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/
 <li>Configbestand: <code>/etc/kea/kea-dhcp4.conf</code></li>
 <li>Zie voorbeeld:
 <code>/usr/share/doc/kea/examples/kea4/single-subnet.json</code></li>
-<li>Wat hebben we nodig voor onze opstelling?</li>
+<li>Wat hebben we nodig voor onze opstelling? Pas aan!</li>
 </ul>
 </section>
 <section id="opstarten-systemctl-1" class="slide level2">
@@ -268,6 +311,7 @@ class="uri">https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/
 <section id="sluit-de-gui-vm-aan-op-intnet" class="slide level2">
 <h2>Sluit de GUI VM aan op intnet</h2>
 <ul>
+<li>Pas netwerkconfiguratie aan (automatisch via DHCP)</li>
 <li>Vang netwerkverkeer op met <code>tcpdump</code>, bv.
 <ul>
 <li><code>sudo tcpdump -w dhcp.pcap -i eth1 port 67 or port 68</code></li>
@@ -284,6 +328,13 @@ class="uri">https://hogenttin.github.io/linux-training-hogent/opslinux/dhcp_kea/
 <li>Heb je Internet-toegang? Waarom (niet)?</li>
 <li>Zoek via de man-page voor dhcpd waar DHCP leases bijgehouden
 worden</li>
+</ul>
+</section>
+<section id="volgende-weken" class="slide level2">
+<h2>Volgende weken</h2>
+<ul>
+<li>Vanaf nu werken we meestal met meerdere VMs</li>
+<li>Zorg ervoor dat je de opstelling snel kan reproduceren!</li>
 </ul>
 </section></section>
     </div>

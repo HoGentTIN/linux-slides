@@ -100,6 +100,8 @@ hogent@almaserver:~$ ip -br -4 a show dev enp0s8
 enp0s8           UP             192.168.76.254/24
 ```
 
+Configuratiebestanden: `/etc/NetworkManager/system-connections/`
+
 ## Netwerkconfiguratie aanpassen (Debian 13)
 
 Configuratiebestand `/etc/network/interfaces`

@@ -178,41 +178,52 @@ hint: See PEP 668 for the detailed specification.</code></pre>
 <section id="voorbeeldcode" class="slide level2">
 <h2>Voorbeeldcode</h2>
 <ul>
+<li>Sla op als <code>penguins.py</code></li>
 <li>Let op de shebang!</li>
 <li>Deps: Seaborn, scikit-learn</li>
 </ul>
 <div class="sourceCode" id="cb2"><pre
 class="sourceCode python"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /usr/bin/env python3</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns<span class="op">;</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.linear_model <span class="im">import</span> LinearRegression</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">&#39;penguins&#39;</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>df_flipper_mass <span class="op">=</span> penguins[[<span class="st">&#39;flipper_length_mm&#39;</span>, <span class="st">&#39;body_mass_g&#39;</span>]].dropna()</span></code></pre></div>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the Palmer Penguins demo dataset</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>penguins <span class="op">=</span> sns.load_dataset(<span class="st">&#39;penguins&#39;</span>)</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Select only needed colums and drop NaNs</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>df_flipper_mass <span class="op">=</span> penguins[[<span class="st">&#39;flipper_length_mm&#39;</span>, <span class="st">&#39;body_mass_g&#39;</span>]].dropna()</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Build linear regression model</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>lm_flipper_mass <span class="op">=</span> LinearRegression().fit(</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    df_flipper_mass[[<span class="st">&#39;flipper_length_mm&#39;</span>]].values,</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>    df_flipper_mass[[<span class="st">&#39;body_mass_g&#39;</span>]].values)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Print regression line coefficients</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Regression line: mass = %.4f + %.4f x fl_length&quot;</span> <span class="op">%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>      (lm_flipper_mass.intercept_[<span class="dv">0</span>], lm_flipper_mass.coef_[<span class="dv">0</span>,<span class="dv">0</span>]))</span></code></pre></div>
 </section>
 <section class="slide level2">
 
 <div class="sourceCode" id="cb3"><pre
-class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>lm_flipper_mass <span class="op">=</span> LinearRegression().fit(</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    df_flipper_mass[[<span class="st">&#39;flipper_length_mm&#39;</span>]].values,</span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    df_flipper_mass[[<span class="st">&#39;body_mass_g&#39;</span>]].values)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f&quot;Regression line: mass = </span><span class="sc">{</span>lm_flipper_mass<span class="sc">.</span>intercept_<span class="sc">}</span><span class="ss"> + </span><span class="sc">{</span>lm_flipper_mass<span class="sc">.</span>coef_[<span class="dv">0</span>]<span class="sc">}</span><span class="ss"> x fl.length&quot;</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>plot_flipper_mass <span class="op">=</span> sns.relplot(data<span class="op">=</span>penguins,</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&#39;flipper_length_mm&#39;</span>, y<span class="op">=</span><span class="st">&#39;body_mass_g&#39;</span>, </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">&#39;species&#39;</span>, style<span class="op">=</span><span class="st">&#39;sex&#39;</span>)<span class="op">;</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>plot_flipper_mass.figure.savefig(<span class="st">&#39;penguins_flipper_mass.png&#39;</span>)</span></code></pre></div>
+class="sourceCode python"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot scatter plot for flipper length and body mass</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>plot_flipper_mass <span class="op">=</span> sns.relplot(data<span class="op">=</span>penguins,</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&#39;flipper_length_mm&#39;</span>, y<span class="op">=</span><span class="st">&#39;body_mass_g&#39;</span>, </span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    hue<span class="op">=</span><span class="st">&#39;species&#39;</span>, style<span class="op">=</span><span class="st">&#39;sex&#39;</span>)<span class="op">;</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Add regression line to the plot</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>sns.regplot(data<span class="op">=</span>df_flipper_mass,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    x<span class="op">=</span><span class="st">&#39;flipper_length_mm&#39;</span>, y<span class="op">=</span><span class="st">&#39;body_mass_g&#39;</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>    scatter<span class="op">=</span><span class="va">False</span>, ax<span class="op">=</span>plot_flipper_mass.ax)<span class="op">;</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Save to output/ directory (is expected to exist!)</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>plot_flipper_mass.figure.savefig(<span class="st">&#39;output/penguins_flipper_mass.png&#39;</span>)</span></code></pre></div>
 </section>
 <section id="virtuele-omgeving-aanmaken" class="slide level2">
 <h2>Virtuele omgeving aanmaken</h2>
-<pre class="console"><code>hogent@LinuxGUI:~/penguins$ ls -l
+<pre class="console"><code>hogent@LinuxGUI:~/penguins$ chmod +x penguins.py
+hogent@LinuxGUI:~/penguins$ ls -l
 total 4
--rwxr-xr-x 1 hogent users 929 Oct  8 10:10 penguins.py
-hogent@LinuxGUI:~/penguins$ python3 -m venv .venv
-hogent@LinuxGUI:~/penguins$ ls .venv/
-bin  include  lib  lib64  pyvenv.cfg
-hogent@LinuxGUI:~/penguins$ ls .venv/lib/python3.13/site-packages/
-pip  pip-25.1.1.dist-info</code></pre>
+-rwxr-xr-x 1 hogent users 1126 Oct 15 12:57 penguins.py
+hogent@LinuxGUI:~/penguins$ python3 -m venv .venv</code></pre>
 </section>
 <section id="inhoud-.venv" class="slide level2">
 <h2>Inhoud .venv</h2>
@@ -223,6 +234,12 @@ pip  pip-25.1.1.dist-info</code></pre>
 </ul></li>
 <li><code>lib/</code>, <code>lib64/</code>: Python libraries</li>
 </ul>
+<pre class="console"><code>hogent@LinuxGUI:~/penguins$ ls .venv/
+bin  include  lib  lib64  pyvenv.cfg
+hogent@LinuxGUI:~/penguins$ ls .venv/bin/
+activate  activate.csh  activate.fish  Activate.ps1  pip  pip3  pip3.13  python  python3  python3.13
+hogent@LinuxGUI:~/penguins$ ls .venv/lib/python3.13/site-packages/
+pip  pip-25.1.1.dist-info</code></pre>
 </section>
 <section id="activatie" class="slide level2">
 <h2>Activatie</h2>
@@ -235,7 +252,8 @@ pip  pip-25.1.1.dist-info</code></pre>
 </section>
 <section id="probeer-het-script-uit" class="slide level2">
 <h2>Probeer het script uit!</h2>
-<pre class="console"><code>(.venv) hogent@LinuxGUI:~/penguins$ python3 penguins.py 
+<pre class="console"><code>(.venv) hogent@LinuxGUI:~/penguins$ mkdir output
+(.venv) hogent@LinuxGUI:~/penguins$ ./penguins.py
 Traceback (most recent call last):
   File &quot;/home/hogent/penguins/penguins.py&quot;, line 6, in &lt;module&gt;
     import seaborn as sns;
@@ -251,12 +269,11 @@ Successfully installed ...</code></pre>
 </section>
 <section id="probeer-opnieuw" class="slide level2">
 <h2>Probeer opnieuw</h2>
-<pre class="console"><code>(.venv) hogent@LinuxGUI:~/penguins$ ./penguins.py 
-Regression line: mass = [-5780.83135808] + [49.68556641] x fl.length
-(.venv) hogent@LinuxGUI:~/penguins$ ls -l
-total 80
--rw-r--r-- 1 hogent users 75098 Oct  8 14:06 penguins_flipper_mass.png
--rwxr-xr-x 1 hogent users   929 Oct  8 10:10 penguins.py</code></pre>
+<pre class="console"><code>(.venv) hogent@LinuxGUI:~/penguins$ ./penguins.py
+Regression line: mass = -5780.8314 + 49.6856 x fl_length
+(.venv) hogent@LinuxGUI:~/penguins$ ls -l output/
+total 84
+-rw-r--r-- 1 hogent users 83224 Oct 15 13:30 penguins_flipper_mass.png</code></pre>
 </section>
 <section id="reproduceerbaarheid" class="slide level2">
 <h2>Reproduceerbaarheid</h2>
@@ -271,39 +288,70 @@ total 80
 </section>
 <section id="test-reproduceerbaarheid" class="slide level2">
 <h2>Test reproduceerbaarheid</h2>
+<p>Verwijder de virtuele omgeving:</p>
 <pre class="console"><code>(.venv) hogent@LinuxGUI:~/penguins$ deactivate
 hogent@LinuxGUI:~/penguins$ rm -rf .venv
-hogent@LinuxGUI:~/penguins$ python3 -m venv .venv
+hogent@LinuxGUI:~/penguins$ rm output/*
+hogent@LinuxGUI:~/penguins$ tree
+.
+├── output
+├── penguins.py
+└── requirements.txt
+
+2 directories, 2 files</code></pre>
+</section>
+<section id="bouw-opnieuw" class="slide level2">
+<h2>Bouw opnieuw</h2>
+<pre class="console"><code>hogent@LinuxGUI:~/penguins$ python3 -m venv .venv
 hogent@LinuxGUI:~/penguins$ source .venv/bin/activate
 (.venv) hogent@LinuxGUI:~/penguins$ pip install -r requirements.txt
-(.venv) hogent@LinuxGUI:~/penguins$ ./penguins.py</code></pre>
+(.venv) hogent@LinuxGUI:~/penguins$ ./penguins.py 
+Regression line: mass = -5780.8314 + 49.6856 x fl_length
+(.venv) hogent@LinuxGUI:~/penguins$ tree
+.
+├── output
+│   └── penguins_flipper_mass.png
+├── penguins.py
+└── requirements.txt
+
+2 directories, 3 files</code></pre>
 </section>
 <section id="reproduceerbaarheid-in-docker" class="slide level2">
 <h2>Reproduceerbaarheid in Docker</h2>
-<div class="sourceCode" id="cb11"><pre
-class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running a Python application with dependencies in a Docker container</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> python:3.13-slim</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> VIRTUAL_ENV=/opt/venv</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">python3</span> <span class="at">-m</span> venv <span class="va">$VIRTUAL_ENV</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> PATH=<span class="st">&quot;$VIRTUAL_ENV/bin:$PATH&quot;</span></span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies:</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> requirements.txt .</span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application:</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> penguins.py .</span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [ <span class="st">&quot;python&quot;</span>, <span class="st">&quot;penguins.py&quot;</span> ]</span></code></pre></div>
+<p>Creeer een <code>Dockerfile</code>:</p>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode dockerfile"><code class="sourceCode dockerfile"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Running a Python application with dependencies in a Docker container</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> python:3.13-slim</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> VIRTUAL_ENV=/opt/venv</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">python3</span> <span class="at">-m</span> venv <span class="st">&quot;</span><span class="va">${VIRTUAL_ENV}</span><span class="st">&quot;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="kw">ENV</span> PATH=<span class="st">&quot;${VIRTUAL_ENV}/bin:${PATH}&quot;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Install dependencies:</span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> requirements.txt .</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="kw">RUN</span> <span class="ex">pip</span> install <span class="at">-r</span> requirements.txt</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Run the application:</span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="kw">COPY</span> penguins.py .</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="kw">CMD</span> [ <span class="st">&quot;python&quot;</span>, <span class="st">&quot;penguins.py&quot;</span> ]</span></code></pre></div>
 </section>
 <section id="build-run" class="slide level2">
 <h2>Build &amp; run</h2>
+<p>(verwijder eerst opnieuw <code>.venv/</code> en de inhoud van
+<code>output/</code>)</p>
 <pre class="console"><code>hogent@LinuxGUI:~/penguins$ docker build -t local:penguins-app .
 [...veel output weggelaten...]
-hogent@LinuxGUI:~/penguins$ docker run --rm -v &quot;$PWD&quot;:/app -w /app local:penguins-app
-Regression line: mass = [-5780.83135808] + [49.68556641] x fl.length
-hogent@LinuxGUI:~/penguins$ ls
-Dockerfile  penguins_flipper_mass.png  penguins.py  requirements.txt</code></pre>
+hogent@LinuxGUI:~/penguins$ docker run --rm -v &quot;${PWD}/output&quot;:/app/output local:penguins-app
+Regression line: mass = -5780.8314 + 49.6856 x fl_length
+hogent@LinuxGUI:~/penguins$ tree
+.
+├── Dockerfile
+├── output
+│   └── penguins_flipper_mass.png
+├── penguins.py
+└── requirements.txt
+
+2 directories, 4 files</code></pre>
 </section></section>
     </div>
   </div>

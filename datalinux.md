@@ -22,11 +22,13 @@ Je kan **handouts** van de slides genereren door ze te openen in de browser en C
     - [Containervirtualisatie (Docker)](08-containers.html)
     - [Secure Shell](08-ssh.html)
 - 9 - [Workflow automation (Makefiles)](09-makefiles.html)
-- 10 - [Reproduceerbare Python development-omgevingen](10-python-venv.html)
+- 10 - Reproduceerbare development-omgevingen
+    - [Python virtual environments](10-python-venv.html)
+    - [Vagrant](06-vagrant.html)
 
 Extra:
 
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Wed Oct 15 13:49:39 UTC 2025
+Laatste wijziging: Wed Oct 15 13:50:08 UTC 2025

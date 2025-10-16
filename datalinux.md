@@ -24,11 +24,11 @@ Je kan **handouts** van de slides genereren door ze te openen in de browser en C
 - 9 - [Workflow automation (Makefiles)](09-makefiles.html)
 - 10 - Reproduceerbare development-omgevingen
     - [Python virtual environments](10-python-venv.html)
-    - [Vagrant](06-vagrant.html)
+    - [Vagrant](06-automatiseren.html)
 
 Extra:
 
 - [Git, Github, Markdown](99-git-survival-guide.html)
 - [Vim Survival Guide](99-vim-survival-guide.html)
 
-Laatste wijziging: Thu Oct 16 17:11:07 UTC 2025
+Laatste wijziging: Thu Oct 16 17:11:39 UTC 2025

@@ -156,12 +156,21 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="
 </section>
 <section id="het-commando-systemctl" class="slide level2">
 <h2>Het commando systemctl</h2>
-<div class="sourceCode" id="cb2"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl start <span class="op">&lt;</span>service<span class="op">&gt;</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl stop <span class="op">&lt;</span>service<span class="op">&gt;</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl restart <span class="op">&lt;</span>service<span class="op">&gt;</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl enable <span class="op">&lt;</span>service<span class="op">&gt;</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo systemctl disable <span class="op">&lt;</span>service<span class="op">&gt;</span></span></code></pre></div>
+<p>Info opvragen: geen <code>sudo</code> nodig</p>
+<pre class="console"><code>$ systemctl status &lt;service&gt;
+$ systemctl is-enabled &lt;service&gt;
+$ systemctl is-active &lt;service&gt;
+$ systemctl list-units --type=service
+$ systemctl list-units --failed</code></pre>
+</section>
+<section class="slide level2">
+
+<p>Toestanden wijzigen: <code>sudo</code> vereist!</p>
+<pre class="console"><code>$ sudo systemctl start &lt;service&gt;
+$ sudo systemctl stop &lt;service&gt;
+$ sudo systemctl restart &lt;service&gt;
+$ sudo systemctl enable &lt;service&gt;
+$ sudo systemctl disable &lt;service&gt;</code></pre>
 </section>
 <section id="het-commando-ss" class="slide level2">
 <h2>Het commando ss</h2>
@@ -221,15 +230,15 @@ LISTEN  0       128              [::]:22            [::]:*      users:((&quot;ss
 <li>surf naar <a href="http://localhost/"
 class="uri">http://localhost/</a></li>
 </ul>
-<div class="sourceCode" id="cb4"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> localhost</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> 127.0.0.1</span></code></pre></div></li>
+<div class="sourceCode" id="cb5"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> localhost</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> 127.0.0.1</span></code></pre></div></li>
 <li>PHP testen: maak bestand <code>/var/www/html/info.php</code></li>
 <li>Surf naar: <a href="http://localhost/info.php"
 class="uri">http://localhost/info.php</a></li>
 </ul>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode php"><code class="sourceCode php"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode php"><code class="sourceCode php"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="kw">&lt;?php</span> <span class="fu">phpinfo</span>()<span class="ot">;</span> <span class="kw">?&gt;</span></span></code></pre></div>
 </section>
 <section id="logbestanden" class="slide level2">
 <h2>Logbestanden</h2>
@@ -256,43 +265,43 @@ $ sudo tail -f /var/log/apache2/error_log</code></pre>
 </ul></li>
 </ul>
 </section>
-<section id="options" class="slide level2">
-<h2>Options</h2>
+<section id="opties" class="slide level2">
+<h2>Opties</h2>
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 46%" />
+<col style="width: 53%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Action</th>
-<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Actie</th>
+<th style="text-align: left;">Commando</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Show latest log and wait for changes</td>
+<td style="text-align: left;">Toon laatste lijnen en wacht</td>
 <td style="text-align: left;"><code>journalctl -f</code>,
 <code>--follow</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Show only log of SERVICE</td>
+<td style="text-align: left;">Toon enkel log van SERVICE</td>
 <td style="text-align: left;"><code>journalctl -u SERVICE</code>,
 <code>--unit=SERVICE</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Match executable,
-e.g. <code>dhclient</code></td>
+<td style="text-align: left;">Log voor executable, bv.
+<code>dhclient</code></td>
 <td
 style="text-align: left;"><code>journalctl /usr/sbin/dhclient</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Match device node,
-e.g. <code>/dev/sda</code></td>
+<td style="text-align: left;">Log voor apparaat, bv.
+<code>/dev/sda</code></td>
 <td style="text-align: left;"><code>journalctl /dev/sda</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Show auditd logs</td>
+<td style="text-align: left;">Toon auditd logs</td>
 <td
 style="text-align: left;"><code>journalctl _TRANSPORT=audit</code></td>
 </tr>
@@ -303,39 +312,39 @@ style="text-align: left;"><code>journalctl _TRANSPORT=audit</code></td>
 
 <table>
 <colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
+<col style="width: 48%" />
+<col style="width: 51%" />
 </colgroup>
 <thead>
 <tr class="header">
-<th style="text-align: left;">Action</th>
-<th style="text-align: left;">Command</th>
+<th style="text-align: left;">Actie</th>
+<th style="text-align: left;">Commando</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
-<td style="text-align: left;">Show log since last boot</td>
+<td style="text-align: left;">Toon log sinds laatste boot</td>
 <td style="text-align: left;"><code>journalctl -b</code>,
 <code>--boot</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Kernel messages (like
+<td style="text-align: left;">Kernelberichten (zoals
 <code>dmesg</code>)</td>
 <td style="text-align: left;"><code>journalctl -k</code>,
 <code>--dmesg</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Reverse output (newest first)</td>
+<td style="text-align: left;">Omgekeerde uitvoer (nieuwste eerst)</td>
 <td style="text-align: left;"><code>journalctl -r</code>,
 <code>--reverse</code></td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Show only errors and worse</td>
+<td style="text-align: left;">Toon alleen fouten en erger</td>
 <td style="text-align: left;"><code>journalctl -p err</code>,
 <code>--priority=err</code></td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Since yesterday</td>
+<td style="text-align: left;">Sinds gisteren</td>
 <td
 style="text-align: left;"><code>journalctl --since=yesterday</code></td>
 </tr>
@@ -344,10 +353,10 @@ style="text-align: left;"><code>journalctl --since=yesterday</code></td>
 </section>
 <section class="slide level2">
 
-<p>Filter on time (example):</p>
+<p>Filter op tijd (voorbeeld):</p>
 <pre class="console"><code>journalctl --since=2018-06-00 \
            --until=&quot;2018-06-07 12:00:00&quot;</code></pre>
-<p>Much more options in the man-page!</p>
+<p>Veel meer opties in de man-pagina!</p>
 </section>
 <section id="website-vanaf-fysiek-systeem-bekijken"
 class="slide level2">
@@ -373,20 +382,6 @@ alt="Port-forwarding" />
 <figcaption aria-hidden="true">Port-forwarding</figcaption>
 </figure>
 </section>
-<section id="database-beveiligen" class="slide level2">
-<h2>Database beveiligen</h2>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> sudo mysql_secure_installation</span></code></pre></div>
-<ul>
-<li>Volg de instructies!</li>
-<li>(optioneel) kies MariaDB root-wachtwoord
-<ul>
-<li>≠ wachtwoord Linux root!</li>
-</ul></li>
-<li>bevestig andere vragen (ENTER)</li>
-</ul>
-<p><strong>Hou je wachtwoorden goed bij!</strong></p>
-</section>
 <section id="database-testen-root" class="slide level2">
 <h2>Database testen: root</h2>
 <div class="sourceCode" id="cb9"><pre
@@ -396,8 +391,12 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> SELECT user,password from user<span class="kw">;</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="ex">MariaDB</span> [mysql]<span class="op">&gt;</span> quit</span></code></pre></div>
 <ul>
-<li><code>sudo</code> =&gt; inloggen als MariaDB-root</li>
-<li><code>mysql</code>: inloggen op database <code>mysql</code></li>
+<li><code>sudo</code> =&gt; inloggen als MariaDB-root
+<ul>
+<li>wachtwoord uitgeschakeld</li>
+<li>kan enkel vanaf localhost met <code>sudo</code></li>
+</ul></li>
+<li>2e <code>mysql</code>: inloggen op database <code>mysql</code></li>
 </ul>
 </section>
 <section id="labo-oefening" class="slide level2">

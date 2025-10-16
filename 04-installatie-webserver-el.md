@@ -31,14 +31,36 @@ $ sudo dnf install httpd mariadb-server php
 ## Services opstarten
 
 ```bash
-$ sudo systemctl start mariadb
-$ sudo systemctl enable mariadb
-$ sudo systemctl start httpd
-$ sudo systemctl enable httpd
+$ sudo systemctl enable --now mariadb
+$ sudo systemctl enable --now httpd
 ```
 
-- `start`: *nu* opstarten
 - `enable`: automatisch opstarten bij *booten*
+- `--now`: *nu* opstarten (kan ook met `systemctl start`)
+
+## Het commando systemctl
+
+Info opvragen: geen `sudo` nodig
+
+```console
+$ systemctl status <service>
+$ systemctl is-enabled <service>
+$ systemctl is-active <service>
+$ systemctl list-units --type=service
+$ systemctl list-units --failed
+```
+
+---
+
+Toestanden wijzigen: `sudo` vereist!
+
+```console
+$ sudo systemctl start <service>
+$ sudo systemctl stop <service>
+$ sudo systemctl restart <service>
+$ sudo systemctl enable <service>
+$ sudo systemctl disable <service>
+```
 
 ## Test de services
 
@@ -62,19 +84,12 @@ curl 127.0.0.1
 <?php phpinfo(); ?>
 ```
 
-## Toon sockets/poorten in gebruik
+## Het commando ss
 
-Show sockets: `ss`
-
-- `netstat` is obsolete, replaced by `ss`
-    - `netstat` uses `/proc/net/tcp`
-    - `ss` directly queries the kernel
-- Similar options
-
-## ss Options
+`ss` = Show Sockets
 
 | Task                 | Command                |
-| :---                 | :---                   |
+| :------------------- | :--------------------- |
 | Show server sockets  | `ss -l`, `--listening` |
 | Show TCP sockets     | `ss -t`, `--tcp`       |
 | Show UDP sockets     | `ss -u`, `--udp`       |
@@ -112,77 +127,65 @@ $ sudo tail -f /var/log/httpd/error_log
 
 ## `journalctl`
 
-- `journalctl` requires *root permissions*
-    - Or, add user to group `adm` or `systemd-journal`
-- Some "traditional" text-based log files still exist (for now?):
-    - `/var/log/messages` (gone in Fedora!)
-    - `/var/log/httpd/access_log` and `error_log`
+- `journalctl` kan enkel als `root`/met `sudo`
+    - Of, voeg gebruiker toe aan groep `adm` of `systemd-journal`
+- Sommige "traditionele" tekstgebaseerde logbestanden bestaan nog steeds (voorlopig?):
+    - `/var/log/messages` (verdwenen in Fedora!)
+    - `/var/log/httpd/access_log` en `error_log`
     - ...
 
-## Options
+## Opties
 
-| Action                               | Command                                   |
-| :---                                 | :---                                      |
-| Show latest log and wait for changes | `journalctl -f`, `--follow`               |
-| Show only log of SERVICE             | `journalctl -u SERVICE`, `--unit=SERVICE` |
-| Match executable, e.g. `dhclient`    | `journalctl /usr/sbin/dhclient`           |
-| Match device node, e.g. `/dev/sda`   | `journalctl /dev/sda`                     |
-| Show auditd logs                     | `journalctl _TRANSPORT=audit`             |
-
----
-
-| Action                         | Command                               |
-| :---                           | :---                                  |
-| Show log since last boot       | `journalctl -b`, `--boot`             |
-| Kernel messages (like `dmesg`) | `journalctl -k`, `--dmesg`            |
-| Reverse output (newest first)  | `journalctl -r`, `--reverse`          |
-| Show only errors and worse     | `journalctl -p err`, `--priority=err` |
-| Since yesterday                | `journalctl --since=yesterday`        |
+| Actie                               | Commando                                  |
+| :---------------------------------- | :---------------------------------------- |
+| Toon laatste lijnen en wacht        | `journalctl -f`, `--follow`               |
+| Toon enkel log van SERVICE          | `journalctl -u SERVICE`, `--unit=SERVICE` |
+| Log voor executable, bv. `dhclient` | `journalctl /usr/sbin/dhclient`           |
+| Log voor apparaat, bv. `/dev/sda`   | `journalctl /dev/sda`                     |
+| Toon auditd logs                    | `journalctl _TRANSPORT=audit`             |
 
 ---
 
-Filter on time (example):
+| Actie                               | Commando                              |
+| :---------------------------------- | :------------------------------------ |
+| Toon log sinds laatste boot         | `journalctl -b`, `--boot`             |
+| Kernelberichten (zoals `dmesg`)     | `journalctl -k`, `--dmesg`            |
+| Omgekeerde uitvoer (nieuwste eerst) | `journalctl -r`, `--reverse`          |
+| Toon alleen fouten en erger         | `journalctl -p err`, `--priority=err` |
+| Sinds gisteren                      | `journalctl --since=yesterday`        |
+
+---
+
+Filter op tijd (voorbeeld):
 
 ```console
 journalctl --since=2018-06-00 \
            --until="2018-06-07 12:00:00"
 ```
 
-Much more options in the man-page!
+Veel meer opties in de man-pagina!
 
-## Website vanaf GUI Linux VM bekijken
+## Website vanaf Linux GUI VM bekijken
 
-- Controleer IP-adres VM: `ip a`
-    - waarschijnlijk 192.168.76.12
-		- verifieer dat je GUI Linux VM een IP-adres in dit netwerk heeft
-		- ping ?!
-
-## Database beveiligen
-
-```bash
-$ sudo mysql_secure_installation
-```
-
-- Volg de instructies!
-- kies MariaDB root-wachtwoord
-    - ≠ wachtwoord Linux root!
-- bevestig andere vragen (ENTER)
-
-**Hou je wachtwoorden goed bij!**
+- Controleer IP-adres webserver-VM: `ip a`
+- Test route vanaf Linux GUI VM met `ping <IP-adres>`
+- Surf vanaf Linux GUI VM naar IP-adres webserver-VM
 
 ## Database testen: root
 
 ```bash
-$ mysql -uroot -pR2rrbLV02TA1hAjN mysql
+$ sudo mysql mysql
 ...
 MariaDB [mysql]> SHOW DATABASES;
-MariaDB [mysql]> SELECT user,password from user;
+MariaDB [mysql]> SELECT user,host,password from user;
 MariaDB [mysql]> quit
 ```
 
-- `-uroot`: inloggen als MariaDB-root
-- `-pR2rrbLV02TA1hAjN`: gekozen wachtwoord
-    - (GEEN spatie na `-p`)
-- `mysql`: inloggen op database `mysql`
+- `sudo`: inloggen als MariaDB-root
+    - wachtwoord uitgeschakeld
+    - kan enkel vanaf localhost met `sudo`
+- 2e `mysql`: inloggen op database `mysql`
 
+## Labo-oefening
 
+Ga nu zelf verder met de labo-oefening! Leerpad 4.4.1

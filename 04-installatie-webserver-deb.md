@@ -41,7 +41,21 @@ $ sudo apt install apache2 mariadb-server php
 
 ## Het commando systemctl
 
-```bash
+Info opvragen: geen `sudo` nodig
+
+```console
+$ systemctl status <service>
+$ systemctl is-enabled <service>
+$ systemctl is-active <service>
+$ systemctl list-units --type=service
+$ systemctl list-units --failed
+```
+
+---
+
+Toestanden wijzigen: `sudo` vereist!
+
+```console
 $ sudo systemctl start <service>
 $ sudo systemctl stop <service>
 $ sudo systemctl restart <service>
@@ -114,36 +128,37 @@ $ sudo tail -f /var/log/apache2/error_log
     - `/var/log/dmesg` (log bootproces)
     - ...
 
-## Options
 
-| Action                               | Command                                   |
-| :---                                 | :---                                      |
-| Show latest log and wait for changes | `journalctl -f`, `--follow`               |
-| Show only log of SERVICE             | `journalctl -u SERVICE`, `--unit=SERVICE` |
-| Match executable, e.g. `dhclient`    | `journalctl /usr/sbin/dhclient`           |
-| Match device node, e.g. `/dev/sda`   | `journalctl /dev/sda`                     |
-| Show auditd logs                     | `journalctl _TRANSPORT=audit`             |
+## Opties
 
----
-
-| Action                         | Command                               |
-| :---                           | :---                                  |
-| Show log since last boot       | `journalctl -b`, `--boot`             |
-| Kernel messages (like `dmesg`) | `journalctl -k`, `--dmesg`            |
-| Reverse output (newest first)  | `journalctl -r`, `--reverse`          |
-| Show only errors and worse     | `journalctl -p err`, `--priority=err` |
-| Since yesterday                | `journalctl --since=yesterday`        |
+| Actie                               | Commando                                  |
+| :---------------------------------- | :---------------------------------------- |
+| Toon laatste lijnen en wacht        | `journalctl -f`, `--follow`               |
+| Toon enkel log van SERVICE          | `journalctl -u SERVICE`, `--unit=SERVICE` |
+| Log voor executable, bv. `dhclient` | `journalctl /usr/sbin/dhclient`           |
+| Log voor apparaat, bv. `/dev/sda`   | `journalctl /dev/sda`                     |
+| Toon auditd logs                    | `journalctl _TRANSPORT=audit`             |
 
 ---
 
-Filter on time (example):
+| Actie                               | Commando                              |
+| :---------------------------------- | :------------------------------------ |
+| Toon log sinds laatste boot         | `journalctl -b`, `--boot`             |
+| Kernelberichten (zoals `dmesg`)     | `journalctl -k`, `--dmesg`            |
+| Omgekeerde uitvoer (nieuwste eerst) | `journalctl -r`, `--reverse`          |
+| Toon alleen fouten en erger         | `journalctl -p err`, `--priority=err` |
+| Sinds gisteren                      | `journalctl --since=yesterday`        |
+
+---
+
+Filter op tijd (voorbeeld):
 
 ```console
 journalctl --since=2018-06-00 \
            --until="2018-06-07 12:00:00"
 ```
 
-Much more options in the man-page!
+Veel meer opties in de man-pagina!
 
 ## Website vanaf fysiek systeem bekijken
 
@@ -157,19 +172,6 @@ Much more options in the man-page!
 
 ![Port-forwarding](assets/webserver-portforwarding.png)
 
-## Database beveiligen
-
-```bash
-$ sudo mysql_secure_installation
-```
-
-- Volg de instructies!
-- (optioneel) kies MariaDB root-wachtwoord
-    - ≠ wachtwoord Linux root!
-- bevestig andere vragen (ENTER)
-
-**Hou je wachtwoorden goed bij!**
-
 ## Database testen: root
 
 ```bash
@@ -181,7 +183,9 @@ MariaDB [mysql]> quit
 ```
 
 - `sudo` => inloggen als MariaDB-root
-- `mysql`: inloggen op database `mysql`
+    - wachtwoord uitgeschakeld
+    - kan enkel vanaf localhost met `sudo`
+- 2e `mysql`: inloggen op database `mysql`
 
 ## Labo-oefening
 

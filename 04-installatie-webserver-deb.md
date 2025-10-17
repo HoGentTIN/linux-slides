@@ -15,7 +15,7 @@ date: 2025-2026
 ## Installatie software
 
 ```bash
-$ sudo apt install apache2 mariadb-server php
+$ sudo apt install apache2 libapache2-mod-php mariadb-server php php-mysql
 ```
 
 ## Belangrijke directories
@@ -93,19 +93,47 @@ LISTEN  0       128              [::]:22            [::]:*      users:(("sshd",p
 ## Test de services
 
 - CLI webbrowser *op de VM*
-    - surf naar <http://localhost/>
-```bash
-curl localhost
-curl 127.0.0.1
-```
 
-- PHP testen: maak bestand
-  `/var/www/html/info.php`
+    - surf naar <http://localhost/>
+
+    ```bash
+    curl localhost
+    curl 127.0.0.1
+    ```
+
+- PHP testen: maak bestand `/var/www/html/info.php`
+
+    ```php
+    <?php phpinfo(); ?>
+    ```
+
 - Surf naar: <http://localhost/info.php>
 
-```php
-<?php phpinfo(); ?>
+## Ondersteuning voor HTTPS
+
+- "Module" `ssl`
+- Zie `/etc/apache2/`
+    - `mods-available`, `mods-enabled`
+    - `conf-available`, `conf-enabled`
+
+```console
+hogent@LinuxGUI:/var/www/html$ sudo a2ensite default-ssl
+Enabling site default-ssl.
+To activate the new configuration, you need to run:
+  systemctl reload apache2
+hogent@LinuxGUI:~$ sudo a2enmod ssl
+Considering dependency mime for ssl:
+Module mime already enabled
+Considering dependency socache_shmcb for ssl:
+Module socache_shmcb already enabled
+Enabling module ssl.
+See /usr/share/doc/apache2/README.Debian.gz on how to configure SSL and create self-signed certificates.
+To activate the new configuration, you need to run:
+  systemctl restart apache2
+hogent@LinuxGUI:~$ sudo systemctl restart apache2.service 
 ```
+
+Controleer open poorten met `ss` en open de pagina met https!
 
 ## Logbestanden
 
@@ -183,8 +211,10 @@ MariaDB [mysql]> quit
 ```
 
 - `sudo` => inloggen als MariaDB-root
+
     - wachtwoord uitgeschakeld
     - kan enkel vanaf localhost met `sudo`
+
 - 2e `mysql`: inloggen op database `mysql`
 
 ## Labo-oefening

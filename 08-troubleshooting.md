@@ -122,35 +122,7 @@ Checking *Local network configuration:*
 - IP address?
 - In correct subnet?
 - DHCP or fixed IP?
-- Check configuration: `/etc/sysconfig/network-scripts/ifcfg-*`
-
----
-
-Example: DHCP
-
-```console
-[vagrant@db ~]$ cat /etc/sysconfig/network-scripts/ifcfg-enp0s3 
-TYPE=Ethernet
-BOOTPROTO=dhcp
-NAME=enp0s3
-DEVICE=enp0s3
-ONBOOT=yes
-[...]
-```
-
----
-
-Example: Static IP
-
-```console
-$ cat /etc/sysconfig/network-scripts/ifcfg-enp0s8
-BOOTPROTO=none
-ONBOOT=yes
-IPADDR=192.168.76.73
-NETMASK=255.255.255.0
-DEVICE=enp0s8
-[...]
-```
+- Check configuration (e.g. `nmcli conn show` for EL 10)
 
 ## Common causes (DHCP)
 
@@ -287,6 +259,14 @@ $ sudo firewall-cmd --reload
     - <https://httpd.apache.org/docs/2.4/configuring.html>
 - Man pages
     - smb.conf(5), dhcpd.conf(5), named.conf(5), ...
+
+## What about ChatGPT?
+
+- LLMs will hallucinate
+- Advice may be outdated
+- Advice may be irrelevant
+
+**When you manage production systems, nothing beats the quality of official documentation and manuals!**
 
 # SELinux troubleshooting
 

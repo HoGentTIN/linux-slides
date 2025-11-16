@@ -231,31 +231,9 @@ $ vagrant up
 <li>IP address?</li>
 <li>In correct subnet?</li>
 <li>DHCP or fixed IP?</li>
-<li>Check configuration:
-<code>/etc/sysconfig/network-scripts/ifcfg-*</code></li>
+<li>Check configuration (e.g. <code>nmcli conn show</code> for EL
+10)</li>
 </ul>
-</section>
-<section class="slide level2">
-
-<p>Example: DHCP</p>
-<pre class="console"><code>[vagrant@db ~]$ cat /etc/sysconfig/network-scripts/ifcfg-enp0s3 
-TYPE=Ethernet
-BOOTPROTO=dhcp
-NAME=enp0s3
-DEVICE=enp0s3
-ONBOOT=yes
-[...]</code></pre>
-</section>
-<section class="slide level2">
-
-<p>Example: Static IP</p>
-<pre class="console"><code>$ cat /etc/sysconfig/network-scripts/ifcfg-enp0s8
-BOOTPROTO=none
-ONBOOT=yes
-IPADDR=192.168.76.73
-NETMASK=255.255.255.0
-DEVICE=enp0s8
-[...]</code></pre>
 </section>
 <section id="common-causes-dhcp" class="slide level2">
 <h2>Common causes (DHCP)</h2>
@@ -464,6 +442,16 @@ class="uri">https://httpd.apache.org/docs/2.4/configuring.html</a></li>
 <li>smb.conf(5), dhcpd.conf(5), named.conf(5), …</li>
 </ul></li>
 </ul>
+</section>
+<section id="what-about-chatgpt" class="slide level2">
+<h2>What about ChatGPT?</h2>
+<ul>
+<li>LLMs will hallucinate</li>
+<li>Advice may be outdated</li>
+<li>Advice may be irrelevant</li>
+</ul>
+<p><strong>When you manage production systems, nothing beats the quality
+of official documentation and manuals!</strong></p>
 </section></section>
 <section>
 <section id="selinux-troubleshooting" class="title-slide slide level1">

@@ -164,55 +164,14 @@ class="uri">https://www.redhat.com/en/topics/containers/containers-vs-vms</a></p
 <section id="installeer-en-start-docker" class="slide level2">
 <h2>Installeer en start Docker</h2>
 <ul>
-<li>Open terminal, ga naar subdirectory <code>dockerlab/</code> binnen
-je repository.</li>
+<li>Download nieuwe versie van installatiescript: <a
+href="https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/install-docker.sh"
+class="uri">https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/install-docker.sh</a></li>
+<li>Download in <code>dockerlab/</code> subdirectory binnen je
+repository</li>
+<li>Open terminal, ga naar <code>dockerlab/</code></li>
 <li>Voer het script <code>install-docker.sh</code> uit als root.</li>
 </ul>
-<!-- ## Installeer en start Docker
-
-```console
-$ cd dockerlab
-$ sudo ./install-docker.sh
-``` -->
-<!-- ## Foutmelding?
-
-```console
-vm.rb:326:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
-```
-
-Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:
-
-```ruby
-node.vm.network :private_network, **network_options(host)
-```
-
-(sterretjes toevoegen)
-
-Zie ook <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143>
-
-## Op het einde van het labo:
-
-```console
-$ vagrant halt
-```
-
-| Taak                       | Commando          |
-| :------------------------- | :---------------- |
-| Overzicht Vagrant-omgeving | `vagrant status`  |
-| VM aanmaken/Opstarten      | `vagrant up`      |
-| VM Afsluiten               | `vagrant halt`    |
-| Herstarten                 | `vagrant reload`  |
-| Inloggen                   | `vagrant ssh`     |
-| VM vernietigen             | `vagrant destroy` | -->
-<!-- ## Docker-VM
-
-- Ubuntu 20.04 LTS
-- 4GiB RAM
-- Geïnstalleerde software:
-    - Docker, Docker-compose
-    - Portainer
-    - Nuttige commando's
-- Bash aliases -->
 </section>
 <section id="aan-de-slag" class="slide level2">
 <h2>Aan de slag!</h2>

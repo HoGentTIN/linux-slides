@@ -46,56 +46,10 @@ Solomon Hykes @ PyCon 2013
 
 ## Installeer en start Docker
 
-- Open terminal, ga naar subdirectory `dockerlab/` binnen je repository.
+- Download nieuwe versie van installatiescript: <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/install-docker.sh>
+- Download in `dockerlab/` subdirectory binnen je repository
+- Open terminal, ga naar `dockerlab/`
 - Voer het script `install-docker.sh` uit als root.
-
-<!-- ## Installeer en start Docker
-
-```console
-$ cd dockerlab
-$ sudo ./install-docker.sh
-``` -->
-
-<!-- ## Foutmelding?
-
-```console
-vm.rb:326:in `network': wrong number of arguments (given 2, expected 1) (ArgumentError)
-```
-
-Open Vagrantfile in bv. VSCode, ga naar lijn 143, pas aan in:
-
-```ruby
-node.vm.network :private_network, **network_options(host)
-```
-
-(sterretjes toevoegen)
-
-Zie ook <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/Vagrantfile#L143>
-
-## Op het einde van het labo:
-
-```console
-$ vagrant halt
-```
-
-| Taak                       | Commando          |
-| :------------------------- | :---------------- |
-| Overzicht Vagrant-omgeving | `vagrant status`  |
-| VM aanmaken/Opstarten      | `vagrant up`      |
-| VM Afsluiten               | `vagrant halt`    |
-| Herstarten                 | `vagrant reload`  |
-| Inloggen                   | `vagrant ssh`     |
-| VM vernietigen             | `vagrant destroy` | -->
-
-<!-- ## Docker-VM
-
-- Ubuntu 20.04 LTS
-- 4GiB RAM
-- Geïnstalleerde software:
-    - Docker, Docker-compose
-    - Portainer
-    - Nuttige commando's
-- Bash aliases -->
 
 ## Aan de slag!
 

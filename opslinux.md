@@ -12,7 +12,7 @@ De planning over de lesweken is niet noodzakelijk definitief, maar hangt o.a. af
 
 | Lesweek | Topic                                                           |
 | :-----: | :-------------------------------------------------------------- |
-|    1    | [Introductie](opslinux-intro.html)                       |
+|    1    | [Introductie](topics/opslinux-intro.html)                       |
 |         | First Linux VM                                                  |
 |         | [Organising Users](topics/user-mgmt.html)                       |
 |    2    | [Intro Git](topics/git-survival-guide.html)                     |

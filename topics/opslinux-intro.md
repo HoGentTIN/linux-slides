@@ -1,8 +1,8 @@
 ---
-title: "0. Linux for Ops: intro"
-subtitle: "HOGENT toegepaste informatica"
-author: Andy Van Maele, Bert Van Vreckem
-date: 2025-2026
+title: "Introductie, studiewijzer"
+subtitle: "Linux (for Operations)"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # Praktische afspraken

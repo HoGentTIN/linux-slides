@@ -1,8 +1,8 @@
 ---
-title: "1. User management"
-subtitle: "HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
-date: 2025-2026
+title: "User management"
+subtitle: "Linux"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # Permissies (herhaling)

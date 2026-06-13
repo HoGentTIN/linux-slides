@@ -1,8 +1,8 @@
 ---
-title: "11.2. Linux installatie: expert-modus"
-subtitle: "Linux<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
-date: 2025-2026
+title: "Linux installatie: expert-modus"
+subtitle: "Linux"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # OS-installatie op servers

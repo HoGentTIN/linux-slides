@@ -1,8 +1,8 @@
 ---
-title: "4.1. Installatie van een webserver (EL)"
-subtitle: "Linux for Operations<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
-date: 2025-2026
+title: "Installatie van een webserver (EL)"
+subtitle: "Linux"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # Webserver installatie

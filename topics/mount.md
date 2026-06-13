@@ -1,8 +1,8 @@
 ---
-title: "9. Mount"
-subtitle: "Linux<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
-date: 2025-2026
+title: "Mounting filesystems"
+subtitle: "Linux"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # Pre knowledge

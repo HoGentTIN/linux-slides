@@ -1,8 +1,8 @@
 ---
-title: "10. Reproduceerbare Python development-omgevingen"
-subtitle: "Linux (for data Scientists)<br/>HOGENT toegepaste informatica"
-author: Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem
-date: 2025-2026
+title: "Reproduceerbare Python development-omgevingen"
+subtitle: "Linux"
+author: "HOGENT toegepaste informatica"
+date: "2026-2027"
 ---
 
 # Pyhon package management

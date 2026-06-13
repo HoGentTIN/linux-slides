@@ -151,10 +151,10 @@ class="title-slide slide level1">
 <section id="http-request-methods" class="slide level2">
 <h2>HTTP Request methods</h2>
 <p>E.g.</p>
-<pre class="console"><code>curl -X GET https://httpbin.org/anything
-curl -X POST https://httpbin.org/anything
-curl -X PUT https://httpbin.org/anything
-curl -X DELETE https://httpbin.org/anything
+<pre class="console"><code>curl -X GET https://httpbun.com/any
+curl -X POST https://httpbun.com/any
+curl -X PUT https://httpbun.com/any
+curl -X DELETE https://httpbun.com/any
 ...</code></pre>
 <p>Which request is default?</p>
 </section>
@@ -165,7 +165,7 @@ curl -X DELETE https://httpbin.org/anything
 <code>&lt;file&gt;</code></li>
 <li><code>-O</code>, <code>--remote-name</code></li>
 </ul>
-<pre class="console"><code>curl -s -o anything.json https://httpbin.org/anything
+<pre class="console"><code>curl -s -o anything.json https://httpbun.com/any
 curl -s -O https://www.google.com/robots.txt</code></pre>
 </section>
 <section id="show-headers" class="slide level2">
@@ -181,7 +181,7 @@ headers</li>
 <section id="set-request-headers" class="slide level2">
 <h2>Set request headers</h2>
 <pre class="console"><code>curl -H &#39;User-Agent: Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)&#39; \
-    https://httpbin.org/anything</code></pre>
+    https://httpbun.com/any</code></pre>
 </section>
 <section id="follow-redirects" class="slide level2">
 <h2>Follow redirects</h2>
@@ -199,48 +199,7 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="
 <li><code>-d</code>, <code>--data</code>
 <code>var=val&amp;var=val</code></li>
 </ul>
-<pre class="console"><code>curl -X POST -d &#39;penguin=tux&amp;color=blue&#39; https://httpbin.org/anything</code></pre>
-</section>
-<section id="opdracht-automatiseren-data-workflow" class="slide level2">
-<h2>Opdracht Automatiseren data-workflow</h2>
-<ol type="1">
-<li>Verzamel data over een bepaalde periode (bv. curl)</li>
-<li>Zet ruwe data om in geschikte vorm (bv. JSON/HTML -&gt; CSV)</li>
-<li>Simuleer analyse van de data (bv. grafiekje,
-basis-statistieken)</li>
-<li>Genereer rapport (webpagina, PDF)</li>
-</ol>
-<p>Resultaat in te dienen/demonstreren (= 30% examencijfer)</p>
-</section>
-<section id="stap-1.-verzamel-data" class="slide level2">
-<h2>Stap 1. Verzamel data</h2>
-<ul>
-<li>Kies een dataset</li>
-<li>Schrijf een script dat de gewenste data downloadt
-<ul>
-<li>Slaat op in bepaalde directory (instellen met variabele)</li>
-<li>Bestand met timestamp in de naam</li>
-</ul></li>
-</ul>
-</section>
-<section id="voorbeelden-open-datasets" class="slide level2">
-<h2>Voorbeelden open datasets</h2>
-<ul>
-<li><a
-href="https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d">CO2-meter
-in lokaal B.4.037</a></li>
-<li><a
-href="https://www.postman.com/cs-demo/public-rest-apis/collection/tfzpqfc/public-rest-apis">Lijst
-van publieke REST APIs</a> (Postman)</li>
-<li><a href="https://github.com/public-apis/public-apis">Public
-API’s</a> (Github-repo)</li>
-<li><a href="https://rapidapi.com/collection/list-of-free-apis">Free
-APIs for developers</a> (Rapid API)</li>
-<li><a
-href="https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/">Big
-list of free and open APIs</a> (Ana Kravitz)</li>
-<li>…</li>
-</ul>
+<pre class="console"><code>curl -X POST -d &#39;penguin=tux&amp;color=blue&#39; https://httpbun.com/any</code></pre>
 </section></section>
     </div>
   </div>

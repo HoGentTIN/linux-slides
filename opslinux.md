@@ -1,6 +1,6 @@
 # Slides Linux (voor IT Operations)
 
-Laatste wijziging: Sat Jun 13 21:17:01 UTC 2026
+Laatste wijziging: Sat Jun 13 21:20:29 UTC 2026
 
 Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux binnen het keuzepakket *IT Operations* in de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
@@ -12,7 +12,7 @@ De planning over de lesweken is niet noodzakelijk definitief, maar hangt o.a. af
 
 | Lesweek | Topic                                                           |
 | :-----: | :-------------------------------------------------------------- |
-|    1    | [Introductie](opslinux-intro.html)                       |
+|    1    | [Introductie](topics/opslinux-intro.html)                       |
 |         | First Linux VM                                                  |
 |         | [Organising Users](topics/user-mgmt.html)                       |
 |    2    | [Intro Git](topics/git-survival-guide.html)                     |

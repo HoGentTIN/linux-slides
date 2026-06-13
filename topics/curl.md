@@ -53,10 +53,10 @@ Try this:
 E.g.
 
 ```console
-curl -X GET https://httpbin.org/anything
-curl -X POST https://httpbin.org/anything
-curl -X PUT https://httpbin.org/anything
-curl -X DELETE https://httpbin.org/anything
+curl -X GET https://httpbun.com/any
+curl -X POST https://httpbun.com/any
+curl -X PUT https://httpbun.com/any
+curl -X DELETE https://httpbun.com/any
 ...
 ```
 
@@ -68,7 +68,7 @@ Which request is default?
 - `-O`, `--remote-name`
 
 ```console
-curl -s -o anything.json https://httpbin.org/anything
+curl -s -o anything.json https://httpbun.com/any
 curl -s -O https://www.google.com/robots.txt
 ```
 
@@ -85,7 +85,7 @@ curl -i http://google.com
 
 ```console
 curl -H 'User-Agent: Mozilla/4.0 (compatible; MSIE 5.0; Windows 98; DigExt)' \
-    https://httpbin.org/anything
+    https://httpbun.com/any
 ```
 
 ## Follow redirects
@@ -103,30 +103,5 @@ curl -L https://www.twitter.com   # volg de redirect
 - `-d`, `--data` `var=val&var=val`
 
 ```console
-curl -X POST -d 'penguin=tux&color=blue' https://httpbin.org/anything
+curl -X POST -d 'penguin=tux&color=blue' https://httpbun.com/any
 ```
-
-## Opdracht Automatiseren data-workflow
-
-1. Verzamel data over een bepaalde periode (bv. curl)
-2. Zet ruwe data om in geschikte vorm (bv. JSON/HTML -> CSV)
-3. Simuleer analyse van de data (bv. grafiekje, basis-statistieken)
-4. Genereer rapport (webpagina, PDF)
-
-Resultaat in te dienen/demonstreren (= 30% examencijfer)
-
-## Stap 1. Verzamel data
-
-- Kies een dataset
-- Schrijf een script dat de gewenste data downloadt
-    - Slaat op in bepaalde directory (instellen met variabele)
-    - Bestand met timestamp in de naam
-
-## Voorbeelden open datasets
-
-- [CO2-meter in lokaal B.4.037](https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d)
-- [Lijst van publieke REST APIs](https://www.postman.com/cs-demo/public-rest-apis/collection/tfzpqfc/public-rest-apis) (Postman)
-- [Public API's](https://github.com/public-apis/public-apis) (Github-repo)
-- [Free APIs for developers](https://rapidapi.com/collection/list-of-free-apis) (Rapid API)
-- [Big list of free and open APIs](https://mixedanalytics.com/blog/list-actually-free-open-no-auth-needed-apis/) (Ana Kravitz)
-- ...

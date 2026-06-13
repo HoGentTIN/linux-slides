@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem">
+  <title>9. Mount</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">9. Mount</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem,
+Jan Willem</p>
+  <p class="date">2025-2026</p>
+</section>
+
+<section>
+<section id="pre-knowledge" class="title-slide slide level1">
+<h1>Pre knowledge</h1>
+
+</section>
+<section id="pre-knowledge-1" class="slide level2">
+<h2>Pre knowledge</h2>
+<p>Disk devices and partitions have already surfaced in other courses.
+We briefly depict how you can explore these devices on Linux</p>
+</section>
+<section id="disk-devices" class="slide level2">
+<h2>Disk devices</h2>
+<p>Sata disks devices:</p>
+<pre class="console"><code>$ ls /dev/sd*
+/dev/sda    /dev/sdb</code></pre>
+</section>
+<section id="disk-partitions" class="slide level2">
+<h2>Disk partitions</h2>
+<p>Every disk:</p>
+<ul>
+<li>maximum 4 primary/extended partitions</li>
+<li>one extended partition can host further logical (sub)partitions</li>
+</ul>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Partition Type</th>
+<th style="text-align: left;">naming</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Primary (max 4)</td>
+<td style="text-align: left;">1-4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Extended (max 1)</td>
+<td style="text-align: left;">1-4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Logical</td>
+<td style="text-align: left;">5-</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="fdisk" class="slide level2">
+<h2>fdisk</h2>
+<p>Display and modify partitions of a disk.</p>
+<pre class="console"><code>$ sudo fdisk -l 
+Disk /dev/sda: 64 GiB, 68719476736 bytes, 134217728 sectors
+[...]
+
+Device     Boot   Start       End   Sectors  Size Id Type
+/dev/sda1          2048   4501503   4499456  2.1G 82 Linux swap / Solaris
+/dev/sda2  *    4501504 134217727 129716224 61.9G 83 Linux</code></pre>
+</section>
+<section id="file-systems" class="slide level2">
+<h2>File systems</h2>
+<p>Linux file systems (common):</p>
+<ul>
+<li>ext2</li>
+<li>ext3 - with journaling</li>
+<li>ext4 - latest version, with journaling</li>
+<li>xfs</li>
+</ul>
+<p>Other file systems:</p>
+<ul>
+<li>vfat</li>
+<li>ntfs</li>
+<li>iso9660</li>
+</ul>
+</section>
+<section id="formating-a-partition" class="slide level2">
+<h2>Formating a partition</h2>
+<p>mkfs = MaKe FileSystem</p>
+<pre class="console"><code>$ sudo mkfs -t ext3 /dev/sdb3
+mke2fs 1.45.5 (07-Jan-2020)
+Creating filesystem with 244224 4k blocks and 61056 inodes
+Filesystem UUID: 396d698d-eac6-44f3-9b95-34db7d461664
+Superblock backups stored on blocks:
+    32768, 98304, 163840, 229376
+
+Allocating group tables: done
+Writing inode tables: done
+Creating journal (4096 blocks): done
+Writing superblocks and filesystem accounting information: done</code></pre>
+</section>
+<section id="changing-defaults-of-a-file-system" class="slide level2">
+<h2>Changing defaults of a file system</h2>
+<p>Every partition has e.g. reserved blocks for root user only:</p>
+<pre class="console"><code>$ sudo tune2fs -l /dev/sdb3 | grep -i &quot;block count&quot;
+Block count:              104388
+Reserved block count:     5219</code></pre>
+</section>
+<section class="slide level2">
+
+<p>Update with <code>tune2fs</code> e.g. reduce to 3% reserved
+blocks</p>
+<pre class="console"><code>$ sudo tune2fs -m3 /dev/sdb3 &quot;
+tune2fs 1.45 (Jan-2020)
+Setting reserved blocks percentage to 3 (3131 blocks)</code></pre>
+</section></section>
+<section>
+<section id="mount" class="title-slide slide level1">
+<h1>Mount</h1>
+
+</section>
+<section id="manual-mount" class="slide level2">
+<h2>Manual mount</h2>
+<p>mount = Making a partition available in the file tree</p>
+<ol type="1">
+<li><p>make a mount point ~ a mount directory, e.g.</p>
+<pre class="console"><code>$ sudo mkdir /mnt/newmountpoint</code></pre></li>
+<li><p>bind the partition to the mount point</p>
+<pre class="console"><code>$ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint</code></pre></li>
+</ol>
+</section>
+<section id="display-mount-points" class="slide level2">
+<h2>Display mount points</h2>
+<pre class="console"><code>$ mount | grep sd
+/dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)
+/dev/sda4 on /home type ext4 (rw,relatime)</code></pre>
+</section>
+<section id="permanent-mounts" class="slide level2">
+<h2>Permanent mounts</h2>
+<p>Partitions which will be mounted at boot: <code>/etc/fstab</code></p>
+<pre class="console"><code>$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+/dev/sda1           /               ext4    errors=remount-ro 0       1
+/dev/sda2           /boot           ext4    defaults        0       2
+/dev/sda4           /home           ext4    defaults        0       2
+/dev/sda3           none            swap    sw              0       0</code></pre>
+</section>
+<section id="mount-options" class="slide level2">
+<h2>Mount options</h2>
+<p>Mount has some useful options:</p>
+<ul>
+<li>ro - read-only</li>
+<li>rw - read-write</li>
+<li>remount - mount an already mounted device with new options</li>
+</ul>
+<pre class="console"><code>$ mount | grep boot 
+/dev/sda2 on /boot type ext4 (rw,relatime)
+$ sudo mount -o remount,ro /boot/
+$ mount | grep boot 
+/dev/sda2 on /boot type ext4 (ro,relatime)</code></pre>
+</section></section>
+<section>
+<section id="uuid" class="title-slide slide level1">
+<h1>UUID</h1>
+
+</section>
+<section id="uuid-def" class="slide level2">
+<h2>UUID def</h2>
+<p>UUID = universally unique identifier</p>
+<ul>
+<li>128 bits</li>
+<li>generated while formating</li>
+</ul>
+</section>
+<section id="lookup-uuid" class="slide level2">
+<h2>lookup UUID</h2>
+<pre class="console"><code>$ sudo tune2fs -l /dev/sda2 | grep UUID
+Filesystem UUID:          fd5db924-4be6-4fee-9a92-ca9db8fe2b9c
+$ blkid /dev/sda2
+/dev/sda2: UUID=&quot;fd5db924-4be6-4fee-9a92-ca9db8fe2b9c&quot; TYPE=&quot;ext4&quot; PARTUUID=&quot;97584a69-02&quot;</code></pre>
+</section>
+<section id="fstab-with-uuid" class="slide level2">
+<h2>fstab with UUID</h2>
+<p>unique indication of partition in case e.g. sda and sdb get switched
+when booting</p>
+<pre class="console"><code>$ cat /etc/fstab
+# /etc/fstab: static file system information.
+#
+# &lt;file system&gt; &lt;mount point&gt;   &lt;type&gt;  &lt;options&gt;       &lt;dump&gt;  &lt;pass&gt;
+# / was on /dev/sda1 during installation
+UUID=757350f2-9cb2-4ce5-86bc-4528dfe9d9ac /               ext4    errors=remount-ro 0       1
+# /boot was on /dev/sda2 during installation
+UUID=fd5db924-4be6-4fee-9a92-ca9db8fe2b9c /boot           ext4    defaults        0       2
+# /home was on /dev/sda4 during installation
+UUID=502c37ca-255c-4a38-9294-9802a5fb5941 /home           ext4    defaults        0       2
+# swap was on /dev/sda3 during installation
+UUID=b559d746-ef9d-45bc-acfb-faa036b3418f none            swap    sw              0       0</code></pre>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem">
+  <title>2. Combining commands towards scripting 101</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">2. Combining commands towards scripting 101</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem,
+Jan Willem</p>
+  <p class="date">2025-2026</p>
+</section>
+
+<section>
+<section id="streams-pipes-redirects" class="title-slide slide level1">
+<h1>Streams, pipes, redirects</h1>
+
+</section>
+<section id="input-en-output" class="slide level2">
+<h2>Input en output</h2>
+<p><img
+data-src="http://linux-training.be/funhtml/images/bash_stdin_stdout_stderr.svg" /></p>
+<ul>
+<li><em>stdin</em>, standard input
+<ul>
+<li>vgl. Java <code>System.in</code></li>
+</ul></li>
+<li><em>stdout</em>, standard output
+<ul>
+<li>vgl. <code>System.out</code></li>
+</ul></li>
+<li><em>stderr</em>, standard error
+<ul>
+<li>vgl. <code>System.err</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="normaal-gedrag" class="slide level2">
+<h2>Normaal gedrag</h2>
+<ul>
+<li><em>standard input</em>: invoer toetsenbord</li>
+<li><em>standard output/error</em>: afdrukken op scherm (console)</li>
+</ul>
+<p><img
+data-src="http://linux-training.be/funhtml/images/bash_ioredirection_keyboard_display.png" /></p>
+</section>
+<section id="io-redirection-1" class="slide level2">
+<h2>I/O Redirection (1)</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Syntax</th>
+<th style="text-align: left;">Betekenis</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd &gt; file</code></td>
+<td style="text-align: left;">schrijf uitvoer van <code>cmd</code> weg
+naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &gt;&gt; file</code></td>
+<td style="text-align: left;">voeg toe aan einde van
+<code>file</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd 2&gt; file</code></td>
+<td style="text-align: left;">schrijf foutboodschappen van
+<code>cmd</code> weg naar <code>file</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cmd &lt; file</code></td>
+<td style="text-align: left;">gebruik inhoud van <code>file</code> als
+invoer voor <code>cmd</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cmd1 | cmd2</code></td>
+<td style="text-align: left;">gebruik uitvoer van <code>cmd1</code> als
+invoer voor <code>cmd2</code></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="io-redirection-2" class="slide level2">
+<h2>I/O Redirection (2)</h2>
+<p><code>cmd &gt; file</code></p>
+<p><img
+data-src="http://linux-training.be/funhtml/images/bash_output_redirection.png" /></p>
+</section>
+<section id="io-redirection-3" class="slide level2">
+<h2>I/O Redirection (3)</h2>
+<p><code>cmd 2&gt; file</code></p>
+<p><img
+data-src="http://linux-training.be/funhtml/images/bash_error_redirection.png" /></p>
+</section>
+<section id="combineren" class="slide level2">
+<h2>Combineren</h2>
+<div class="sourceCode" id="cb1"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># stdout en stderr apart wegschrijven</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> directories.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># stderr &quot;negeren&quot;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> directories.txt <span class="dv">2</span><span class="op">&gt;</span> /dev/null</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># stdout en stderr samen wegschrijven</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&gt;</span> all.txt <span class="dv">2</span><span class="op">&gt;&amp;</span><span class="dv">1</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="op">&amp;&gt;</span> all.txt</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># invoer én uitvoer omleiden</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">sort</span> <span class="op">&lt;</span> unsorted.txt <span class="op">&gt;</span> sorted.txt <span class="dv">2</span><span class="op">&gt;</span> errors.txt</span></code></pre></div>
+</section>
+<section id="foutboodschappen-afdrukken-op-stderr" class="slide level2">
+<h2>Foutboodschappen afdrukken (op stderr)</h2>
+<div class="sourceCode" id="cb2"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Error: </span><span class="va">${dir}</span><span class="st"> is not a directory&quot;</span> <span class="op">&gt;&amp;</span><span class="dv">2</span></span></code></pre></div>
+</section>
+<section id="here-documents-1" class="slide level2">
+<h2>Here documents (1)</h2>
+<p>Als je meer dan één lijn wil afdrukken:</p>
+<div class="sourceCode" id="cb3"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="st">Usage: </span><span class="va">${0}</span><span class="st"> [OPT]... [ARG]..</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="st">OPTIONS:</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="st">  -h, --help  Print this help message</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="op">_EOF_</span></span></code></pre></div>
+<p><em>Let op:</em> geen spaties toegelaten vóór de eindemarkering</p>
+</section>
+<section id="here-documents-2" class="slide level2">
+<h2>Here documents (2)</h2>
+<p>Dit kan bv. ook:</p>
+<div class="sourceCode" id="cb4"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">mysql</span> <span class="at">-uroot</span> <span class="at">-p</span><span class="st">&quot;</span><span class="va">${db_password}</span><span class="st">&quot;</span> mysql <span class="op">&lt;&lt; _EOF_</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="st">DROP DATABASE IF EXISTS drupal;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="st">CREATE DATABASE drupal;</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="st">GRANT ALL PRIVILEGES ON drupal TO </span><span class="va">${drupal_usr}</span><span class="st">@localhost</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="st">  IDENTIFIED BY </span><span class="va">${drupal_password}</span><span class="st">;</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="op">_EOF_</span></span></code></pre></div>
+</section>
+<section id="pipes" class="slide level2">
+<h2>Pipes</h2>
+<p>Probeer het volgende eens!</p>
+<pre class="console"><code>$ sudo apt install fortune cowsay lolcat figlet
+$ echo ${USER} | figlet
+$ fortune
+$ fortune | cowsay
+$ fortune | cowsay | lolcat</code></pre>
+</section>
+<section id="here-strings" class="slide level2">
+<h2>Here strings</h2>
+<pre class="console"><code>echo &quot;Hello world&quot; | figlet</code></pre>
+<p>Zonder “overbodig” proces/pipe:</p>
+<pre class="console"><code>figlet &lt;&lt;&lt; &quot;Hello world!&quot;</code></pre>
+</section></section>
+<section>
+<section id="filters" class="title-slide slide level1">
+<h1>Filters</h1>
+
+</section>
+<section id="filtercommandos" class="slide level2">
+<h2>Filtercommando’s</h2>
+<ul>
+<li>Filter = commando dat:
+<ol type="1">
+<li>leest van <code>stdin</code> of bestand,</li>
+<li>tekst transformeert, en</li>
+<li>wegschrijft naar <code>stdout</code></li>
+</ol></li>
+<li>Combineer filters via <code>|</code> (pipe) om complexe bewerkingen
+op tekst toe te passen
+<ul>
+<li>De <em>UNIX-filosofie</em></li>
+</ul></li>
+</ul>
+</section>
+<section id="filtercommandos-2" class="slide level2">
+<h2>Filtercommando’s (2)</h2>
+<p>Ofwel bestand meegeven, ofwel stdin</p>
+<pre class="console"><code>filter file1 file2...
+
+filter &lt; file
+
+cmd | filter</code></pre>
+<p>Merk op: <code>cat file | filter</code> kan je beter anders
+schrijven!</p>
+</section>
+<section id="io-redirection-naar-bestand-én-stdout"
+class="slide level2">
+<h2>I/O redirection naar bestand én stdout</h2>
+<div class="sourceCode" id="cb9"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">find</span> / <span class="at">-type</span> d <span class="kw">|</span> <span class="fu">tee</span> directories.txt</span></code></pre></div>
+<p><code>tee</code> schrijft weg naar bestand én stdout.</p>
+</section>
+<section id="cat-tac-en-shuf" class="slide level2">
+<h2><code>cat</code>, <code>tac</code> en <code>shuf</code></h2>
+<ul>
+<li><code>cat</code>: wat binnenkomt op stdin afdrukken op stdout</li>
+<li><code>tac</code>: idem, maar in omgekeerde volgorde</li>
+<li><code>shuf</code>: in willekeurige volgorde</li>
+</ul>
+<pre class="console"><code>$ cat file1 file2 &gt; file3
+$ tac file1
+$ shuf cards.txt</code></pre>
+</section>
+<section id="head-en-tail" class="slide level2">
+<h2><code>head</code> en <code>tail</code></h2>
+<ul>
+<li>Toon (10) eerste/laatste regels</li>
+</ul>
+<pre class="console"><code>$ head /etc/passwd
+$ tail -5 /etc/passwd
+$ tail -f /var/log/syslog</code></pre>
+</section>
+<section id="cut-paste-en-join" class="slide level2">
+<h2><code>cut</code>, <code>paste</code> en <code>join</code></h2>
+<ul>
+<li><code>cut</code>: selecteer kolommen uit gestructureerde tekst (bv.
+CSV)</li>
+<li><code>paste</code>: voeg bestanden regel per regel samen</li>
+<li><code>join</code>: voeg bestanden samen ahv gemeenschappelijke
+kolom</li>
+</ul>
+<pre class="console"><code>cut -d: -f1,3-4 /etc/passwd
+paste -d&#39;;&#39; users.txt passwords.txt</code></pre>
+</section>
+<section class="slide level2">
+
+<pre class="console"><code>$ cat foodtypes.txt
+1 Protein
+2 Carbohydrate
+
+$ cat foods.txt
+1 Cheese 
+2 Potato
+
+$ join foodtypes.txt foods.txt
+1 Protein Cheese
+2 Carbohydrate Potato</code></pre>
+</section>
+<section id="sort-en-uniq" class="slide level2">
+<h2><code>sort</code> en <code>uniq</code></h2>
+<pre class="console"><code>$ sort unsorted.txt
+$ uniq -c sorted.txt</code></pre>
+<p>Welke commando’s gebruik ik het vaakst?</p>
+<pre class="console"><code>$ history | awk &#39;{ print $2 }&#39; | sort | uniq -c | sort -nr | head</code></pre>
+</section>
+<section id="fmt-nl-en-wc" class="slide level2">
+<h2><code>fmt</code>, <code>nl</code> en <code>wc</code></h2>
+<pre class="console"><code>$ fmt -w40 some-file.txt
+$ nl script.sh
+$ wc thesis.md
+$ wc --words thesis.md
+$ ls /usr/bin | wc -l</code></pre>
+</section>
+<section id="column" class="slide level2">
+<h2><code>column</code></h2>
+<p>Invoer in kolommen afdrukken.</p>
+<pre class="console"><code>$ column -t -s: &lt; /etc/passwd
+$ column -J -N user,passwd,uid,gid,name,home,shell -s: &lt; /etc/passwd</code></pre>
+<ul>
+<li><code>-t</code>, <code>--table</code>: Afdrukken in kolommen</li>
+<li><code>-J</code>, <code>--json</code>: Vertalen naar JSON</li>
+<li><code>-s</code>, <code>--separator</code>: Input separator</li>
+<li><code>-N</code>, <code>--table-columns</code>: namen velden</li>
+</ul>
+</section>
+<section id="grep" class="slide level2">
+<h2><code>grep</code></h2>
+<pre class="console"><code>$ grep root /etc/passwd
+$ grep &#39;^#&#39; script.sh
+$ sudo grep -i dhcp /var/log/syslog</code></pre>
+<p>Moet je zoeken in een reeks directories? Gebruik
+<code>silversearcher-ag</code></p>
+<pre class="console"><code>$ ag TODO *.java</code></pre>
+</section>
+<section id="buitenbeentje-tr" class="slide level2">
+<h2>Buitenbeentje: <code>tr</code></h2>
+<ul>
+<li>TRanslate</li>
+<li>Teken per teken ipv lijn per lijn</li>
+<li>Enkel stdin, geen files</li>
+</ul>
+<pre class="console"><code>$ tr &#39;A-Z&#39; &#39;a-z&#39; &lt; UPPERCASE.txt &gt; lowercase.txt
+$ tr -d &#39;[:punct:]&#39; &lt; file.txt</code></pre>
+</section>
+<section id="de-stream-editor-sed" class="slide level2">
+<h2>De Stream EDitor, <code>sed</code></h2>
+<div class="sourceCode" id="cb21"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Zoeken en vervangen (1x per regel)</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/&#39;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a><span class="co"># &quot;Globaal&quot;, meerdere keren per regel</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;s/foo/bar/g&#39;</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Regels die beginnen met &#39;#&#39; verwijderen</span></span>
+<span id="cb21-8"><a href="#cb21-8" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^#/d&#39;</span></span>
+<span id="cb21-9"><a href="#cb21-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb21-10"><a href="#cb21-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Lege regels verwijderen</span></span>
+<span id="cb21-11"><a href="#cb21-11" aria-hidden="true" tabindex="-1"></a><span class="fu">sed</span> <span class="st">&#39;/^$/d&#39;</span></span></code></pre></div>
+</section>
+<section id="de-awk-taal" class="slide level2">
+<h2>De AWK-taal</h2>
+<p>Wat tussen accolades staat wordt uitgevoerd op elke regel</p>
+<div class="sourceCode" id="cb22"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk 4e kolom af (afgebakend door &quot;whitespace&quot;)</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ print $4 }&#39;</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Enkel regels afdrukken die beginnen met #</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;/^#/ { print $0 }&#39;</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk kolom 2 en 4 af, gescheiden door ;</span></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">&#39;{ printf &quot;%s;%s&quot;, $2, $4 }&#39;</span></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Druk de namen van de &quot;gewone&quot; gebruikers af</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="at">-F:</span> <span class="st">&#39;{ if($3 &gt; 1000) print $1 }&#39;</span> /etc/passwd</span></code></pre></div>
+</section>
+<section id="code-smells" class="slide level2">
+<h2>Code smells</h2>
+<p>Vermijd opstart van overbodige processen:</p>
+<div class="sourceCode" id="cb23"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Overbodige `cat`!</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cat</span> bestand <span class="kw">|</span> <span class="ex">filter</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter:</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a><span class="ex">filter</span> bestand</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Overbodige `echo`!</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;String&quot;</span> <span class="kw">|</span> <span class="ex">filter</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Beter: here string</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a><span class="ex">filter</span> <span class="op">&lt;&lt;&lt;</span> <span class="st">&quot;String&quot;</span></span></code></pre></div>
+</section></section>
+<section>
+<section id="intro-bash-scripts" class="title-slide slide level1">
+<h1>Intro Bash scripts</h1>
+
+</section>
+<section id="een-script-schrijven" class="slide level2">
+<h2>Een script schrijven</h2>
+<ol type="1">
+<li><p>Maak bestand aan (bv. <code>script.sh</code>) met een
+teksteditor, bv.</p>
+<div class="sourceCode" id="cb24"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co">#! /bin/bash</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hallo </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div></li>
+<li><p>Maak bestand uitvoerbaar:
+<code>chmod +x script.sh</code></p></li>
+<li><p>Voer uit: <code>./script.sh</code></p></li>
+</ol>
+</section>
+<section id="de-shebang" class="slide level2">
+<h2>De “shebang”</h2>
+<ul>
+<li>Eerste regel van een script</li>
+<li>Begint met <code>#!</code> (<code>#</code> = hash; <code>!</code> =
+bang)</li>
+<li>Absoluut pad naar de interpreter voor het script, bv:
+<ul>
+<li><code>#! /usr/bin/python</code></li>
+<li><code>#! /usr/bin/ruby</code></li>
+<li><code>#! /usr/bin/env bash</code>
+<ul>
+<li>= zoek in <code>${PATH}</code> naar <code>bash</code></li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="tekst-afdrukken" class="slide level2">
+<h2>Tekst afdrukken</h2>
+<p>Wat is het verschil?</p>
+<div class="sourceCode" id="cb25"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span></span></code></pre></div>
+</section>
+<section class="slide level2">
+
+<div class="sourceCode" id="cb26"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="va">var</span><span class="op">=</span><span class="st">&quot;world&quot;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${var}</span><span class="st">&quot;</span>    <span class="co"># Binnen &quot; &quot; wordt substitutie toegepast</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&#39;Hello ${var}&#39;</span>    <span class="co"># Binnen &#39; &#39; NIET!</span></span></code></pre></div>
+</section>
+<section id="variabelen" class="slide level2">
+<h2>Variabelen</h2>
+<p>Bash-variabelen zijn (meestal) strings.</p>
+<ul>
+<li>Declaratie: <code>variabele=waarde</code>
+<ul>
+<li><strong>geen</strong> spaties rond <code>=</code></li>
+</ul></li>
+<li>Waarde v/e variabele opvragen: <code>${variable}</code></li>
+<li>Gebruik in strings (met dubbele aanhalingstekens):</li>
+</ul>
+<div class="sourceCode" id="cb27"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">&quot;Hello </span><span class="va">${USER}</span><span class="st">&quot;</span></span></code></pre></div>
+</section>
+<section id="variabelen-codestijl" class="slide level2">
+<h2>Variabelen: codestijl</h2>
+<ul>
+<li>Gebruik zoveel mogelijk de notatie <code>${var}</code>
+<ul>
+<li><em>accolades</em></li>
+</ul></li>
+<li>Gebruik dubbele aanhalingstekens: <code>"${var}"</code>
+<ul>
+<li>vermijd <em>splitsen</em> van woorden</li>
+</ul></li>
+</ul>
+<div class="sourceCode" id="cb28"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="va">bestand</span><span class="op">=</span><span class="st">&quot;Mijn bestand.txt&quot;</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="va">${bestand}</span>        <span class="co"># Fout</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="fu">touch</span> <span class="st">&quot;</span><span class="va">${bestand}</span><span class="st">&quot;</span>      <span class="co"># Juist</span></span></code></pre></div>
+</section>
+<section id="onbestaande-variabelen-opvragen" class="slide level2">
+<h2>Onbestaande variabelen opvragen</h2>
+<ul>
+<li>Onbestaande variabele wordt beschouwd als <em>lege string</em>.
+<ul>
+<li>Oorzaak van veel fouten in shell-scripts!</li>
+<li><code>set -o nounset</code> ⇒ script afbreken</li>
+</ul></li>
+</ul>
+</section>
+<section id="zichtbaarheid-variabelen-scope" class="slide level2">
+<h2>Zichtbaarheid variabelen (scope)</h2>
+<p>Enkel binnen zelfde “shell”, niet binnen “subshells”</p>
+<ul>
+<li>Een script oproepen creëert een subshell</li>
+<li>Maak “globale”, of <em>omgevingsvariabele</em> met
+<code>export</code>:</li>
+</ul>
+<div class="sourceCode" id="cb29"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE1</span><span class="op">=</span>value</span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a><span class="va">VARIABLE2</span><span class="op">=</span>value</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">VARIABLE2</span></span></code></pre></div>
+</section>
+<section id="variabelen-naamgeving" class="slide level2">
+<h2>Variabelen: naamgeving</h2>
+<p>Conventie naamgeving:</p>
+<ul>
+<li>Lokale variabelen: kleine letters, bv: <code>foo_bar</code></li>
+<li>Omgevingsvariabelen: hoofdletters, bv. <code>FOO_BAR</code></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

@@ -2,7 +2,8 @@
 
 - [Linux for IT Operations](opslinux.html)
 - [Linux for Data Scientists](datalinux.html)
+- [Linux & Data Processing Automation](datalinux.html)
 
 De slides zijn opgemaakt in [Markdown](https://guides.github.com/features/mastering-markdown/) en worden met [Pandoc](https://pandoc.org/) omgezet naar een [reveal.js](https://revealjs.com/) presentatie. De broncode is gepubliceerd op: <https://github.com/hogenttin/linux-slides/>
 
-Laatste wijziging: Thu Nov 20 20:40:02 UTC 2025
+Laatste wijziging: Sat Jun 13 20:58:47 UTC 2026

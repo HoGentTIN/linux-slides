@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="author" content="Thomas Parmentier, Andy Van Maele, Bert Van Vreckem, Jan Willem">
+  <title>6. Automatiseren webserverinstallatie</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="./reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="./reveal.js/dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: 1;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="./reveal.js/dist/theme/hogent.css" id="theme">
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+<section id="title-slide">
+  <h1 class="title">6. Automatiseren webserverinstallatie</h1>
+  <p class="subtitle">Linux<br/>HOGENT toegepaste informatica</p>
+  <p class="author">Thomas Parmentier, Andy Van Maele, Bert Van Vreckem,
+Jan Willem</p>
+  <p class="date">2025-2026</p>
+</section>
+
+<section>
+<section id="automatiseren-webserverinstallatie"
+class="title-slide slide level1">
+<h1>Automatiseren webserverinstallatie</h1>
+
+</section>
+<section id="de-kracht-van-automatisering" class="slide level2">
+<h2>De kracht van automatisering</h2>
+<ul>
+<li>Installeren van een server is terugkerende taak</li>
+<li>Moet snel én foutloos kunnen gebeuren!
+<ul>
+<li>1x, 10x, 100x, …</li>
+</ul></li>
+<li>⇒ Automatiseren is een noodzaak!</li>
+</ul>
+</section>
+<section id="kwaliteitsbewaking-bij-server-installatie"
+class="slide level2">
+<h2>Kwaliteitsbewaking bij server-installatie</h2>
+<p>Opbouw in de opleiding:</p>
+<ol type="1">
+<li>Gedetailleerde procedurehandleiding
+<ul>
+<li>SELab, Linux, System Engineering Project</li>
+</ul></li>
+<li>Script voor automatisering
+<ul>
+<li>Linux, System Engineering Project</li>
+</ul></li>
+<li>Configuration Management
+<ul>
+<li>Infrastructure Automation</li>
+</ul></li>
+</ol>
+</section>
+<section id="tool-vagrant" class="slide level2">
+<h2>Tool: Vagrant</h2>
+<p><a href="https://www.vagrantup.com/"
+class="uri">https://www.vagrantup.com/</a></p>
+<ul>
+<li>Command-line applicatie</li>
+<li>Automatiseert aanmaken en configureren van (VirtualBox) VMs</li>
+<li>Draait op Linux, Windows, MacOS</li>
+</ul>
+</section>
+<section id="waarom-vagrant-gebruiken" class="slide level2">
+<h2>Waarom Vagrant gebruiken?</h2>
+<ul>
+<li>Snel nieuwe VMs aanmaken</li>
+<li>Reproduceerbaar!
+<ul>
+<li>Enkel code, geen .ova van +4GB</li>
+<li>Overdraagbaar naar ander platform</li>
+</ul></li>
+<li>Aantal VMs onder controle houden</li>
+</ul>
+</section>
+<section id="installeer-vagrant" class="slide level2">
+<h2>Installeer Vagrant</h2>
+<p>Op je fysieke systeem!</p>
+<ul>
+<li>Windows: <code>winget install vagrant</code></li>
+<li>MacOS: <code>brew install vagrant</code></li>
+<li>Linux: <code>apt install vagrant</code> (of <code>dnf</code>)</li>
+</ul>
+<p>Of ga naar <a href="https://www.vagrantup.com/downloads"
+class="uri">https://www.vagrantup.com/downloads</a></p>
+</section>
+<section id="werkomgeving-opzetten" class="slide level2">
+<h2>Werkomgeving opzetten</h2>
+<ul>
+<li>Kloon je Github-repo voor je labo-taken op je <strong>fysieke
+systeem</strong></li>
+<li>Ga naar de directory <code>automation/</code></li>
+<li>Lees de README.md</li>
+</ul>
+</section>
+<section id="overzicht-repo" class="slide level2">
+<h2>Overzicht repo</h2>
+<pre class="console"><code>$ tree
+.
+├── LICENSE.md
+├── provisioning
+│   ├── common.sh
+│   ├── db.sh
+│   └── web.sh
+├── README.md
+├── Vagrantfile
+└── vagrant-hosts.yml
+
+1 directory, 7 files</code></pre>
+</section>
+<section id="overzicht-repo-2" class="slide level2">
+<h2>Overzicht repo (2)</h2>
+<ul>
+<li><code>Vagrantfile</code>: configuratiebestand van Vagrant
+<ul>
+<li>hoef je niet aan te komen</li>
+</ul></li>
+<li><code>vagrant-hosts.yml</code>: overzicht VMs in de opstelling
+<ul>
+<li>incl. eigenschappen zoals IP-adres</li>
+</ul></li>
+<li><code>provisioning/</code>: installatiescripts voor VMs</li>
+</ul>
+</section>
+<section id="werken-met-vagrant" class="slide level2">
+<h2>Werken met Vagrant</h2>
+<pre class="console"><code>$ vagrant status
+Current machine states:
+
+db                        not created (virtualbox)
+web                       not created (virtualbox)
+
+This environment represents multiple VMs. The VMs are all listed
+above with their current state. For more information about a specific
+VM, run `vagrant status NAME`.</code></pre>
+</section>
+<section id="start-de-db-vm-op" class="slide level2">
+<h2>Start de <code>db</code> VM op</h2>
+<pre class="console"><code>$ vagrant up db
+Bringing machine &#39;db&#39; up with &#39;virtualbox&#39; provider...
+==&gt; db: Importing base box &#39;bento/almalinux-9&#39;...
+==&gt; db: Matching MAC address for NAT networking...
+==&gt; db: Checking if box &#39;bento/almalinux-9&#39; version &#39;202109.10.0&#39; is up to date...
+==&gt; db: Setting the name of the VM: linux-2223-bertvv_db_1635848839364_33506
+==&gt; db: Clearing any previously set network interfaces...
+==&gt; db: Preparing network interfaces based on configuration...
+    db: Adapter 1: nat
+    db: Adapter 2: intnet
+==&gt; db: Forwarding ports...
+    db: 22 (guest) =&gt; 2222 (host) (adapter 1)
+==&gt; db: Running &#39;pre-boot&#39; VM customizations...
+==&gt; db: Booting VM...
+==&gt; db: Waiting for machine to boot. This may take a few minutes...
+    db: SSH address: 127.0.0.1:2222
+    db: SSH username: vagrant
+    db: SSH auth method: private key
+    db: 
+    db: Vagrant insecure key detected. Vagrant will automatically replace
+    db: this with a newly generated keypair for better security.
+    db: 
+    db: Inserting generated public key within guest...
+    db: Removing insecure key from the guest if it&#39;s present...
+    db: Key inserted! Disconnecting and reconnecting using new SSH key...
+==&gt; db: Machine booted and ready!
+==&gt; db: Checking for guest additions in VM...
+==&gt; db: Setting hostname...
+==&gt; db: Configuring and enabling network interfaces...
+==&gt; db: Mounting shared folders...
+    db: /vagrant =&gt; /home/bert/Documents/Vakken/Linux/22-23/linux-2223-bertvv
+==&gt; db: Running provisioner: shell...
+    db: Running: /tmp/vagrant-shell20211102-9694-yq9qn5.sh
+    db: [LOG]  === Starting common provisioning tasks ===
+    db: [LOG]  Ensuring SELinux is activePermissivePermissivePermissive
+    db: [LOG]  Installing useful packages
+    [...]
+    db: [LOG]  Securing the database
+    db: [LOG]  Creating database and user
+    db: [LOG]  Creating database table and add some data</code></pre>
+</section>
+<section id="wat-gebeurt-er" class="slide level2">
+<h2>Wat gebeurt er?</h2>
+<ol type="1">
+<li>Een nieuwe VirtualBox-VM wordt aangemaakt
+<ul>
+<li>Check in de GUI!</li>
+</ul></li>
+<li>Een zgn. “base box” wordt zo nodig gedownload
+<ul>
+<li>= VM image met minimale installatie</li>
+<li>hier: <a
+href="https://app.vagrantup.com/bento/boxes/almalinux-9">bento/almalinux-9</a></li>
+<li>wordt later hergebruikt</li>
+</ul></li>
+</ol>
+</section>
+<section class="slide level2">
+
+<ol start="3" type="1">
+<li>De VM wordt geconfigureerd:
+<ul>
+<li>Naam, CPU, RAM, netwerkkaarten, …</li>
+<li>IP-adres</li>
+<li>Gedeelde map <code>/vagrant</code></li>
+</ul></li>
+<li>Het installatie-script wordt uitgevoerd</li>
+</ol>
+</section>
+<section id="inloggen" class="slide level2">
+<h2>Inloggen</h2>
+<pre class="console"><code>$ vagrant ssh db
+
+This system is built by the Bento project by Chef Software
+More information can be found at https://github.com/chef/bento
+[vagrant@db ~]$ ip a show dev eth1
+3: eth1: &lt;BROADCAST,MULTICAST,UP,LOWER_UP&gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+    link/ether 08:00:27:1f:c4:a7 brd ff:ff:ff:ff:ff:ff
+    inet 192.168.76.3/24 brd 192.168.76.255 scope global noprefixroute eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::a00:27ff:fe1f:c4a7/64 scope link 
+       valid_lft forever preferred_lft forever
+[vagrant@db ~]$ </code></pre>
+</section>
+<section id="probeer-het-volgende" class="slide level2">
+<h2>Probeer het volgende!</h2>
+<ul>
+<li>Kan je pingen vanuit Linux Mint naar deze VM?</li>
+<li>Draait MariaDB?</li>
+<li>Kan je inloggen in de database?</li>
+<li>Welke data zit in de database?</li>
+</ul>
+<p>Tip: bekijk het installatiescript <code>provisioning/db.sh</code></p>
+</section>
+<section id="belangrijkste-commandos" class="slide level2">
+<h2>Belangrijkste commando’s</h2>
+<table>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Commando</th>
+<th style="text-align: left;">Taak</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant status</code></td>
+<td style="text-align: left;">Overzicht omgeving</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant up VM</code></td>
+<td style="text-align: left;">start VM op</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant ssh VM</code></td>
+<td style="text-align: left;">inloggen op VM</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant halt VM</code></td>
+<td style="text-align: left;">VM uitschakelen</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant reload VM</code></td>
+<td style="text-align: left;">VM rebooten</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>vagrant provision VM</code></td>
+<td style="text-align: left;">Installatie-script uitvoeren</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>vagrant destroy VM</code></td>
+<td style="text-align: left;">VM vernietigen</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="opdracht" class="slide level2">
+<h2>Opdracht</h2>
+<ul>
+<li>Maak van <code>web</code> een webserver</li>
+<li>Poort 80, 443 (firewall!)</li>
+<li>Test-php script dat resultaat query naar <code>db</code> toont</li>
+<li>Eindresultaat: <code>vagrant up web</code> ⇒ werkende
+webserver!</li>
+</ul>
+</section>
+<section id="werkwijze" class="slide level2">
+<h2>Werkwijze</h2>
+<ol type="1">
+<li>Begin met <code>vagrant up web</code> en log in</li>
+<li>Open installatiescript <code>provisioning/web.sh</code> in een
+editor</li>
+<li>Zoek de juiste commando’s voor de webserverinstallatie
+(labo-verslagen!)</li>
+<li>Voeg toe aan installatiescript</li>
+<li><code>vagrant provision web</code></li>
+</ol>
+<p>Herhaal 3-5 <strong>in kleine iteraties!</strong></p>
+</section>
+<section id="richtlijnen" class="slide level2">
+<h2>Richtlijnen</h2>
+<ul>
+<li>Rebooten/herbeginnen niet nodig! <code>provision</code> is
+voldoende</li>
+<li>Controleer telkens het effect van wijzigingen</li>
+<li>Onherstelbaar beschadigd? <code>vagrant destroy</code></li>
+<li>Script mag <strong>geen input</strong> van gebruiker vragen</li>
+<li>Script moet meermaals na elkaar uitgevoerd kunnen worden
+<ul>
+<li><strong>idempotentie</strong></li>
+</ul></li>
+<li>Script klaar?
+<ul>
+<li>Test met <code>vagrant destroy web; vagrant up web</code></li>
+</ul></li>
+</ul>
+</section>
+<section id="idempotentie" class="slide level2">
+<h2>Idempotentie</h2>
+<ul>
+<li>Wiskundige eigenschap v/e operatie</li>
+<li>Een operatie herhaald uitvoeren verandert het resultaat niet meer na
+de 1e keer</li>
+<li>Server installatie: handeling wordt enkel uitgevoerd indien nodig
+<ul>
+<li>Sommige Linux commando’s zijn al idempotent (bv.
+<code>dnf install</code>)</li>
+<li>Sommige commando’s zijn dat niet (bv. <code>useradd</code>)</li>
+<li>⇒ test of het nodig is bepaalde taak uit te voeren!</li>
+</ul></li>
+</ul>
+</section></section>
+    </div>
+  </div>
+
+  <script src="./reveal.js/dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="./reveal.js/plugin/notes/notes.js"></script>
+  <script src="./reveal.js/plugin/search/search.js"></script>
+  <script src="./reveal.js/plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: false,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

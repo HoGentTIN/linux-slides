@@ -1,34 +1,36 @@
-# Slides Linux for Data Scientists
+# Slides Linux for Data Scientists/Linux & Data Processing Automation
 
-Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux/Infrastructure Automation for Data Scientists binnen het keuzepakket *Data Engineering* in het tweede/derde modeltraject van de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
+Laatste wijziging:
 
-**Let op! De slides zijn niet de cursus!** Het leerpad op Chamilo bevat de volledige leerstof.
+Dit is een overzicht van de slides voor de lessen van opleidingsonderdelen *Linux for Data Scientists* en *Linux & Data Processing Automation* in de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 
-Je kan **handouts** van de slides genereren door ze te openen in de browser en Ctrl+P te drukken (of Afdrukken te kiezen in het menu). Kies vervolgens voor "Save as PDF".
+**Let op! De slides zijn niet de cursus!** Op Orion vind je de volledige leerstof (onder Inhoud).
 
-- 0 - [Linux for Data Scientists: intro](00-datalinux-intro.html)
-- 1 - Software-installatie, curl
-    - [Software-installatie](03-software-installatie.html)
-    - [Curl](03-curl.html)
-- 2 - [I/O-redirection, filters, scripting](02-towards-scripting.html)
-- 3 - [User Management](01-user-mgmt.html)
-- 4 - Installatie van een webserver, scripting
-    - [Webserver](04-installatie-webserver-deb.html)
-    - [Scripting 102](04-scripting.html)
-- 5 - [Advanced text processing](05-advanced-text-processing.html)
-- 6 - [Scripting](06-scripting.html)
-- 7 - [Complexe scripts, cronjobs](07-scripting-cronjobs.html)
-- 8 - Containervirtualisatie, Secure SHell
-    - [Containervirtualisatie (Docker)](08-containers.html)
-    - [Secure Shell](08-ssh.html)
-- 9 - [Workflow automation (Makefiles)](09-makefiles.html)
-- 10 - Reproduceerbare development-omgevingen
-    - [Python virtual environments](10-python-venv.html)
-    - [Vagrant](06-automatiseren.html)
+Je kan **handouts** van de slides genereren door ze te openen in de browser en Ctrl+P te drukken (of Afdrukken te kiezen in het menu). Je kan zo ook zelf het formaat van je handouts instellen. Kies tenslotte voor "Save as PDF".
+
+De planning over de lesweken is niet noodzakelijk definitief, maar hangt o.a. af van verlofdagen, de snelheid waarmee de leerstof wordt behandeld, ...
+
+| Lesweek | Topic                                                            |
+| :-----: | :--------------------------------------------------------------- |
+|    1    | [Introductie](topics/datalinux-intro.html)                       |
+|         | First Linux VM                                                   |
+|         | [Secure Shell](topics/ssh.html)                                  |
+|    2    | [Intro Git](topics/git-survival-guide.html)                      |
+|         | [Software-installatie](topics/software-installatie.html)         |
+|         | [Curl](topics/curl.html)                                         |
+|    3    | [Scripting 101](topics/scripting-101.html)                       |
+|    4    | [Organising Users](topics/user-mgmt.html)                        |
+|    5    | [Webserver](topics/installatie-webserver-deb.html)               |
+|         | [Scripting 102](topics/scripting-102.html)                       |
+|    6    | [Advanced text processing](topics/advanced-text-processing.html) |
+|    7    | [Scripting 103](topics/scripting-103.html)                       |
+|    8    | [Scheduling](topics/scheduling.html)                             |
+|         | [Scripting 201](topics/scripting-201.html)                       |
+|    9    | [Containers](topics/containers.html)                             |
+|   10    | [Python virtual environments](topics/python-venv.html)           |
+|         | [Vagrant](topics/automatiseren.html)                             |
+|   11    | [Makefiles](topics/makefiles.html)                               |
 
 Extra:
 
-- [Git, Github, Markdown](99-git-survival-guide.html)
-- [Vim Survival Guide](99-vim-survival-guide.html)
-
-Laatste wijziging: 
+- [Vim Survival Guide](topics/vim-survival-guide.html)

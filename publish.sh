@@ -30,7 +30,7 @@ fi
 
 printf 'Deleting old publication\n'
 rm -rf "${output_dir}"
-mkdir "${output_dir}"
+mkdir -p "${output_dir}"/topics
 git worktree prune
 rm -rf ".git/worktrees/${output_dir}"
 

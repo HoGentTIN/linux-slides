@@ -12,7 +12,7 @@
 ##---------- Variables --------------------------------------------------------
 
 # Markdown file containing presentation source
-SOURCE_FILES := $(wildcard [0-9][0-9]-*.md)
+SOURCE_FILES := $(wildcard topics/*.md)
 
 # Target directory for the reveal.js presentation
 OUTPUT := gh-pages
@@ -21,10 +21,10 @@ OUTPUT := gh-pages
 PRESENTATION_FILES := $(patsubst %.md,$(OUTPUT)/%.html,$(SOURCE_FILES))
 
 # Directory for reveal.js
-REVEAL_JS_DIR := $(OUTPUT)/reveal.js
+REVEAL_JS_DIR := $(OUTPUT)/topics/reveal.js
 
 # Directory for other assets (images, etc.)
-ASSETS_DIR := assets
+ASSETS_DIR := topics/assets
 
 # File name of the reveal.js tarball
 # Remark: Pandoc 2.9.2.1 and earlier must use reveal.js 3.x:
@@ -46,24 +46,22 @@ help: ## Show this help message (default)
 	@printf "\033[34mIndividual presentations:\033[0m\n"
 	@printf "\033[36m%-20s\033[0m\n" $(PRESENTATION_FILES)
 
-all: $(STYLE_FILE) $(PRESENTATION_FILES) assets ## Build the presentation (but not the handouts)
-
-assets: ## Copy asset files (images, etc.) to the appropriate directory
-	rsync -avu $(ASSETS_DIR)/ $(OUTPUT)/$(ASSETS_DIR)/
+all: $(PRESENTATION_FILES) ## Build the presentations
 
 clean: ## Deletes the presentation and index pages (not reveal.js)
-	rm -f $(OUTPUT)/*.html
+	rm -f $(OUTPUT)/topics/*.html
 	rm -f $(OUTPUT)/*.md
+	rm -rf $(OUTPUT)/$(ASSETS_DIR)/
 
 mrproper: clean ## Thorough cleanup (also removes reveal.js)
 	rm -rf $(REVEAL_JS_DIR)
 
-.PHONY: clean mrproper help assets
+.PHONY: clean mrproper help
 
 ##---------- Actual build targets ---------------------------------------------
 
 ## Generate the reveal.js presentation
-$(OUTPUT)/%.html: %.md $(REVEAL_JS_DIR) $(STYLE_FILE) $(OUTPUT)/$(ASSETS_DIR)
+$(OUTPUT)/topics/%.html: topics/%.md $(REVEAL_JS_DIR) $(STYLE_FILE) $(OUTPUT)/$(ASSETS_DIR)
 	pandoc \
 		--standalone \
 		--to=revealjs \
@@ -88,4 +86,4 @@ $(REVEAL_JS_DIR):
 
 ## Assets directory
 $(OUTPUT)/$(ASSETS_DIR):
-	rsync -av $(ASSETS_DIR) $(OUTPUT)
+	rsync -avu $(ASSETS_DIR)/ $(OUTPUT)/$(ASSETS_DIR)/

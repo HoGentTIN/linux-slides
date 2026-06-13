@@ -78,7 +78,7 @@ $(STYLE_FILE): $(STYLE).css $(REVEAL_JS_DIR)
 
 ## Download and install reveal.js locally
 $(REVEAL_JS_DIR):
-	test -d $(OUTPUT) || mkdir -p $(OUTPUT)/topics
+	test -d $(OUTPUT)/topics || mkdir -p $(OUTPUT)/topics
 	wget $(REVEAL_JS_URL)
 	tar xzf $(REVEAL_JS_TAR)
 	rm -v $(REVEAL_JS_TAR)

@@ -142,21 +142,13 @@ Ga naar Orion, volg de link onderaan de studiewijzer om een Github-repo aan te m
 
 ---
 
-![](assets/create-repo-github-classroom.png)
-
----
-
-![](assets/create-repo-accepted.png)
-
----
-
 - Persoonlijke private Github-repository
 - Uitnodiging voor Github-organisatie "HogentTIN"
     - <https://github.com/HoGentTIN>
 
 ---
 
-<https://github.com/HoGentTIN/linux-2122-scripts-USERNAME>
+<https://github.com/HoGentTIN/linux-labs-26-27-USERNAME>
 
 ![](assets/create-repo-done.png)
 
@@ -173,7 +165,7 @@ Ga naar Orion, volg de link onderaan de studiewijzer om een Github-repo aan te m
     - Groene knop "<> Code"
     - Local, SSH, kopieer URL
 - Je hebt nu een lokale kopie van de Github-repo:
-    - `~/linux-2122-scripts-USERNAME`
+    - `~/linux-labs-26-27-USERNAME`
     - = directory met subdir `.git`
     - Verplaatsen, naam wijzigen mag!
 
@@ -186,19 +178,15 @@ Klik "Code", SSH, Kopieer de URL:
 ---
 
 ```console
-osboxes@osboxes:~$ git clone git@github.com:HoGentTIN/linux-2122-scripts-bertvv.git
-Cloning into 'linux-2122-scripts-bertvv'...
-The authenticity of host 'github.com (140.82.121.4)' can't be established.
-RSA key fingerprint is SHA256:nThbg6kXUpJWGl7E1IGOCspRomTxdCARLviKw6E5SY8.
-Are you sure you want to continue connecting (yes/no/[fingerprint])? yes
-Warning: Permanently added 'github.com,140.82.121.4' (RSA) to the list of known hosts.
-remote: Enumerating objects: 28, done.
-remote: Counting objects: 100% (28/28), done.
-remote: Compressing objects: 100% (25/25), done.
-remote: Total 28 (delta 1), reused 27 (delta 1), pack-reused 0
-Receiving objects: 100% (28/28), 17.54 KiB | 8.77 MiB/s, done.
-Resolving deltas: 100% (1/1), done.
-```
+hogent@LinuxGUI:~$ git clone git@github.com:HoGentTIN/linux-labs-26-27-jw-hogent.git
+Cloning into 'linux-labs-26-27-jw-hogent'...
+remote: Enumerating objects: 126, done.
+remote: Counting objects: 100% (126/126), done.
+remote: Compressing objects: 100% (104/104), done.
+remote: Total 126 (delta 9), reused 89 (delta 3), pack-reused 0 (from 0)
+Receiving objects: 100% (126/126), 1.24 MiB | 2.77 MiB/s, done.
+Resolving deltas: 100% (9/9), done.
+``
 
 ## Lokale wijzigingen
 

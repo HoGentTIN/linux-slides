@@ -9,8 +9,9 @@ date: "2026-2027"
 
 ## Lectoren
 
-- Bert Van Vreckem (titularis, Gent, Aalst+VC, TIAO)
-- Jan Willem (Gent)
+- Jan Willem (titularis)
+- Bert Van Vreckem
+- Martijn Saelens
 
 Contactinfo - zie studiewijzer
 

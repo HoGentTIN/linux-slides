@@ -84,7 +84,7 @@ of
 $ git config --global --edit
 ```
 
-Voorbeeld: <https://github.com/bertvv/dotfiles/blob/main/.gitconfig>
+Voorbeeld: <https://github.com/bertvv/dotfiles/blob/main/git/dot-gitconfig>
 
 ## SSH sleutelpaar genereren
 
@@ -352,7 +352,7 @@ alias pt='git push -u origin --tags'
 alias gs='git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  "^author "|sort|uniq -c|sort -nr'
 ```
 
-Zie: <https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh>
+Zie: <https://github.com/bertvv/dotfiles/blob/main/bash/dot-bashrc.d/aliases.sh>
 
 ## Meer info over Git
 

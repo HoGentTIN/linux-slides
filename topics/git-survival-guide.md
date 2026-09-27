@@ -138,7 +138,7 @@ Plak in het "Key" veld:
 
 ## Github-repo voor labo-taken aanmaken
 
-Ga naar Chamilo, volg de link om een Github-repo aan te maken.
+Ga naar Orion, volg de link onderaan de studiewijzer om een Github-repo aan te maken.
 
 ---
 

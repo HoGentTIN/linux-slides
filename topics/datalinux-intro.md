@@ -93,7 +93,7 @@ Contactinfo - zie studiewijzer
 
 # Leermateriaal
 
-## Leermateriaal op Chamilo
+## Leermateriaal op Orion
 
 - Leerpad
 - Cursus *Linux for Data Scientists*

@@ -316,15 +316,12 @@ remote: Counting objects: 100% (126/126), done.
 remote: Compressing objects: 100% (104/104), done.
 remote: Total 126 (delta 9), reused 89 (delta 3), pack-reused 0 (from 0)
 Receiving objects: 100% (126/126), 1.24 MiB | 2.77 MiB/s, done.
-Resolving deltas: 100% (9/9), done.
-``
-
-## Lokale wijzigingen
-
-Open terminal in directory met lokale kopie
-
-```console
-[Bestanden bewerken]
+Resolving deltas: 100% (9/9), done.</code></pre>
+</section>
+<section id="lokale-wijzigingen" class="slide level2">
+<h2>Lokale wijzigingen</h2>
+<p>Open terminal in directory met lokale kopie</p>
+<pre class="console"><code>[Bestanden bewerken]
 $ git add .
 $ git commit -m &quot;Beschrijving aanpassingen&quot;</code></pre>
 <ul>
@@ -371,11 +368,11 @@ overlopen</li>
 <section id="oefening" class="slide level2">
 <h2>Oefening</h2>
 <p>Maak een bestand <code>README.md</code> met deze inhoud:</p>
-<div class="sourceCode" id="cb5"><pre
-class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linux scripting labo&#39;s</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Student: STUDENTNAAM</span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Klasgroep: GROEPNAAM</span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre
+class="sourceCode markdown"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu"># Linux scripting labo&#39;s</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Student: STUDENTNAAM</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="ss">- </span>Klasgroep: GROEPNAAM</span></code></pre></div>
 <p>Commit, push naar Github, bekijk het resultaat op github.com!</p>
 </section></section>
 <section>
@@ -468,23 +465,23 @@ opnemen</li>
 <section id="aliases" class="slide level2">
 <h2>Aliases</h2>
 <p>Voeg toe aan <code>~/.bashrc</code></p>
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a=<span class="st">&#39;git add&#39;</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> c=<span class="st">&#39;git commit -m&#39;</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> d=<span class="st">&#39;git diff&#39;</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> g=<span class="st">&#39;git&#39;</span></span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> h=<span class="st">&#39;git log --pretty=&quot;format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar&quot; --date=short --graph --all&#39;</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> p=<span class="st">&#39;git push &amp;&amp; git push --tags&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> s=<span class="st">&#39;git status&#39;</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> a=<span class="st">&#39;git add&#39;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> c=<span class="st">&#39;git commit -m&#39;</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> d=<span class="st">&#39;git diff&#39;</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> g=<span class="st">&#39;git&#39;</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> h=<span class="st">&#39;git log --pretty=&quot;format:%C(yellow)%h %C(blue)%ad %C(reset)%s%C(red)%d %C(green)%an%C(reset), %C(cyan)%ar&quot; --date=short --graph --all&#39;</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> p=<span class="st">&#39;git push &amp;&amp; git push --tags&#39;</span></span></code></pre></div>
 </section>
 <section class="slide level2">
 
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pr=<span class="st">&#39;git pull --rebase&#39;</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pt=<span class="st">&#39;git push -u origin --tags&#39;</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Git author stats</span></span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gs=<span class="st">&#39;git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  &quot;^author &quot;|sort|uniq -c|sort -nr&#39;</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gp=<span class="st">&#39;git pull --rebase&#39;</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pr=<span class="st">&#39;git pull --rebase&#39;</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> pt=<span class="st">&#39;git push -u origin --tags&#39;</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Git author stats</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="bu">alias</span> gs=<span class="st">&#39;git ls-tree -r -z --name-only HEAD | xargs -0 -n1 git blame --line-porcelain | grep  &quot;^author &quot;|sort|uniq -c|sort -nr&#39;</span></span></code></pre></div>
 <p>Zie: <a
 href="https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh"
 class="uri">https://github.com/bertvv/dotfiles/blob/main/.bash.d/aliases.sh</a></p>

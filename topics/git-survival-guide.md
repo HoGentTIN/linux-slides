@@ -200,6 +200,7 @@ $ git commit -m "Beschrijving aanpassingen"
 
 - Dit werkt ook: `git add BESTAND1 BESTAND2 ...`
 - `.` = huidige directory (recursief)
+- of: `git add -p .` om elke patch manueel te overlopen
 
 ---
 

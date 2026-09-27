@@ -186,7 +186,7 @@ remote: Compressing objects: 100% (104/104), done.
 remote: Total 126 (delta 9), reused 89 (delta 3), pack-reused 0 (from 0)
 Receiving objects: 100% (126/126), 1.24 MiB | 2.77 MiB/s, done.
 Resolving deltas: 100% (9/9), done.
-``
+```
 
 ## Lokale wijzigingen
 

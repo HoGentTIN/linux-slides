@@ -32,7 +32,6 @@ Try this:
 
 - `curl 'https://icanhazdadjoke.com/'`
 - `curl 'https://api.coinlore.net/api/ticker/?id=90'`
-- `curl 'https://education.thingsflow.eu/IAQ/DeviceByQR?hashedname=5201731f632701e602d31f98be7297e088a94eb38736c452495f02e444d4ba2d'`
 
 ## Output, redirection
 

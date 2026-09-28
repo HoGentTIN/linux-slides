@@ -324,6 +324,7 @@ $ git status
 
 - Vaak committen/pushen
 - Beschrijvende commit-boodschappen!
+  - bijvoorbeeld [Conventional Commits](https://www.conventionalcommits.org/)
 - Atomaire commits
 - `git status`!
 - `.gitignore` - bepaalde bestanden nooit in versiebeheer opnemen

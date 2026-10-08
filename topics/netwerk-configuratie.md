@@ -90,6 +90,19 @@ $ nmcli device show enp0s3
 $ nmcli -f IP4 device show enp0s3
 ```
 
+## nmcli device vs connection
+
+- device: naam van de hardware device op Linux
+- bvb eth1, enp0s8, ...
+- connection:
+verzameling van de data (L2 details, IP adressen, ...) die je wil instellen op een device
+
+connectie opstellen voor een device om het te kunnen gebruiken in `nmcli`
+
+```console
+hogent@almaserver:~$ nmcli connection add con-name "" type wifi ifname wlan0
+```
+
 ## Vast IP-adres instellen (EL10)
 
 ```console

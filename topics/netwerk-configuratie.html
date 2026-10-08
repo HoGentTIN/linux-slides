@@ -193,6 +193,18 @@ $ nmcli device status
 $ nmcli device show enp0s3
 $ nmcli -f IP4 device show enp0s3</code></pre>
 </section>
+<section id="nmcli-device-vs-connection" class="slide level2">
+<h2>nmcli device vs connection</h2>
+<ul>
+<li>device: naam van de hardware device op Linux</li>
+<li>bvb eth1, enp0s8, …</li>
+<li>connection: verzameling van de data (L2 details, IP adressen, …) die
+je wil instellen op een device</li>
+</ul>
+<p>connectie opstellen voor een device om het te kunnen gebruiken in
+<code>nmcli</code></p>
+<pre class="console"><code>hogent@almaserver:~$ nmcli connection add con-name &quot;&quot; type wifi ifname wlan0</code></pre>
+</section>
 <section id="vast-ip-adres-instellen-el10" class="slide level2">
 <h2>Vast IP-adres instellen (EL10)</h2>
 <pre class="console"><code>hogent@almaserver:~$ sudo nmcli connection modify enp0s8 ipv4.method static ipv4.addresses 192.168.76.254/24
@@ -226,11 +238,11 @@ iface enp0s8 inet static
 </section>
 <section id="wijzigingen-toepassen-debian-13" class="slide level2">
 <h2>Wijzigingen toepassen (Debian 13):</h2>
-<div class="sourceCode" id="cb8"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ifdown enp0s8<span class="kw">;</span> <span class="fu">sudo</span> ifup enp0s8</span></code></pre></div>
-<p>of</p>
 <div class="sourceCode" id="cb9"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart networking</span></code></pre></div>
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> ifdown enp0s8<span class="kw">;</span> <span class="fu">sudo</span> ifup enp0s8</span></code></pre></div>
+<p>of</p>
+<div class="sourceCode" id="cb10"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> systemctl restart networking</span></code></pre></div>
 </section></section>
 <section>
 <section id="lets-install-isc-dhcp" class="title-slide slide level1">

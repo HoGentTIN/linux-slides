@@ -205,4 +205,4 @@ find . -type d -exec chmod 700 "{}" \;
     cd ~/linux-2122-scripts-USERNAME/script102
     ```
 
-- Opgave: `script102/README.md` of Chamilo-leerpad
+- Opgave: `topics/script102/README.md`

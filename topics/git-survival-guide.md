@@ -140,18 +140,9 @@ Plak in het "Key" veld:
 
 Ga naar Orion, volg de link onderaan de studiewijzer om een Github-repo aan te maken.
 
----
-
 - Persoonlijke private Github-repository
 - Uitnodiging voor Github-organisatie "HogentTIN"
     - <https://github.com/HoGentTIN>
-
----
-
-<https://github.com/HoGentTIN/linux-labs-26-27-USERNAME>
-
-![](assets/create-repo-done.png)
-
 
 # Eenvoudige workflow
 

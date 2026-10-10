@@ -188,4 +188,4 @@ MariaDB [mysql]> quit
 
 ## Labo-oefening
 
-Ga nu zelf verder met de labo-oefening! Leerpad 4.4.1
+Ga nu zelf verder met de labo-oefening!

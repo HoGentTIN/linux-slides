@@ -95,7 +95,7 @@ Contactinfo - zie studiewijzer
 
 ## Leermateriaal op Orion
 
-- Leerpad
+- Leerpad (Inhoud)
 - Cursus *Linux for Data Scientists*
 - Slides
 - Github-repo met labo-opgaven

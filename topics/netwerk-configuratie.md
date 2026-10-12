@@ -100,7 +100,7 @@ verzameling van de data (L2 details, IP adressen, ...) die je wil instellen op e
 connectie opstellen voor een device om het te kunnen gebruiken in `nmcli`
 
 ```console
-hogent@almaserver:~$ nmcli connection add con-name "" type wifi ifname wlan0
+hogent@almaserver:~$ nmcli connection add con-name "lan1" type ethernet ifname enp0s8
 ```
 
 ## Vast IP-adres instellen (EL10)

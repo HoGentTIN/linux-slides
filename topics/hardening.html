@@ -52,9 +52,9 @@ $ sudo firewall-cmd --list-all     # = toon firewall-regels
 $ sudo firewall-cmd --add-service http --permanent
 $ sudo firewall-cmd --add-service https --permanent
 $ sudo firewall-cmd --reload</code></pre>
-<p>Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.</p>
-<p><a href="https://192.168.76.12/"
-class="uri">https://192.168.76.12/</a></p>
+<p>Probeer de website te bekijken vanaf de GUI VM.</p>
+<p><a href="https://192.168.76.254/"
+class="uri">https://192.168.76.254/</a></p>
 </section>
 <section id="zones" class="slide level2">
 <h2>Zones</h2>
@@ -62,11 +62,13 @@ class="uri">https://192.168.76.12/</a></p>
 <li>Zone = lijst van regels voor een specifieke situatie
 <ul>
 <li>bv. in een publieke ruimte (standaard), thuisnetwerk, werk, …</li>
+<li>Vooral nuttig voor laptop</li>
 </ul></li>
 <li>Netwerkkaarten worden toegekend aan een zone</li>
-<li>Vooral nuttig voor laptop
+<li>Server:
 <ul>
-<li>Server: <code>public</code> zone is meestal voldoende</li>
+<li><code>public</code> zone is meestal voldoende</li>
+<li>evt. aparte zone voor management interface (SSH, monitoring, …)</li>
 </ul></li>
 </ul>
 </section>
@@ -192,15 +194,15 @@ Enforcing</code></pre>
 </section>
 <section class="slide level2">
 
-<p>Let op! Dit werkt niet op de Linux Mint-VM!</p>
-<pre class="console"><code>osboxes@osboxes:~$ getenforce
+<p>Let op! Dit werkt niet op de Debian-VM!</p>
+<pre class="console"><code>hogent@LinuxGUI:~$ getenforce
 
 Command &#39;getenforce&#39; not found, but can be installed with:
 
 sudo apt install selinux-utils
 
-osboxes@osboxes:~$ sudo aa-status
-[sudo] password for osboxes:
+hogent@LinuxGUI:~$ sudo aa-status
+[sudo] password for hogent:
 apparmor module is loaded.
 22 profiles are loaded.
 [...]</code></pre>
@@ -231,7 +233,7 @@ class="uri">https://stopdisablingselinux.com/</a></p>
 <ul>
 <li>Booleans: <code>getsebool</code>, <code>setsebool</code></li>
 <li>Contexts, labels: <code>ls -Z</code>, <code>chcon</code>,
-<code>restorecon</code></li>
+<code>restorecon</code>, <code>semanage</code></li>
 <li>Policy modules: <code>sepolicy</code></li>
 </ul>
 <p>In de meeste gevallen is configuratie van booleans/context
@@ -247,6 +249,7 @@ class="slide level2">
 </ul></li>
 <li>Wat wordt de SELinux-context bij aanmaken van een nieuw bestand?
 <ul>
+<li><code>semanage fcontext --list | grep &lt;bestand&gt;</code></li>
 <li><code>/etc/selinux/targeted/contexts/files/files_contexts</code></li>
 </ul></li>
 <li>Standaard-context herstellen:
@@ -258,6 +261,13 @@ class="slide level2">
 <li><code>sudo chcon -t httpd_sys_content_t test.php</code></li>
 </ul></li>
 </ul>
+</section>
+<section id="regels-aanpassen" class="slide level2">
+<h2>Regels aanpassen</h2>
+<p>Bv. DocumentRoot naar <code>/srv/www/</code> verplaatsen:</p>
+<pre class="console"><code>$ sudo semanage fcontext --list | grep httpd
+$ sudo semanage fcontext --add --type httpd_sys_content_t &quot;/srv/www(/.*)?&quot;
+$ sudo restorecon -R /srv/www/</code></pre>
 </section>
 <section id="check-booleans" class="slide level2">
 <h2>Check booleans</h2>

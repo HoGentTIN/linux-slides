@@ -19,7 +19,7 @@ date: "2026-2027"
 
 ## Opstelling
 
-- We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
+- We gaan verder met de opstelling met GUi-, web- en db-VMs
     - Github repo: "linux-2122-USERNAME/automation"
 - In de les: stap voor stap, manueel
 - Labo-taak: automatiseren!
@@ -219,7 +219,7 @@ Controleer dit!
 - Firewall?
 - Reageert de service op requests?
     - localhost?
-    - vanaf de Linux Mint?
+    - vanaf de Debian GUI VM?
 
 ## Voorbeeld: domein example.com
 
@@ -422,7 +422,7 @@ Authoritative name server voor het domein *linux.lan*
 
 - Zoek zelf op: hoe kan je "http://linux.lan" laten werken?
 - Begin met forward zone, pas als die werkt de reverse
-- Kan je DNS ondervragen vanaf Linux Mint?
+- Kan je DNS ondervragen vanaf de Debian GUI VM?
 
 ## Nuttige commando's
 
@@ -459,7 +459,7 @@ BIND logs tonen:
 [vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -
 ```
 
-1. Interactie met de Linux Mint VM
+1. Interactie met de Debian GUI VM
 2. Alle verkeer op poort 53, opslaan in dns.pcap
 
 Bestand `dns.pcap` kan je openen met Wireshark!
@@ -470,4 +470,4 @@ Werk de huidige opstelling af tot een volledig werkend LAN
 
 - Automatiseer de installatie en configuratie van BIND
 - Zorg dat ook DHCP-server geïnstalleerd en geconfigureerd wordt
-- Zorg dat Linux Mint correcte IP-instellingen krijgt op intnet
+- Zorg dat de Debian GUI VM correcte IP-instellingen krijgt op intnet

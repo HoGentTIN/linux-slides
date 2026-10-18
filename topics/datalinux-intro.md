@@ -107,7 +107,7 @@ Contactinfo - zie studiewijzer
     - Remote Development
     - ShellCheck
 - Oracle VirtualBox + Extension Pack
-- Linux Mint als GUI-Linux VM
+- Debian als GUI-Linux VM
     - Download ova file
     - import & get started
 

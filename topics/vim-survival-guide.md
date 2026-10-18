@@ -13,7 +13,7 @@ date: "2026-2027"
 
 ## Vim vs Nano
 
-- Nano = default editor on Mint (& Ubuntu, ...)
+- Nano = default editor on Debian (& Ubuntu, Mint, ...)
     - Niet altijd beschikbaar! (bv. servers)
 - ed (1973) > ex (1976) > vi (1976) > Vim (1991)
 - Vi is standaard

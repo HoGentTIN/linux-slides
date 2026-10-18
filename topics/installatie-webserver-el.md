@@ -10,7 +10,7 @@ date: "2026-2027"
 ## Doelstelling
 
 - LAMP-stack: **L**inux + **A**pache + **M**ariaDB + **P**HP
-- Website bekijken vanop de andere VM (Linux Mint)
+- Website bekijken vanop de andere VM (Debian)
 
 ## Installatie software
 

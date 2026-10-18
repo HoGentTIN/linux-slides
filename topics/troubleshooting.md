@@ -71,7 +71,7 @@ $ ./query_db.sh
 
 Should work from
 
-- your Linux Mint GUI VM (if it is connected to `intnet`
+- your Debian GUI VM (if it is connected to `intnet`
   `sudo apt install mysql-client`
 - from demo VMs (`/vagrant/query_db.sh`)
 

@@ -177,7 +177,7 @@ More information can be found at https://github.com/chef/bento
 
 ## Probeer het volgende!
 
-- Kan je pingen vanuit Linux Mint naar deze VM?
+- Kan je pingen vanuit de GUI VM naar deze VM?
 - Draait MariaDB?
 - Kan je inloggen in de database?
 - Welke data zit in de database?

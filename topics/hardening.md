@@ -17,17 +17,19 @@ $ sudo firewall-cmd --add-service https --permanent
 $ sudo firewall-cmd --reload
 ```
 
-Probeer opnieuw de website te bekijken vanaf de Linux Mint VM.
+Probeer de website te bekijken vanaf de GUI VM.
 
-<https://192.168.76.12/>
+<https://192.168.76.254/>
 
 ## Zones
 
 - Zone = lijst van regels voor een specifieke situatie
     - bv. in een publieke ruimte (standaard), thuisnetwerk, werk, ...
+    - Vooral nuttig voor laptop
 - Netwerkkaarten worden toegekend aan een zone
-- Vooral nuttig voor laptop
-    - Server: `public` zone is meestal voldoende
+- Server:
+    - `public` zone is meestal voldoende
+    - evt. aparte zone voor management interface (SSH, monitoring, ...)
 
 ---
 
@@ -85,17 +87,17 @@ Enforcing
 
 ---
 
-Let op! Dit werkt niet op de Linux Mint-VM!
+Let op! Dit werkt niet op de Debian-VM!
 
 ```console
-osboxes@osboxes:~$ getenforce
+hogent@LinuxGUI:~$ getenforce
 
 Command 'getenforce' not found, but can be installed with:
 
 sudo apt install selinux-utils
 
-osboxes@osboxes:~$ sudo aa-status
-[sudo] password for osboxes:
+hogent@LinuxGUI:~$ sudo aa-status
+[sudo] password for hogent:
 apparmor module is loaded.
 22 profiles are loaded.
 [...]
@@ -127,7 +129,7 @@ Op productie-systemen zou SELinux altijd aan moeten staan!
 ## 3 soorten SELinux-instellingen
 
 - Booleans: `getsebool`, `setsebool`
-- Contexts, labels: `ls -Z`, `chcon`, `restorecon`
+- Contexts, labels: `ls -Z`, `chcon`, `restorecon`, `semanage`
 - Policy modules: `sepolicy`
 
 In de meeste gevallen is configuratie van booleans/context voldoende!
@@ -137,11 +139,22 @@ In de meeste gevallen is configuratie van booleans/context voldoende!
 - Wat is de SELinux-context van een bestand?
     - `ls -lZ`
 - Wat wordt de SELinux-context bij aanmaken van een nieuw bestand?
+    - `semanage fcontext --list | grep <bestand>`
     - `/etc/selinux/targeted/contexts/files/files_contexts`
 - Standaard-context herstellen:
     - `sudo restorecon -R /var/www/`
 - Context instellen naar een bepaalde waarde:
     - `sudo chcon -t httpd_sys_content_t test.php`
+
+## Regels aanpassen
+
+Bv. DocumentRoot naar `/srv/www/` verplaatsen:
+
+```console
+$ sudo semanage fcontext --list | grep httpd
+$ sudo semanage fcontext --add --type httpd_sys_content_t "/srv/www(/.*)?"
+$ sudo restorecon -R /srv/www/
+```
 
 ## Check booleans
 

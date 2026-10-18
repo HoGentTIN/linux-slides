@@ -122,7 +122,7 @@ class="uri">http://www.zytrax.com/books/dns/</a></p>
 <section id="opstelling" class="slide level2">
 <h2>Opstelling</h2>
 <ul>
-<li>We gaan verder met de opstelling met Linux Mint-, web- en db-VMs
+<li>We gaan verder met de opstelling met GUi-, web- en db-VMs
 <ul>
 <li>Github repo: “linux-2122-USERNAME/automation”</li>
 </ul></li>
@@ -361,7 +361,7 @@ server!</li>
 <li>Reageert de service op requests?
 <ul>
 <li>localhost?</li>
-<li>vanaf de Linux Mint?</li>
+<li>vanaf de Debian GUI VM?</li>
 </ul></li>
 </ul>
 </section>
@@ -624,7 +624,7 @@ b.root-servers.net. 518400 IN AAAA 2001:500:200::b
 <ul>
 <li>Zoek zelf op: hoe kan je “http://linux.lan” laten werken?</li>
 <li>Begin met forward zone, pas als die werkt de reverse</li>
-<li>Kan je DNS ondervragen vanaf Linux Mint?</li>
+<li>Kan je DNS ondervragen vanaf de Debian GUI VM?</li>
 </ul>
 </section>
 <section id="nuttige-commandos" class="slide level2">
@@ -654,7 +654,7 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 <pre class="console"><code>[vagrant@srv ~]$ sudo tcpdump -i eth1 -vvnnttt
 [vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -</code></pre>
 <ol type="1">
-<li>Interactie met de Linux Mint VM</li>
+<li>Interactie met de Debian GUI VM</li>
 <li>Alle verkeer op poort 53, opslaan in dns.pcap</li>
 </ol>
 <p>Bestand <code>dns.pcap</code> kan je openen met Wireshark!</p>
@@ -665,7 +665,8 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 <ul>
 <li>Automatiseer de installatie en configuratie van BIND</li>
 <li>Zorg dat ook DHCP-server geïnstalleerd en geconfigureerd wordt</li>
-<li>Zorg dat Linux Mint correcte IP-instellingen krijgt op intnet</li>
+<li>Zorg dat de Debian GUI VM correcte IP-instellingen krijgt op
+intnet</li>
 </ul>
 </section></section>
     </div>

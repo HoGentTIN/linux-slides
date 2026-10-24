@@ -54,8 +54,9 @@ Of ga naar <https://www.vagrantup.com/downloads>
 ## Werkomgeving opzetten
 
 - Kloon je Github-repo voor je labo-taken op je **fysieke systeem**
-- Ga naar de directory `automation/`
+- Ga naar de directory `vagrant_rpm/` (OpsLinux) of `vagrant_deb/` (Data/DevLinux)
 - Lees de README.md
+- Download onze base boxes (zie Leermateriaal voor dit hoofdstuk op Orion)
 
 ## Overzicht repo
 
@@ -101,41 +102,34 @@ VM, run `vagrant status NAME`.
 ```console
 $ vagrant up db
 Bringing machine 'db' up with 'virtualbox' provider...
-==> db: Importing base box 'bento/almalinux-9'...
+==> db: Importing base box 'hogenttin/almalinux-10'...
 ==> db: Matching MAC address for NAT networking...
-==> db: Checking if box 'bento/almalinux-9' version '202109.10.0' is up to date...
-==> db: Setting the name of the VM: linux-2223-bertvv_db_1635848839364_33506
+==> db: Setting the name of the VM: vagrant_rpm_db_1792843218365_99961
+==> db: Fixed port collision for 22 => 2222. Now on port 2201.
 ==> db: Clearing any previously set network interfaces...
 ==> db: Preparing network interfaces based on configuration...
     db: Adapter 1: nat
     db: Adapter 2: intnet
 ==> db: Forwarding ports...
-    db: 22 (guest) => 2222 (host) (adapter 1)
+    db: 22 (guest) => 2201 (host) (adapter 1)
 ==> db: Running 'pre-boot' VM customizations...
 ==> db: Booting VM...
 ==> db: Waiting for machine to boot. This may take a few minutes...
-    db: SSH address: 127.0.0.1:2222
+    db: SSH address: 127.0.0.1:2201
     db: SSH username: vagrant
     db: SSH auth method: private key
-    db: 
-    db: Vagrant insecure key detected. Vagrant will automatically replace
-    db: this with a newly generated keypair for better security.
-    db: 
-    db: Inserting generated public key within guest...
-    db: Removing insecure key from the guest if it's present...
-    db: Key inserted! Disconnecting and reconnecting using new SSH key...
+[...]
 ==> db: Machine booted and ready!
 ==> db: Checking for guest additions in VM...
 ==> db: Setting hostname...
 ==> db: Configuring and enabling network interfaces...
 ==> db: Mounting shared folders...
-    db: /vagrant => /home/bert/Documents/Vakken/Linux/22-23/linux-2223-bertvv
+    db: /home/bert/Documents/Vakken/Linux/linux-labos/topics/vagrant_rpm => /vagrant
 ==> db: Running provisioner: shell...
-    db: Running: /tmp/vagrant-shell20211102-9694-yq9qn5.sh
+    db: Running: /tmp/vagrant-shell20261024-69798-h4xhtj.sh
     db: [LOG]  === Starting common provisioning tasks ===
-    db: [LOG]  Ensuring SELinux is activePermissivePermissivePermissive
-    db: [LOG]  Installing useful packages
-    [...]
+[...]
+    db: success
     db: [LOG]  Securing the database
     db: [LOG]  Creating database and user
     db: [LOG]  Creating database table and add some data
@@ -147,7 +141,6 @@ Bringing machine 'db' up with 'virtualbox' provider...
     - Check in de GUI!
 2. Een zgn. "base box" wordt zo nodig gedownload
     - = VM image met minimale installatie
-    - hier: [bento/almalinux-9](https://app.vagrantup.com/bento/boxes/almalinux-9)
     - wordt later hergebruikt
 
 ---
@@ -155,6 +148,7 @@ Bringing machine 'db' up with 'virtualbox' provider...
 3. De VM wordt geconfigureerd:
     - Naam, CPU, RAM, netwerkkaarten, ...
     - IP-adres
+    - SSH-sleutel
     - Gedeelde map `/vagrant`
 4. Het installatie-script wordt uitgevoerd
 
@@ -165,14 +159,12 @@ $ vagrant ssh db
 
 This system is built by the Bento project by Chef Software
 More information can be found at https://github.com/chef/bento
-[vagrant@db ~]$ ip a show dev eth1
-3: eth1: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500 qdisc fq_codel state UP group default qlen 1000
-    link/ether 08:00:27:1f:c4:a7 brd ff:ff:ff:ff:ff:ff
-    inet 192.168.76.3/24 brd 192.168.76.255 scope global noprefixroute eth1
-       valid_lft forever preferred_lft forever
-    inet6 fe80::a00:27ff:fe1f:c4a7/64 scope link 
-       valid_lft forever preferred_lft forever
-[vagrant@db ~]$ 
+
+Use of this system is acceptance of the OS vendor EULA and License Agreements.
+vagrant@db:~$ ip -br a
+lo               UNKNOWN        127.0.0.1/8 ::1/128 
+enp0s3           UP             10.0.2.15/24 fe80...
+enp0s8           UP             192.168.76.3/24 fe80...
 ```
 
 ## Probeer het volgende!

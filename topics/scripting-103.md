@@ -196,13 +196,3 @@ Beter:
 ```bash
 find . -type d -exec chmod 700 "{}" \;
 ```
-
-## Labo-oefeningen
-
-- Start met oefeningenreeks `script102`
-
-    ```console
-    cd ~/linux-2122-scripts-USERNAME/script102
-    ```
-
-- Opgave: `topics/script102/README.md`

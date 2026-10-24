@@ -1,6 +1,6 @@
 # Slides Linux (voor IT Operations)
 
-Laatste wijziging: Sun Oct 18 10:32:49 UTC 2026
+Laatste wijziging: Sat Oct 24 11:27:54 UTC 2026
 
 Dit is een overzicht van de slides voor de lessen van het opleidingsonderdeel Linux binnen het keuzepakket *IT Operations* in de opleiding professionele bachelor toegepaste informatica aan [HOGENT](https://www.hogent.be/).
 

@@ -180,7 +180,7 @@ END {
 
 ---
 
-Print de *user shells* in `/etc/passwsd` en tel hoeveel elk voorkomt
+Print de *user shells* in `/etc/passwd` en tel hoeveel elk voorkomt
 
 ```awk
 #! /usr/bin/awk -f

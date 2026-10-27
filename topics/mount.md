@@ -21,12 +21,12 @@ $ ls /dev/sd*
 /dev/sda	/dev/sdb
 ```
 
-## Disk partitions
+## Partition table
 
-Every disk:
+Every disk with Master Boot Record (**MBR**) partition table can have:
 
-* maximum 4 primary/extended partitions
-* one extended partition can host further logical (sub)partitions
+- maximum 4 primary/extended partitions
+- one extended partition can host further logical (sub)partitions
 
 | Partition Type   | naming |
 | :--------------- | :----- |
@@ -34,62 +34,90 @@ Every disk:
 | Extended (max 1) | 1-4    |
 | Logical          | 5-     |
 
+**GPT** (Globally Unique Identifier Partition Table) is the successor of MBR and has no such limitations.
+
+## lsblk
+
+Show block devices and their partitions
+
+```console
+$ lsblk -f
+NAME    FSTYPE FSVER LABEL UUID                                 FSAVAIL FSUSE% MOUNTPOINTS
+sda                                                                            
+├─sda1  ext4   1.0         df4df5bb-613a-4382-8cf9-653304605a1f    3.3G    62% /
+├─sda14                                                                        
+└─sda15 vfat   FAT16       6EA5-B51D                             114.8M     7% /boot/efi
+```
+
 ## fdisk
 
 Display and modify partitions of a disk.
 
 ```console
-$ sudo fdisk -l 
-Disk /dev/sda: 64 GiB, 68719476736 bytes, 134217728 sectors
-[...]
+$ sudo fdisk -l /dev/sda
+Disk /dev/sda: 10 GiB, 10737418240 bytes, 20971520 sectors
+Disk model: HARDDISK        
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: gpt
+Disk identifier: 97AF9C2E-CA04-4A3C-BCE2-24A66EFB4208
 
-Device     Boot   Start       End   Sectors  Size Id Type
-/dev/sda1          2048   4501503   4499456  2.1G 82 Linux swap / Solaris
-/dev/sda2  *    4501504 134217727 129716224 61.9G 83 Linux
+Device      Start      End  Sectors  Size Type
+/dev/sda1  262144 20971486 20709343  9.9G Linux root (x86-64)
+/dev/sda14   2048     8191     6144    3M BIOS boot
+/dev/sda15   8192   262143   253952  124M EFI System
+
+Partition table entries are not in disk order.
 ```
 
-## File systems
+## Common file systems on Linux
 
-Linux file systems (common):
+- ext2 - "original" ext file system, no journaling, deprecated
+- ext3, ext4 - evolution of ext2, with journaling
+- btrfs - focus on modern features, lower performance
+- xfs - journaling, large files, default on EL
 
-* ext2
-* ext3 - with journaling
-* ext4 - latest version, with journaling
-* xfs
+## Other notable file systems
 
-Other file systems:
-
-* vfat
-* ntfs
-* iso9660
+- bcachefs - features + performance, no kernel support
+- exfat - for flash drives, SD cards
+- hfs, hfs+ - Mac file systems
+- iso9660 - for CD/DVD
+- vfat, ntfs - Windows file systems
+- zfs - BSD licensed, features + performance
 
 ## Formating a partition
 
-mkfs = MaKe FileSystem
+`mkfs` = MaKe FileSystem
 
 ```console
-$ sudo mkfs -t ext3 /dev/sdb3
-mke2fs 1.45.5 (07-Jan-2020)
-Creating filesystem with 244224 4k blocks and 61056 inodes
-Filesystem UUID: 396d698d-eac6-44f3-9b95-34db7d461664
-Superblock backups stored on blocks:
-	32768, 98304, 163840, 229376
+$ sudo mkfs -t ext4 /dev/sdb1
+mke2fs 1.47.2 (1-Jan-2025)
+Creating filesystem with 488192 4k blocks and 122160 inodes
+Filesystem UUID: 8587ac09-73d2-4f7b-a3ab-dd9cc08737d4
+Superblock backups stored on blocks: 
+	32768, 98304, 163840, 229376, 294912
 
-Allocating group tables: done
-Writing inode tables: done
-Creating journal (4096 blocks): done
-Writing superblocks and filesystem accounting information: done
+Allocating group tables: done                            
+Writing inode tables: done                            
+Creating journal (8192 blocks): done
+Writing superblocks and filesystem accounting information: done 
 ```
+
+(tip: try `ls /sbin/mk*` to see currently supported file systems)
 
 ## Changing defaults of a file system
 
 Every partition has e.g. reserved blocks for root user only:
 
 ```console
-$ sudo tune2fs -l /dev/sdb3 | grep -i "block count"
-Block count:              104388
-Reserved block count:     5219
+$ sudo tune2fs -l /dev/sdb1 | grep -i 'block count'
+Block count:              488192
+Reserved block count:     24409
 ```
+
+(only works for ext3/ext4)
 
 ---
 
@@ -97,9 +125,12 @@ Update with `tune2fs`
 e.g. reduce to 3% reserved blocks
 
 ```console
-$ sudo tune2fs -m3 /dev/sdb3 "
-tune2fs 1.45 (Jan-2020)
-Setting reserved blocks percentage to 3 (3131 blocks)
+$ sudo tune2fs -m3 /dev/sdb1
+tune2fs 1.47.2 (1-Jan-2025)
+Setting reserved blocks percentage to 3% (14645 blocks)
+$ sudo tune2fs -l /dev/sdb1 | grep -i 'block count'
+Block count:              488192
+Reserved block count:     14645
 ```
 
 # Mount
@@ -108,24 +139,19 @@ Setting reserved blocks percentage to 3 (3131 blocks)
 
 mount = Making a partition available in the file tree
 
-1. make a mount point ~ a mount directory, e.g.
+```console
+$ sudo mkdir /mnt/newmountpoint
+$ sudo mount /dev/sdb1 /mnt/newmountpoint/
+```
 
-    ```console
-    $ sudo mkdir /mnt/newmountpoint
-    ```
-
-2. bind the partition to the mount point
-
-    ```console
-    $ sudo mount -t ext3 /dev/sdb3 /mnt/newmountpoint
-    ```
-
-## Display mount points
+Display mount points
 
 ```console
-$ mount | grep sd
-/dev/sda1 on / type ext4 (rw,relatime,errors=remount-ro)
-/dev/sda4 on /home type ext4 (rw,relatime)
+$ findmnt --real
+TARGET               SOURCE     FSTYPE OPTIONS
+/                    /dev/sda1  ext4   rw,relatime,discard,errors=remount-ro
+├─/boot/efi          /dev/sda15 vfat   rw,relatime,fmask=0077,dmask=0077,...
+└─/mnt/newmountpoint /dev/sdb1  ext4   rw,relatime
 ```
 
 ## Permanent mounts
@@ -147,9 +173,9 @@ $ cat /etc/fstab
 
 Mount has some useful options:
 
-* ro - read-only
-* rw - read-write
-* remount - mount an already mounted device with new options
+- ro - read-only
+- rw - read-write
+- remount - mount an already mounted device with new options
 
 ```console
 $ mount | grep boot 
@@ -161,20 +187,19 @@ $ mount | grep boot
 
 # UUID
 
-## UUID def
+## Universally Unique IDentifier
 
-UUID = universally unique identifier
-
-* 128 bits
-* generated while formating
+- e.g. `8587ac09-73d2-4f7b-a3ab-dd9cc08737d4`
+- 128 bits
+- generated while formatting
 
 ## lookup UUID
 
 ```console
-$ sudo tune2fs -l /dev/sda2 | grep UUID
-Filesystem UUID:          fd5db924-4be6-4fee-9a92-ca9db8fe2b9c
 $ blkid /dev/sda2
 /dev/sda2: UUID="fd5db924-4be6-4fee-9a92-ca9db8fe2b9c" TYPE="ext4" PARTUUID="97584a69-02"
+$ sudo tune2fs -l /dev/sda2 | grep UUID
+Filesystem UUID:          fd5db924-4be6-4fee-9a92-ca9db8fe2b9c
 ```
 
 ## fstab with UUID

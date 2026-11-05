@@ -32,6 +32,7 @@ date: "2026-2027"
 Begin elk script met:
 
 ```bash
+#! /usr/bin/env bash
 set -o errexit   # abort on nonzero exitstatus
 set -o nounset   # abort on unbound variable
 set -o pipefail  # don't hide errors within pipes
@@ -66,6 +67,22 @@ public class False {
 ```
 
 De echte implementatie [vind je hier](https://github.com/coreutils/coreutils/blob/master/src/true.c)
+
+## Bash-implementatie
+
+In Bash zou je `true` als volgt implementeren
+
+```bash
+#!/usr/bin/env bash
+exit 0
+```
+
+En `false`:
+
+```bash
+#!/usr/bin/env bash
+exit 1
+```
 
 ## Logische operatoren
 

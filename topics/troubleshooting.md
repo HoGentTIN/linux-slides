@@ -13,13 +13,13 @@ Set up the test environment:
 
 - clone your Github repo for lab assignments
     - on your physical system!
-- open terminal in directory `troubleshooting`
+- open terminal in directory `troubleshoot`
 - start the VMs
     - `dbt` - a working database server
     - `webt` - a web server with faulty configuration
 
 ```console
-$ cd trouble-demo
+$ cd topics/troubleshoot
 $ vagrant up 
 [...]
 ```
@@ -71,9 +71,27 @@ $ ./query_db.sh
 
 Should work from
 
-- your Debian GUI VM (if it is connected to `intnet`
-  `sudo apt install mysql-client`
-- from demo VMs (`/vagrant/query_db.sh`)
+- from the Vagrant VMs (`/vagrant/query_db.sh`)
+- your Debian GUI VM
+    - connect it to `intnet`
+    - install MariaDB client
+
+## Test database from GUI VM
+
+If you get this error:
+
+```console
+$ bash query_db.sh 
++ mysql --host=192.168.76.73 --user=demo_user --password=ArfovWap_OwkUfeaf4 demo '--execute=SELECT * FROM demo_tbl;'
+ERROR 2026 (HY000): TLS/SSL error: SSL is required, but the server does not support it
+```
+
+Create a file `~/.my.cnf` with the following content:
+
+```ini
+[client]
+skip-ssl = true
+```
 
 ## Use a bottom-up approach
 
@@ -260,11 +278,11 @@ $ sudo firewall-cmd --reload
 - Man pages
     - smb.conf(5), dhcpd.conf(5), named.conf(5), ...
 
-## What about ChatGPT?
+## What about GenAI?
 
 - LLMs will hallucinate
 - Advice may be outdated
-- Advice may be irrelevant
+- Advice may be irrelevant for your case
 
 **When you manage production systems, nothing beats the quality of official documentation and manuals!**
 

@@ -124,7 +124,7 @@ clean:
 
 sources := $(wildcard *.c)
 objects := $(patsubst %.c,%.o,$(sources))
-executables := true false
+executables := $(patsubst %.c,%,$(sources))
 
 CC := gcc
 CFLAGS := -Wall -O
@@ -135,7 +135,7 @@ CFLAGS := -Wall -O
     - waarde opvragen: `$(variabele)`
 - `wildcard` - lijst v/bestanden die matchen met globbing-patroon
     - hier: `true.c false.c`
-- `patsubsts` - zoeken & vervangen
+- `patsubst` - zoeken & vervangen
     - hier: `true.o false.o`
 
 ---

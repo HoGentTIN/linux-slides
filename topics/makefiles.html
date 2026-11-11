@@ -233,7 +233,7 @@ class="sourceCode makefile"><code class="sourceCode makefile"><span id="cb8-1"><
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="dt">sources </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">wildcard</span><span class="st"> *.c</span><span class="ch">)</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="dt">objects </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.c</span><span class="kw">,</span><span class="st">%.o</span><span class="kw">,</span><span class="ch">$(</span><span class="dt">sources</span><span class="ch">))</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">executables </span><span class="ch">:=</span><span class="st"> true false</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="dt">executables </span><span class="ch">:=</span><span class="st"> </span><span class="ch">$(</span><span class="kw">patsubst</span><span class="st"> %.c</span><span class="kw">,</span><span class="st">%</span><span class="kw">,</span><span class="ch">$(</span><span class="dt">sources</span><span class="ch">))</span></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="dt">CC </span><span class="ch">:=</span><span class="st"> gcc</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="dt">CFLAGS </span><span class="ch">:=</span><span class="st"> -Wall -O</span></span></code></pre></div>
@@ -248,7 +248,7 @@ globbing-patroon
 <ul>
 <li>hier: <code>true.c false.c</code></li>
 </ul></li>
-<li><code>patsubsts</code> - zoeken &amp; vervangen
+<li><code>patsubst</code> - zoeken &amp; vervangen
 <ul>
 <li>hier: <code>true.o false.o</code></li>
 </ul></li>

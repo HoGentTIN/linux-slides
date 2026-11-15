@@ -46,7 +46,7 @@ Solomon Hykes @ PyCon 2013
 
 ## Installeer en start Docker
 
-- Download nieuwe versie van installatiescript: <https://github.com/HoGentTIN/linux-labos/blob/main/dockerlab/install-docker.sh>
+- Download nieuwe versie van installatiescript: <https://github.com/HoGentTIN/linux-labos/blob/main/topics/docker/install-docker.sh>
 - Download in `dockerlab/` subdirectory binnen je repository
 - Open terminal, ga naar `dockerlab/`
 - Voer het script `install-docker.sh` uit als root.

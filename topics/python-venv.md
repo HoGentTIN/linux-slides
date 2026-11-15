@@ -220,6 +220,9 @@ Creeer een `Dockerfile`:
 # Running a Python application with dependencies in a Docker container
 FROM python:3.13-slim
 
+RUN mkdir /app
+WORKDIR /app
+
 ENV VIRTUAL_ENV=/opt/venv
 RUN python3 -m venv "${VIRTUAL_ENV}"
 ENV PATH="${VIRTUAL_ENV}/bin:${PATH}"

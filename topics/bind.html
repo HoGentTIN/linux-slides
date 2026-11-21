@@ -124,7 +124,7 @@ class="uri">http://www.zytrax.com/books/dns/</a></p>
 <ul>
 <li>We gaan verder met de opstelling met GUi-, web- en db-VMs
 <ul>
-<li>Github repo: “linux-2122-USERNAME/automation”</li>
+<li>Github repo labo’s: “topics/vagrant_rpm”</li>
 </ul></li>
 <li>In de les: stap voor stap, manueel</li>
 <li>Labo-taak: automatiseren!</li>
@@ -136,7 +136,7 @@ class="uri">http://www.zytrax.com/books/dns/</a></p>
 <li><p>In <code>vagrant-hosts.yml</code>:</p>
 <div class="sourceCode" id="cb1"><pre
 class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> srv</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-9</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">box</span><span class="kw">:</span><span class="at"> bento/almalinux-10</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">ip</span><span class="kw">:</span><span class="at"> </span><span class="fl">192.168.76.254</span></span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="at">  </span><span class="fu">intnet</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span></code></pre></div></li>
 <li><p>In <code>provisioning/</code> script <code>srv.sh</code>
@@ -172,9 +172,8 @@ is a freaking DNS problem</a></p>
 127.0.0.1      localhost   localhost.localdomain
 ::1            localhost6  localhost6.localdomain6
 
-172.22.255.254 router4038  gw gw.netlab.hogent.be
-172.22.0.2     server4038  server4038.netlab.hogent.be
-172.22.0.3     printer4038 printer4038.netlab.hogent.be</code></pre>
+172.22.255.254 router4037  gw gw.netlab.hogent.be
+172.22.0.2     server4037  server4037.netlab.hogent.be</code></pre>
 <ul>
 <li>On Windows: <code>c:\Windows\System32\Drivers\etc\hosts</code></li>
 <li>Ad blocker: <a href="https://someonewhocares.org/hosts/"
@@ -194,7 +193,7 @@ alt="Hierarchical domains" />
 
 <figure>
 <img
-data-src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png"
+data-src="https://upload.wikimedia.org/wikipedia/commons/a/a5/Example_of_an_iterative_DNS_resolver.svg"
 alt="Iterative resolver" />
 <figcaption aria-hidden="true">Iterative resolver</figcaption>
 </figure>
@@ -651,7 +650,7 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 </section>
 <section id="netwerkverkeer-opvangen" class="slide level2">
 <h2>Netwerkverkeer opvangen:</h2>
-<pre class="console"><code>[vagrant@srv ~]$ sudo tcpdump -i eth1 -vvnnttt
+<pre class="console"><code>[vagrant@srv ~]$ sudo tcpdump -i enp0s8 -vvnnttt
 [vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -</code></pre>
 <ol type="1">
 <li>Interactie met de Debian GUI VM</li>
@@ -667,6 +666,7 @@ $ sudo named-checkzone 76.168.192.in-addr.arpa \
 <li>Zorg dat ook DHCP-server geïnstalleerd en geconfigureerd wordt</li>
 <li>Zorg dat de Debian GUI VM correcte IP-instellingen krijgt op
 intnet</li>
+<li>(optioneel) Maak een router van de <code>srv</code>-VM</li>
 </ul>
 </section></section>
     </div>

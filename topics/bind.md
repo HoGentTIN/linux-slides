@@ -20,7 +20,7 @@ date: "2026-2027"
 ## Opstelling
 
 - We gaan verder met de opstelling met GUi-, web- en db-VMs
-    - Github repo: "linux-2122-USERNAME/automation"
+    - Github repo labo's: "topics/vagrant_rpm"
 - In de les: stap voor stap, manueel
 - Labo-taak: automatiseren!
 
@@ -30,13 +30,14 @@ date: "2026-2027"
   
     ```yaml
     - name: srv
-      box: bento/almalinux-9
+      box: bento/almalinux-10
       ip: 192.168.76.254
       intnet: true
     ```
 
 - In `provisioning/` script `srv.sh` toevoegen
     - bv. kopie van `web.sh`, toegevoegde code voor installatie LAMP verwijderen
+
 - `vagrant up srv`
 
 # DNS
@@ -60,9 +61,8 @@ Hosts-bestand: `/etc/hosts`
 127.0.0.1      localhost   localhost.localdomain
 ::1            localhost6  localhost6.localdomain6
 
-172.22.255.254 router4038  gw gw.netlab.hogent.be
-172.22.0.2     server4038  server4038.netlab.hogent.be
-172.22.0.3     printer4038 printer4038.netlab.hogent.be
+172.22.255.254 router4037  gw gw.netlab.hogent.be
+172.22.0.2     server4037  server4037.netlab.hogent.be
 ```
 
 - On Windows: `c:\Windows\System32\Drivers\etc\hosts`
@@ -74,7 +74,7 @@ Hosts-bestand: `/etc/hosts`
 
 ---
 
-![Iterative resolver](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a5/Example_of_an_iterative_DNS_resolver.svg/800px-Example_of_an_iterative_DNS_resolver.svg.png)
+![Iterative resolver](https://upload.wikimedia.org/wikipedia/commons/a/a5/Example_of_an_iterative_DNS_resolver.svg)
 
 ## Root DNS servers
 
@@ -455,7 +455,7 @@ BIND logs tonen:
 ## Netwerkverkeer opvangen:
 
 ```console
-[vagrant@srv ~]$ sudo tcpdump -i eth1 -vvnnttt
+[vagrant@srv ~]$ sudo tcpdump -i enp0s8 -vvnnttt
 [vagrant@srv ~]$ sudo tcpdump -i any -U -w - port 53 | tee /vagrant/dns.pcap | tcpdump -vv -nn -ttttt -r -
 ```
 
@@ -471,3 +471,4 @@ Werk de huidige opstelling af tot een volledig werkend LAN
 - Automatiseer de installatie en configuratie van BIND
 - Zorg dat ook DHCP-server geïnstalleerd en geconfigureerd wordt
 - Zorg dat de Debian GUI VM correcte IP-instellingen krijgt op intnet
+- (optioneel) Maak een router van de `srv`-VM

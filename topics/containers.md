@@ -46,14 +46,14 @@ Solomon Hykes @ PyCon 2013
 
 ## Installeer en start Docker
 
-- Download nieuwe versie van installatiescript: <https://github.com/HoGentTIN/linux-labos/blob/main/topics/docker/install-docker.sh>
-- Download in `dockerlab/` subdirectory binnen je repository
-- Open terminal, ga naar `dockerlab/`
+Installatiescript in labos repo: `topics/docker/install-docker.sh`
+
+- Open terminal, ga naar `topics/docker/`
 - Voer het script `install-docker.sh` uit als root.
 
 ## Aan de slag!
 
-- Open de labo-opdracht (dockerlab/assignment.md)
+- Open de labo-opdracht (`topics/docker/README.md`)
 - Open een browsertabblad en surf naar <http://localhost:9000> (Portainer UI)
 - Volg de stappen in de opgave!
 
